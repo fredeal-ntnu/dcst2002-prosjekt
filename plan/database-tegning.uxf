@@ -16,4 +16,6 @@ tag_id {PK}</panel_attributes><additional_attributes></additional_attributes></e
 --
 tag_quest_id {PK}</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>630</x><y>130</y><w>140</w><h>70</h></coordinates><panel_attributes>_Comment_
 --
-comment_id {PK}</panel_attributes><additional_attributes></additional_attributes></element></diagram>
+comment_id {PK}</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>790</x><y>130</y><w>120</w><h>70</h></coordinates><panel_attributes>_Upvote_
+--
+upvote_id {PK}</panel_attributes><additional_attributes></additional_attributes></element></diagram>

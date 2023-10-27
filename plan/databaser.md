@@ -25,13 +25,15 @@ tags
 
     Vi kommer til å trenge:
     User
-    Questions
-    Answers
-    Favourites
+    Question
+    Answer
+    Favourite
     Tags
     Upvotes
+    Comment
 
-    Upvote_comments
-    Favourite_comments
-    answers_comments
+
+    Favourite_comment
+    answer_comment
     Tags_question_relation
+    Comment_upvote
