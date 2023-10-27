@@ -17,7 +17,7 @@ tags
 
 
 
-
+    For å bruke tegne-program i VSCode, last ned UMLet, lag en fil med extension .uxf
 
     Vi må ha en felles database vi jobber mot, kan være hvem som helst sin.
     Så oppretter vi alle tabellene vi trenger i denne.
@@ -30,7 +30,7 @@ tags
     Favourites
     Tags
     Upvotes
-    
+
     Upvote_comments
     Favourite_comments
     answers_comments
