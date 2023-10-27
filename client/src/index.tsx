@@ -8,8 +8,11 @@ import { TaskList, TaskDetails, TaskEdit, TaskNew } from './task-components';
 class Menu extends Component {
   render() {
     return (
-      <NavBar brand="Todo App">
-        <NavBar.Link to="/tasks">Tasks</NavBar.Link>
+      <NavBar brand="AskMorgan">
+        <NavBar.Link to="/questions">Questions</NavBar.Link>
+        <NavBar.Link to="/login">Log In</NavBar.Link>
+        <NavBar.Link to="/signup">Sign Up</NavBar.Link>
+        <NavBar.Link to="/">Sign Up</NavBar.Link>
       </NavBar>
     );
   }
@@ -17,7 +20,7 @@ class Menu extends Component {
 
 class Home extends Component {
   render() {
-    return <Card title="Welcome">This is Todo App</Card>;
+    return <Card title="Splash">Her kan vi ha mest sette spørsmål</Card>;
   }
 }
 
