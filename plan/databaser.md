@@ -29,5 +29,9 @@ tags
     Answers
     Favourites
     Tags
+    Upvotes
     
-heiaa
+    Upvote_comments
+    Favourite_comments
+    answers_comments
+    Tags_question_relation
