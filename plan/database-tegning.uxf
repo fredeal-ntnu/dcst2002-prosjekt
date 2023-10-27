@@ -1,21 +1,21 @@
-<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>60</x><y>130</y><w>110</w><h>70</h></coordinates><panel_attributes>_User_
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>26</x><y>130</y><w>110</w><h>70</h></coordinates><panel_attributes>_User_
 --
-User_id {PK}
-User_name
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>190</x><y>130</y><w>120</w><h>70</h></coordinates><panel_attributes>_Question_
+user_id {PK}
+user_name
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>156</x><y>130</y><w>120</w><h>70</h></coordinates><panel_attributes>_Question_
 --
 quest_id {PK}
-quest_text</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>330</x><y>130</y><w>130</w><h>70</h></coordinates><panel_attributes>_Answer_
+quest_text</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>296</x><y>130</y><w>130</w><h>70</h></coordinates><panel_attributes>_Answer_
 --
-answer_id {PK}
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>480</x><y>130</y><w>130</w><h>70</h></coordinates><panel_attributes>_Favourite_
+answ_id {PK}
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>446</x><y>130</y><w>130</w><h>70</h></coordinates><panel_attributes>_Favourite_
 --
-fav_id {PK}</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>190</x><y>370</y><w>120</w><h>70</h></coordinates><panel_attributes>_Tag_
+fav_id {PK}</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>156</x><y>370</y><w>120</w><h>70</h></coordinates><panel_attributes>_Tag_
 --
-tag_id {PK}</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>190</x><y>250</y><w>120</w><h>70</h></coordinates><panel_attributes>_tag_question_relation_
+tag_id {PK}</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>156</x><y>250</y><w>120</w><h>70</h></coordinates><panel_attributes>_tag_question_relation_
 --
-tag_quest_id {PK}</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>630</x><y>130</y><w>140</w><h>70</h></coordinates><panel_attributes>_Comment_
+tag_quest_id {PK}</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>596</x><y>130</y><w>140</w><h>70</h></coordinates><panel_attributes>_Comment_
 --
-comment_id {PK}</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>790</x><y>130</y><w>120</w><h>70</h></coordinates><panel_attributes>_Upvote_
+comment_id {PK}</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>756</x><y>130</y><w>120</w><h>70</h></coordinates><panel_attributes>_Upvote_
 --
 upvote_id {PK}</panel_attributes><additional_attributes></additional_attributes></element></diagram>
