@@ -50,6 +50,8 @@ class Service {
         return new Promise<number>((resolve, reject) => {
             pool.query('INSERT INTO Question SET title=?, text=?', [title, text], (error, results: ResultSetHeader) => {
             if (error) return reject(error);
+
+        
     
             resolve(results.insertId);
             });
