@@ -1,21 +1,65 @@
-<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>26</x><y>130</y><w>110</w><h>70</h></coordinates><panel_attributes>_User_
+<diagram program="umletino" version="15.1"><zoom_level>11</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>41</x><y>231</y><w>121</w><h>77</h></coordinates><panel_attributes>_User_
 --
 user_id {PK}
 user_name
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>156</x><y>130</y><w>120</w><h>70</h></coordinates><panel_attributes>_Question_
+password
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>525</x><y>220</y><w>132</w><h>121</h></coordinates><panel_attributes>_Question_
 --
 quest_id {PK}
-quest_text</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>296</x><y>130</y><w>130</w><h>70</h></coordinates><panel_attributes>_Answer_
+title
+quest_text
+view_count
+confirmed_answer (boolean)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>778</x><y>297</y><w>143</w><h>99</h></coordinates><panel_attributes>_Answer_
 --
 answ_id {PK}
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>446</x><y>130</y><w>130</w><h>70</h></coordinates><panel_attributes>_Favourite_
+text
+score
+question_id (FK)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>261</x><y>275</y><w>143</w><h>77</h></coordinates><panel_attributes>user-question-created
 --
-fav_id {PK}</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>156</x><y>370</y><w>120</w><h>70</h></coordinates><panel_attributes>_Tag_
+user_id {PK}
+question_id (PK)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>536</x><y>572</y><w>132</w><h>77</h></coordinates><panel_attributes>_Tag_
 --
-tag_id {PK}</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>156</x><y>250</y><w>120</w><h>70</h></coordinates><panel_attributes>_tag_question_relation_
+tag_id {PK}
+name
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>525</x><y>429</y><w>132</w><h>77</h></coordinates><panel_attributes>_tag_question_relation_
 --
-tag_quest_id {PK}</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>596</x><y>130</y><w>140</w><h>70</h></coordinates><panel_attributes>_Comment_
+quest_id {FK}
+tag_id {FK}</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>514</x><y>55</y><w>154</w><h>77</h></coordinates><panel_attributes>question_comment
 --
-comment_id {PK}</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>756</x><y>130</y><w>120</w><h>70</h></coordinates><panel_attributes>_Upvote_
+comment_id {PK}
+text
+question_id (FK)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>789</x><y>132</y><w>154</w><h>77</h></coordinates><panel_attributes>answer_comment
 --
-upvote_id {PK}</panel_attributes><additional_attributes></additional_attributes></element></diagram>
+comment_id {PK}
+text
+answer_id (FK)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>261</x><y>176</y><w>143</w><h>77</h></coordinates><panel_attributes>_user_question_relation_favourite_
+--
+user_id{FK}
+question_id(FK)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>151</x><y>286</y><w>132</w><h>55</h></coordinates><panel_attributes>lt=-
+m1=0..*
+m2=0..1
+</panel_attributes><additional_attributes>10;10;100;30</additional_attributes></element><element><id>Relation</id><coordinates><x>393</x><y>286</y><w>154</w><h>66</h></coordinates><panel_attributes>lt=-
+m1=0..1
+m2=0..*
+</panel_attributes><additional_attributes>10;30;120;20</additional_attributes></element><element><id>Relation</id><coordinates><x>151</x><y>209</y><w>132</w><h>77</h></coordinates><panel_attributes>lt=-
+m1=0..*
+m2=0..1
+</panel_attributes><additional_attributes>10;50;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>393</x><y>209</y><w>154</w><h>77</h></coordinates><panel_attributes>lt=-
+m1=0..1
+m2=0..*
+</panel_attributes><additional_attributes>10;10;120;50</additional_attributes></element><element><id>Relation</id><coordinates><x>580</x><y>330</y><w>55</w><h>121</h></coordinates><panel_attributes>lt=-
+m1=0..*
+m2=0..1
+</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>569</x><y>495</y><w>66</w><h>99</h></coordinates><panel_attributes>lt=-
+m1=0..1
+m2=0..*
+</panel_attributes><additional_attributes>10;10;30;70</additional_attributes></element><element><id>Relation</id><coordinates><x>569</x><y>121</y><w>55</w><h>121</h></coordinates><panel_attributes>lt=-
+m1=0..*
+m2=1
+</panel_attributes><additional_attributes>10;10;20;90</additional_attributes></element><element><id>Relation</id><coordinates><x>646</x><y>275</y><w>154</w><h>99</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=0..*
+</panel_attributes><additional_attributes>10;10;120;70</additional_attributes></element><element><id>Relation</id><coordinates><x>833</x><y>198</y><w>55</w><h>121</h></coordinates><panel_attributes>lt=-
+m1=0..*
+m2=1
+</panel_attributes><additional_attributes>10;10;20;90</additional_attributes></element></diagram>
