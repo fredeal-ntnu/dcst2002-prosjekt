@@ -86,4 +86,4 @@ class Service {
     }
     
 }
-export const answer_contentService = new Service(); 
+export const answerService = new Service(); 

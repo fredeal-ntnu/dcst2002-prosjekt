@@ -83,4 +83,4 @@ class Service {
         });
     }
 }
-export const question_contentService = new Service(); 
+export const questionService = new Service(); 

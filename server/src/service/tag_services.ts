@@ -41,4 +41,4 @@ class Service {
     }
 }
 
-export const tag_contentService = new Service();
+export const tagService = new Service();
