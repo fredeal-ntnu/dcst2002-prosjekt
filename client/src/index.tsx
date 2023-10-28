@@ -13,6 +13,10 @@ class Menu extends Component {
         <NavBar.Link to="/login">Log In</NavBar.Link>
         <NavBar.Link to="/signup">Sign Up</NavBar.Link>
         <NavBar.Link to="/">Sign Up</NavBar.Link>
+        <NavBar.Link to="/tasks">Tasks</NavBar.Link>
+        <NavBar.Link to="/tasks/new">New Task</NavBar.Link>
+        <NavBar.Link to="/tasks/1">Task 1</NavBar.Link>
+        <NavBar.Link to="/tasks/2">Task 2</NavBar.Link>
       </NavBar>
     );
   }
