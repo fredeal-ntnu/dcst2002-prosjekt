@@ -21,6 +21,34 @@ export class Card extends Component<{ title: ReactNode }> {
   }
 }
 
+class Link extends Component<{ to: string }> {
+  render() {
+    return (
+      <NavLink className="btn btn-outline-light" activeClassName="active" to={this.props.to} style={{ color: 'Black' }}>
+        {this.props.children}
+      </NavLink>
+    );
+  }
+}
+
+export class CardHome extends Component<{ header: ReactNode, items: {label: string, to: string}[] }> {
+  static Link = Link;
+  render() {
+    return (
+      <div className="card" style={{ width: '18rem', margin: '20px' }}>
+        <div className="card-header">{this.props.header}</div>
+          <ul className="list-group list-group-flush">{this.props.items.map((item, index) => (
+            <li key={index} className="list-group-item">
+              <Link to={item.to}>{item.label}</Link>
+            </li>))}
+          </ul>
+      </div>
+    );
+  }
+}
+
+
+
 /**
  * Renders a row using Bootstrap classes.
  */
@@ -157,9 +185,19 @@ export class Button {
 class NavBarLink extends Component<{ to: string }> {
   render() {
     return (
-      <NavLink className="nav-link" activeClassName="active" to={this.props.to}>
+      <NavLink className="btn btn-outline-light my-2 my-sm-0" activeClassName="active" to={this.props.to} style={{ marginRight: '5px' }}>
         {this.props.children}
       </NavLink>
+    );
+  }
+}
+
+class NavBarSearch extends Component {
+  render() {
+    return (
+      <form className="form-inline d-flex align-items-center">
+        <input className="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search" style={{ marginRight: '5px', width: '200%' }}/>
+      </form>
     );
   }
 }
@@ -171,11 +209,12 @@ class NavBarLink extends Component<{ to: string }> {
  */
 export class NavBar extends Component<{ brand: ReactNode }> {
   static Link = NavBarLink;
+  static Search = NavBarSearch;
 
   render() {
     return (
-      <nav className="navbar navbar-expand-sm navbar-light bg-light">
-        <div className="container-fluid justify-content-start">
+      <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div className="container-fluid">
           <NavLink className="navbar-brand" activeClassName="active" exact to="/">
             {this.props.brand}
           </NavLink>
