@@ -42,42 +42,47 @@ question_user_favourite(__question_id, user_id__)
 
 
 
+CREATE TABLE User (
+    user_id INT PRIMARY KEY,
+    user_name VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
 
 CREATE TABLE Question (
-    question_id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255),
+    question_id INT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
     text TEXT,
-    view_count INT,
-    confirmed_answer BOOLEAN,
+    view_count INT DEFAULT 0,
+    confirmed_answer INT,
     user_id INT,
-    FOREIGN KEY (user_id) REFERENCES User (user_id)
-    );
+    FOREIGN KEY (user_id) REFERENCES User(user_id)
+);
 
 CREATE TABLE question_comment (
-    question_comment_id INT AUTO_INCREMENT PRIMARY KEY,
-    text TEXT,
+    question_comment_id INT PRIMARY KEY,
+    text TEXT NOT NULL,
     question_id INT,
     FOREIGN KEY (question_id) REFERENCES Question(question_id)
 );
 
 CREATE TABLE Answer (
-    answer_id INT AUTO_INCREMENT PRIMARY KEY,
-    text TEXT,
-    score INT,
+    answer_id INT PRIMARY KEY,
+    text TEXT NOT NULL,
+    score INT DEFAULT 0,
     question_id INT,
     FOREIGN KEY (question_id) REFERENCES Question(question_id)
 );
 
 CREATE TABLE answer_comment (
-    answer_comment_id INT AUTO_INCREMENT PRIMARY KEY,
-    text TEXT,
+    answer_comment_id INT PRIMARY KEY,
+    text TEXT NOT NULL,
     answer_id INT,
     FOREIGN KEY (answer_id) REFERENCES Answer(answer_id)
 );
 
 CREATE TABLE Tag (
-    tag_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255)
+    tag_id INT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE tag_question_relation (
@@ -88,12 +93,6 @@ CREATE TABLE tag_question_relation (
     FOREIGN KEY (question_id) REFERENCES Question(question_id)
 );
 
-CREATE TABLE User (
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_name VARCHAR(255),
-    password VARCHAR(255)
-);
-
 CREATE TABLE question_user_favourite (
     question_id INT,
     user_id INT,
@@ -101,3 +100,78 @@ CREATE TABLE question_user_favourite (
     FOREIGN KEY (question_id) REFERENCES Question(question_id),
     FOREIGN KEY (user_id) REFERENCES User(user_id)
 );
+
+
+Eksempeldata:
+
+-- User Table
+INSERT INTO User(user_id, user_name, password) VALUES 
+(1, 'Alice', 'password123'),
+(2, 'Bob', 'bobpass'),
+(3, 'Charlie', 'charliepass'),
+(4, 'David', 'davidpass'),
+(5, 'Eve', 'evepass'),
+(6, 'Frank', 'frankpass');
+
+-- Question Table
+INSERT INTO Question(question_id, title, text, view_count, confirmed_answer, user_id) VALUES 
+(1, 'How to code in Python?', 'Need help with Python.', 100, NULL, 1),
+(2, 'Java vs C#?', 'Which is better?', 50, NULL, 2),
+(3, 'HTML basics?', 'Help with HTML.', 75, NULL, 3),
+(4, 'JavaScript frameworks?', 'Which one is the best?', 60, NULL, 4),
+(5, 'SQL or NoSQL?', 'Database types?', 80, NULL, 5),
+(6, 'How to deploy an app?', 'Deployment strategies.', 90, NULL, 6);
+
+-- question_comment Table
+INSERT INTO question_comment(question_comment_id, text, question_id) VALUES 
+(1, 'I recommend checking out online tutorials.', 1),
+(2, 'Java is versatile but C# has its perks.', 2),
+(3, 'W3Schools is a good start.', 3),
+(4, 'React has been quite popular lately.', 4),
+(5, 'Depends on the use case.', 5),
+(6, 'Look into cloud platforms.', 6);
+
+-- Answer Table
+INSERT INTO Answer(answer_id, text, score, question_id) VALUES 
+(1, 'Python is easy. Start with basics.', 5, 1),
+(2, 'Both have their strengths.', 3, 2),
+(3, 'HTML is a markup language.', 4, 3),
+(4, 'Vue.js is also gaining traction.', 2, 4),
+(5, 'SQL for structured, NoSQL for flexible.', 6, 5),
+(6, 'AWS or Azure could be a good choice.', 1, 6);
+
+-- answer_comment Table
+INSERT INTO answer_comment(answer_comment_id, text, answer_id) VALUES 
+(1, 'Agree with this!', 1),
+(2, 'Not sure about this.', 2),
+(3, 'Good point.', 3),
+(4, 'Angular is also good.', 4),
+(5, 'I prefer NoSQL for scalability.', 5),
+(6, 'Heroku is simpler for beginners.', 6);
+
+-- Tag Table
+INSERT INTO Tag(tag_id, name) VALUES 
+(1, 'Python'),
+(2, 'Java'),
+(3, 'HTML'),
+(4, 'JavaScript'),
+(5, 'Database'),
+(6, 'Deployment');
+
+-- tag_question_relation Table
+INSERT INTO tag_question_relation(tag_id, question_id) VALUES 
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6);
+
+-- question_user_favourite Table
+INSERT INTO question_user_favourite(question_id, user_id) VALUES 
+(1, 2),
+(2, 3),
+(3, 4),
+(4, 5),
+(5, 6),
+(6, 1);
