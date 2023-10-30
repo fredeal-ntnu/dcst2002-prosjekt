@@ -22,12 +22,7 @@ class Home extends Component {
   render() {
     return (
       <CardHome header="Public"
-      items=
-      {[
-        { label: "Questions", to: "/questions" },
-        { label: "Tags", to: "/tags" },
-      ]}
-      />
+      items={[{ label: "Questions", to: "/questions" }, { label: "Tags", to: "/tags" }]}/>
     );
   }
 }
@@ -40,8 +35,10 @@ if (root)
         <Alert />
         <Menu />
         <Route exact path="/" component={Home} />
-        {/* <Route exact path="/signin" component={signin} /> */}
+        {/* <Route exact path="/signin" component={login} /> */}
         {/* <Route exact path="/signup" component={signup} /> */}
+        {/* <Route exact path="/signup" component={questions} /> */}
+        {/* <Route exact path="/signup" component={tags} /> */}
       </div>
     </HashRouter>,
   );
