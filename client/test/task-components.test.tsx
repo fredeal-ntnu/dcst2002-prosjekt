@@ -56,7 +56,7 @@
 
 
 import * as React from 'react';
-import { TaskList, TaskDetails, TaskEdit, TaskNew } from '../src/task-components';
+import { TaskList, TaskDetails, TaskEdit, TaskNew } from '../src/components/task-components';
 import { shallow } from 'enzyme';
 import { Form, Button, Column } from '../src/widgets';
 import { NavLink } from 'react-router-dom';
