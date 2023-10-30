@@ -48,8 +48,10 @@ CREATE TABLE Question (
     title VARCHAR(255),
     text TEXT,
     view_count INT,
-    confirmed_answer BOOLEAN
-);
+    confirmed_answer BOOLEAN,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES User (user_id)
+    );
 
 CREATE TABLE question_comment (
     question_comment_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -93,14 +95,6 @@ CREATE TABLE User (
 );
 
 CREATE TABLE question_user_favourite (
-    question_id INT,
-    user_id INT,
-    PRIMARY KEY (question_id, user_id),
-    FOREIGN KEY (question_id) REFERENCES Question(question_id),
-    FOREIGN KEY (user_id) REFERENCES User(user_id)
-);
-
-CREATE TABLE question_user_created (
     question_id INT,
     user_id INT,
     PRIMARY KEY (question_id, user_id),
