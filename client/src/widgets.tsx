@@ -195,8 +195,8 @@ class NavBarLink extends Component<{ to: string }> {
 class NavBarSearch extends Component {
   render() {
     return (
-      <form className="form-inline d-flex align-items-center">
-        <input className="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search" style={{ marginRight: '5px', width: '200%' }}/>
+      <form className="form-inline d-flex align-items-center" style={{ width: '600px' }}>
+        <input className="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search" style={{ marginRight: '5px' }}/>
       </form>
     );
   }
