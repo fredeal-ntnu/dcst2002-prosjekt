@@ -1,19 +1,3 @@
-questions
-    id(pk)
-    title
-    text
-
-answers
-    id(pk)
-    text
-    score
-
-tags
-    id(pk)
-    name
-
-
-
 
 
 
@@ -42,15 +26,14 @@ tags
 
 
 
-Question(__question_id__, title, text, view_count, confirmed_answer)
+User(__user_id__, user_name, password)
+Question(__question_id__, title, text, view_count, confirmed_answer, user_id)
 question_comment(__question_comment_id__, text, question_id*)
 Answer(__answer_id__, text, score, question_id*)
 answer_comment(__answer_comment_id__, text, answer_id*)
 Tag(__tag_id__, name)
 tag_question_relation(__tag_id, question_id__)
-User(__user_id__, user_name, password)
 question_user_favourite(__question_id, user_id__)
-question_user_created(__question_id, user_id__)
 
 
 
