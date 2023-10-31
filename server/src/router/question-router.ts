@@ -6,6 +6,7 @@ import {questionService} from '../service/question_services';
  */
 const router = express.Router();
 
+//Get all questions
 router.get('/questions', (_request, response) => {
   questionService
     .getAllQuestions()
@@ -13,6 +14,7 @@ router.get('/questions', (_request, response) => {
     .catch((error) => response.status(500).send(error));
 });
 
+//Get question by id
 router.get('/questions/:id', (request, response) => {
   const id = Number(request.params.id);
   questionService
@@ -21,9 +23,15 @@ router.get('/questions/:id', (request, response) => {
     .catch((error) => response.status(500).send(error));
 });
 
-// Example request body: { title: "Ny oppgave" }
-// Example response body: { id: 4 }
-    
+//Get top five questions
+router.get('/topfive', (_request, response) => {
+  questionService
+    .getTopFiveQuestions()
+    .then((rows) => response.send(rows))
+    .catch((error) => response.status(500).send(error));
+});
+
+//Create new question
 router.post('/questions', (request, response) => {
   const data = request.body;
   if (
@@ -44,6 +52,7 @@ router.post('/questions', (request, response) => {
   else response.status(400).send('Missing question title');
 });
 
+//Delete question
 router.delete('/questions/:id', (request, response) => {
   questionService
     .deleteQuestion(Number(request.params.id))
@@ -51,7 +60,8 @@ router.delete('/questions/:id', (request, response) => {
     .catch((error) => response.status(500).send(error));
 });
 
-router.put('/tasks', (request, response) => {
+//Update question
+router.put('/questions', (request, response) => {
   const data = request.body;
   if (
     typeof data.id == 'number' &&
@@ -61,10 +71,12 @@ router.put('/tasks', (request, response) => {
     data.text.length ! == 0
   )
     questionService
-      .updateQuestion({ question_id: data.id, title: data.title, text: data.text, confirmed_answer: data.confirmed_answer, views: data.views})
+      .updateQuestion({ question_id: data.id, title: data.title, text: data.text, confirmed_answer: data.confirmed_answer, view_count: data.views})
       .then(() => response.send())
       .catch((error) => response.status(500).send(error));
   else response.status(400).send('Missing task properties');
 });
+
+
 
 export default router;

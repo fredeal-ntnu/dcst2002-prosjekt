@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Alert, Card, Row, Column, Form, Button } from '../widgets';
 import { NavLink } from 'react-router-dom';
-import taskService, { Question } from '../services/question_service';
+import service, { NewQuestion } from './services/create-question';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after successfully saving a student

@@ -8,7 +8,7 @@ export type Question_Content = {
   question_id: number;
   title: string;
   text: string;
-  views: number;
+  view_count: number;
   confirmed_answer: boolean;
 };
 
@@ -39,6 +39,20 @@ class Service {
             });
     });
     }
+
+        /**
+     * Get the top 5 questions with most views in descending order
+     */
+    
+        getTopFiveQuestions() {
+            return new Promise<Question_Content[]>((resolve, reject) => {
+                pool.query('SELECT * FROM Question ORDER BY view_count DESC LIMIT 5', (error, results: RowDataPacket[]) => {
+                if (error) return reject(error);
+        
+                resolve(results as Question_Content[]);
+                });
+            });
+        }
     
     /**
      * Create new question having the given title.
@@ -82,5 +96,6 @@ class Service {
             });
         });
     }
+
 }
 export const questionService = new Service(); 
