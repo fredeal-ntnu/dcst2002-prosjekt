@@ -4,7 +4,8 @@ import { Component } from 'react-simplified';
 import { HashRouter, Route } from 'react-router-dom';
 import { NavBar, Card, Alert, CardQuestions, CardHome, Row, Column } from './widgets';
 import service, { Question } from './service';
-// import { TaskList, TaskDetails, TaskEdit, TaskNew } from './task-components';
+import { CreateQuestion } from './components/create-question';
+import { IndexSigned } from './components/index-signed';
 
 
 class Menu extends Component {
@@ -44,14 +45,12 @@ class Home extends Component {
 
   createQuestion() {
     service.createQuestion().then((questions) => (this.questions = questions));
-  }
+  };
 
-
-
-    mounted() {
-      service.getTopFiveQuestions().then((questions) => (this.questions = questions));
-    }
-}
+  mounted() {
+    service.getTopFiveQuestions().then((questions) => (this.questions = questions));
+  };
+};
 
 
 let root = document.getElementById('root');
@@ -62,10 +61,11 @@ if (root)
         <Alert />
         <Menu />
         <Route exact path="/" component={Home} />
-        {/* <Route exact path="/signin" component={login} /> */}
-        {/* <Route exact path="/signup" component={signup} /> */}
-        {/* <Route exact path="/signup" component={questions} /> */}
-        {/* <Route exact path="/signup" component={tags} /> */}
+        <Route exact path="/createquestion" component={CreateQuestion} /> {/* er det index her? */}
+        <Route exact path="/indexsigned/:1" component={IndexSigned} /> {/* huske å endre index */}
+        {/* <Route exact path="/signup" component={Signup} /> */}
+        {/* <Route exact path="/signup" component={Questions} /> */}
+        {/* <Route exact path="/signup" component={Tags} /> */}
       </div>
     </HashRouter>,
   );
