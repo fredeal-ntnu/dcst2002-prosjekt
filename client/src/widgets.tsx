@@ -35,13 +35,29 @@ export class CardHome extends Component<{ header: ReactNode, items: {label: stri
   static Link = Link;
   render() {
     return (
-      <div className="card" style={{ width: '18rem', margin: '20px' }}>
-        <div className="card-header">{this.props.header}</div>
-          <ul className="list-group list-group-flush">{this.props.items.map((item, index) => (
-            <li key={index} className="list-group-item">
-              <Link to={item.to}>{item.label}</Link>
-            </li>))}
-          </ul>
+      <div className='col-md-3'>
+        <div className="card" style={{ width: '18rem', marginTop: '20px' }}>
+          <div className="card-header">{this.props.header}</div>
+            <ul className="list-group list-group-flush">{this.props.items.map((item, index) => (
+              <li key={index} className="list-group-item">
+                <Link to={item.to}>{item.label}</Link>
+              </li>))}
+            </ul>
+        </div>
+      </div>
+    );
+  }
+}
+
+export class CardQuestions extends Component<{ header: ReactNode }> {
+  static Link = Link;
+  render() {
+    return (
+      <div className='col-md-6'>
+        <div className="card" style={{ width: '58rem', marginTop: '20px' }}>
+          <div className="card-header">{this.props.header}</div>
+            <div className="card-text" style={{ padding: '15px' }}>{this.props.children}</div>
+        </div>
       </div>
     );
   }

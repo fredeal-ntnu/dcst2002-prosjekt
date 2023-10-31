@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
 import { HashRouter, Route } from 'react-router-dom';
-import { NavBar, Card, Alert, Form, CardHome } from './widgets';
+import { NavBar, Card, Alert, CardQuestions, CardHome, Row, Column } from './widgets';
 // import { TaskList, TaskDetails, TaskEdit, TaskNew } from './task-components';
 
 
@@ -21,8 +21,13 @@ class Menu extends Component {
 class Home extends Component {
   render() {
     return (
-      <CardHome header="Public"
-      items={[{ label: "Questions", to: "/questions" }, { label: "Tags", to: "/tags" }]}/>
+      <Card title="">
+        <div className="row">
+          <CardHome header="Public"
+            items={[{ label: "Questions", to: "/questions" }, { label: "Tags", to: "/tags" }]}/>
+          <CardQuestions header="Top Questions">Kuk</CardQuestions>
+        </div> 
+      </Card>
     );
   }
 }
