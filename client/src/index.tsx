@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
 import { HashRouter, Route } from 'react-router-dom';
 import { NavBar, Card, Alert, CardQuestions, CardHome, Row, Column } from './widgets';
+import service, { Question } from './service';
 // import { TaskList, TaskDetails, TaskEdit, TaskNew } from './task-components';
 
 
@@ -19,18 +20,39 @@ class Menu extends Component {
 }
 
 class Home extends Component {
+  questions: Question[] = [];
+
   render() {
     return (
       <Card title="">
         <div className="row">
           <CardHome header="Public"
             items={[{ label: "Questions", to: "/questions" }, { label: "Tags", to: "/tags" }]}/>
-          <CardQuestions header="Top Questions">Kuk</CardQuestions>
+          <CardQuestions header="Top Questions">
+          {this.questions.map((question) => (
+            <Row key={question.question_id}>
+              {question.title}<br></br>{question.text}
+            </Row>
+          ))}
+        </CardQuestions>
+          
         </div> 
       </Card>
     );
   }
+
+
+  createQuestion() {
+    service.createQuestion().then((questions) => (this.questions = questions));
+  }
+
+
+
+    mounted() {
+      service.getTopFiveQuestions().then((questions) => (this.questions = questions));
+    }
 }
+
 
 let root = document.getElementById('root');
 if (root)
