@@ -5,7 +5,7 @@ import { HashRouter, Route } from 'react-router-dom';
 import { NavBar, Card, Alert, MainCard, SideMenu, Row, Column } from './widgets';
 import service, { Question } from './service';
 import { CreateQuestion } from './components/create-question';
-// import { IndexSigned } from './components/index-signed';
+import { IndexSigned } from './components/index-signed';
 
 
 class Menu extends Component {
@@ -61,7 +61,7 @@ if (root)
         <Menu />
         <Route exact path="/" component={Home} />
         <Route exact path="/createquestion" component={CreateQuestion} /> {/* er det index her? */}
-        {/* <Route exact path="/indexsigned/:1" component={IndexSigned} /> huske å endre index */}
+        <Route exact path="/indexsigned/:1" component={IndexSigned} /> {/* huske å endre index */}
         {/* <Route exact path="/signup" component={Signup} /> */}
         {/* <Route exact path="/signup" component={Questions} /> */}
         {/* <Route exact path="/signup" component={Tags} /> */}
