@@ -2,8 +2,8 @@ import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
 import { HashRouter, Route } from 'react-router-dom';
-import { NavBar, Card, Alert, CardQuestions, CardHome, Row, Column } from './widgets';
-import service, { Question } from './service';
+import { NavBar, Card, Alert, MainCard, SideMenu, Row, Column } from './widgets';
+// import service, { Question } from './service';
 import { CreateQuestion } from './components/create-question';
 import { IndexSigned } from './components/index-signed';
 
@@ -27,16 +27,15 @@ class Home extends Component {
     return (
       <Card title="">
         <div className="row">
-          <CardHome header="Public"
+          <SideMenu header="Public"
             items={[{ label: "Questions", to: "/questions" }, { label: "Tags", to: "/tags" }]}/>
-          <CardQuestions header="Top Questions">
+          <MainCard header="Top Questions">
           {this.questions.map((question) => (
             <Row key={question.question_id}>
               {question.title}<br></br>{question.text}
             </Row>
           ))}
-        </CardQuestions>
-          
+        </MainCard>
         </div> 
       </Card>
     );
