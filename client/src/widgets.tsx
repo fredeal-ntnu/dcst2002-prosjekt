@@ -31,7 +31,7 @@ class Link extends Component<{ to: string }> {
   }
 }
 
-export class CardHome extends Component<{ header: ReactNode, items: {label: string, to: string}[] }> {
+export class SideMenu extends Component<{ header: ReactNode, items: {label: string, to: string}[] }> {
   static Link = Link;
   render() {
     return (
@@ -49,7 +49,7 @@ export class CardHome extends Component<{ header: ReactNode, items: {label: stri
   }
 }
 
-export class CardQuestions extends Component<{ header: ReactNode }> {
+export class MainCard extends Component<{ header: ReactNode }> {
   static Link = Link;
   render() {
     return (
