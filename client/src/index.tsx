@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
 import { HashRouter, Route } from 'react-router-dom';
 import { NavBar, Card, Alert, MainCard, SideMenu, Row, Column } from './widgets';
-// import service, { Question } from './service';
+import service, { Question } from './service';
 import { CreateQuestion } from './components/create-question';
 // import { IndexSigned } from './components/index-signed';
 
