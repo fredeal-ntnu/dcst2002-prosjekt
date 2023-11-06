@@ -10,6 +10,7 @@ export type Question_Content = {
   text: string;
   view_count: number;
   confirmed_answer: boolean;
+  user_id: number;
 };
 
 class Service {
@@ -60,13 +61,12 @@ class Service {
      * Resolves the newly created question id.
      */
 
-    createQuestion(title: string, text: string) {
+    createQuestion(title: string, text: string, view_count: number, confirmed_answer: boolean, user_id: number) {
         return new Promise<number>((resolve, reject) => {
-            pool.query('INSERT INTO Question SET title=?, text=?', [title, text], (error, results: ResultSetHeader) => {
+            pool.query('INSERT INTO Question SET title=?, text=?, view_count=0, confirmed_answer=0, user_id=?',
+            [title, text, view_count,confirmed_answer,user_id], (error, results: ResultSetHeader) => {
             if (error) return reject(error);
 
-        
-    
             resolve(results.insertId);
             });
         });

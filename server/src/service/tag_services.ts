@@ -9,6 +9,7 @@ export type Tag_Content = {
   name: string;
 };
 
+
 class Service {
 
     /*
@@ -16,7 +17,7 @@ class Service {
     */
 
     getTag(tag_id: number) { 
-        return new Promise<Tag_Content | undefined>((resolve, reject) => {
+        return new Promise<Tag_Content>((resolve, reject) => {
             pool.query('SELECT * FROM Tag WHERE tag_id = ?', [tag_id], (error, results: RowDataPacket[]) => {
             if (error) return reject(error);
     

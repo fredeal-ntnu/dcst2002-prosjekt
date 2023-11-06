@@ -42,13 +42,9 @@ class Home extends Component {
   }
 
 
-  createQuestion() {
-    service.createQuestion().then((questions) => (this.questions = questions));
-  };
-
   mounted() {
-    service.getTopFiveQuestions().then((questions) => (this.questions = questions));
-  };
+    service.getAllQuestions().then((questions) => (this.questions = questions));
+  }
 };
 
 
