@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Alert, Form, Card, Row, Column, Button} from '.././widgets';
+import { Alert, Form, Card, Row, Column, Button} from '../widgets';
 import { NavLink } from 'react-router-dom';
-import service, { Question, Tag_Question_Relation, Tag } from '.././service';
+import service, { Question, Tag_Question_Relation, Tag } from '../service';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after successfully saving a student
 export class CreateQuestion extends Component {
     tags: Tag[] = [];
+    selectedTags: number[] = []; 
     title = "";
     text = "";
-    selectedTags: number[] = []; 
   
 
   render() {
@@ -55,9 +55,7 @@ export class CreateQuestion extends Component {
     service
       .getAllTags()
       .then((tags) => (this.tags = tags))
-      .catch((error) => Alert.danger(error.message));
-      console.log(this.tags)
-  
+      .catch((error) => Alert.danger(error.message));  
   }
 
   handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,7 +70,6 @@ export class CreateQuestion extends Component {
 
 
 handleAddQuestion = async () => {
-    console.log(typeof(this.selectedTags))
     const question_id = await service.createQuestion(this.title, this.text);
 
     // For each selected tag, create a new relation in the Tag_question_relation tabl

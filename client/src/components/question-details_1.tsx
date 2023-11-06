@@ -2,11 +2,11 @@ import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
 import { HashRouter, Route } from 'react-router-dom';
-import { NavBar, Card, Alert, CardQuestions, CardHome, Row, Column } from '../widgets';
+import { NavBar, Card, Alert, Row, Column, Button } from '../widgets';
 import service, { Question, Tag, Tag_Question_Relation } from '../service';
-import { CreateQuestion } from './create-question';
+import { createHashHistory } from 'history';
 
-
+const history = createHashHistory()
 export class QuestionDetails extends Component {
  question: Question = {question_id: 0, title: "", text: "", view_count: 0, user_id: 0, confirmed_answer: false};
  relations: Tag_Question_Relation[] = []
@@ -15,20 +15,18 @@ export class QuestionDetails extends Component {
   
   render() {
     return (
+      <>
       <Card title="Question">
         <Row>
-          <Column width={2}>
-            <CardQuestions header="Question">
-              <Row>
-                <Column width={2}>
-                  <CardQuestions header="Title">{this.question.title}</CardQuestions>
+                <Column width={100}>
+                  <Card title="Title">{this.question.title}</Card>
                 </Column>
-                <Column width={2}>
-                  <CardQuestions header="Text">{this.question.text}</CardQuestions>
+                <Column width={100}>
+                  <Card title="Text">{this.question.text}</Card>
                 </Column>
                 <Row>
-                <Column width={2}>
-                    <CardQuestions header="Tags">{
+                <Column width={100}>
+                    <Card title="Tags">{
                       this.relations.map((relation) => {
                         if (relation.question_id == this.props.match.params.id) {
                           return this.tags.map((tag) => {
@@ -38,14 +36,18 @@ export class QuestionDetails extends Component {
                           })
                         }
                       }
-                      )}</CardQuestions>
+                      )}</Card>
                     </Column>
                     </Row>
-              </Row>
-            </CardQuestions>
-          </Column>
         </Row>
       </Card>
+      <Row>
+        <Column width={2}>
+          <Button.Success onClick={() => history.push('/questions/' + this.props.match.params.id + '/edit')}>Edit</Button.Success>
+          </Column>
+      </Row>
+      <Card title="Answers"></Card>
+      </>
     );
   }
 
@@ -68,11 +70,6 @@ export class QuestionDetails extends Component {
     
   
   }
-
-
-  
-
-  
 }
 
 
