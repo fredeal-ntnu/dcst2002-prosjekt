@@ -182,6 +182,33 @@ class ButtonLight extends Component<{
   }
 }
 
+class ButtonChecked extends Component<{
+  small?: boolean;
+  onClick: () => void;
+}> {
+  render() {
+    return (
+      <button
+        type="button"
+        className=
+        className="btn-group-toggle" data-toggle="buttons"
+        style={
+          this.props.small
+            ? {
+                padding: '5px 5px',
+                fontSize: '16px',
+                lineHeight: '0.7',
+              }
+            : {}
+        }
+        onClick={this.props.onClick}
+      >
+        {this.props.children}
+      </button>
+    );
+  }
+}
+
 /**
  * Renders a button using Bootstrap styles.
  *
@@ -191,6 +218,7 @@ export class Button {
   static Success = ButtonSuccess;
   static Danger = ButtonDanger;
   static Light = ButtonLight;
+  static Checked = ButtonChecked;
 }
 
 /**
