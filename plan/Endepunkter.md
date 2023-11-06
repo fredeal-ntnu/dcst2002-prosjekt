@@ -7,7 +7,7 @@ Innloggingside
 
 Signupside
 
-alle spørsmål
+Alle spørsmål
 
 Enkelt spørsmål
 
@@ -18,4 +18,13 @@ Brukerens spørsmål
 Brukerens kommentarer
 
 Svar på søk
+
+
+
+Komponenter:
+
+Spørsmålskomponent
+
+Kommentarkomponent
+
 
