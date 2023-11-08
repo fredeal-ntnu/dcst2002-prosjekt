@@ -6,11 +6,11 @@ import type { RowDataPacket, ResultSetHeader } from 'mysql2';
 
 export type Question_Content = {
   question_id: number;
+  user_name: string;
   title: string;
   text: string;
   view_count: number;
   confirmed_answer: boolean;
-  user_id: number;
 };
 
 class Service {
