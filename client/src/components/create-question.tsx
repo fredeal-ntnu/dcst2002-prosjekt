@@ -69,11 +69,7 @@ export class CreateQuestion extends Component {
                 </Row><br/>
                 <Row>
                   <Column>
-                    <Button.Success
-                      onClick={() => 
-                        {this.handleAddQuestion()}
-                      }>askMorgan
-                    </Button.Success>
+                  <Button.Success onClick={() => {this.handleAddQuestion()}}>AskMorgan</Button.Success> 
                   </Column>
                 </Row>
             </MainCard>
