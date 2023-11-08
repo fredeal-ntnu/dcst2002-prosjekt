@@ -7,7 +7,6 @@ import service, { Question } from './service';
 import { CreateQuestion } from './components/create-question';
 import { QuestionDetails } from './components/question-details';
 import { EditQuestion } from './components/edit-question';
-import { IndexSigned } from '.index-signed';
 
 
 class Menu extends Component {
@@ -17,6 +16,7 @@ class Menu extends Component {
         <NavBar.Search/>
         <NavBar.Link to="/login">Log in</NavBar.Link>
         <NavBar.Link to="/signup">Sign up</NavBar.Link>
+        <NavBar.Link to="/createQuestion">Add question</NavBar.Link>
       </NavBar>
     );
   }
@@ -34,10 +34,10 @@ class Home extends Component {
           <MainCard header="Top Questions">
           {this.questions.map((question) => (
             <Row key={question.question_id}>
-              {question.title}<br></br>{question.text}
+              <a href={'/questions/' + question.question_id}>{question.title}</a>
             </Row>
           ))}
-        </MainCard>
+       </MainCard>
         </div> 
       </Card>
     );
