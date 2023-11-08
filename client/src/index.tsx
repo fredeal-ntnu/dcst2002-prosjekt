@@ -7,6 +7,7 @@ import service, { Question } from './service';
 import { CreateQuestion } from './components/create-question';
 import { QuestionDetails } from './components/question-details';
 import { EditQuestion } from './components/edit-question';
+import { Login } from './components/login';
 
 
 class Menu extends Component {
@@ -61,6 +62,8 @@ if (root)
         <Route exact path="/createQuestion" component={CreateQuestion} /> {/* er det index her? */}
         <Route exact path="/questions/:id(\d+)" component={QuestionDetails} /> {/* huske å endre index */}
         <Route exact path="/questions/:id(\d+)/edit" component={EditQuestion} />
+        <Route exact path="/login" component={Login} />
+        {/* <Route exact path="/signup" component={IndexSigned} /> */}
         {/* <Route exact path="/signup" component={Questions} /> */}
         {/* <Route exact path="/signup" component={Tags} /> */}
       </div>

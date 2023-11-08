@@ -26,14 +26,14 @@
 
 
 
-User(__user_id__, user_name, password)
-Question(__question_id__, title, text, view_count, confirmed_answer, user_id)
+User(__user_name__, password)
+Question(__question_id__, title, text, view_count, confirmed_answer, user_name)
 question_comment(__question_comment_id__, text, question_id*)
 Answer(__answer_id__, text, score, question_id*)
 answer_comment(__answer_comment_id__, text, answer_id*)
 Tag(__tag_id__, name)
 tag_question_relation(__tag_id, question_id__)
-question_user_favourite(__question_id, user_id__)
+question_user_favourite(__question_id, user_name__)
 
 
 
@@ -43,8 +43,7 @@ question_user_favourite(__question_id, user_id__)
 
 
 CREATE TABLE User (
-    user_id INT PRIMARY KEY,
-    user_name VARCHAR(255) NOT NULL,
+    user_name VARCHAR(255) PRIMARY KEY,
     password VARCHAR(255) NOT NULL
 );
 
@@ -54,8 +53,8 @@ CREATE TABLE Question (
     text TEXT,
     view_count INT DEFAULT 0,
     confirmed_answer INT,
-    user_id INT,
-    FOREIGN KEY (user_id) REFERENCES User(user_id)
+    user_NAME VARCHAR(255),
+    FOREIGN KEY (user_name) REFERENCES User(user_name)
 );
 
 CREATE TABLE question_comment (
@@ -95,26 +94,26 @@ CREATE TABLE tag_question_relation (
 
 CREATE TABLE question_user_favourite (
     question_id INT,
-    user_id INT,
-    PRIMARY KEY (question_id, user_id),
+    user_name VARCHAR(255),
+    PRIMARY KEY (question_id, user_name),
     FOREIGN KEY (question_id) REFERENCES Question(question_id),
-    FOREIGN KEY (user_id) REFERENCES User(user_id)
+    FOREIGN KEY (user_name) REFERENCES User(user_name)
 );
 
 
 Eksempeldata:
 
 -- User Table
-INSERT INTO User(user_id, user_name, password) VALUES 
-(1, 'Alice', 'password123'),
-(2, 'Bob', 'bobpass'),
-(3, 'Charlie', 'charliepass'),
-(4, 'David', 'davidpass'),
-(5, 'Eve', 'evepass'),
-(6, 'Frank', 'frankpass');
+INSERT INTO User( user_name, password) VALUES 
+('Alice', 'password123'),
+('Bob', 'bobpass'),
+('Charlie', 'charliepass'),
+('David', 'davidpass'),
+('Eve', 'evepass'),
+('Frank', 'frankpass');
 
 -- Question Table
-INSERT INTO Question(question_id, title, text, view_count, confirmed_answer, user_id) VALUES 
+INSERT INTO Question(question_id, title, text, view_count, confirmed_answer, user_name) VALUES 
 (1, 'How to code in Python?', 'Need help with Python.', 100, NULL, 1),
 (2, 'Java vs C#?', 'Which is better?', 50, NULL, 2),
 (3, 'HTML basics?', 'Help with HTML.', 75, NULL, 3),
@@ -168,10 +167,12 @@ INSERT INTO tag_question_relation(tag_id, question_id) VALUES
 (6, 6);
 
 -- question_user_favourite Table
-INSERT INTO question_user_favourite(question_id, user_id) VALUES 
-(1, 2),
-(2, 3),
-(3, 4),
-(4, 5),
-(5, 6),
-(6, 1);
+INSERT INTO question_user_favourite(question_id, user_name) VALUES 
+(1, "Alice"),
+(2, "Bob"),
+(3, "Charlie"),
+(4, "David"),
+(5, "David"),
+(6, "Frank");
+
+

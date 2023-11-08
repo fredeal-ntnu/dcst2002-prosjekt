@@ -66,7 +66,7 @@ questionRouter.put('/questions', (request, response) => {
     data.text.length ! == 0
   )
     questionService
-      .updateQuestion({ question_id: data.id, title: data.title, text: data.text, confirmed_answer: data.confirmed_answer, view_count: data.views, user_id: data.user_id})
+      .updateQuestion({ question_id: data.id, title: data.title, text: data.text, confirmed_answer: data.confirmed_answer, view_count: data.views, user_name: data.user_name})
       .then(() => response.send())
       .catch((error) => response.status(500).send(error));
   else response.status(400).send('Missing task properties');
