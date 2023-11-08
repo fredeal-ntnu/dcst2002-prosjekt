@@ -1,13 +1,15 @@
 import * as React from 'react';
-import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
 import { Card, Row, Column, SideMenu, Button, MainCard, Alert, Form } from '../widgets';
-import service, { Question } from '../service';
+import service, { Question, Tag_Question_Relation, Tag } from '../service';
+import { createHashHistory } from 'history';
 
-
+const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after successfully saving a student
 export class CreateQuestion extends Component {
-  title = '';
-  text = '';
+    tags: Tag[] = [];
+    selectedTags: number[] = []; 
+    title = "";
+    text = "";
   
     render() { 
       return (
@@ -16,7 +18,7 @@ export class CreateQuestion extends Component {
             <div className="row">
               <SideMenu header="Public"
                 items={[{ label: "Questions", to: "/questions" }, { label: "Tags", to: "/tags" }]}/>
-              <MainCard header="Create Question">
+              <MainCard header="Ask a Question">
                 <Row>
                   <Column width={2}>
                     <Form.Label>Title:</Form.Label>
@@ -48,20 +50,29 @@ export class CreateQuestion extends Component {
                     <Form.Label>Tags:</Form.Label>
                   </Column>
                   <Column>
-                    <Form.Checkbox
-                      /* hva faen skal jeg skrive her */                   
-                    />
+                    <Row>
+                    {this.tags.map((tag) => (
+                        <Column>
+                            <Form.Label>
+                                {tag.name}
+                                <input type='checkbox'
+                                    value={tag.tag_id}
+                                    onChange={(event) => {this.handleCheckboxChange(event)}}
+                                />
+                            
+                            </Form.Label>
+                        
+                        </Column>
+                    ))}
+                </Row>
                   </Column>
                 </Row><br/>
                 <Row>
                   <Column>
                     <Button.Success
-                      onClick={() => {
-                        service
-                        .createQuestion(this.title, this.text)
-                        // .then((id) => history.push('/question/' + id))
-                        // .catch((error) => Alert.danger('Error creating questions: ' + error.message));
-                      }}>askMorgan
+                      onClick={() => 
+                        {this.handleAddQuestion()}
+                      }>askMorgan
                     </Button.Success>
                   </Column>
                 </Row>
@@ -71,27 +82,37 @@ export class CreateQuestion extends Component {
         </>
       );
     }
-    
-};
 
-export class MyQuestion extends Component {
-  questions: Question[] = [];
-
-  render() { 
-    return (
-      <>
-       {/*  <Card title="My Questions">
-          {this.questions.map((question) => (
-            <Row key={question.id}>
-              <Column>
-                <NavLink to={'/question/' + task.id}>{task.title}</NavLink>
-              </Column>
-            </Row>
-          ))}
-        </Card>
-        <Button.Success onClick={() => history.push('/question/:id(\d+)')}>New task</Button.Success> */}
-      </>
-    );
+    mounted() {
+        
+      service
+        .getAllTags()
+        .then((tags) => (this.tags = tags))
+        .catch((error) => Alert.danger(error.message));  
+    }
+  
+    handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      let tagId = Number(event.target.value);
+  
+      if (event.target.checked) {
+          this.selectedTags.push(tagId);
+      } else {
+          this.selectedTags = this.selectedTags.filter(id => id !== tagId);
+      }
+  }
+  
+  
+  handleAddQuestion = async () => {
+      const question_id = await service.createQuestion(this.title, this.text);
+  
+      // For each selected tag, create a new relation in the Tag_question_relation tabl
+      this.selectedTags.forEach(tag_id => {
+          service.createTagQuestionRelation(tag_id, question_id);
+      });
+      
+      // Redirect to the question page
+      history.push(`/questions/${question_id}`);
   }
 };
+
 

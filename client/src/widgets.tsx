@@ -190,7 +190,6 @@ class ButtonChecked extends Component<{
     return (
       <button
         type="button"
-        className=
         className="btn-group-toggle" data-toggle="buttons"
         style={
           this.props.small

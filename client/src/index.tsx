@@ -5,7 +5,9 @@ import { HashRouter, Route } from 'react-router-dom';
 import { NavBar, Card, Alert, MainCard, SideMenu, Row, Column } from './widgets';
 import service, { Question } from './service';
 import { CreateQuestion } from './components/create-question';
-import { IndexSigned } from './components/index-signed';
+import { QuestionDetails } from './components/question-details';
+import { EditQuestion } from './components/edit-question';
+import { IndexSigned } from '.index-signed';
 
 
 class Menu extends Component {
@@ -56,11 +58,12 @@ if (root)
         <Alert />
         <Menu />
         <Route exact path="/" component={Home} />
-        <Route exact path="/createquestion" component={CreateQuestion} /> {/* er det index her? */}
-        <Route exact path="/indexsigned/:1" component={IndexSigned} /> {/* huske å endre index */}
-        {/* <Route exact path="/signup" component={Signup} /> */}
+        <Route exact path="/createQuestion" component={CreateQuestion} /> {/* er det index her? */}
+        <Route exact path="/questions/:id(\d+)" component={QuestionDetails} /> {/* huske å endre index */}
+        <Route exact path="/questions/:id(\d+)/edit" component={EditQuestion} />
         {/* <Route exact path="/signup" component={Questions} /> */}
         {/* <Route exact path="/signup" component={Tags} /> */}
       </div>
     </HashRouter>,
   );
+

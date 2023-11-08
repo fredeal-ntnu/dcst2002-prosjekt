@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Alert, Form, Card, Row, Column, Button} from '../widgets';
-import { NavLink } from 'react-router-dom';
 import service, { Question, Tag_Question_Relation, Tag } from '../service';
 import { createHashHistory } from 'history';
 
@@ -105,4 +104,4 @@ createquestion{
 
 }
 
-*/
+*/ 

@@ -69,7 +69,7 @@ class Service {
 
   createQuestion(title: string, text: string) {
     return axios
-      .post('/questions', {title, text })
+      .post('/questions', {title, text})
       .then((response) => response.data.id);
   }
 
