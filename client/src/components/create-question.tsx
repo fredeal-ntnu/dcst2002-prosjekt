@@ -6,6 +6,7 @@ import { createHashHistory } from 'history';
 
 const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after successfully saving a student
 export class CreateQuestion extends Component {
+  question: Question = {question_id: 0, title: "", text: "", view_count: 0, user_name: "", confirmed_answer: false};
     tags: Tag[] = [];
     selectedTags: number[] = []; 
     title = "";
@@ -24,12 +25,11 @@ export class CreateQuestion extends Component {
                     <Form.Label>Title:</Form.Label>
                   </Column>
                   <Column>
-                    <Form.Input
-                      placeholder="Title"
-                      type="text"
-                      value={this.title}
-                      onChange={(event) => (this.title = event.currentTarget.value)}
-                    />
+                  <Form.Input
+                type="text"
+                value={this.question.title}
+                onChange={(event) => (this.question.title = event.currentTarget.value)}
+              />
                   </Column> 
                 </Row><br/>
                 <Row>

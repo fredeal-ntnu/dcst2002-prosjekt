@@ -63,7 +63,7 @@ class Service {
 
     createQuestion(title: string, text: string, view_count: number, confirmed_answer: boolean, user_name: string) {
         return new Promise<number>((resolve, reject) => {
-            pool.query('INSERT INTO Question SET title=?, text=?, view_count=0, confirmed_answer=0, user_name=?',
+            pool.query('INSERT INTO Question SET title=?, text=?, view_count=0, confirmed_answer=0, user_name=*',
             [title, text, view_count,confirmed_answer,user_name], (error, results: ResultSetHeader) => {
             if (error) return reject(error);
 
@@ -86,16 +86,31 @@ class Service {
         });
 }
 
+    // updateQuestion(question: Question_Content) {
+    //     return new Promise<void>((resolve, reject) => {
+    //         pool.query('UPDATE Question SET title=?, text=? WHERE question_id=?', [question.question_id, question.title, question.text], (error, results: ResultSetHeader) => {
+    //         if (error) return reject(error);
+    //         if (results.affectedRows == 0) return reject(new Error('No row updated'));
+    
+    //         resolve();
+    //         });
+    //     });
+    // }
+
+
     updateQuestion(question: Question_Content) {
         return new Promise<void>((resolve, reject) => {
-            pool.query('UPDATE Question SET title=?, text=? WHERE question_id=?', [question.title, question.text, question.question_id], (error, results: ResultSetHeader) => {
-            if (error) return reject(error);
-            if (results.affectedRows == 0) return reject(new Error('No row updated'));
+          pool.query(
+            'UPDATE Question SET title=?, text=?, view_count=?, confirmed_answer, user_name WHERE id=?',
+            [question.question_id,question.title, question.text, question.view_count, question.confirmed_answer, question.user_name     ],
+            (error, _results) => {
+              if(error) return reject(error)
     
-            resolve();
-            });
-        });
-    }
+              resolve() 
+            }
+          )
+        })
+      }
 
 }
 export const questionService = new Service(); 

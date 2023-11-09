@@ -62,12 +62,23 @@ class Service {
    * Update a question.
    */
 
+  // updateQuestion(question: Question) {
+  //   return axios
+  //     .put<Question>('/questions' + question.question_id, { question: question })
+  //     .then((response) => response.data);
+  // }
+
+  // updateQuestion(question: Question) {
+  //   return axios
+  //   .put('/questions',question)
+  //   .then((response) => response.data)
+  // }
+
   updateQuestion(question: Question) {
     return axios
-      .put<Question>('/questions' + question.question_id, { question: question })
-      .then((response) => response.data);
+    .put('/questions',question)
+    .then((response) => response.data)
   }
-
   /**
    * Create a question.
    */

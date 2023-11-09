@@ -21,19 +21,34 @@ export class EditQuestion extends Component {
             <Card title="Edit Question">
                 <Row>
                     <Column>
-                    <Form.Label>
-
-                    </Form.Label>
+                    <Form.Input
+                      placeholder="Title"
+                      type="text"
+                      value={this.question.title}
+                      onChange={(event) => (this.question.title = event.currentTarget.value)}
+                    />
                     </Column>
-                    <Column></Column>
+                    <Column>
+                    <Form.Textarea 
+                      placeholder='Text'
+                      type="text"
+                      value={this.question.text}
+                      onChange={(event) => (this.question.text = event.currentTarget.value)}
+                      rows={5}
+                      />
+                    </Column>
                 </Row>
             </Card> 
             </Row>
             <Row>
-                <Column width={2}>
+                <Column width={6}>
+                    <Button.Success onClick={()=>this.save()}>Save</Button.Success>
+                </Column>
+                <Column width={6}>
                     <Button.Danger onClick={()=>'delete()'}>Delete</Button.Danger>
                 </Column>
             </Row>
+            {console.log(this.question)}
             </>
             )       
        
@@ -45,4 +60,12 @@ export class EditQuestion extends Component {
       .then((question) => (this.question = question))
       .catch((error: Error) => Alert.danger('Error getting question: ' + error.message))
     }
+
+    save() {
+        service
+          .updateQuestion(this.question)
+          .then(() => history.push('/questions/' + this.question.question_id))
+          .catch((error) => Alert.danger('Error saving question: ' + error.message));
+      }
+    
 }
