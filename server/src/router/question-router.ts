@@ -41,7 +41,7 @@ questionRouter.post('/questions', (request, response) => {
     data.text.length != 0
   )
     questionService
-      .createQuestion(data.title, data.text,data.confirmed_answer, data.view_count, data.user_id)
+      .createQuestion(data.title, data.text, data.view_count, data.confirmed_answer, data.user_name)
       .then((id) => response.send({ id: id}))
       .catch((error) => response.status(500).send(error));
   else response.status(400).send('Missing dobbeltsjekk mongo properties');

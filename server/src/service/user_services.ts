@@ -4,16 +4,15 @@ import pool from '../mysql-pool';
 import type { RowDataPacket, ResultSetHeader } from 'mysql2';
 
 export type User_Content = {
-  user_id: number;
-  username: string;
+  user_name: string;
   password: string;
 };
 
 class Service {
 
-    getUser(user_id: number) { 
+    getUser(user_name: string) { 
         return new Promise<User_Content | undefined>((resolve, reject) => {
-            pool.query('SELECT * FROM User WHERE user_id = ?', [user_id], (error, results: RowDataPacket[]) => {
+            pool.query('SELECT * FROM User WHERE user_name = ?', [user_name], (error, results: RowDataPacket[]) => {
             if (error) return reject(error);
     
             resolve(results[0] as User_Content);
@@ -31,9 +30,9 @@ class Service {
         });
     }
 
-    createUser(username: string, password: string) {
+    createUser(user_name: string, password: string) {
         return new Promise<number>((resolve, reject) => {
-            pool.query('INSERT INTO User SET username=?, password=?', [username, password], (error, results: ResultSetHeader) => {
+            pool.query('INSERT INTO User SET username=?, password=?', [user_name, password], (error, results: ResultSetHeader) => {
             if (error) return reject(error);
     
             resolve(results.insertId);
@@ -41,9 +40,9 @@ class Service {
         });
     }
 
-    updateUser(username: string, password: string, user_id: number) {
+    updateUser(user_name: string, password: string) {
         return new Promise<number>((resolve, reject) => {
-            pool.query('UPDATE User SET username=?, password=? WHERE user_id=?', [username, password, user_id], (error, results: ResultSetHeader) => {
+            pool.query('UPDATE User SET username=?, password=? WHERE user_name=?', [user_name, password], (error, results: ResultSetHeader) => {
             if (error) return reject(error);
     
             resolve(results.insertId);
@@ -51,9 +50,9 @@ class Service {
         });
     }
 
-    deleteUser(user_id: number) {
+    deleteUser(user_name: string) {
         return new Promise<void>((resolve, reject) => {
-            pool.query('DELETE FROM User WHERE user_id = ?', [user_id], (error, results: ResultSetHeader) => {
+            pool.query('DELETE FROM User WHERE user_name = ?', [user_name], (error, results: ResultSetHeader) => {
             if (error) return reject(error);
             if (results.affectedRows == 0) return reject(new Error('No row deleted'));
 

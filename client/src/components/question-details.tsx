@@ -8,7 +8,7 @@ import { createHashHistory } from 'history';
 
 const history = createHashHistory()
 export class QuestionDetails extends Component {
- question: Question = {question_id: 0, title: "", text: "", view_count: 0, user_id: 0, confirmed_answer: false};
+ question: Question = {question_id: 0, title: "", text: "", view_count: 0, user_name: "", confirmed_answer: false};
  relations: Tag_Question_Relation[] = []
  tags: Tag[] = [];
 

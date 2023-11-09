@@ -100,6 +100,7 @@ export class CreateQuestion extends Component {
   
   handleAddQuestion = async () => {
       const question_id = await service.createQuestion(this.title, this.text);
+      
   
       // For each selected tag, create a new relation in the Tag_question_relation tabl
       this.selectedTags.forEach(tag_id => {

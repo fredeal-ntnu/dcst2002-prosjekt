@@ -9,7 +9,7 @@ export type Question = {
   text: string;
   view_count: number;
   confirmed_answer: boolean;
-  user_id: number;
+  user_name: string;
 }; 
 
 

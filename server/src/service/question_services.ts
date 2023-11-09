@@ -6,11 +6,11 @@ import type { RowDataPacket, ResultSetHeader } from 'mysql2';
 
 export type Question_Content = {
   question_id: number;
-  user_name: string;
   title: string;
   text: string;
   view_count: number;
   confirmed_answer: boolean;
+  user_name: string;
 };
 
 class Service {
@@ -61,10 +61,10 @@ class Service {
      * Resolves the newly created question id.
      */
 
-    createQuestion(title: string, text: string, view_count: number, confirmed_answer: boolean, user_id: number) {
+    createQuestion(title: string, text: string, view_count: number, confirmed_answer: boolean, user_name: string) {
         return new Promise<number>((resolve, reject) => {
-            pool.query('INSERT INTO Question SET title=?, text=?, view_count=0, confirmed_answer=0, user_id=?',
-            [title, text, view_count,confirmed_answer,user_id], (error, results: ResultSetHeader) => {
+            pool.query('INSERT INTO Question SET title=?, text=?, view_count=0, confirmed_answer=0, user_name=?',
+            [title, text, view_count,confirmed_answer,user_name], (error, results: ResultSetHeader) => {
             if (error) return reject(error);
 
             resolve(results.insertId);

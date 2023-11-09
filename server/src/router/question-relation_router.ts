@@ -12,9 +12,6 @@ questionRelationRouter.get(`/questions/:id/tag`, (request, response) => {
       .catch((error) => response.status(500).send(error));
   });
 
-
-
-
 //Create new tag_question_relation
 questionRelationRouter.post(`/questions/:id`, (request, response) => {
     const data = request.body;
