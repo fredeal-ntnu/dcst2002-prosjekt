@@ -8,13 +8,13 @@ import { CreateQuestion } from './components/create-question';
 import { QuestionDetails } from './components/question-details';
 import { EditQuestion } from './components/edit-question';
 import { Login } from './components/login';
+import { AllQuestions } from './components/all-question';
 
 
 class Menu extends Component {
   render() {
     return (
       <NavBar brand="askMorgan">
-        <NavBar.Search/>
         <NavBar.Link to="/login">Log in</NavBar.Link>
         <NavBar.Link to="/signup">Sign up</NavBar.Link>
         <NavBar.Link to="/createQuestion">Add question</NavBar.Link>
@@ -63,7 +63,7 @@ if (root)
         <Route exact path="/questions/:id(\d+)" component={QuestionDetails} /> {/* huske å endre index */}
         <Route exact path="/questions/:id(\d+)/edit" component={EditQuestion} />
         <Route exact path="/login" component={Login} />
-        {/* <Route exact path="/signup" component={IndexSigned} /> */}
+        <Route exact path="/questions" component={AllQuestions} />
         {/* <Route exact path="/signup" component={Questions} /> */}
         {/* <Route exact path="/signup" component={Tags} /> */}
       </div>

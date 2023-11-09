@@ -235,7 +235,7 @@ class NavBarLink extends Component<{ to: string }> {
   }
 }
 
-class NavBarSearch extends Component {
+class Search extends Component {
   render() {
     return (
       <form className="form-inline d-flex align-items-center" style={{ width: '600px' }}>
@@ -252,7 +252,6 @@ class NavBarSearch extends Component {
  */
 export class NavBar extends Component<{ brand: ReactNode }> {
   static Link = NavBarLink;
-  static Search = NavBarSearch;
 
   render() {
     return (
@@ -355,7 +354,11 @@ class FormSelect extends Component<{
     // For further information, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
     const { value, onChange, children, ...rest } = this.props;
     return (
-      <select {...rest} className="custom-select" value={value} onChange={onChange}>
+      <select 
+        {...rest} 
+        className="custom-select"
+        value={value} 
+        onChange={onChange}>
         {children}
       </select>
     );
