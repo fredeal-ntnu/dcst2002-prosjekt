@@ -24,12 +24,11 @@ export class CreateQuestion extends Component {
                     <Form.Label>Title:</Form.Label>
                   </Column>
                   <Column>
-                    <Form.Input
-                      placeholder="Title"
-                      type="text"
-                      value={this.title}
-                      onChange={(event) => (this.title = event.currentTarget.value)}
-                    />
+                  <Form.Input
+                type="text"
+                value={this.title}
+                onChange={(event) => (this.title = event.currentTarget.value)}
+              />
                   </Column> 
                 </Row><br/>
                 <Row>
@@ -69,11 +68,7 @@ export class CreateQuestion extends Component {
                 </Row><br/>
                 <Row>
                   <Column>
-                    <Button.Success
-                      onClick={() => 
-                        {this.handleAddQuestion()}
-                      }>askMorgan
-                    </Button.Success>
+                  <Button.Success onClick={() => {this.handleAddQuestion()}}>AskMorgan</Button.Success> 
                   </Column>
                 </Row>
             </MainCard>
@@ -93,6 +88,7 @@ export class CreateQuestion extends Component {
   
     handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       let tagId = Number(event.target.value);
+      console.log(tagId)
   
       if (event.target.checked) {
           this.selectedTags.push(tagId);
@@ -103,7 +99,8 @@ export class CreateQuestion extends Component {
   
   
   handleAddQuestion = async () => {
-      const question_id = await service.createQuestion(this.title, this.text);
+      let question_id = await service.createQuestion(this.title, this.text);
+      
   
       // For each selected tag, create a new relation in the Tag_question_relation tabl
       this.selectedTags.forEach(tag_id => {

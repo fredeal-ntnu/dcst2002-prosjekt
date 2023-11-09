@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
-import { HashRouter, Route } from 'react-router-dom';
-import { NavBar, Card, Alert, MainCard, SideMenu, Row, Column } from './widgets';
+import { HashRouter, Route, NavLink } from 'react-router-dom';
+import { NavBar, Card, Alert, MainCard, SideMenu, Row, Column} from './widgets';
 import service, { Question } from './service';
 import { CreateQuestion } from './components/create-question';
 import { QuestionDetails } from './components/question-details';
@@ -35,7 +35,7 @@ class Home extends Component {
           <MainCard header="Top Questions">
           {this.questions.map((question) => (
             <Row key={question.question_id}>
-              <a href={'/questions/' + question.question_id}>{question.title}</a>
+              <NavLink to={'/questions/' + question.question_id}>{question.title}</NavLink>
             </Row>
           ))}
        </MainCard>

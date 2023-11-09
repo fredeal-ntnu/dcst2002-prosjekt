@@ -16,6 +16,20 @@ loginRouter.get('/login/:user_name', (request, response) => {
 });
 
 //create new user
+loginRouter.post('/signup', (request, response) => {
+    const data = request.body;
+    if (
+        typeof data.user_name == 'string' &&
+        data.user_name.length != 0 &&
+        typeof data.password == 'string' &&
+        data.password.length != 0
+    )
+        loginService
+        .createUser(data.user_name, data.password)
+        .then((id) => response.send({ id: id}))
+        .catch((error) => response.status(500).send(error));
+    else response.status(400).send('Missing properties');
+    });
 
 
 

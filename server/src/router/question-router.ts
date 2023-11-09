@@ -41,7 +41,7 @@ questionRouter.post('/questions', (request, response) => {
     data.text.length != 0
   )
     questionService
-      .createQuestion(data.title, data.text,data.confirmed_answer, data.view_count, data.user_id)
+      .createQuestion(data.title, data.text, data.view_count, data.confirmed_answer, data.user_name)
       .then((id) => response.send({ id: id}))
       .catch((error) => response.status(500).send(error));
   else response.status(400).send('Missing dobbeltsjekk mongo properties');
@@ -56,22 +56,18 @@ questionRouter.delete('/questions/:id', (request, response) => {
 });
 
 //Update question
-questionRouter.put('/questions', (request, response) => {
-  const data = request.body;
-  if (
-    typeof data.id == 'number' &&
-    typeof data.title == 'string' &&
-    data.title.length  != 0 &&
-    typeof data.text == 'string' &&
-    data.text.length ! == 0
-  )
-    questionService
-      .updateQuestion({ question_id: data.id, title: data.title, text: data.text, confirmed_answer: data.confirmed_answer, view_count: data.views, user_name: data.user_name})
-      .then(() => response.send())
-      .catch((error) => response.status(500).send(error));
-  else response.status(400).send('Missing task properties');
-});
-
-
-
+// questionRouter.put('/questions', (request, response) => {
+//   const data = request.body;
+//   if (
+//     typeof data.question_id == 'number' &&
+//     typeof data.title == 'string' &&
+//     data.title.length != 0 &&
+//     typeof data.text == 'string'
+//   )
+//     questionService
+//       .updateQuestion({ question_id: data.question_id, title: data.title, text: data.text, view_count: data.view_count, confirmed_answer: data.confirmed_answer, user_name: data.user_name})
+//       .then(() => response.send())
+//       .catch((error) => response.status(500).send(error));
+//   else response.status(400).send('Missing question properties');
+// });
 export default questionRouter;

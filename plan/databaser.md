@@ -53,7 +53,7 @@ CREATE TABLE Question (
     text TEXT,
     view_count INT DEFAULT 0,
     confirmed_answer INT,
-    user_NAME VARCHAR(255),
+    user_name VARCHAR(255),
     FOREIGN KEY (user_name) REFERENCES User(user_name)
 );
 

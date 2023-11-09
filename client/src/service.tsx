@@ -9,7 +9,7 @@ export type Question = {
   text: string;
   view_count: number;
   confirmed_answer: boolean;
-  user_id: number;
+  user_name: string;
 }; 
 
 
@@ -22,6 +22,11 @@ export type Tag = {
 export type Tag_Question_Relation = {
   tag_id: number;
   question_id: number;
+};
+
+export type User = {
+  user_name: string;
+  password: string;
 };
 
 
@@ -57,12 +62,23 @@ class Service {
    * Update a question.
    */
 
-  updateQuestion(question: Question) {
-    return axios
-      .put<Question>('/questions' + question.question_id, { question: question })
-      .then((response) => response.data);
-  }
+  // updateQuestion(question: Question) {
+  //   return axios
+  //     .put<Question>('/questions' + question.question_id, { question: question })
+  //     .then((response) => response.data);
+  // }
 
+  // updateQuestion(question: Question) {
+  //   return axios
+  //   .put('/questions',question)
+  //   .then((response) => response.data)
+  // }
+
+  // updateQuestion(question: Question) {
+  //   return axios
+  //   .put('/questions',question)
+  //   .then((response) => response.data)
+  // }
   /**
    * Create a question.
    */
@@ -124,7 +140,20 @@ class Service {
     return axios.get('/question/:id').then((response) => response.data);
   }
 
+
+//get a user
+getUser(user_name: string) {
+  return axios.get<User>('/users/' + user_name).then((response) => response.data);
 }
+
+
+
+
+
+
+}
+
+
 
 
 
