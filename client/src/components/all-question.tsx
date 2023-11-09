@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Card, Alert, Column, Row, Form } from '../widgets';
-import service, { Question } from '../service';
+import service, { Question, Tag } from '../service';
 
 export class AllQuestions extends Component {
     questions: Question[] = [];
     filter: string = 'All'; // State to manage the filter type
     search = '';
+    tags: Tag[] = [];
   
     render() {
       return (
@@ -39,7 +40,19 @@ export class AllQuestions extends Component {
                 ))
                 }
             <Row>
-                owiefjo2eifn
+            {this.tags.map((tag) => (
+                        <Column>
+                            <Form.Label>
+                                {tag.name}
+                                <input type='checkbox'
+                                    value={tag.tag_id}
+                                    onChange={() => {'vet ikke'}}
+                                />
+                            
+                            </Form.Label>
+                        
+                        </Column>
+                    ))}
             </Row>
           </Card>
         </>
@@ -73,6 +86,11 @@ export class AllQuestions extends Component {
     // Lifecycle method to load questions when the component mounts
     mounted() {
       this.loadQuestions();
+
+      service
+        .getAllTags()
+        .then((tags) => (this.tags = tags))
+        .catch((error) => Alert.danger(error.message));  
       
     //   service.getAllQuestions((questions) => {
     //     this.questions = questions;
