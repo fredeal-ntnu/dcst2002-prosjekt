@@ -24,6 +24,11 @@ export type Tag_Question_Relation = {
   question_id: number;
 };
 
+export type User = {
+  user_name: string;
+  password: string;
+};
+
 
 
 class Service {
@@ -124,7 +129,20 @@ class Service {
     return axios.get('/question/:id').then((response) => response.data);
   }
 
+
+//get a user
+getUser(user_name: string) {
+  return axios.get<User>('/users/' + user_name).then((response) => response.data);
 }
+
+
+
+
+
+
+}
+
+
 
 
 
