@@ -62,10 +62,10 @@ export class EditQuestion extends Component {
     }
 
     save() {
-        service
-          .updateQuestion(this.question)
-          .then(() => history.push('/questions/' + this.question.question_id))
-          .catch((error) => Alert.danger('Error saving question: ' + error.message));
+        // service
+        //   .updateQuestion(this.question)
+        //   .then(() => history.push('/questions/' + this.question.question_id))
+        //   .catch((error) => Alert.danger('Error saving question: ' + error.message));
       }
     
 }

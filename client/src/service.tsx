@@ -74,11 +74,11 @@ class Service {
   //   .then((response) => response.data)
   // }
 
-  updateQuestion(question: Question) {
-    return axios
-    .put('/questions',question)
-    .then((response) => response.data)
-  }
+  // updateQuestion(question: Question) {
+  //   return axios
+  //   .put('/questions',question)
+  //   .then((response) => response.data)
+  // }
   /**
    * Create a question.
    */
