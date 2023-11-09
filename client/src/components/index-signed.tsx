@@ -10,7 +10,7 @@ export class IndexSigned extends Component {
       <Card title="">
         <div className="row">
           <SideMenu header="Private"
-            items={[{ label: "Questions", to: "/questions" }, { label: "Tags", to: "/tags" }, {label: "New Question", to: "createquestion"}, {label: "My Questions", to: "myquestion"}]}/>
+            items={[{ label: "Questions", to: "/all-questions" }, {label: "New Question", to: "createquestion"}, {label: "My Questions", to: "myquestion"}]}/>
           <MainCard header="Top Questions">
           {this.questions.map((question) => (
             <Row key={question.question_id}>
