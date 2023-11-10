@@ -9,10 +9,9 @@ import { createHashHistory } from 'history';
 const history = createHashHistory()
 
 export class EditQuestion extends Component {
-    question: Question = {question_id: 0, title: "", text: "", view_count: 0, user_name: "", confirmed_answer: false};
+    question: Question = {question_id: 0, title: "", text: "", view_count: 0, confirmed_answer: false, user_name: ""};
     
-    title = "";
-    text = "";
+   
 
     render() {
         return(
@@ -42,7 +41,7 @@ export class EditQuestion extends Component {
             </Row>
             <Row>
                 <Column width={6}>
-                    <Button.Success onClick={()=>this.save()}>Save</Button.Success>
+                    <Button.Success onClick={() => {this.save()}}>Save</Button.Success> 
                 </Column>
                 <Column width={6}>
                     <Button.Danger onClick={()=>'delete()'}>Delete</Button.Danger>
@@ -62,10 +61,10 @@ export class EditQuestion extends Component {
     }
 
     save() {
-        // service
-        //   .updateQuestion(this.question)
-        //   .then(() => history.push('/questions/' + this.question.question_id))
-        //   .catch((error) => Alert.danger('Error saving question: ' + error.message));
+        service
+          .updateQuestion(this.question)
+          .then(() => history.push('/questions/' + this.question.question_id))
+          .catch((error) => Alert.danger('Error saving question: ' + error.message));
       }
     
 }

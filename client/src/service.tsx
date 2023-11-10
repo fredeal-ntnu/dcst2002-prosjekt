@@ -38,7 +38,9 @@ class Service {
    */
 
   getAllQuestions() {
-    return axios.get<Question[]>('/questions').then((response) => response.data);
+    return axios
+    .get<Question[]>('/questions')
+    .then((response) => response.data);
   }
 
   /**
@@ -47,7 +49,9 @@ class Service {
 
 
   getQuestion(id: number) {
-    return axios.get<Question>('/questions/' + id).then((response) => response.data);
+    return axios
+    .get<Question>('/questions/' + id)
+    .then((response) => response.data);
   }
 
   /**
@@ -55,30 +59,21 @@ class Service {
    */
 
   getTopFiveQuestions() {
-    return axios.get<Question[]>('/topfive').then((response) => response.data);
+    return axios
+    .get<Question[]>('/topfive')
+    .then((response) => response.data);
   }
 
   /**
    * Update a question.
    */
 
-  // updateQuestion(question: Question) {
-  //   return axios
-  //     .put<Question>('/questions' + question.question_id, { question: question })
-  //     .then((response) => response.data);
-  // }
+  updateQuestion(question: Question) {
+    return axios
+    .put('/questions',question)
+    .then((response) => response.data)
+  }
 
-  // updateQuestion(question: Question) {
-  //   return axios
-  //   .put('/questions',question)
-  //   .then((response) => response.data)
-  // }
-
-  // updateQuestion(question: Question) {
-  //   return axios
-  //   .put('/questions',question)
-  //   .then((response) => response.data)
-  // }
   /**
    * Create a question.
    */
@@ -94,7 +89,9 @@ class Service {
    */
   
   deleteQuestion(id: number) {
-    return axios.delete<Question>('/questions' + id).then((response) => response.data);
+    return axios
+    .delete<Question>('/questions' + id)
+    .then((response) => response.data);
   }
 
 
@@ -103,7 +100,9 @@ class Service {
    */
 
   getTags(id: number) {
-    return axios.get('/questions/' + id + '/tags').then((response) => response.data);
+    return axios
+    .get('/questions/' + id + '/tags')
+    .then((response) => response.data);
   }
 
   /**
@@ -111,11 +110,14 @@ class Service {
    */
 
   getAllTags() {
-    return axios.get('/tags').then((response) => response.data);
+    return axios
+    .get('/tags')
+    .then((response) => response.data);
   }
 
   createTagQuestionRelation(tag_id: number, question_id: number) {
-    return axios.post('/questions/' + question_id, {tag_id, question_id})
+    return axios
+    .post('/questions/' + question_id, {tag_id, question_id})
   }
 
 
@@ -126,24 +128,32 @@ class Service {
    */
 
   getQuestionsByTag(tag: string) {
-    return axios.get('/tags/' + tag + '/questions').then((response) => response.data);
+    return axios
+    .get('/tags/' + tag + '/questions')
+    .then((response) => response.data);
   }
 
 
 
 //get all tags for a question by question id
   getTagsForQuestion(id: number) {
-    return axios.get('/questions/' + id + '/tags').then((response) => response.data);
+    return axios
+    .get('/questions/' + id + '/tags')
+    .then((response) => response.data);
   }
 
   getAllTagQuestionsRelations() {
-    return axios.get('/question/:id').then((response) => response.data);
+    return axios
+    .get('/question/:id')
+    .then((response) => response.data);
   }
 
 
 //get a user
 getUser(user_name: string) {
-  return axios.get<User>('/users/' + user_name).then((response) => response.data);
+  return axios
+  .get<User>('/users/' + user_name)
+  .then((response) => response.data);
 }
 
 

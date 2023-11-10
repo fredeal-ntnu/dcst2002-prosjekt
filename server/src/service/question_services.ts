@@ -20,7 +20,7 @@ class Service {
      */
     getQuestion(question_id: number) { 
         return new Promise<Question_Content | undefined>((resolve, reject) => {
-            pool.query('SELECT * FROM Question WHERE question_id = ?', [question_id], (error, results: RowDataPacket[]) => {
+            pool.query('SELECT * FROM Question WHERE question_id=?', [question_id], (error, results: RowDataPacket[]) => {
             if (error) return reject(error);
     
             resolve(results[0] as Question_Content);
@@ -86,23 +86,13 @@ class Service {
         });
 }
 
-    // updateQuestion(question: Question_Content) {
-    //     return new Promise<void>((resolve, reject) => {
-    //         pool.query('UPDATE Question SET title=?, text=? WHERE question_id=?', [question.question_id, question.title, question.text], (error, results: ResultSetHeader) => {
-    //         if (error) return reject(error);
-    //         if (results.affectedRows == 0) return reject(new Error('No row updated'));
-    
-    //         resolve();
-    //         });
-    //     });
-    // }
-
 
     updateQuestion(question: Question_Content) {
+
         return new Promise<void>((resolve, reject) => {
           pool.query(
-            'UPDATE Question SET title=?, text=?, view_count=?, confirmed_answer, user_name WHERE id=?',
-            [question.question_id,question.title, question.text, question.view_count, question.confirmed_answer, question.user_name     ],
+            'UPDATE Question SET title=?, text=?, view_count=?, confirmed_answer=?, user_name=? WHERE question_id=?',
+            [question.title, question.text, question.view_count, question.confirmed_answer, question.user_name,question.question_id],
             (error, _results) => {
               if(error) return reject(error)
     

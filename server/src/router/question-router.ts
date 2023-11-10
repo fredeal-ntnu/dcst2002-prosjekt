@@ -1,6 +1,6 @@
 import express from 'express';
 import {questionService} from '../service/question_services';
-
+import {Question_Content} from '../service/question_services'
 /**
  * Express router containing task methods.
  */
@@ -56,18 +56,20 @@ questionRouter.delete('/questions/:id', (request, response) => {
 });
 
 //Update question
-// questionRouter.put('/questions', (request, response) => {
-//   const data = request.body;
-//   if (
-//     typeof data.question_id == 'number' &&
-//     typeof data.title == 'string' &&
-//     data.title.length != 0 &&
-//     typeof data.text == 'string'
-//   )
-//     questionService
-//       .updateQuestion({ question_id: data.question_id, title: data.title, text: data.text, view_count: data.view_count, confirmed_answer: data.confirmed_answer, user_name: data.user_name})
-//       .then(() => response.send())
-//       .catch((error) => response.status(500).send(error));
-//   else response.status(400).send('Missing question properties');
-// });
+questionRouter.put('/questions', (request, response) => {
+  const data = request.body;
+  if (
+    typeof data.question_id == 'number' &&
+    typeof data.title == 'string' &&
+    data.title.length != 0 &&
+    typeof data.text == 'string'
+  ){
+    console.log(data);
+    questionService
+    // .updateQuestion(Question_Content: data.question)
+      .updateQuestion({ question_id: data.question_id, title: data.title, text: data.text, view_count: data.view_count, confirmed_answer: data.confirmed_answer, user_name: data.user_name })
+      .then(() => response.send())
+      .catch((error) => response.status(500).send(error));}
+  else response.status(400).send('Missing question properties');
+});
 export default questionRouter;
