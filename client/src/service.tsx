@@ -160,7 +160,8 @@ class Service {
 
 //get a user
 getUser(user : User) {
-  return axios.get<User>('/users/' + user.user_name).then((response) => response.data);
+  return axios.get<User>('/users/' + user.user_name)
+  .then((response) => response.data);
 }
 
 

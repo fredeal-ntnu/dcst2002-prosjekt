@@ -3,7 +3,7 @@ import questionRouter from './router/question-router';
 import tagRouter from './router/tag-router';
 import questionRelationRouter from './router/question-relation_router';
 import loginRouter from './router/login-router';
-import sessions from 'express-session';
+import session from 'express-session';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
 
@@ -34,12 +34,18 @@ app.use(express.static(__dirname));
 
 const oneDay = 1000 * 60 * 60 * 24;
 
-app.use(sessions({
+app.use(session({
     secret: "secretKeyNumberTwoFiveFour",
     saveUninitialized:true,
-    cookie: { maxAge: oneDay },
+    cookie: { 
+        maxAge: oneDay,
+        httpOnly: true,
+        sameSite: true 
+    },
     resave: false 
 }));
+
+app.use(passport.authenticate('session'));
 
 
 
