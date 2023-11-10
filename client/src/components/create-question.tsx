@@ -99,7 +99,14 @@ export class CreateQuestion extends Component {
   
   
   handleAddQuestion = async () => {
-      let question_id = await service.createQuestion(this.title, this.text);
+
+    if (this.selectedTags.length == 0) {
+      //error
+      alert("You must select at least one tag");
+      return null;
+    } else {
+      var question_id = await service.createQuestion(this.title, this.text);
+    }
       
   
       // For each selected tag, create a new relation in the Tag_question_relation tabl
