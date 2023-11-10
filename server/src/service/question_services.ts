@@ -77,14 +77,14 @@ class Service {
      */
     deleteQuestion(question_id: number) {
         return new Promise<void>((resolve, reject) => {
-            pool.query('DELETE FROM Question WHERE question_id = ?', [question_id], (error, results: ResultSetHeader) => {
+            pool.query('DELETE FROM Question WHERE question_id=?', [question_id], (error) => {
             if (error) return reject(error);
-            if (results.affectedRows == 0) return reject(new Error('No row deleted'));
-    
+
             resolve();
             });
         });
-}
+    }
+
 
 
     updateQuestion(question: Question_Content) {

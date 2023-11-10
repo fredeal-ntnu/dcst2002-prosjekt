@@ -88,9 +88,9 @@ class Service {
    * Delete a question.
    */
   
-  deleteQuestion(id: number) {
+  deleteQuestion(question_id: number) {
     return axios
-    .delete<Question>('/questions' + id)
+    .delete<Question>('/questions/' + question_id)
     .then((response) => response.data);
   }
 

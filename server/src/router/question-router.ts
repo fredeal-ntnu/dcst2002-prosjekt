@@ -49,6 +49,7 @@ questionRouter.post('/questions', (request, response) => {
 
 //Delete question
 questionRouter.delete('/questions/:id', (request, response) => {
+  console.log(Number(request.params.id))
   questionService
     .deleteQuestion(Number(request.params.id))
     .then((_result) => response.send())

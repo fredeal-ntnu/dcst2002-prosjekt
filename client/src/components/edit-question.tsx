@@ -41,10 +41,10 @@ export class EditQuestion extends Component {
             </Row>
             <Row>
                 <Column width={6}>
-                    <Button.Success onClick={() => {this.save()}}>Save</Button.Success> 
+                    <Button.Success onClick={this.save}>Save</Button.Success> 
                 </Column>
                 <Column width={6}>
-                    <Button.Danger onClick={()=>'delete()'}>Delete</Button.Danger>
+                    <Button.Danger onClick={this.delete}>Delete</Button.Danger>
                 </Column>
             </Row>
             {console.log(this.question)}
@@ -66,5 +66,12 @@ export class EditQuestion extends Component {
           .then(() => history.push('/questions/' + this.question.question_id))
           .catch((error) => Alert.danger('Error saving question: ' + error.message));
       }
+
+    delete() {
+        service
+          .deleteQuestion(this.question.question_id)
+          .then(() => history.push('/questions'))
+          .catch((error) => Alert.danger('Error deleting question: ' + error.message));
+    }
     
 }
