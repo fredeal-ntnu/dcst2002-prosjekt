@@ -22,6 +22,9 @@ class Service {
         return new Promise<Question_Content | undefined>((resolve, reject) => {
             pool.query('SELECT * FROM Question WHERE question_id=?', [question_id], (error, results: RowDataPacket[]) => {
             if (error) return reject(error);
+
+                this.incrementViewCount(results[0].question_id)
+                .catch((error) => console.error(error));
     
             resolve(results[0] as Question_Content);
             });
@@ -44,27 +47,26 @@ class Service {
         /**
      * Get the top 5 questions with most views in descending order
      */
-    
-        getTopFiveQuestions() {
-            return new Promise<Question_Content[]>((resolve, reject) => {
-                pool.query('SELECT * FROM Question ORDER BY view_count DESC LIMIT 5', (error, results: RowDataPacket[]) => {
-                if (error) return reject(error);
-        
-                resolve(results as Question_Content[]);
-                });
-            });
-        }
 
-        getUnansweredQuestions() {
-            return new Promise<Question_Content[]>((resolve, reject) => {
-                pool.query('SELECT * FROM Question WHERE confirmed_answer=0', (error, results: RowDataPacket[]) => {
-                if (error) return reject(error);
-        
-                resolve(results as Question_Content[]);
-                });
-            });
-        }
+    getTopFiveQuestions() {
+        return new Promise<Question_Content[]>((resolve, reject) => {
+            pool.query('SELECT * FROM Question ORDER BY view_count DESC LIMIT 5', (error, results: RowDataPacket[]) => {
+            if (error) return reject(error);
     
+            resolve(results as Question_Content[]);
+            });
+        });
+    }
+    getUnansweredQuestions() {
+        return new Promise<Question_Content[]>((resolve, reject) => {
+            pool.query('SELECT * FROM Question WHERE confirmed_answer=0 OR confirmed_answer IS NULL', (error, results: RowDataPacket[]) => {
+            if (error) return reject(error);
+    
+            resolve(results as Question_Content[]);
+            });
+        });
+    }
+
     /**
      * Create new question having the given title.
      *
@@ -111,6 +113,16 @@ class Service {
           )
         })
       }
+
+    incrementViewCount(question_id: number) {
+        return new Promise<void>((resolve, reject) => {
+            pool.query('UPDATE Question SET view_count=view_count+1 WHERE question_id=?', [question_id], (error) => {
+            if (error) return reject(error);
+
+            resolve();
+            });
+        });
+    }
 
     
 

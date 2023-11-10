@@ -2,10 +2,12 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Card, Alert, Column, Row, Form } from '../widgets';
 import service, { Question, Tag } from '../service';
+import { EyeIcon } from '../icons';
+import { NavLink } from 'react-router-dom';
 
 export class AllQuestions extends Component {
     questions: Question[] = [];
-    filter: string = 'All'; // State to manage the filter type
+    filter: string = 'all'; // State to manage the filter type
     search = '';
     tags: Tag[] = [];
   
@@ -50,9 +52,11 @@ export class AllQuestions extends Component {
           {this.questions
                 .filter((question) => (question.title.toLowerCase().includes(this.search.toLowerCase())))
                 .map((question, i) => (
-                    <Card key={i} title={question.title}>
+                    <Card key={i} 
+                    title={<NavLink to={'/questions/' + question.question_id}>{question.title}</NavLink>}>
                         <Row>
-                            <Column width={2}>{question.text}</Column>
+                            <Column>{question.text}</Column>
+                            <Column width={1} right><EyeIcon style={{ verticalAlign: '-2px' }} />{' '}{question.view_count}</Column>
                         </Row>
                     </Card>
                 ))
@@ -63,7 +67,8 @@ export class AllQuestions extends Component {
 
     handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         this.filter = event.target.value;
-        this.loadQuestions(); // Call a method to load questions based on the selected filter
+        console.log(this.filter);
+        this.loadQuestions() // Call a method to load questions based on the selected filter
       };
   
     // Method to load questions based on the current filter
@@ -71,14 +76,23 @@ export class AllQuestions extends Component {
       // Add logic here to fetch and filter questions accordingly
       // This is a placeholder for whatever your service methods might be
       switch (this.filter) {
-        case 'All':
-          // Fetch all questions
+        case 'all':
+            service
+                .getAllQuestions()
+                .then((questions) => (this.questions = questions))
+                .catch((error) => Alert.danger(error.message));
           break;
-        case 'Popular':
-          // Fetch most popular questions
+        case 'popular':
+            service
+                .getTopFiveQuestions()
+                .then((questions) => (this.questions = questions))
+                .catch((error) => Alert.danger(error.message));
           break;
-        case 'Unanswered':
-          // Fetch unanswered questions
+        case 'unanswered':
+            service
+                .getUnansweredQuestions()
+                .then((questions) => (this.questions = questions))
+                .catch((error) => Alert.danger(error.message));
           break;
         default:
           // Handle default case
@@ -94,10 +108,7 @@ export class AllQuestions extends Component {
         .then((tags) => (this.tags = tags))
         .catch((error) => Alert.danger(error.message));  
       
-      service
-        .getAllQuestions()
-        .then((questions) => (this.questions = questions))
-        .catch((error) => Alert.danger(error.message));
+      
 
   }
 }
