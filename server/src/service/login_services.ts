@@ -11,9 +11,9 @@ export type Login_Content = {
 class Service {
 
     //getUser
-    getUser(user_name: string) {
+    getUser(user_name: string, password: string) {
         return new Promise<Login_Content | undefined>((resolve, reject) => {
-            pool.query('SELECT * FROM Login WHERE user_name = ?', [user_name], (error, results: RowDataPacket[]) => {
+            pool.query('SELECT * FROM User WHERE user_name = ?, password = ?', [user_name, password], (error, results: RowDataPacket[]) => {
             if (error) return reject(error);
     
             resolve(results[0] as Login_Content);

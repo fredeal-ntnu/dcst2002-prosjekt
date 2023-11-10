@@ -159,11 +159,10 @@ class Service {
 
 
 //get a user
-getUser(user_name: string) {
-  return axios
-  .get<User>('/users/' + user_name)
-  .then((response) => response.data);
+getUser(user : User) {
+  return axios.get<User>('/users/' + user.user_name).then((response) => response.data);
 }
+
 
 
 
