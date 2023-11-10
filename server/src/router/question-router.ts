@@ -24,9 +24,17 @@ questionRouter.get('/questions/:id', (request, response) => {
 });
 
 //Get top five questions
-questionRouter.get('/topfive', (_request, response) => {
+questionRouter.get('/topfivequestions', (_request, response) => {
   questionService
     .getTopFiveQuestions()
+    .then((rows) => response.send(rows))
+    .catch((error) => response.status(500).send(error));
+});
+
+//Get unanswered questions
+questionRouter.get('/unansweredquestions', (_request, response) => {
+  questionService
+    .getUnansweredQuestions()
     .then((rows) => response.send(rows))
     .catch((error) => response.status(500).send(error));
 });

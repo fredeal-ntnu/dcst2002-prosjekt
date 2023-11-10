@@ -54,6 +54,16 @@ class Service {
                 });
             });
         }
+
+        getUnansweredQuestions() {
+            return new Promise<Question_Content[]>((resolve, reject) => {
+                pool.query('SELECT * FROM Question WHERE confirmed_answer=0', (error, results: RowDataPacket[]) => {
+                if (error) return reject(error);
+        
+                resolve(results as Question_Content[]);
+                });
+            });
+        }
     
     /**
      * Create new question having the given title.
@@ -101,6 +111,8 @@ class Service {
           )
         })
       }
+
+    
 
 }
 export const questionService = new Service(); 

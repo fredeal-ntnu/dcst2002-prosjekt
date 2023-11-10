@@ -29,17 +29,9 @@ export class AllQuestions extends Component {
                     />
                 </Column>
             </Row>
-                {this.questions
-                .filter((question) => (question.title.toLowerCase().includes(this.search.toLowerCase())))
-                .map((question, i) => (
-                    <Card key={i} title={question.title}>
-                        <Row>
-                            <Column width={2}>{question.text}</Column>
-                        </Row>
-                    </Card>
-                ))
-                }
-            <Row>
+
+               
+            {/* <Row>
             {this.tags.map((tag) => (
                         <Column>
                             <Form.Label>
@@ -53,8 +45,18 @@ export class AllQuestions extends Component {
                         
                         </Column>
                     ))}
-            </Row>
+            </Row> */}
           </Card>
+          {this.questions
+                .filter((question) => (question.title.toLowerCase().includes(this.search.toLowerCase())))
+                .map((question, i) => (
+                    <Card key={i} title={question.title}>
+                        <Row>
+                            <Column width={2}>{question.text}</Column>
+                        </Row>
+                    </Card>
+                ))
+                }
         </>
       );
     }
@@ -92,8 +94,10 @@ export class AllQuestions extends Component {
         .then((tags) => (this.tags = tags))
         .catch((error) => Alert.danger(error.message));  
       
-    //   service.getAllQuestions((questions) => {
-    //     this.questions = questions;
-    //   });
+      service
+        .getAllQuestions()
+        .then((questions) => (this.questions = questions))
+        .catch((error) => Alert.danger(error.message));
+
   }
 }

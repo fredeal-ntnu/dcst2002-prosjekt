@@ -60,7 +60,16 @@ class Service {
 
   getTopFiveQuestions() {
     return axios
-    .get<Question[]>('/topfive')
+    .get<Question[]>('/topfivequestions')
+    .then((response) => response.data);
+  }
+
+  /**
+   * Get all unaswered questions.
+   */
+  getUnansweredQuestions() {
+    return axios
+    .get<Question[]>('/unansweredquestions')
     .then((response) => response.data);
   }
 
