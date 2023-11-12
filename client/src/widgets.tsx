@@ -356,8 +356,6 @@ class FormRadio extends Component<{
   [prop: string]: any;
 }> {
   render() {
-    // ...rest will contain extra passed attributes such as disabled, required, width, height, pattern
-    // For further information, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
     const { checked, onChange, ...rest } = this.props;
     return (
       <input
@@ -370,6 +368,34 @@ class FormRadio extends Component<{
     );
   }
 }
+
+export class RadioRow extends Component<{
+  label: string;
+  checked: boolean; 
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void; 
+  [prop: string]: any;
+}> {
+  render() {
+    const { checked, label, onChange, ...rest } = this.props;
+
+    return(
+        <Row>  
+            <Column>
+                {label}
+            </Column>
+            <Column right>
+                <Form.Radio
+                    {...rest}
+                    className="form-check-input"
+                    type="radio"
+                    checked={checked}
+                    onChange={onChange}
+                    label={label}
+                />
+            </Column>
+        </Row> 
+)}
+    }
 
 /**
  * Renders form components using Bootstrap styles.

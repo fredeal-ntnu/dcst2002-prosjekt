@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Form, Card, Alert, MainCard, SideMenu, Row, Column, Button } from '../widgets';
+import { Form, Card, Alert, MainCard, SideMenu, Row, Column, Button, RadioRow } from '../widgets';
 import service, { Question, Tag, Tag_Question_Relation } from '../service';
 import { NavLink } from 'react-router-dom';
 import { EyeIcon } from '../icons';
@@ -30,51 +30,30 @@ export class Tags extends Component {
             
 
 
-                <Card title="Sort by" smallTitle>
-            <Row>  
-                <Column>
-                    Popularity
-                </Column>
-                <Column right>
-                    <Form.Radio
-                        checked={this.sortOrder === 'popularity'}
-                        onChange={() => this.handleSortChange('popularity')}
-                        label="Popularity"
-                    />
-                </Column>
-            </Row> 
-            <Row>  
-                <Column>
-                    A-Z
-                </Column>
-                <Column right>
-                    <Form.Radio
-                        checked={this.sortOrder === 'a-z'}
-                        onChange={() => this.handleSortChange('a-z')}
-                        label="A-Z"
-                    />
-                </Column>
-            </Row> 
-            <Row>  
-                <Column>
-                    Z-A
-                </Column>
-                <Column right>
-                    <Form.Radio
-                        checked={this.sortOrder === 'z-a'}
-                        onChange={() => this.handleSortChange('z-a')}
-                        label="Z-A"
-                    />
-                </Column>
-            </Row>      
-            <div style={{ marginTop: '5px'}}>
-                <Form.Input
-                        type='text' 
-                        placeholder={`Search`}
-                        value={this.tagSearch} 
-                        onChange={(event) => this.tagSearch = event.currentTarget.value}
-                        />
-            </div>
+            <Card title="Sort by" smallTitle>
+                <RadioRow 
+                    label='Popularity' 
+                    checked={this.sortOrder === 'popularity'} 
+                    onChange={() => this.handleSortChange('popularity')}
+                />
+                <RadioRow 
+                    label='A-Z' 
+                    checked={this.sortOrder === 'a-z'} 
+                    onChange={() => this.handleSortChange('a-z')}
+                />
+                <RadioRow 
+                    label='Z-A' 
+                    checked={this.sortOrder === 'z-a'} 
+                    onChange={() => this.handleSortChange('z-a')}
+                />
+                <div style={{ marginTop: '5px'}}>
+                    <Form.Input
+                            type='text' 
+                            placeholder={`Search`}
+                            value={this.tagSearch} 
+                            onChange={(event) => this.tagSearch = event.currentTarget.value}
+                            />
+                </div>
             </Card>        
                 
            

@@ -58,15 +58,14 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                 <Row>
                   <Column width={100}>
                     <Card title="Tags">
-                      {this.relations.map((relation) => {
-                        if (relation.question_id == this.props.match.params.id) {
-                          return this.tags.map((tag) => {
-                            if (relation.tag_id == tag.tag_id) {
-                              return tag.name + ', ';
-                            }
-                          });
-                        }
-                      })}
+                    {
+                        this.relations
+                          .filter((relation) => relation.question_id == this.props.match.params.id)
+                          .map((relation) => this.tags.find((tag) => tag.tag_id == relation.tag_id))
+                          .filter((tag): tag is Tag => tag !== undefined)
+                          .map((tag) => tag.name)
+                          .join(', ')
+                      }
                     </Card>
                   </Column>
                 </Row>
