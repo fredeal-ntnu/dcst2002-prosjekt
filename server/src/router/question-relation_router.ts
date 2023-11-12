@@ -31,5 +31,14 @@ questionRelationRouter.post(`/questions/:id`, (request, response) => {
       .then((rows) => response.send(rows))
       .catch((error) => response.status(500).send(error));
   });
+
+  // Get all questions by tag id
+  questionRelationRouter.get(`/tag/:id/questions`, (request, response) => {
+    const id = Number(request.params.id);
+    questionRelationService
+      .getAllQuestionsByTagId(id)
+      .then((rows) => {response.send(rows)})
+      .catch((error) => response.status(500).send(error));
+  });
   
   export default questionRelationRouter;

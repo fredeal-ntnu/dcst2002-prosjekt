@@ -8,12 +8,12 @@ import { NavLink } from 'react-router-dom';
  *
  * Properties: title
  */
-export class Card extends Component<{ title: ReactNode }> {
+export class Card extends Component<{ title: ReactNode, smallTitle?: boolean }> {
   render() {
     return (
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">{this.props.title}</h5>
+          {this.props.smallTitle ? <h6 className="card-title">{this.props.title}</h6> : <h5 className="card-title">{this.props.title}</h5>}
           <div className="card-text">{this.props.children}</div>
         </div>
       </div>
@@ -348,6 +348,30 @@ class FormSelect extends Component<{
 }
 
 /**
+ * Renders a form radio button using Bootstrap styles.
+ */
+class FormRadio extends Component<{
+  checked: boolean;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  [prop: string]: any;
+}> {
+  render() {
+    // ...rest will contain extra passed attributes such as disabled, required, width, height, pattern
+    // For further information, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+    const { checked, onChange, ...rest } = this.props;
+    return (
+      <input
+        {...rest}
+        className="form-check-input"
+        type="radio"
+        checked={checked}
+        onChange={onChange}
+      />
+    );
+  }
+}
+
+/**
  * Renders form components using Bootstrap styles.
  */
 export class Form {
@@ -356,6 +380,7 @@ export class Form {
   static Textarea = FormTextarea;
   static Checkbox = FormCheckbox;
   static Select = FormSelect;
+  static Radio = FormRadio;
 }
 
 /**

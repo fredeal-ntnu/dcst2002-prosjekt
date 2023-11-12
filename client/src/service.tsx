@@ -152,9 +152,9 @@ class Service {
    * Get a tag by name.
    */
 
-  getQuestionsByTag(tag: number) {
+  getQuestionsByTagId(tag: number) {
     return axios
-    .get('/tags/' + tag + '/questions')
+    .get('/tag/' + tag + '/questions')
     .then((response) => response.data);
   }
 

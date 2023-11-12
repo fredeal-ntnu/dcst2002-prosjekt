@@ -43,6 +43,17 @@ class Service {
             });
         });
     }
+
+    getAllQuestionsByTagId(tag_id: number) {
+        return new Promise<Tag_Question_Relation[]>((resolve, reject) => {
+            pool.query('SELECT * FROM tag_question_relation WHERE tag_id=?', [tag_id],
+             (error, results: RowDataPacket[]) => {
+                if (error) return reject(error);
+
+                resolve(results as Tag_Question_Relation[]);
+            });
+        });
+    }
 }
 
 
