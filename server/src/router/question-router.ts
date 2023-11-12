@@ -78,7 +78,7 @@ questionRouter.put('/questions', (request, response) => {
     console.log(data);
     questionService
     // .updateQuestion(Question_Content: data.question)
-      .updateQuestion({ question_id: data.question_id, title: data.title, text: data.text, view_count: data.view_count, confirmed_answer: data.confirmed_answer, user_name: data.user_name })
+      .updateQuestion({ question_id: data.question_id, title: data.title, text: data.text, view_count: data.view_count, confirmed_answer: data.confirmed_answer, username: data.user_name })
       .then(() => response.send())
       .catch((error) => response.status(500).send(error));}
   else response.status(400).send('Missing question properties');
