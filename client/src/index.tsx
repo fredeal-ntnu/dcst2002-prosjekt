@@ -11,6 +11,10 @@ import { Login } from './components/login';
 import { AllQuestions } from './components/all-question';
 import { Tags } from './components/tags';
 import { AnswerDetails } from './components/answer-details';
+import { QuestionCommentDetails } from './components/question-comment-details';
+import { AnswerCommentDetails } from './components/answer-comment-details';
+
+
 
 
 class Menu extends Component {
@@ -65,6 +69,8 @@ if (root)
         <Route exact path="/questions/:id(\d+)" component={QuestionDetails} /> {/* huske å endre index */}
         <Route exact path="/questions/:id(\d+)/edit" component={EditQuestion} />
         <Route exact path="/questions/:id(\d+)/answers/:id(\d+)" component={AnswerDetails} />
+        <Route exact path="/questions/:id(\d+)/comments/:id(\d+)" component={QuestionCommentDetails} />
+        <Route exact path="/questions/:id(\d+)/answers/:id(\d+)/comments/:id(\d+)" component={AnswerCommentDetails} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/questions" component={AllQuestions} />
         {/* <Route exact path="/signup" component={Questions} /> */}
