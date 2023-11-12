@@ -70,7 +70,7 @@ if (root)
         <Route exact path="/questions/:id(\d+)/edit" component={EditQuestion} />
         <Route exact path="/questions/:id(\d+)/answers/:id(\d+)" component={AnswerDetails} />
         <Route exact path="/questions/:id(\d+)/comments/:id(\d+)" component={QuestionCommentDetails} />
-        <Route exact path="/questions/:id(\d+)/answers/:id(\d+)/comments/:id(\d+)" component={AnswerCommentDetails} />
+        <Route exact path="/questions/:id(\d+)/answers/:id(\d+)/comments" component={AnswerCommentDetails} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/questions" component={AllQuestions} />
         {/* <Route exact path="/signup" component={Questions} /> */}
