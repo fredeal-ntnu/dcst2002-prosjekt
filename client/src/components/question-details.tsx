@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
-import { HashRouter, Route } from 'react-router-dom';
-import { NavBar, Card, Alert, Row, Column, Button, SideMenu, MainCard } from '../widgets';
+import { HashRouter, Route, NavLink } from 'react-router-dom';
+import { NavBar, Card, Alert, Row, Column, Button, SideMenu, MainCard} from '../widgets';
+
 import service, {
   Question,
   Tag,
@@ -85,7 +86,10 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                     {
                     this.answers.map((answer) => {
                       if (answer.question_id == this.props.match.params.id) {
-                        return <Row key={answer.answer_id}>{answer.text}</Row>
+                        return( 
+                        <Row key={answer.answer_id}>
+                          <NavLink to={'/questions/'+this.props.match.params.id+'/answers/'+answer.answer_id}>{answer.text}</NavLink>
+                        </Row>)
                       }
                     })
                     }
