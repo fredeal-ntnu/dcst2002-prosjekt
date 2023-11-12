@@ -57,12 +57,14 @@ questionRouter.post('/questions', (request, response) => {
 
 //Delete question
 questionRouter.delete('/questions/:id', (request, response) => {
-  console.log(Number(request.params.id))
+  const id = Number(request.params.id);
+
   questionService
-    .deleteQuestion(Number(request.params.id))
-    .then((_result) => response.send())
-    .catch((error) => response.status(500).send(error));
+    .deleteQuestion(id)
+    .then(() => response.send())
+    .catch((error) => response.status(500).send("Error deleting question"));
 });
+
 
 //Update question
 questionRouter.put('/questions', (request, response) => {
@@ -81,4 +83,6 @@ questionRouter.put('/questions', (request, response) => {
       .catch((error) => response.status(500).send(error));}
   else response.status(400).send('Missing question properties');
 });
+
+
 export default questionRouter;

@@ -87,11 +87,12 @@ class Service {
     /**
      * Delete question with given id.
      */
-    deleteQuestion(question_id: number) {
+    deleteQuestion(id: number) {
+        console.log("heidu",typeof(id))
         return new Promise<void>((resolve, reject) => {
-            pool.query('DELETE FROM Question WHERE question_id=?', [question_id], (error) => {
+            pool.query('DELETE FROM Question WHERE question_id=?', [id], (error) => {
+                console.log(error)
             if (error) return reject(error);
-
             resolve();
             });
         });

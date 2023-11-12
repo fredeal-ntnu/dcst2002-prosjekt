@@ -97,11 +97,13 @@ class Service {
    * Delete a question.
    */
   
-  deleteQuestion(question_id: number) {
+  deleteQuestion(id: number) {
+    console.log(typeof(id))
     return axios
-    .delete<Question>('/questions/' + question_id)
+    .delete('/questions/' + id)
     .then((response) => response.data);
   }
+
 
 
   /**

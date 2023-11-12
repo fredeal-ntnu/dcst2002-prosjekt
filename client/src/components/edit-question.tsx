@@ -8,7 +8,7 @@ import { createHashHistory } from 'history';
 
 const history = createHashHistory()
 
-export class EditQuestion extends Component {
+export class EditQuestion extends Component <{match: {params: {id: number}}}> {
     question: Question = {question_id: 0, title: "", text: "", view_count: 0, confirmed_answer: false, user_name: ""};
     
    
@@ -47,7 +47,6 @@ export class EditQuestion extends Component {
                     <Button.Danger onClick={this.delete}>Delete</Button.Danger>
                 </Column>
             </Row>
-            {console.log(this.question)}
             </>
             )       
        
@@ -69,7 +68,7 @@ export class EditQuestion extends Component {
 
     delete() {
         service
-          .deleteQuestion(this.question.question_id)
+          .deleteQuestion(this.props.match.params.id)
           .then(() => history.push('/questions'))
           .catch((error) => Alert.danger('Error deleting question: ' + error.message));
     }
