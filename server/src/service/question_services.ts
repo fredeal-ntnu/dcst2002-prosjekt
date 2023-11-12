@@ -10,7 +10,7 @@ export type Question_Content = {
   text: string;
   view_count: number;
   confirmed_answer: boolean;
-  user_name: string;
+  username: string;
 };
 
 class Service {
@@ -20,7 +20,7 @@ class Service {
      */
     getQuestion(question_id: number) { 
         return new Promise<Question_Content | undefined>((resolve, reject) => {
-            pool.query('SELECT * FROM Question WHERE question_id=?', [question_id], (error, results: RowDataPacket[]) => {
+            pool.query('SELECT * FROM Questions WHERE question_id=?', [question_id], (error, results: RowDataPacket[]) => {
             if (error) return reject(error);
 
                 this.incrementViewCount(results[0].question_id)
@@ -36,7 +36,7 @@ class Service {
      */
     getAllQuestions() {
         return new Promise<Question_Content[]>((resolve, reject) => {
-            pool.query('SELECT * FROM Question', (error, results: RowDataPacket[]) => {
+            pool.query('SELECT * FROM Questions', (error, results: RowDataPacket[]) => {
             if (error) return reject(error);
     
             resolve(results as Question_Content[]);
@@ -50,7 +50,7 @@ class Service {
 
     getTopFiveQuestions() {
         return new Promise<Question_Content[]>((resolve, reject) => {
-            pool.query('SELECT * FROM Question ORDER BY view_count DESC LIMIT 5', (error, results: RowDataPacket[]) => {
+            pool.query('SELECT * FROM Questions ORDER BY view_count DESC LIMIT 5', (error, results: RowDataPacket[]) => {
             if (error) return reject(error);
     
             resolve(results as Question_Content[]);
@@ -59,7 +59,7 @@ class Service {
     }
     getUnansweredQuestions() {
         return new Promise<Question_Content[]>((resolve, reject) => {
-            pool.query('SELECT * FROM Question WHERE confirmed_answer=0 OR confirmed_answer IS NULL', (error, results: RowDataPacket[]) => {
+            pool.query('SELECT * FROM Questions WHERE has_answer=0 OR has_answer IS NULL', (error, results: RowDataPacket[]) => {
             if (error) return reject(error);
     
             resolve(results as Question_Content[]);
@@ -73,10 +73,10 @@ class Service {
      * Resolves the newly created question id.
      */
 
-    createQuestion(title: string, text: string, view_count: number, confirmed_answer: boolean, user_name: string) {
+    createQuestion(title: string, text: string, view_count: number, confirmed_answer: boolean, username: string) {
         return new Promise<number>((resolve, reject) => {
-            pool.query('INSERT INTO Question SET title=?, text=?, view_count=0, confirmed_answer=0, user_name="bob"',
-            [title, text, view_count,confirmed_answer,user_name], (error, results: ResultSetHeader) => {
+            pool.query('INSERT INTO Questions SET title=?, text=?, view_count=0, has_answer=0, username="bob"',
+            [title, text, view_count,confirmed_answer,username], (error, results: ResultSetHeader) => {
             if (error) return reject(error);
 
             resolve(results.insertId);
@@ -88,9 +88,8 @@ class Service {
      * Delete question with given id.
      */
     deleteQuestion(id: number) {
-        console.log("heidu",typeof(id))
         return new Promise<void>((resolve, reject) => {
-            pool.query('DELETE FROM Question WHERE question_id=?', [id], (error) => {
+            pool.query('DELETE FROM Questions WHERE question_id=?', [id], (error) => {
                 console.log(error)
             if (error) return reject(error);
             resolve();
@@ -104,8 +103,8 @@ class Service {
 
         return new Promise<void>((resolve, reject) => {
           pool.query(
-            'UPDATE Question SET title=?, text=?, view_count=?, confirmed_answer=?, user_name=? WHERE question_id=?',
-            [question.title, question.text, question.view_count, question.confirmed_answer, question.user_name,question.question_id],
+            'UPDATE Questions SET title=?, text=?, view_count=?, has_answer=?, username=? WHERE question_id=?',
+            [question.title, question.text, question.view_count, question.confirmed_answer, question.username,question.question_id],
             (error, _results) => {
               if(error) return reject(error)
     
@@ -117,7 +116,7 @@ class Service {
 
     incrementViewCount(question_id: number) {
         return new Promise<void>((resolve, reject) => {
-            pool.query('UPDATE Question SET view_count=view_count+1 WHERE question_id=?', [question_id], (error) => {
+            pool.query('UPDATE Questions SET view_count=view_count+1 WHERE question_id=?', [question_id], (error) => {
             if (error) return reject(error);
 
             resolve();
