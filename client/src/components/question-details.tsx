@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
-import { NavBar, Card, Alert, Row, Column, Button, SideMenu, MainCard} from '../widgets';
+import { NavBar, Card, Alert, Row, Column, Button, SideMenu, MainCard, Form} from '../widgets';
 
 import service, {
   Question,
@@ -79,7 +79,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                 </Row>
               </Row>
             </MainCard>
-            <Card title="Answers">
+            <Card title="">
               <Column width={500}>
                 <Row>
                   <Card title="Answers">
@@ -87,13 +87,34 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                     this.answers.map((answer) => {
                       if (answer.question_id == this.props.match.params.id) {
                         return( 
+                          <Card title=''>
                         <Row key={answer.answer_id}>
                           <NavLink to={'/questions/'+this.props.match.params.id+'/answers/'+answer.answer_id}>{answer.text}</NavLink>
-                        </Row>)
+                        </Row>
+                        </Card>)
                       }
                     })
                     }
-                  </Card>
+
+                      
+                        <Row>
+                          <Column>
+                            <Form.Textarea
+                              placeholder="Add answer"
+                              type="text"
+                              value={this.answer.text}
+                              onChange={(event) => (this.answer.text = event.currentTarget.value)}
+                              rows={5}
+                            />
+                          </Column>
+                        </Row>
+                        <Row>
+                          <Column>
+                            <Button.Success onClick={'save'}>Add</Button.Success>
+                          </Column>
+                        </Row>
+                      </Card>
+                  
                 </Row>
               </Column>
               <Column width={500}>
