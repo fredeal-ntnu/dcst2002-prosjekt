@@ -1,4 +1,3 @@
-//vi trenger getAllAnswers, getAnswer, createAnswer, updateAnswer, deleteAnswer
 
 import pool from '../mysql-pool';
 import type { RowDataPacket, ResultSetHeader } from 'mysql2';

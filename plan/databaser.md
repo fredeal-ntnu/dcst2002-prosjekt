@@ -107,7 +107,7 @@ CREATE TABLE question_user_favourite (
     FOREIGN KEY (username) REFERENCES Users(username)
 );
 
-Eksempeldata:
+--Eksempeldata:
 
 -- User Table
 INSERT INTO Users( username, password) VALUES 

@@ -3,7 +3,14 @@ import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
 import { HashRouter, Route } from 'react-router-dom';
 import { NavBar, Card, Alert, Row, Column, Button, SideMenu, MainCard } from '../widgets';
-import service, { Question, Tag, Tag_Question_Relation, Answer, Comment } from '../service';
+import service, {
+  Question,
+  Tag,
+  Tag_Question_Relation,
+  Answer,
+  QuestionComment,
+  AnswerComment,
+} from '../service';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();
@@ -13,13 +20,15 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     title: '',
     text: '',
     view_count: 0,
-    confirmed_answer: false,
-    user_name: '',
+    has_answer: false,
+    username: '',
   };
   relations: Tag_Question_Relation[] = [];
   tags: Tag[] = [];
-  answers: Answer = { answer_id: 0, text: '', user_name: '', question_id: 0 };
-  comments: Comment = { comment_id: 0, text: '', user_name: '', question_id: 0 };
+  answers: Answer[] = [];
+  answer: Answer = { answer_id: 0, text: '', confirmed_answer: false, question_id: 0 };
+  questionComments: QuestionComment = { question_comment_id: 0, text: '', question_id: 0 };
+  answerComments: AnswerComment = { answer_comment_id: 0, text: '', answer_id: 0 };
 
   render() {
     return (
@@ -72,15 +81,22 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
             <Card title="Answers">
               <Column width={500}>
                 <Row>
-                  <Card title="Answers">{this.answers.text}
-                      her skal alle svarene til et spørsmål vises
+                  <Card title="Answers">
+                    {
+                    this.answers.map((answer) => {
+                      if (answer.question_id == this.props.match.params.id) {
+                        return <Row key={answer.answer_id}>{answer.text}</Row>
+                      }
+                    })
+                    }
                   </Card>
                 </Row>
               </Column>
               <Column width={500}>
-                <Row> 
-                  <Card title="Comments">{this.comments.text}
-                      her skal alle kommentarene til et spørsmål vises
+                <Row>
+                  <Card title="Comments">
+                   
+                    her skal alle kommentarene til et spørsmål vises
                   </Card>
                 </Row>
               </Column>
@@ -103,5 +119,9 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
       .catch((error: Error) => Alert.danger('Error getting question: ' + error.message));
 
     service.getAllTagQuestionsRelations().then((relations) => (this.relations = relations));
+
+    service
+      .getAnswersForQuestion(this.props.match.params.id)
+      .then((answers) => (this.answers = answers));
   }
 }
