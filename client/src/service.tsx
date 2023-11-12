@@ -29,6 +29,20 @@ export type User = {
   password: string;
 };
 
+export type Answer = {
+  answer_id: number;
+  text: string;
+  user_name: string;
+  question_id: number;
+};
+
+export type Comment = {
+  comment_id: number;
+  text: string;
+  user_name: string;
+  question_id: number;
+};
+
 
 
 class Service {
