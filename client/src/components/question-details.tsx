@@ -29,7 +29,9 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   tags: Tag[] = [];
   answers: Answer[] = [];
   answer: Answer = { answer_id: 0, text: '', confirmed_answer: false, question_id: 0 };
+  questionComment: QuestionComment[] = [];
   questionComments: QuestionComment = { question_comment_id: 0, text: '', question_id: 0 };
+
   answerComments: AnswerComment = { answer_comment_id: 0, text: '', answer_id: 0 };
 
   render() {
@@ -111,6 +113,52 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                         <Row>
                           <Column>
                             <Form.Textarea
+                              placeholder="Add comment"
+                              type="text"
+                              value={this.questionComments.text}
+                              onChange={(event) => (this.questionComments.text = event.currentTarget.value)}
+                              rows={5}
+                            />
+                          </Column>
+                        </Row>
+                        <Row>
+                          <Column>
+                            <Button.Success onClick={""}>Add</Button.Success>
+                          </Column>
+                        </Row>
+                      </Card>
+                  
+                </Row>
+              </Column>
+              <Column width={500}>
+                <Row>
+                  <Card title="Comments">
+                    {
+                      
+                    this.questionComment.map((comment) => {
+                      if (comment.question_id == this.props.match.params.id) {
+                        return( 
+                          <Card title=''>
+                        <Row key={comment.question_comment_id}>
+                          {comment.text}
+                          <Row>
+                          <Column><Button.Success onClick={() => {}}>Upvote</Button.Success></Column>
+                          <Column><Button.Success onClick={() => {}}>Downvote</Button.Success></Column>
+                          <Column><Button.Success onClick={() => {this.sendToAnswerCommentPage(comment.question_comment_id)}}>Comments</Button.Success></Column>
+                          <Column><Button.Success onClick={() => {}}>Edit</Button.Success></Column>
+                          <Column><Button.Success onClick={() => {}}>Mark as best</Button.Success></Column>
+                          </Row>
+                          
+                        </Row>
+                        </Card>)
+                      }
+                    })
+                    }
+
+                      
+                        <Row>
+                          <Column>
+                            <Form.Textarea
                               placeholder="Add answer"
                               type="text"
                               value={this.answer.text}
@@ -126,14 +174,6 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                         </Row>
                       </Card>
                   
-                </Row>
-              </Column>
-              <Column width={500}>
-                <Row>
-                  <Card title="Comments">
-                   
-                    her skal alle kommentarene til et spørsmål vises
-                  </Card>
                 </Row>
               </Column>
             </Card>
