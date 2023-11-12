@@ -13,6 +13,18 @@ answerRouter.get('/questions/:id/answers', (request, response) => {
     .catch((error) => response.status(500).send(error));
 });
 
+answerRouter.post('/questions/:id/answers', (request, response) => {
+    const data = request.body;
+    if (
+        typeof data.text == 'string' &&
+        data.text.length != 0
+    )
+        answerService
+        .createAnswer(data.text, data.question_id)
+        .then((id) => response.send({ id: id}))
+        .catch((error) => response.status(500).send(error));
+    else response.status(400).send('Missing dobbeltsjekk mongo properties');
+});   
 
 export default answerRouter;
 

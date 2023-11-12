@@ -190,15 +190,13 @@ getAnswersForQuestion(id: number) {
   .then((response) => response.data);
 }
 
-
-
-
+createAnswer(text: string, question_id: number) {
+  return axios
+  .post('/questions/' + question_id + '/answers', {text, question_id})
+  .then((response) => response.data);
 }
 
-
-
-
-
+}
 
 const service = new Service();
 export default service;

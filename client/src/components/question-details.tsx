@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { NavBar, Card, Alert, Row, Column, Button, SideMenu, MainCard, Form} from '../widgets';
-
 import service, {
   Question,
   Tag,
@@ -13,8 +12,10 @@ import service, {
   AnswerComment,
 } from '../service';
 import { createHashHistory } from 'history';
+import { CreateQuestion } from './create-question';
 
 const history = createHashHistory();
+
 export class QuestionDetails extends Component<{ match: { params: { id: number } } }> {
   question: Question = {
     question_id: 0,
@@ -34,6 +35,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   render() {
     return (
       <>
+      
         <Card title="">
           <div className="row">
             <SideMenu
@@ -84,12 +86,21 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                 <Row>
                   <Card title="Answers">
                     {
+                      
                     this.answers.map((answer) => {
                       if (answer.question_id == this.props.match.params.id) {
                         return( 
                           <Card title=''>
                         <Row key={answer.answer_id}>
-                          <NavLink to={'/questions/'+this.props.match.params.id+'/answers/'+answer.answer_id}>{answer.text}</NavLink>
+                          {answer.text}
+                          <Row>
+                          <Column><Button.Success onClick={() => {}}>Upvote</Button.Success></Column>
+                          <Column><Button.Success onClick={() => {}}>Downvote</Button.Success></Column>
+                          <Column><Button.Success onClick={() => {this.sendToAnswerCommentPage(answer.answer_id)}}>Comments</Button.Success></Column>
+                          <Column><Button.Success onClick={() => {}}>Edit</Button.Success></Column>
+                          <Column><Button.Success onClick={() => {}}>Mark as best</Button.Success></Column>
+                          </Row>
+                          
                         </Row>
                         </Card>)
                       }
@@ -110,7 +121,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                         </Row>
                         <Row>
                           <Column>
-                            <Button.Success onClick={'save'}>Add</Button.Success>
+                            <Button.Success onClick={this.createAnswer}>Add</Button.Success>
                           </Column>
                         </Row>
                       </Card>
@@ -149,4 +160,16 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
       .getAnswersForQuestion(this.props.match.params.id)
       .then((answers) => (this.answers = answers));
   }
+
+  createAnswer() {
+    service
+      .createAnswer(this.answer.text, this.props.match.params.id)
+      .then(() => location.reload())
+      .catch((error) => Alert.danger('Error saving answer: ' + error.message));
+  }
+
+  sendToAnswerCommentPage(answer_id: number) {
+    history.push('/questions/' + this.props.match.params.id + '/answers/' + answer_id + '/comments');
+  }
 }
+
