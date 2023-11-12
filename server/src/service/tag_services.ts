@@ -18,7 +18,7 @@ class Service {
 
     getTag(tag_id: number) { 
         return new Promise<Tag_Content>((resolve, reject) => {
-            pool.query('SELECT * FROM Tag WHERE tag_id = ?', [tag_id], (error, results: RowDataPacket[]) => {
+            pool.query('SELECT * FROM Tags WHERE tag_id = ?', [tag_id], (error, results: RowDataPacket[]) => {
             if (error) return reject(error);
     
             resolve(results[0] as Tag_Content);
@@ -33,7 +33,7 @@ class Service {
 
     getAllTags() {
         return new Promise<Tag_Content[]>((resolve, reject) => {
-            pool.query('SELECT * FROM Tag', (error, results: RowDataPacket[]) => {
+            pool.query('SELECT * FROM Tags', (error, results: RowDataPacket[]) => {
             if (error) return reject(error);
     
             resolve(results as Tag_Content[]);
