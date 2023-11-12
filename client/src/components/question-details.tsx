@@ -7,7 +7,7 @@ import service, { Question, Tag, Tag_Question_Relation, Answer, Comment } from '
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();
-export class QuestionDetails extends Component <{match: {params: {id: number}}}> {
+export class QuestionDetails extends Component<{ match: { params: { id: number } } }> {
   question: Question = {
     question_id: 0,
     title: '',
@@ -19,7 +19,7 @@ export class QuestionDetails extends Component <{match: {params: {id: number}}}>
   relations: Tag_Question_Relation[] = [];
   tags: Tag[] = [];
   answers: Answer = { answer_id: 0, text: '', user_name: '', question_id: 0 };
-  comment: Comment = { comment_id: 0, text: '', user_name: '', question_id: 0 };
+  comments: Comment = { comment_id: 0, text: '', user_name: '', question_id: 0 };
 
   render() {
     return (
@@ -70,14 +70,20 @@ export class QuestionDetails extends Component <{match: {params: {id: number}}}>
               </Row>
             </MainCard>
             <Card title="Answers">
-              <Row>
-                <Column width={50}>
-                  <Card title="Answer">{this.answers.text}</Card>
-                </Column>
-                <Column width={50}>
-                  <Card title="Comment">{this.answers.text}</Card>
-                </Column>
-              </Row>
+              <Column width={500}>
+                <Row>
+                  <Card title="Answers">{this.answers.text}
+                      her skal alle svarene til et spørsmål vises
+                  </Card>
+                </Row>
+              </Column>
+              <Column width={500}>
+                <Row> 
+                  <Card title="Comments">{this.comments.text}
+                      her skal alle kommentarene til et spørsmål vises
+                  </Card>
+                </Row>
+              </Column>
             </Card>
           </div>
         </Card>
