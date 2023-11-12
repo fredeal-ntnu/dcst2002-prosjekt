@@ -1,6 +1,5 @@
 import express from 'express';
 import {questionService} from '../service/question_services';
-import {Question_Content} from '../service/question_services'
 /**
  * Express router containing task methods.
  */

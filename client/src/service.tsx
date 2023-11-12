@@ -8,8 +8,8 @@ export type Question = {
   title: string;
   text: string;
   view_count: number;
-  confirmed_answer: boolean;
-  user_name: string;
+  has_answer: boolean;
+  username: string;
 }; 
 
 
@@ -32,17 +32,21 @@ export type User = {
 export type Answer = {
   answer_id: number;
   text: string;
-  user_name: string;
+  confirmed_answer: boolean;
   question_id: number;
 };
 
-export type Comment = {
-  comment_id: number;
+export type QuestionComment = {
+  question_comment_id: number;
   text: string;
-  user_name: string;
   question_id: number;
 };
 
+export type AnswerComment = {
+  answer_comment_id: number;
+  text: string;
+  answer_id: number;
+};
 
 
 class Service {
@@ -180,18 +184,19 @@ getUser(user : User) {
   .then((response) => response.data);
 }
 
-
-
-
-
-
-
+getAnswersForQuestion(id: number) {
+  return axios
+  .get('/questions/' + id + '/answers')
+  .then((response) => response.data);
 }
 
+createAnswer(text: string, question_id: number) {
+  return axios
+  .post('/questions/' + question_id + '/answers', {text, question_id})
+  .then((response) => response.data);
+}
 
-
-
-
+}
 
 const service = new Service();
 export default service;
