@@ -3,13 +3,20 @@ import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
 import { HashRouter, Route } from 'react-router-dom';
 import { Card, Row, Column, SideMenu, Button, MainCard, Alert, Form } from '../widgets';
-import service, { Question} from '../service';
+import service, { Question, Tag, Tag_Question_Relation, Answer, AnswerComment, QuestionComment } from '../service';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory()
 
 export class EditQuestion extends Component <{match: {params: {id: number}}}> {
     question: Question = {question_id: 0, title: "", text: "", view_count: 0, has_answer: false, username: ""};
+    answers: Answer = {answer_id: 0, text: "", confirmed_answer: false, question_id: 0};
+    answerComment: AnswerComment = {answer_comment_id: 0, text: "", answer_id: 0};
+    questionComment: QuestionComment = {question_comment_id: 0, text: "", question_id: 0};
+
+    
+   
+
     render() {
         return(
             <>
