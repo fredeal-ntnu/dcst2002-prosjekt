@@ -15,6 +15,7 @@ export class CreateQuestion extends Component {
       return (
         <>
           <Card title="">
+            
             <div className="row">
               <SideMenu header="Public"
                 items={[{ label: "Questions", to: "/questions" }, { label: "Tags", to: "/tags" }]}/>

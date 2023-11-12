@@ -12,37 +12,27 @@ export type Answer_Content = {
 
 class Service {
 
-    /**
-     * Get answer with given id.
-     */
-    getAnswer(answer_id: number) { 
-        return new Promise<Answer_Content | undefined>((resolve, reject) => {
-            pool.query('SELECT * FROM Answers WHERE answer_id = ?', [answer_id], (error, results: RowDataPacket[]) => {
-            if (error) return reject(error);
-    
-            resolve(results[0] as Answer_Content);
-            });
-        });
-    }
-
-    /**
-     * Get all answers.
-     */
-    getAllAnswers() {
+    getAnswersByQuestionId(question_id: number) {
         return new Promise<Answer_Content[]>((resolve, reject) => {
-            pool.query('SELECT * FROM Answers', (error, results: RowDataPacket[]) => {
+            pool.query('SELECT * FROM Answers WHERE question_id = ?', [question_id], (error, results: RowDataPacket[]) => {
             if (error) return reject(error);
-    
+
             resolve(results as Answer_Content[]);
             });
         });
     }
 
-    /**
-     * Create new answer having the given text.
-     *
-     * Resolves the newly created answer id.
-     */
+    setConfirmedAnswer(answer_id: number) {
+        return new Promise<void>((resolve, reject) => {
+            pool.query('UPDATE Answers SET confirmed_answer = true WHERE answer_id = ?', [answer_id], (error, results: ResultSetHeader) => {
+            if (error) return reject(error);
+            if (results.affectedRows == 0) return reject(new Error('No row updated'));
+
+            resolve();
+            });
+        }); 
+    }
+
 
     createAnswer(text: string, question_id: number) {
         return new Promise<number>((resolve, reject) => {
