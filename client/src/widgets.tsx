@@ -31,18 +31,22 @@ class Link extends Component<{ to: string }> {
   }
 }
 
-export class SideMenu extends Component<{ header: ReactNode, items: {label: string, to: string}[] }> {
+export class SideMenu extends Component<{ header: ReactNode, items?: {label: string, to: string}[] }> {
   static Link = Link;
+
   render() {
     return (
       <div className='col-md-3'>
         <div className="card" style={{ width: '18rem', marginTop: '20px' }}>
           <div className="card-header">{this.props.header}</div>
+          {this.props.items ?
             <ul className="list-group list-group-flush">{this.props.items.map((item, index) => (
               <li key={index} className="list-group-item">
                 <Link to={item.to}>{item.label}</Link>
               </li>))}
             </ul>
+            : this.props.children
+            }
         </div>
       </div>
     );
@@ -120,6 +124,7 @@ class ButtonSuccess extends Component<{
   }
 }
 
+
 /**
  * Renders a danger button using Bootstrap styles.
  *
@@ -182,31 +187,7 @@ class ButtonLight extends Component<{
   }
 }
 
-class ButtonChecked extends Component<{
-  small?: boolean;
-  onClick: () => void;
-}> {
-  render() {
-    return (
-      <button
-        type="button"
-        className="btn-group-toggle" data-toggle="buttons"
-        style={
-          this.props.small
-            ? {
-                padding: '5px 5px',
-                fontSize: '16px',
-                lineHeight: '0.7',
-              }
-            : {}
-        }
-        onClick={this.props.onClick}
-      >
-        {this.props.children}
-      </button>
-    );
-  }
-}
+
 
 /**
  * Renders a button using Bootstrap styles.
@@ -217,7 +198,6 @@ export class Button {
   static Success = ButtonSuccess;
   static Danger = ButtonDanger;
   static Light = ButtonLight;
-  static Checked = ButtonChecked;
 }
 
 /**
@@ -282,19 +262,21 @@ class FormLabel extends Component {
 class FormInput extends Component<{
   type: string;
   value: string | number;
+  placeholder?: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   [prop: string]: any;
 }> {
   render() {
     // ...rest will contain extra passed attributes such as disabled, required, width, height, pattern
     // For further information, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
-    const { type, value, onChange, ...rest } = this.props;
+    const { type, value, placeholder, onChange, ...rest } = this.props;
     return (
       <input
         {...rest}
         className="form-control"
         type={this.props.type}
         value={this.props.value}
+        placeholder={this.props.placeholder}
         onChange={this.props.onChange}
       />
     );

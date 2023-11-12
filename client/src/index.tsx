@@ -9,6 +9,7 @@ import { QuestionDetails } from './components/question-details';
 import { EditQuestion } from './components/edit-question';
 import { Login } from './components/login';
 import { AllQuestions } from './components/all-question';
+import { Tags } from './components/tags';
 
 
 class Menu extends Component {
@@ -65,7 +66,7 @@ if (root)
         <Route exact path="/login" component={Login} />
         <Route exact path="/questions" component={AllQuestions} />
         {/* <Route exact path="/signup" component={Questions} /> */}
-        {/* <Route exact path="/signup" component={Tags} /> */}
+        <Route exact path="/tags" component={Tags} />
       </div>
     </HashRouter>,
   );

@@ -94,8 +94,6 @@ export class AllQuestions extends Component {
                 .then((questions) => (this.questions = questions))
                 .catch((error) => Alert.danger(error.message));
           break;
-        default:
-          // Handle default case
       }
     }
   

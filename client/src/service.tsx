@@ -136,7 +136,7 @@ class Service {
    * Get a tag by name.
    */
 
-  getQuestionsByTag(tag: string) {
+  getQuestionsByTag(tag: number) {
     return axios
     .get('/tags/' + tag + '/questions')
     .then((response) => response.data);
