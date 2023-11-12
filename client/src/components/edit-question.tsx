@@ -13,7 +13,6 @@ export class EditQuestion extends Component <{match: {params: {id: number}}}> {
     render() {
         return(
             <>
-            
             <Row>
             <Card title="Edit Question">
                 <Row>
