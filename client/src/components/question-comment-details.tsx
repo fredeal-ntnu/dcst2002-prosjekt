@@ -44,7 +44,7 @@ export class QuestionCommentDetails extends Component<{ match: { params: { id: n
   }
 
   save() {
-    console.log(this.questionComment.question_id)
+    console.log(this.questionComment)
     service
       .updateQuestionComment(this.questionComment)
       .then(() => history.push('/questions/' + this.questionComment.question_id))

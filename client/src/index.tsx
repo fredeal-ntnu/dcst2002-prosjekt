@@ -74,7 +74,7 @@ if (root)
         <Route exact path="/questions/:id(\d+)/answers/:id(\d+)/edit" component={EditAnswer} />
         <Route
           exact
-          path="/questions/:id(\d+)/comments/:id(\d+)"
+          path="/questions/:id(\d+)/comments/:id(\d+)/edit"
           component={QuestionCommentDetails}
         />
         <Route
