@@ -20,6 +20,8 @@ class Menu extends Component {
     return (
       <NavBar brand="askMorgan">
         <NavBar.Link to="/login">Log in</NavBar.Link>
+        <a href="/login/federated/google">Sign in with Google</a>
+
         <NavBar.Link to="/signup">Sign up</NavBar.Link>
         <NavBar.Link to="/createQuestion">Add question</NavBar.Link>
       </NavBar>
