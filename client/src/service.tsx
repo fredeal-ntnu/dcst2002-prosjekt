@@ -203,6 +203,62 @@ createAnswer(text: string, question_id: number) {
   .then((response) => response.data);
 }
 
+
+// ALLE SERVICES FOR QUESTION COMMENTS
+createQuestionComment(text: string, question_id: number) {
+  return axios
+  .post('/questions/' + question_id + '/comments', {text, question_id})
+  .then((response) => response.data);
+}
+
+updateQuestionComment(question_comment_id: number, text: string) {
+  return axios
+  .put('/questions/' + question_comment_id + '/comments', {question_comment_id, text})
+  .then((response) => response.data);
+}
+
+deleteQuestionComment(question_comment_id: number) {
+  return axios
+  .delete('/questions/' + question_comment_id + '/comments')
+  .then((response) => response.data);
+}
+
+getQuestionCommentsForQuestion(id: number) {
+  return axios
+  .get('/questions/' + id + '/comments')
+  .then((response) => response.data);
+}
+
+
+// ALLE SERVICES FOR ANSWER COMMENTS
+createAnswerComment(text: string, answer_id: number) {
+  return axios
+  .post('/answers/' + answer_id + '/comments', {text, answer_id})
+  .then((response) => response.data);
+}
+
+updateAnswerComment(answer_comment_id: number, text: string) {
+  return axios
+  .put('/answers/' + answer_comment_id + '/comments', {answer_comment_id, text})
+  .then((response) => response.data);
+}
+
+deleteAnswerComment(answer_comment_id: number) {
+  return axios
+  .delete('/answers/' + answer_comment_id + '/comments')
+  .then((response) => response.data);
+}
+
+getAnswerCommentsForAnswer(id: number) {
+  return axios
+  .get('/answers/' + id + '/comments')
+  .then((response) => response.data);
+}
+
+
+
+
+
 updateAnswer(answer: Answer) {
   return axios
   .put('/answers', answer)
