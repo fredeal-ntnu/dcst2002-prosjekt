@@ -1,6 +1,8 @@
 CREATE TABLE Users (
-    username VARCHAR(255) PRIMARY KEY,
-    password VARCHAR(255) NOT NULL
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    google_id VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Questions (
@@ -9,10 +11,9 @@ CREATE TABLE Questions (
     text TEXT,
     view_count INT DEFAULT 0,
     has_answer BOOLEAN DEFAULT FALSE,
-    username VARCHAR(255),
-    FOREIGN KEY (username) REFERENCES Users(username) ON DELETE CASCADE
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
-
 CREATE TABLE question_comments (
     question_comment_id INT PRIMARY KEY AUTO_INCREMENT,
     text TEXT NOT NULL,
@@ -29,11 +30,11 @@ CREATE TABLE Answers (
 );
 
 CREATE TABLE Votes (
-    username VARCHAR(255),
+    user_id INT,
     question_id INT,
     vote_type BOOLEAN,
-    PRIMARY KEY (username, question_id),
-    FOREIGN KEY (username) REFERENCES Users(username) ON DELETE CASCADE,
+    PRIMARY KEY (user_id, question_id),
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (question_id) REFERENCES Questions(question_id) ON DELETE CASCADE
 );
 
@@ -59,31 +60,31 @@ CREATE TABLE tag_question_relation (
 
 CREATE TABLE question_user_favourite (
     question_id INT,
-    username VARCHAR(255),
-    PRIMARY KEY (question_id, username),
+    user_id INT,
+    PRIMARY KEY (question_id, user_id),
     FOREIGN KEY (question_id) REFERENCES Questions(question_id) ON DELETE CASCADE,
-    FOREIGN KEY (username) REFERENCES Users(username) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
 --Eksempeldata:
 
 -- User Table
-INSERT INTO Users( username, password) VALUES 
-('Alice', 'password123'),
-('Bob', 'bobpass'),
-('Charlie', 'charliepass'),
-('David', 'davidpass'),
-('Eve', 'evepass'),
-('Frank', 'frankpass');
+INSERT INTO Users( user_id, google_id, username, email) VALUES 
+(1, "asdasda" ,'alice', "alice@gmail.com"),
+(2, "asdasdads" ,'bob', "bob@gmail.com"),
+(3, "qfafsf" ,'charlie', "charlie@gmail.com"),
+(4, "fdafadf" ,'david', "david@gmail.com"),
+(5, "dasdasda" ,'eve', "eve@gmail.com"),
+(6, "lkafnjasl" ,'frank', "frank@gmail.com");
 
 -- Question Table
-INSERT INTO Questions(question_id, title, text, view_count, has_answer, username) VALUES 
-(1, 'How to code in Python?', 'Need help with Python.', 100, TRUE, 'Bob'),
-(2, 'Java vs C#?', 'Which is better?', 50, FALSE, 'Bob'),
-(3, 'HTML basics?', 'Help with HTML.', 75, FALSE, 'Bob'),
-(4, 'JavaScript frameworks?', 'Which one is the best?', 60, TRUE, 'Bob'),
-(5, 'SQL or NoSQL?', 'Database types?', 80, TRUE, 'Bob'),
-(6, 'How to deploy an app?', 'Deployment strategies.', 90, FALSE, 'Bob');
+INSERT INTO Questions(question_id, title, text, view_count, has_answer, user_id) VALUES 
+(1, 'How to code in Python?', 'Need help with Python.', 100, TRUE, 2),
+(2, 'Java vs C#?', 'Which is better?', 50, FALSE, 2),
+(3, 'HTML basics?', 'Help with HTML.', 75, FALSE, 2),
+(4, 'JavaScript frameworks?', 'Which one is the best?', 60, TRUE, 2),
+(5, 'SQL or NoSQL?', 'Database types?', 80, TRUE, 2),
+(6, 'How to deploy an app?', 'Deployment strategies.', 90, FALSE, 2);
 
 -- question_comment Table
 INSERT INTO question_comments(question_comment_id, text, question_id) VALUES 
@@ -131,13 +132,13 @@ INSERT INTO tag_question_relation(tag_id, question_id) VALUES
 (6, 6);
 
 -- question_user_favourite Table
-INSERT INTO question_user_favourite(question_id, username) VALUES 
-(1, "Alice"),
-(2, "Bob"),
-(3, "Charlie"),
-(4, "David"),
-(5, "David"),
-(6, "Frank");
+INSERT INTO question_user_favourite(question_id, user_id) VALUES 
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6);
 
 
 insert into `Answers` (`text`, `confirmed_answer`, `question_id`) values ('heii', 0, 1);
