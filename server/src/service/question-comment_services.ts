@@ -8,6 +8,7 @@ export type Question_Comment_Content = {
 };
 
 class Service {
+
   //get answer comment by question id
   getQuestionCommentByQuestionId(question_id: number) {
     return new Promise<Question_Comment_Content[]>((resolve, reject) => {
@@ -23,6 +24,7 @@ class Service {
     });
   }
 
+  //create answer comment by question id
   createQuestionComment(text: string, question_id: number) {
     return new Promise<number>((resolve, reject) => {
       pool.query(

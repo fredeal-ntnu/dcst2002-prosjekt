@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
-import { NavBar, Card, Alert, Row, Column, Button, SideMenu, MainCard, Form} from '../widgets';
+import { NavBar, Card, Alert, Row, Column, Button, SideMenu, MainCard, Form } from '../widgets';
 import service, {
   Question,
   Tag,
@@ -50,21 +50,22 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                 <Row>
                   <Column width={100}>
                     <Card title="Tags">
-                    {
-                        this.relations
-                          .filter((relation) => relation.question_id == this.props.match.params.id)
-                          .map((relation) => this.tags.find((tag) => tag.tag_id == relation.tag_id))
-                          .filter((tag): tag is Tag => tag !== undefined)
-                          .map((tag) => tag.name)
-                          .join(', ')
-                      }
+                      {this.relations
+                        .filter((relation) => relation.question_id == this.props.match.params.id)
+                        .map((relation) => this.tags.find((tag) => tag.tag_id == relation.tag_id))
+                        .filter((tag): tag is Tag => tag !== undefined)
+                        .map((tag) => tag.name)
+                        .join(', ')}
                     </Card>
                   </Column>
                 </Row>
                 <Row>
                   <Column width={2}>
                     <Button.Success
-                      onClick={() => history.push('/questions/' + this.props.match.params.id + '/edit')}>
+                      onClick={() =>
+                        history.push('/questions/' + this.props.match.params.id + '/edit')
+                      }
+                    >
                       Edit
                     </Button.Success>
                   </Column>
@@ -203,7 +204,21 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   }
 
   sendToAnswerCommentPage(answer_id: number) {
-    history.push('/questions/' + this.props.match.params.id + '/answers/' + answer_id + '/comments');
+    history.push(
+      '/questions/' + this.props.match.params.id + '/answers/' + answer_id + '/comments',
+    );
+  }
+
+  setConfirmedAnswer() {
+    if(this.connectedUser == this.question.username){
+      this.answer.confirmed_answer = true;
+    service
+      .updateAnswer(this.answer)
+      .then(() => location.reload())
+      .catch((error) => Alert.danger('Error saving answer: ' + error.message));
+  }
+  else{
+    Alert.danger('You are not the owner of this question');
   }
 
   setConfirmedAnswer() {

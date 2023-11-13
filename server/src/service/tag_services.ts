@@ -1,6 +1,5 @@
 //vi trenger getTag og getAllTags
 
-
 import pool from '../mysql-pool';
 import type { RowDataPacket, ResultSetHeader } from 'mysql2';
 
@@ -9,37 +8,38 @@ export type Tag_Content = {
   name: string;
 };
 
-
 class Service {
+  /*
+   * Get tag with given id.
+   */
 
-    /*
-        * Get tag with given id.
-    */
+  getTag(tag_id: number) {
+    return new Promise<Tag_Content>((resolve, reject) => {
+      pool.query(
+        'SELECT * FROM Tags WHERE tag_id = ?',
+        [tag_id],
+        (error, results: RowDataPacket[]) => {
+          if (error) return reject(error);
 
-    getTag(tag_id: number) { 
-        return new Promise<Tag_Content>((resolve, reject) => {
-            pool.query('SELECT * FROM Tags WHERE tag_id = ?', [tag_id], (error, results: RowDataPacket[]) => {
-            if (error) return reject(error);
-    
-            resolve(results[0] as Tag_Content);
-            });
-        });
-    }
-    
+          resolve(results[0] as Tag_Content);
+        },
+      );
+    });
+  }
 
-    /*
-        * Get all tags.
-    */
+  /*
+   * Get all tags.
+   */
 
-    getAllTags() {
-        return new Promise<Tag_Content[]>((resolve, reject) => {
-            pool.query('SELECT * FROM Tags', (error, results: RowDataPacket[]) => {
-            if (error) return reject(error);
-    
-            resolve(results as Tag_Content[]);
-            });
-        });
-    }
+  getAllTags() {
+    return new Promise<Tag_Content[]>((resolve, reject) => {
+      pool.query('SELECT * FROM Tags', (error, results: RowDataPacket[]) => {
+        if (error) return reject(error);
+
+        resolve(results as Tag_Content[]);
+      });
+    });
+  }
 }
 
 export const tagService = new Service();
