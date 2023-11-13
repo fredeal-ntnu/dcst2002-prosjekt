@@ -72,10 +72,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                 <Row>
                   <Column width={2}>
                     <Button.Success
-                      onClick={() =>
-                        history.push('/questions/' + this.props.match.params.id + '/edit')
-                      }
-                    >
+                      onClick={() => history.push('/questions/' + this.props.match.params.id + '/edit')}>
                       Edit
                     </Button.Success>
                   </Column>
@@ -98,7 +95,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                           <Column><Button.Success onClick={() => {}}>Upvote</Button.Success></Column>
                           <Column><Button.Success onClick={() => {}}>Downvote</Button.Success></Column>
                           <Column><Button.Success onClick={() => {this.sendToAnswerCommentPage(answer.answer_id)}}>Comments</Button.Success></Column>
-                          <Column><Button.Success onClick={() => {}}>Edit</Button.Success></Column>
+                          <Column><Button.Success onClick={() => history.push('/questions/' + this.props.match.params.id + '/answers/' + answer.answer_id+'/edit')}>Edit</Button.Success></Column>
                           <Column><Button.Success onClick={() => {}}>Mark as best</Button.Success></Column>
                           </Row>
                           

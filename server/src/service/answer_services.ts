@@ -5,7 +5,7 @@ import type { RowDataPacket, ResultSetHeader } from 'mysql2';
 export type Answer_Content = {
   answer_id: number;
   text: string;
-  confimed_answer: boolean;
+  confirmed_answer: boolean;
   question_id: number;
 };
 
@@ -23,7 +23,7 @@ class Service {
 
     setConfirmedAnswer(answer_id: number) {
         return new Promise<void>((resolve, reject) => {
-            pool.query('UPDATE Answers SET confirmed_answer = true WHERE answer_id = ?', [answer_id], (error, results: ResultSetHeader) => {
+            pool.query('UPDATE Answers SET confirmed_answer = 1 WHERE answer_id = ?', [answer_id], (error, results: ResultSetHeader) => {
             if (error) return reject(error);
             if (results.affectedRows == 0) return reject(new Error('No row updated'));
 
@@ -32,6 +32,16 @@ class Service {
         }); 
     }
 
+   getAnswerById(answer_id: number) {
+    return new Promise<Answer_Content>((resolve, reject) => {
+        pool.query('SELECT * FROM Answers WHERE answer_id = ?', [answer_id], (error, results: RowDataPacket[]) => {
+        if (error) return reject(error);
+        if (results.length == 0) return reject(new Error('No answer found'));
+
+        resolve(results[0] as Answer_Content);
+        });
+    });
+   }
 
     createAnswer(text: string, question_id: number) {
         return new Promise<number>((resolve, reject) => {
@@ -48,25 +58,23 @@ class Service {
      * Delete answer with given id.
      */
 
-    deleteAnswer(answer_id: number) {
+    deleteAnswer(id: number) {
         return new Promise<void>((resolve, reject) => {
-            pool.query('DELETE FROM Answers WHERE answer_id = ?', [answer_id], (error, results: ResultSetHeader) => {
+            pool.query('DELETE FROM Answers WHERE answer_id=?', [id], (error) => {
+                console.log(error)
             if (error) return reject(error);
-            if (results.affectedRows == 0) return reject(new Error('No row deleted'));
-
             resolve();
             });
-        });     
+        });
     }
-
     /**
      * Update answer with given id.
      */
     
     updateAnswer(answer: Answer_Content) {
         return new Promise<void>((resolve, reject) => {
-            pool.query('UPDATE Answers SET text=?, confirmed_answer=?, question_id=? WHERE answer_id=?', 
-            [answer.answer_id, answer.text, answer.confimed_answer,answer.question_id],
+            pool.query('UPDATE Answers SET text=?, confirmed_answer=? WHERE answer_id=?', 
+            [answer.text, answer.confirmed_answer, answer.answer_id],
              (error, results: ResultSetHeader) => {
             if (error) return reject(error);
             if (results.affectedRows == 0) return reject(new Error('No row updated'));

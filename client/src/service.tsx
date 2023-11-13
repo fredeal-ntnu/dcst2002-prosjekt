@@ -184,6 +184,13 @@ getUser(user : User) {
   .then((response) => response.data);
 }
 
+getAnswerById(id: number) {
+  return axios
+  .get('/answers/' + id)
+  .then((response) => response.data);
+
+}
+
 getAnswersForQuestion(id: number) {
   return axios
   .get('/questions/' + id + '/answers')
@@ -195,6 +202,19 @@ createAnswer(text: string, question_id: number) {
   .post('/questions/' + question_id + '/answers', {text, question_id})
   .then((response) => response.data);
 }
+
+updateAnswer(answer: Answer) {
+  return axios
+  .put('/answers', answer)
+  .then((response) => response.data);
+}
+
+deleteAnswer(id: number) {
+  return axios
+  .delete('/answers/' + id)
+  .then((response) => response.data);
+}
+
 
 }
 
