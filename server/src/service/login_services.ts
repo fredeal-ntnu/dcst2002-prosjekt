@@ -1,14 +1,16 @@
-// vi trenger getUser, createUser, updateUser
-
 import pool from '../mysql-pool';
 import type { RowDataPacket, ResultSetHeader,  } from 'mysql2';
 
 export type Login_Content = {
-  user_name: string;
-  password: string;  
+  user_id: number;
+  google_id: string;
+  username: string;  
+  email: string;
 };
 
 class Service {
+
+    
 
     
 }
