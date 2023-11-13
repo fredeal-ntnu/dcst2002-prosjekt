@@ -32,6 +32,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   answer: Answer = { answer_id: 0, text: '', confirmed_answer: false, question_id: 0 };
   questionComment: QuestionComment = { question_comment_id: 0, text: '', question_id: 0 };
   answerComment: AnswerComment = { answer_comment_id: 0, text: '', answer_id: 0 };
+  connectedUser = "bob"
 
   render() {
     return (

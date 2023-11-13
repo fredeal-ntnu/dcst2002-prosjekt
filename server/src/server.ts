@@ -5,6 +5,7 @@
 import app from './app';
 import express from 'express';
 import path from 'path';
+import { config } from 'dotenv';
 
 // Serve client files
 app.use(express.static(path.join(__dirname, '/../../client/public')));
