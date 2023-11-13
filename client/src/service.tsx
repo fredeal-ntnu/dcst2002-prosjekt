@@ -211,9 +211,9 @@ createQuestionComment(text: string, question_id: number) {
   .then((response) => response.data);
 }
 
-updateQuestionComment(question_comment_id: number, text: string) {
+updateQuestionComment(questionComment: QuestionComment) {
   return axios
-  .put('/questions/' + question_comment_id + '/comments', {question_comment_id, text})
+  .put('/questions/' + questionComment.question_id + '/comments', {questionComment})
   .then((response) => response.data);
 }
 
@@ -270,7 +270,6 @@ deleteAnswer(id: number) {
   .delete('/answers/' + id)
   .then((response) => response.data);
 }
-
 
 }
 
