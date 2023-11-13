@@ -159,6 +159,13 @@ class Service {
   }
 
   // ALLE SERVICES FOR QUESTION COMMENTS
+
+  getQuestionCommentById(id: number) {
+    return axios
+    .get('/comments/'+ id)
+    .then((response) => response.data);
+  }
+
   createQuestionComment(text: string, question_id: number) {
     return axios
       .post('/questions/' + question_id + '/comments', { text, question_id })
@@ -167,7 +174,7 @@ class Service {
 
 updateQuestionComment(questionComment: QuestionComment) {
   return axios
-  .put('/questions/' + questionComment.question_id + '/comments', {questionComment})
+  .put('/comments', {questionComment})
   .then((response) => response.data);
 }
 
@@ -205,7 +212,8 @@ updateQuestionComment(questionComment: QuestionComment) {
   }
 
   updateAnswer(answer: Answer) {
-    return axios.put('/answers', answer).then((response) => response.data);
+    return axios.put('/answers', answer)
+    .then((response) => response.data);
   }
 
 deleteAnswer(id: number) {

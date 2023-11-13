@@ -21,6 +21,7 @@ export class EditAnswer extends Component<{ match: { params: { id: number } } }>
   render() {
     return (
       <>
+      {console.log(this.answer)}
         <Row>
           <Card title="Edit Answer">
             <Row>

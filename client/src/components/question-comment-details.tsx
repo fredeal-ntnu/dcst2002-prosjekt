@@ -15,7 +15,7 @@ export class QuestionCommentDetails extends Component<{ match: { params: { id: n
   render() {
     return(
       <>
-      {console.log(this.props.match.params.id)}
+    {console.log(this.questionComment)}
       <Card title="Edit Comment">
         <Row>
           <Column width={10}>
@@ -29,7 +29,7 @@ export class QuestionCommentDetails extends Component<{ match: { params: { id: n
         </Row>
         <Row>
           <Column><Button.Success onClick={this.save}>Save</Button.Success></Column>
-          <Column><Button.Danger onClick={this.delete}></Button.Danger></Column>
+          <Column><Button.Danger onClick={this.delete}>Delete</Button.Danger></Column>
         </Row>
       </Card>
       </>
@@ -38,11 +38,13 @@ export class QuestionCommentDetails extends Component<{ match: { params: { id: n
   }
 
   mounted() {
-    service.getQuestionCommentsForQuestion(this.props.match.params.id)
-    .then((questionComments) => (this.questionComments = questionComments));
+    service.getQuestionCommentById(this.props.match.params.id)
+    .then((questionComment) => (this.questionComment = questionComment))
+    .catch((error: Error) => Alert.danger('Error getting question comment: ' + error.message));
   }
 
   save() {
+    console.log(this.questionComment.question_id)
     service
       .updateQuestionComment(this.questionComment)
       .then(() => history.push('/questions/' + this.questionComment.question_id))

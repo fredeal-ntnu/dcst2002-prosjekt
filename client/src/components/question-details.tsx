@@ -36,7 +36,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   render() {
     return (
       <>
-        {console.log(this.questionComments)}
+    
         <Card title="">
           <div className="row">
             <SideMenu
@@ -166,7 +166,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                                         '/questions/' +
                                           this.props.match.params.id +
                                           '/comments/' +
-                                          questionComment.question_comment_id,
+                                          questionComment.question_comment_id + '/edit',
                                       )
                                     }
                                   >

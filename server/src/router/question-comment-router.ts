@@ -37,14 +37,24 @@ questionCommentRouter.delete('/questions/:questionId/comments/:commentId', (requ
 
 //Update question comment
 
-questionCommentRouter.put('/questions/:questionId/comments/:commentId', (request, response) => {
+questionCommentRouter.put('/comments', (request, response) => {
   const data = request.body;
   if (typeof data.text == 'string' && data.text.length != 0)
     questionCommentService
-      .updateQuestionComment(data.text, Number(data.question_comment_id))
+      .updateQuestionComment({question_comment_id: data.question_comment_id, text: data.text, question_id: data.question_id})
       .then((id) => response.send({ id: id }))
       .catch((error) => response.status(500).send(error));
   else response.status(400).send('Missing question comment router 400');
 });
+
+//Get question comment by id
+
+questionCommentRouter.get('/comments/:id', (request, response) => {
+  const commentId = Number(request.params.id);
+  questionCommentService
+    .getQuestionCommentById(commentId)
+    .then((rows) => response.send(rows))
+    .catch((error) => response.status(500).send(error));
+})
 
 export default questionCommentRouter;

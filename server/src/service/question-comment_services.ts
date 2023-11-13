@@ -24,6 +24,21 @@ class Service {
     });
   }
 
+  getQuestionCommentById(question_comment_id: number) {
+    return new Promise<Question_Comment_Content>((resolve, reject) => {
+      pool.query(
+        'SELECT * FROM question_comments WHERE question_comment_id = ?',
+        [question_comment_id],
+        (error, results: RowDataPacket[]) => {
+          if (error) return reject(error);
+          if (results.length == 0) return reject(new Error('No question comment found'));
+
+          resolve(results[0] as Question_Comment_Content);
+        },
+      );
+    });
+  }
+
   //create answer comment by question id
   createQuestionComment(text: string, question_id: number) {
     return new Promise<number>((resolve, reject) => {
@@ -62,11 +77,11 @@ class Service {
    * Update answer Comment with given id.
    */
 
-  updateQuestionComment(text: string, question_comment_id: number) {
+  updateQuestionComment(question_comment: Question_Comment_Content) {
     return new Promise<void>((resolve, reject) => {
       pool.query(
         'UPDATE question_comments SET text=? WHERE question_comment_id=?',
-        [text, question_comment_id],
+        [question_comment.text, question_comment.question_comment_id],
         (error, _results) => {
           if (error) return reject(error);
 
