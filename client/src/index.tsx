@@ -21,7 +21,6 @@ class Menu extends Component {
       <NavBar brand="askMorgan">
         <NavBar.Link to="/login">Log in</NavBar.Link>
         <a href="/login/federated/google">Sign in with Google</a>
-
         <NavBar.Link to="/signup">Sign up</NavBar.Link>
         <NavBar.Link to="/createQuestion">Add question</NavBar.Link>
       </NavBar>
@@ -87,6 +86,7 @@ if (root)
         <Route exact path="/questions" component={AllQuestions} />
         {/* <Route exact path="/signup" component={Questions} /> */}
         <Route exact path="/tags" component={Tags} />
+        <Route exact path="/login/federated/google" component={} />
       </div>
     </HashRouter>,
   );

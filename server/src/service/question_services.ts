@@ -9,7 +9,7 @@ export type Question_Content = {
   text: string;
   view_count: number;
   confirmed_answer: boolean;
-  username: string;
+  user_id: number;
 };
 
 class Service {
@@ -89,12 +89,12 @@ class Service {
     text: string,
     view_count: number,
     confirmed_answer: boolean,
-    username: string,
+    user_id: number,
   ) {
     return new Promise<number>((resolve, reject) => {
       pool.query(
-        'INSERT INTO Questions SET title=?, text=?, view_count=0, has_answer=0, username="bob"',
-        [title, text, view_count, confirmed_answer, username],
+        'INSERT INTO Questions SET title=?, text=?, view_count=0, has_answer=0, user_id=2',
+        [title, text, view_count, confirmed_answer, user_id],
         (error, results: ResultSetHeader) => {
           if (error) return reject(error);
 
@@ -123,13 +123,13 @@ class Service {
   updateQuestion(question: Question_Content) {
     return new Promise<void>((resolve, reject) => {
       pool.query(
-        'UPDATE Questions SET title=?, text=?, view_count=?, has_answer=?, username=? WHERE question_id=?',
+        'UPDATE Questions SET title=?, text=?, view_count=?, has_answer=?, user_id=? WHERE question_id=?',
         [
           question.title,
           question.text,
           question.view_count,
           question.confirmed_answer,
-          question.username,
+          question.user_id,
           question.question_id,
         ],
         (error, _results) => {
