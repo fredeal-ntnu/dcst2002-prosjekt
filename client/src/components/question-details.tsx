@@ -241,6 +241,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   createComment() {
     service
       .createQuestionComment(this.questionComment.text, this.props.match.params.id)
+      .then(() => location.reload())
       .catch((error) => Alert.danger('Error saving comment: ' + error.message));
   }
 
