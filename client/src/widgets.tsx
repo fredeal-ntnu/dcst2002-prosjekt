@@ -2,16 +2,18 @@ import * as React from 'react';
 import { ReactNode, ChangeEvent } from 'react';
 import { Component } from 'react-simplified';
 import { NavLink } from 'react-router-dom';
+import { Question } from './service';
+import { EyeIcon } from './icons';
 
 /**
  * Renders an information card using Bootstrap classes.
  *
  * Properties: title
  */
-export class Card extends Component<{ title: ReactNode, smallTitle?: boolean }> {
+export class Card extends Component<{ title: ReactNode, smallTitle?: boolean, width?: string }> {
   render() {
     return (
-      <div className="card">
+      <div className="card" style={{ width: this.props.width || 'auto', marginTop: '20px'}}>
         <div className="card-body">
           {this.props.smallTitle ? <h6 className="card-title">{this.props.title}</h6> : <h5 className="card-title">{this.props.title}</h5>}
           <div className="card-text">{this.props.children}</div>
@@ -37,8 +39,8 @@ export class SideMenu extends Component<{ header: ReactNode, items?: {label: str
   render() {
     return (
       <div className='col-md-3'>
-        <div className="card" style={{ width: '18rem', marginTop: '20px' }}>
-          <div className="card-header">{this.props.header}</div>
+        <div className="card" style={{ width: '18rem', marginTop: '20px', marginLeft: '20px'}}>
+          <h5 className="card-header">{this.props.header}</h5>
           {this.props.items ?
             <ul className="list-group list-group-flush">{this.props.items.map((item, index) => (
               <li key={index} className="list-group-item">
@@ -59,11 +61,24 @@ export class MainCard extends Component<{ header: ReactNode }> {
     return (
       <div className='col-md-6'>
         <div className="card" style={{ width: '58rem', marginTop: '20px' }}>
-          <div className="card-header">{this.props.header}</div>
+          <h5 className="card-header">{this.props.header}</h5>
             <div className="card-text" style={{ padding: '15px' }}>{this.props.children}</div>
         </div>
       </div>
     );
+  }
+}
+
+export class QuestionCard extends Component<{ question: Question }> {
+  render() {
+    return (
+      <Card title={<NavLink to={'/questions/' + this.props.question.question_id}>{this.props.question.title}</NavLink>}>
+            <Row>
+              <Column>{this.props.question.text}</Column>
+              <Column width={2} right><EyeIcon style={{ verticalAlign: '-2px' }} />{' '}{this.props.question.view_count}</Column>
+            </Row>
+      </Card>
+    )
   }
 }
 
@@ -187,8 +202,6 @@ class ButtonLight extends Component<{
   }
 }
 
-
-
 /**
  * Renders a button using Bootstrap styles.
  *
@@ -292,8 +305,6 @@ class FormTextarea extends React.Component<{
   [prop: string]: any;
 }> {
   render() {
-    // ...rest will contain extra passed attributes such as disabled, required, rows, cols
-    // For further information, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
     const { value, onChange, ...rest } = this.props;
     return <textarea {...rest} className="form-control" value={value} onChange={onChange} />;
   }
@@ -338,7 +349,8 @@ class FormSelect extends Component<{
     return (
       <select 
         {...rest} 
-        className="custom-select"
+        className="form-select"
+        aria-label="Default select example"
         value={value} 
         onChange={onChange}>
         {children}
