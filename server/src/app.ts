@@ -4,6 +4,8 @@ import answerRouter from './router/answer-router';
 import tagRouter from './router/tag-router';
 import questionRelationRouter from './router/question-relation_router';
 import loginRouter from './router/login-router';
+import questionCommentRouter from './router/question-comment-router';
+import answerCommentRouter from './router/answer-comment-router';
 import session from 'express-session';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
@@ -24,6 +26,10 @@ app.use('/api/v2', tagRouter);
 app.use('/api/v2', questionRelationRouter);
 app.use('/api/v2', loginRouter);
 app.use('/api/v2', answerRouter);
+app.use('/api/v2', questionCommentRouter);
+app.use('/api/v2', answerCommentRouter);
+
+
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
