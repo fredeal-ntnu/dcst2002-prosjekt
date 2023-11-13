@@ -1,4 +1,4 @@
-require("dotenv").config();
+/*require("dotenv").config();
 import express, { response } from "express";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
@@ -11,6 +11,8 @@ const router = express.Router();
 const GoogleStrategy = require('passport-google-oauth20').OAuth2Strategy;
 const GOOGLE_CLIENT_ID = process.env.ClientID
 const GOOGLE_CLIENT_SECRET = process.env.ClientSecret;
+
+
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
@@ -34,6 +36,7 @@ app.get('/auth/google/callback',
 /**
  * Express router containing task methods.
  */
-const loginRouter = express.Router();
+/* const loginRouter = express.Router();
 
 export default loginRouter;
+/*
