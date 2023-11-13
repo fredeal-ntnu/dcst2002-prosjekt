@@ -12,7 +12,6 @@ type TagWithCount = {
 };
 
 export class Tags extends Component {
-<<<<<<< HEAD
     questions: Question[] = [];
     tags: TagWithCount[] = [];
     relations: Tag_Question_Relation[] = [];   
@@ -86,93 +85,6 @@ export class Tags extends Component {
             </Row>
         );
       }
-=======
-  questions: Question[] = [];
-  tags: TagWithCount[] = [];
-  relations: Tag_Question_Relation[] = [];
-  questionSearch = '';
-  tagSearch = '';
-  sortOrder = 'none';
-
-  render() {
-    return (
-      <Card title="">
-        <div className="row">
-          <SideMenu header="Select Tags">
-            <ul className="list-group list-group-flush">
-              <Card title="Sort by" smallTitle>
-                <RadioRow
-                  label="Popularity"
-                  checked={this.sortOrder === 'popularity'}
-                  onChange={() => this.handleSortChange('popularity')}
-                />
-                <RadioRow
-                  label="A-Z"
-                  checked={this.sortOrder === 'a-z'}
-                  onChange={() => this.handleSortChange('a-z')}
-                />
-                <RadioRow
-                  label="Z-A"
-                  checked={this.sortOrder === 'z-a'}
-                  onChange={() => this.handleSortChange('z-a')}
-                />
-                <div style={{ marginTop: '5px' }}>
-                  <Form.Input
-                    type="text"
-                    placeholder={`Search`}
-                    value={this.tagSearch}
-                    onChange={(event) => (this.tagSearch = event.currentTarget.value)}
-                  />
-                </div>
-              </Card>
-
-              {this.tags
-                .filter((tag) => tag.name.toLowerCase().includes(this.tagSearch.toLowerCase()))
-                .map((tag, index) => (
-                  <li key={index} className="list-group-item">
-                    <Button.Light
-                      key={tag.tag_id}
-                      onClick={() => this.showQuestionsByTag(tag.tag_id)}
-                    >
-                      {tag.name} {tag.questions}
-                    </Button.Light>
-                  </li>
-                ))}
-            </ul>
-          </SideMenu>
-          <MainCard header="Top Questions">
-            <Form.Input
-              type="text"
-              placeholder={`Search`}
-              value={this.questionSearch}
-              onChange={(event) => (this.questionSearch = event.currentTarget.value)}
-            />
-            <br />
-            {this.questions
-              .filter((question) =>
-                question.title.toLowerCase().includes(this.questionSearch.toLowerCase()),
-              )
-              .map((question, i) => (
-                <Card
-                  key={i}
-                  title={
-                    <NavLink to={'/questions/' + question.question_id}>{question.title}</NavLink>
-                  }
-                >
-                  <Row>
-                    <Column>{question.text}</Column>
-                    <Column width={1} right>
-                      <EyeIcon style={{ verticalAlign: '-2px' }} /> {question.view_count}
-                    </Column>
-                  </Row>
-                </Card>
-              ))}
-          </MainCard>
-        </div>
-      </Card>
-    );
-  }
->>>>>>> 2dfd03a7675ad95971f3efe5d021d7eb08706f74
 
   showQuestionsByTag(tag_id: number) {
     service
@@ -190,25 +102,6 @@ export class Tags extends Component {
       .catch((error) => Alert.danger(error.message));
   }
 
-  handleSortChange(sortOrder: string) {
-    this.sortOrder = sortOrder;
-
-    switch (this.sortOrder) {
-      case 'popularity':
-        this.tags.sort((a, b) => b.questions - a.questions);
-        break;
-      case 'a-z':
-        this.tags.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-      case 'z-a':
-        this.tags.sort((a, b) => b.name.localeCompare(a.name));
-        break;
-      default:
-        break;
-    }
-  }
-
-<<<<<<< HEAD
     handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         this.sortOrder = event.target.value;
         console.log(this.sortOrder);
@@ -237,10 +130,6 @@ export class Tags extends Component {
       service
         .getAllQuestions()
         .then((questions) => (this.questions = questions));
-=======
-  mounted() {
-    service.getAllQuestions().then((questions) => (this.questions = questions));
->>>>>>> 2dfd03a7675ad95971f3efe5d021d7eb08706f74
 
     service
       .getAllTags()
