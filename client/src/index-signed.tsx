@@ -9,21 +9,29 @@ export class IndexSigned extends Component {
     return (
       <Card title="">
         <div className="row">
-          <SideMenu header="Private"
-            items={[{ label: "Questions", to: "/questions" }, { label: "Tags", to: "/tags" }, {label: "New Question", to: "createquestion"}, {label: "My Questions", to: "myquestion"}]}/>
+          <SideMenu
+            header="Private"
+            items={[
+              { label: 'Questions', to: '/questions' },
+              { label: 'Tags', to: '/tags' },
+              { label: 'New Question', to: 'createquestion' },
+              { label: 'My Questions', to: 'myquestion' },
+            ]}
+          />
           <MainCard header="Top Questions">
-          {this.questions.map((question) => (
-            <Row key={question.question_id}>
-              {question.title}<br></br>{question.text}
-            </Row>
-          ))}
-        </MainCard>
-        </div> 
+            {this.questions.map((question) => (
+              <Row key={question.question_id}>
+                {question.title}
+                <br></br>
+                {question.text}
+              </Row>
+            ))}
+          </MainCard>
+        </div>
       </Card>
     );
   }
   mounted() {
     service.getTopFiveQuestions().then((questions) => (this.questions = questions));
-  };
-
-};
+  }
+}

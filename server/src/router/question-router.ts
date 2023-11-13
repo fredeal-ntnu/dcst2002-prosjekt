@@ -1,5 +1,5 @@
 import express from 'express';
-import {questionService} from '../service/question_services';
+import { questionService } from '../service/question_services';
 /**
  * Express router containing task methods.
  */
@@ -18,7 +18,9 @@ questionRouter.get('/questions/:id', (request, response) => {
   const id = Number(request.params.id);
   questionService
     .getQuestion(id)
-    .then((question) => (question ? response.send(question) : response.status(404).send('Question not found')))
+    .then((question) =>
+      question ? response.send(question) : response.status(404).send('Question not found'),
+    )
     .catch((error) => response.status(500).send(error));
 });
 
@@ -48,8 +50,8 @@ questionRouter.post('/questions', (request, response) => {
     data.text.length != 0
   )
     questionService
-      .createQuestion(data.title, data.text, data.view_count, data.confirmed_answer, data.user_name)
-      .then((id) => response.send({ id: id}))
+      .createQuestion(data.title, data.text, data.view_count, data.confirmed_answer, data.user_ID)
+      .then((id) => response.send({ id: id }))
       .catch((error) => response.status(500).send(error));
   else response.status(400).send('Missing dobbeltsjekk mongo properties');
 });
@@ -61,9 +63,8 @@ questionRouter.delete('/questions/:id', (request, response) => {
   questionService
     .deleteQuestion(id)
     .then(() => response.send())
-    .catch((error) => response.status(500).send("Error deleting question"));
+    .catch((error) => response.status(500).send('Error deleting question'));
 });
-
 
 //Update question
 questionRouter.put('/questions', (request, response) => {
@@ -73,15 +74,21 @@ questionRouter.put('/questions', (request, response) => {
     typeof data.title == 'string' &&
     data.title.length != 0 &&
     typeof data.text == 'string'
-  ){
+  ) {
     console.log(data);
     questionService
-    // .updateQuestion(Question_Content: data.question)
-      .updateQuestion({ question_id: data.question_id, title: data.title, text: data.text, view_count: data.view_count, confirmed_answer: data.confirmed_answer, username: data.user_name })
+      // .updateQuestion(Question_Content: data.question)
+      .updateQuestion({
+        question_id: data.question_id,
+        title: data.title,
+        text: data.text,
+        view_count: data.view_count,
+        confirmed_answer: data.confirmed_answer,
+        user_id: data.user_id,
+      })
       .then(() => response.send())
-      .catch((error) => response.status(500).send(error));}
-  else response.status(400).send('Missing question properties');
+      .catch((error) => response.status(500).send(error));
+  } else response.status(400).send('Missing question properties');
 });
-
 
 export default questionRouter;

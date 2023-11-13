@@ -1,5 +1,5 @@
 import express from 'express';
-import {tagService} from '../service/tag_services';
+import { tagService } from '../service/tag_services';
 
 /**
  * Express router containing task methods.
@@ -18,12 +18,10 @@ tagRouter.get('/tags/:id', (request, response) => {
 //Get all tags
 
 tagRouter.get('/tags', (_request, response) => {
-    tagService
-      .getAllTags()
-      .then((rows) => response.send(rows))
-      .catch((error) => response.status(500).send(error));
-  });
-
-
+  tagService
+    .getAllTags()
+    .then((rows) => response.send(rows))
+    .catch((error) => response.status(500).send(error));
+});
 
 export default tagRouter;

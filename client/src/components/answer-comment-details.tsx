@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
-import { NavBar, Card, Alert, Row, Column, Button, SideMenu, MainCard} from '../widgets';
+import { NavBar, Card, Alert, Row, Column, Button, SideMenu, MainCard } from '../widgets';
 
 import service, {
   Question,
@@ -83,25 +83,30 @@ export class AnswerCommentDetails extends Component<{ match: { params: { id: num
               <Column width={500}>
                 <Row>
                   <Card title="Answers">
-                    {
-                    this.answers.map((answer) => {
+                    {this.answers.map((answer) => {
                       if (answer.question_id == this.props.match.params.id) {
-                        return( 
-                        <Row key={answer.answer_id}>
-                          <NavLink to={'/questions/'+this.props.match.params.id+'/answers/'+answer.answer_id}>{answer.text}</NavLink>
-                        </Row>)
+                        return (
+                          <Row key={answer.answer_id}>
+                            <NavLink
+                              to={
+                                '/questions/' +
+                                this.props.match.params.id +
+                                '/answers/' +
+                                answer.answer_id
+                              }
+                            >
+                              {answer.text}
+                            </NavLink>
+                          </Row>
+                        );
                       }
-                    })
-                    }
+                    })}
                   </Card>
                 </Row>
               </Column>
               <Column width={500}>
                 <Row>
-                  <Card title="Comments">
-                   
-                    her skal alle kommentarene til et spørsmål vises
-                  </Card>
+                  <Card title="Comments">her skal alle kommentarene til et spørsmål vises</Card>
                 </Row>
               </Column>
             </Card>

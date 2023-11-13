@@ -10,8 +10,7 @@ import session from 'express-session';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
 
-
-const cookieparser = require("cookie-parser");
+const cookieparser = require('cookie-parser');
 
 /**
  * Express application.
@@ -29,32 +28,27 @@ app.use('/api/v2', answerRouter);
 app.use('/api/v2', questionCommentRouter);
 app.use('/api/v2', answerCommentRouter);
 
-
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-
 
 //serving public file
 app.use(express.static(__dirname));
 
-
-
-
 const oneDay = 1000 * 60 * 60 * 24;
 
-app.use(session({
-    secret: "secretKeyNumberTwoFiveFour",
-    saveUninitialized:true,
-    cookie: { 
-        maxAge: oneDay,
-        httpOnly: true,
-        sameSite: true 
+app.use(
+  session({
+    secret: 'secretKeyNumberTwoFiveFour',
+    saveUninitialized: true,
+    cookie: {
+      maxAge: oneDay,
+      httpOnly: true,
+      sameSite: true,
     },
-    resave: false 
-}));
+    resave: false,
+  }),
+);
 
 app.use(passport.authenticate('session'));
-
-
 
 export default app;
