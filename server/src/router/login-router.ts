@@ -33,10 +33,10 @@ app.get('/auth/google/callback',
     // Successful authentication, redirect success.
     res.redirect('/success');
   });
-/**
- * Express router containing task methods.
+/*
+ Express router containing task methods.
  */
 /* const loginRouter = express.Router();
 
 export default loginRouter;
-/*
+*/ 

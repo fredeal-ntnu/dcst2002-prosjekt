@@ -20,7 +20,7 @@ class Menu extends Component {
     return (
       <NavBar brand="askMorgan">
         <NavBar.Link to="/login">Log in</NavBar.Link>
-        <a href="/login/federated/google">Sign in with Google</a>
+
         <NavBar.Link to="/signup">Sign up</NavBar.Link>
         <NavBar.Link to="/createQuestion">Add question</NavBar.Link>
       </NavBar>
@@ -63,7 +63,7 @@ let root = document.getElementById('root');
 if (root)
   createRoot(root).render(
     <HashRouter>
-      <div>
+      
         <Alert />
         <Menu />
         <Route exact path="/" component={Home} />
@@ -86,6 +86,6 @@ if (root)
         <Route exact path="/questions" component={AllQuestions} />
         {/* <Route exact path="/signup" component={Questions} /> */}
         <Route exact path="/tags" component={Tags} />
-      </div>
+     
     </HashRouter>,
   );
