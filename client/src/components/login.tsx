@@ -49,7 +49,7 @@ export class Login extends Component {
   //check if user exists with given username and password then log them in and redirect to home page
   handleLogin = async () => {
     service
-      .getUser(this.user)
+      .getUser(this.user_name)
       .then((user) => {
         if (user.user_name.length == 1) {
           console.log('User logged in');
