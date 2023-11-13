@@ -5,6 +5,7 @@ const answerCommentRouter = express.Router();
 
 
 // Get all answer comments by answer id
+
 answerCommentRouter.get('/questions/:questionId/answers/:answerId/comments', (request, response) => {
     const answerId = Number(request.params.answerId);
     answerCommentService
@@ -14,6 +15,7 @@ answerCommentRouter.get('/questions/:questionId/answers/:answerId/comments', (re
 });
 
 //create new answer comment
+
 answerCommentRouter.post('/questions/:questionId/answers/:answerId/comments', (request, response) => {
     const data = request.body;
     if (
@@ -28,6 +30,7 @@ answerCommentRouter.post('/questions/:questionId/answers/:answerId/comments', (r
 });
 
 // Delete answer comment
+
 answerCommentRouter.delete('/questions/:questionId/answers/:answerId/comments/:commentId', (request, response) => {
     const commentId = Number(request.params.commentId);
     answerCommentService
@@ -37,6 +40,7 @@ answerCommentRouter.delete('/questions/:questionId/answers/:answerId/comments/:c
 });
 
 // Update answer comment
+
 answerCommentRouter.put('/questions/:questionId/answers/:answerId/comments/:commentId', (request, response) => {
     const data = request.body;
     if (

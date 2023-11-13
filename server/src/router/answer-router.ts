@@ -3,7 +3,7 @@ import {answerService} from '../service/answer_services';
 
 const answerRouter = express.Router();
 
-//Get all answerse by question id
+//Get all answers by question id
 
 answerRouter.get('/questions/:id/answers', (request, response) => {
   const id = Number(request.params.id);
@@ -22,6 +22,9 @@ answerRouter.get('/answers/:id', (request, response) => {
       .then((answer) => (answer ? response.send(answer) : response.status(404).send('Answer not found')))
       .catch((error) => response.status(500).send(error));
   });
+
+
+//Create new answer
 
 answerRouter.post('/questions/:id/answers', (request, response) => {
     const data = request.body;
@@ -54,6 +57,7 @@ answerRouter.put('/answers', (request, response) => {
   });
 
   //Delete answer
+  
   answerRouter.delete('/answers/:id', (request, response) => {
     const id = Number(request.params.id);
   
