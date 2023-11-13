@@ -86,7 +86,6 @@ if (root)
         <Route exact path="/questions" component={AllQuestions} />
         {/* <Route exact path="/signup" component={Questions} /> */}
         <Route exact path="/tags" component={Tags} />
-        <Route exact path="/login/federated/google" component={} />
       </div>
     </HashRouter>,
   );
