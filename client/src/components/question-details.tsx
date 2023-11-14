@@ -10,6 +10,7 @@ import service, {
   Answer,
   QuestionComment,
   AnswerComment,
+  Vote,
 } from '../service';
 import { createHashHistory } from 'history';
 import { CreateQuestion } from './create-question';
@@ -32,12 +33,16 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   answer: Answer = { answer_id: 0, text: '', confirmed_answer: false, question_id: 0 };
   questionComment: QuestionComment = { question_comment_id: 0, text: '', question_id: 0 };
   answerComment: AnswerComment = { answer_comment_id: 0, text: '', answer_id: 0 };
+  vote: Vote = { user_id: 0, answer_id: 0, vote_type: false };
+  votes: Vote[] = []
   connectedUser = 2;
+  score: number = 0;
 
   render() {
+  
     return (
       <>
-      {console.log(this.questionComments)}
+  
         <Card title="">
           <div className="row">
             <SideMenu
@@ -87,6 +92,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                     {this.answers.map((answer) => {
                       if (answer.question_id == this.props.match.params.id) {
                         return (
+                          
                           <Card title="">
                             <Row key={answer.answer_id}>
                               {answer.text}
@@ -97,6 +103,18 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                                 <Column>
                                   <Button.Success onClick={() => {}}>Downvote</Button.Success>
                                 </Column>
+                                
+                                  <Column>
+                                    <Card title="Votes">
+                                      {answer.score}
+                                      
+                                      
+                              
+
+                          
+                                    </Card>
+                                  </Column>
+                                
                                 <Column>
                                   <Button.Success
                                     onClick={() => {
@@ -130,6 +148,8 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                         );
                       }
                     })}
+
+
 
                     <Row>
                       <Column>
@@ -229,7 +249,18 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     service
       .getQuestionCommentsForQuestion(this.props.match.params.id)
       .then((questionComments) => (this.questionComments = questionComments))
-      .catch((error: Error) => Alert.danger('Error getting question comments: ' + error.message));
+      .catch((error: Error) => Alert.danger('Error getting question comments: ' + error.message))
+
+      // this.answers.map((answer) => {
+      //   service.getVotesByAnswerId(answer.answer_id)
+      //     .then((vote) => { this.vote = vote })
+      //     .catch((error) => {
+      //       console.error(error);
+      //     });
+      // });
+    
+    
+      
   }
 
   createAnswer() {
@@ -252,25 +283,38 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     );
   }
 
-  setConfirmedAnswer() {
-    if (this.connectedUser == this.question.user_id) {
-      this.answer.confirmed_answer = true;
-      service
-        .updateAnswer(this.answer)
-        .then(() => location.reload())
-        .catch((error) => Alert.danger('Error saving answer: ' + error.message));
-    } else {
-      Alert.danger('You are not the owner of this question');
-    }
-  }
+  // setConfirmedAnswer() {
+  //   if (this.connectedUser == this.question.user_id) {
+  //     this.answer.confirmed_answer = true;
+  //     service
+  //       .updateAnswer(this.answer)
+  //       .then(() => location.reload())
+  //       .catch((error) => Alert.danger('Error saving answer: ' + error.message));
+  //   } else {
+  //     Alert.danger('You are not the owner of this question');
+  //   }
+  // }
 
-  // upvoteAnswer() {
-  //   if (this.connectedUser == this.question.username) {
+
+  // createVoteForAnswer() {
   //   service
-  //     .upvoteAnswer(this.answer.answer_id)
+  //     .createVoteForAnswer(this.vote.user_id, this.vote.answer_id, this.vote.vote_type)
   //     .then(() => location.reload())
   //     .catch((error) => Alert.danger('Error saving answer: ' + error.message));
   // }
+
+
+  // getVotesByAnswerId(id: number) {
+  //   console.log(id)
+  //   service
+  //   .getVotesByAnswerId(id)
+  //   .then((votes) => (this.votes = votes))
+  //   .catch((error: Error) => Alert.danger('Error getting votes: ' + error.message))
+  // }
+  
+
+
+
 
   // downwoteAnswer() {
   //   service.downwoteAnswer(this.answer.answer_id)

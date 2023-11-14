@@ -8,15 +8,34 @@ export type Answer_Content = {
   last_edited: Date;
   question_id: number;
   user_id: number;
+  score?: number;
 };
 
 class Service {
   //get answer by question idxxx
+  // SELECT answer_id, SUM(CASE WHEN vote_type = 1 THEN 1 ELSE -1 END) AS total_votes FROM Votes WHERE answer_id = ? GROUP BY answer_id;
 
   getAnswersByQuestionId(question_id: number) {
     return new Promise<Answer_Content[]>((resolve, reject) => {
+      const query = `
+      SELECT
+      a.*,
+      COALESCE(SUM(
+          CASE
+              WHEN ap.vote_type = 1 THEN 1
+              WHEN ap.vote_type = 0 THEN -1
+              ELSE 0
+          END
+      ), 0) AS score
+  FROM
+      Answers AS a
+  LEFT JOIN
+      Votes AS ap ON a.answer_id = ap.answer_id
+  GROUP BY
+      a.answer_id;
+      `;
       pool.query(
-        'SELECT * FROM Answers WHERE question_id = ?',
+        query,
         [question_id],
         (error, results: RowDataPacket[]) => {
           if (error) return reject(error);
@@ -93,7 +112,24 @@ class Service {
       );
     });
   }
+  
+  sortByLastEdited(answer: Answer_Content) {
+    return new Promise<Answer_Content[]>((resolve, reject) => {
+      pool.query(
+        'SELECT * FROM Answers ORDER BY last_edited DESC',
+        [answer.answer_id, answer.confirmed_answer, answer.question_id, answer.text, answer.user_id ,answer.last_edited],
+        (error, results: RowDataPacket[]) => {
+          console.log(error);
+          if (error) return reject(error);
+          resolve(results as Answer_Content[]);
+        })})
+    }
 }
+
+
+
+
+
 
 
 export const answerService = new Service();

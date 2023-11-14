@@ -31,6 +31,7 @@ export type Answer = {
   text: string;
   confirmed_answer: boolean;
   question_id: number;
+  score?: number;
 };
 
 export type QuestionComment = {
@@ -44,6 +45,12 @@ export type AnswerComment = {
   text: string;
   answer_id: number;
 };
+
+export type Vote = {
+  user_id: number;
+  answer_id: number;
+  vote_type: boolean;
+}
 
 class Service {
   /**
@@ -218,6 +225,24 @@ deleteAnswer(id: number) {
   .delete('/answers/' + id)
   .then((response) => response.data);
 }
+
+
+
+// alle services for votes
+
+getVotesByAnswerId(id: number) {
+  return axios
+  .get('/answers/' + id + '/votes')
+  .then((response) => response.data);
+
+}
+
+createVoteForAnswer(user_id: number, answer_id: string, vote_type: boolean) {
+  return axios
+  .post(answer_id + '/votes', { user_id, answer_id, vote_type })
+  .then((response) => response.data);
+}
+
 
 }
 
