@@ -6,9 +6,9 @@ const answerCommentRouter = express.Router();
 // Get all answer comments by answer id
 
 answerCommentRouter.get(
-  '/questions/:questionId/answers/:answerId/comments',
+  '/answers/:id/comments',
   (request, response) => {
-    const answerId = Number(request.params.answerId);
+    const answerId = Number(request.params.id);
     answerCommentService
       .getAnswerCommentByAnswerId(answerId)
       .then((rows) => response.send(rows))

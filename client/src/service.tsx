@@ -210,7 +210,8 @@ updateQuestionComment(questionComment: QuestionComment) {
   }
 
   getAnswerCommentsForAnswer(id: number) {
-    return axios.get('/answers/' + id + '/comments').then((response) => response.data);
+    return axios.get('/answers/' + id + '/comments')
+    .then((response) => response.data);
   }
 
   updateAnswer(answer: Answer) {

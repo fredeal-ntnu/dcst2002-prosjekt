@@ -21,33 +21,39 @@ answerComments: AnswerComment[] = [];
   render() {
     return (
       <>
+      {console.log(this.answerComments)}
         <Card title="Answer">
           <Row>
             <Column width={10}>
-              <p>{this.answer.text}</p>
+              {this.answer.text}
             </Column>
           </Row>
           <Row>
-            <Column>
-              <Button.Success onClick={this.confirmAnswer}>Confirm answer</Button.Success>
-            </Column>
           </Row>
         </Card>
         <Card title="Comments">
           {this.answerComments.map((answerComment) => (
             <Row key={answerComment.answer_comment_id}>
               <Column width={10}>
-                <p>{answerComment.text}</p>
-              </Column>
-              <Column width={2}>
-                <NavLink to={'/answerComments/' + answerComment.answer_comment_id}>Edit</NavLink>
+                {answerComment.text}
+                
               </Column>
             </Row>
           ))}
         </Card>
       </>
     );
-    )
+    
   }
-  mounted() {}
+
+  mounted() {
+    service
+      .getAnswerById(this.props.match.params.id)
+      .then((answer) => {
+        this.answer = answer;
+        return service.getAnswerCommentsForAnswer(this.answer.answer_id);
+      })
+      .then((answerComments) => (this.answerComments = answerComments))
+      .catch((error: Error) => Alert.danger('Error getting answer: ' + error.message));
+  }
 }

@@ -37,7 +37,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   render() {
     return (
       <>
-    
+      {console.log(this.questionComments)}
         <Card title="">
           <div className="row">
             <SideMenu
@@ -248,7 +248,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
 
   sendToAnswerCommentPage(answer_id: number) {
     history.push(
-      '/questions/' + this.props.match.params.id + '/answers/' + answer_id + '/comments',
+      '/questions/' + this.props.match.params.id + '/answers/' + answer_id,
     );
   }
 

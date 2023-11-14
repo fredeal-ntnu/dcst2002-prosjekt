@@ -7,7 +7,7 @@ import service, { Question,Tag, Tag_Question_Relation, Answer, QuestionComment, 
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();
-export class QuestionCommentDetails extends Component<{ match: { params: { id: number } } }> {
+export class EditQuestionComment extends Component<{ match: { params: { id: number } } }> {
   questionComments: QuestionComment[] = [];
   questionComment: QuestionComment = {question_comment_id: 0, text: '', question_id: 0};
 
