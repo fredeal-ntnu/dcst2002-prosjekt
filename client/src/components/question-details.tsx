@@ -27,9 +27,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     title: '',
     text: '',
     view_count: 0,
-    has_answer: false,
-    username: '',
-  };
+    has_answer: false, username: '',};
   answer: Answer = { answer_id: 0, text: '', confirmed_answer: false, question_id: 0 };
   questionComment: QuestionComment = { question_comment_id: 0, text: '', question_id: 0 };
   answerComment: AnswerComment = { answer_comment_id: 0, text: '', answer_id: 0 };

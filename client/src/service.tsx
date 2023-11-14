@@ -211,6 +211,24 @@ updateQuestionComment(questionComment: QuestionComment) {
       .then((response) => response.data);
   }
 
+  getAnswerCommentById(id: number) {
+    return axios
+    .get('/comments/'+ id)
+    .then((response) => response.data);
+  }
+
+  updateAnswerComment(answerComment: AnswerComment) {
+    return axios
+    .put('/comments/', answerComment)
+    .then((response) => response.data);
+  }
+
+  deleteAnswerComment(id: number) {
+    return axios
+      .delete('/comments/' + id)
+      .then((response) => response.data);
+  }
+
   
 
 

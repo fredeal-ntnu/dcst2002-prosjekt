@@ -10,7 +10,7 @@ export type Answer_Comment_Content = {
 
 class Service {
     //get answer comment by answer id
-    getAnswerCommentByAnswerId(answer_id: number) {
+    getAnswerCommentsByAnswerId(answer_id: number) {
         return new Promise<Answer_Comment_Content[]>((resolve, reject) => {
             pool.query(
             'SELECT * FROM answer_comments WHERE answer_id = ?',
@@ -22,6 +22,22 @@ class Service {
             },
             );
         });
+    }
+
+
+    getAnswerCommentById(answer_comment_id: number) {
+      return new Promise<Answer_Comment_Content>((resolve, reject) => {
+        pool.query(
+          'SELECT * FROM answer_comments WHERE answer_comment_id = ?',
+          [answer_comment_id],
+          (error, results: RowDataPacket[]) => {
+            if (error) return reject(error);
+            if (results.length == 0) return reject(new Error('No answer comment found'));
+  
+            resolve(results[0] as Answer_Comment_Content);
+          },
+        );  
+      });
     }
 
     //Create answer comment
@@ -40,7 +56,45 @@ class Service {
       });
     }
 
-  
+   /**
+   * Delete answer comment with answer id.
+   */
+
+   deleteAnswerComment(answer_comment_id: number) {
+    return new Promise<void>((resolve, reject) => {
+      pool.query(
+        'DELETE FROM answer_comments WHERE answer_comment_id = ?',
+        [answer_comment_id],
+        (error, results: ResultSetHeader) => {
+          if (error) return reject(error);
+          if (results.affectedRows == 0) return reject(new Error('No row deleted'));
+
+          resolve();
+        },
+      );
+    });
+  }
+
+  /**
+   * Update answer Comment with given id.
+   */
+
+  updateAnswerComment(answer_comment: Answer_Comment_Content) {
+    return new Promise<void>((resolve, reject) => {
+      pool.query(
+        'UPDATE answer_comments SET text=? WHERE answer_comment_id=?',
+        [answer_comment.text, answer_comment.answer_comment_id],
+        (error, _results) => {
+          if (error) return reject(error);
+
+          resolve();
+        },
+      );
+    });
+  }
+
+
+
   }
   
    
