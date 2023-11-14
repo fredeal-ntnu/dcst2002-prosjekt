@@ -5,7 +5,9 @@ export type Answer_Content = {
   answer_id: number;
   text: string;
   confirmed_answer: boolean;
+  last_edited: Date;
   question_id: number;
+  user_id: number;
 };
 
 class Service {

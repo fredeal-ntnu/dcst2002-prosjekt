@@ -47,7 +47,9 @@ answerRouter.put('/answers', (request, response) => {
         answer_id: data.answer_id,
         text: data.text,
         confirmed_answer: data.confirmed_answer,
+        last_edited: data.last_edited,
         question_id: data.question_id,
+        user_id: data.user_id,
       })
       .then(() => response.send())
       .catch((error) => response.status(500).send(error));
