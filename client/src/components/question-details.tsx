@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
-import { NavBar, Card, Alert, Row, Column, Button, SideMenu, MainCard, Form } from '../widgets';
+import { NavBar, Card, Alert, Row, Column, Button, SideMenu, Form } from '../widgets';
 import service, { Question, Tag, Tag_Question_Relation, Answer, QuestionComment, AnswerComment, Vote } from '../service';
 import { createHashHistory } from 'history';
 import { CreateQuestion } from './create-question';
@@ -35,7 +35,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                 { label: 'Tags', to: '/tags' },
               ]}
             />
-            <MainCard header="Question">
+            <Card title="Question">
               
               
                   <Card title="Title">{this.question.title}</Card>
@@ -72,9 +72,9 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                 
                   
               
-            </MainCard>
+            </Card>
 
-            <MainCard header="Comments">
+            <Card title="Comments">
                     {this.questionComments.map((questionComment) => {
                       if (questionComment.question_id == this.props.match.params.id) {
                         return (
@@ -121,7 +121,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                         <Button.Success onClick={this.createComment}>Add</Button.Success>
                       </Column>
                     </Row>
-                  </MainCard>
+                  </Card>
             
             
             
