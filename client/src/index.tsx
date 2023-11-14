@@ -15,6 +15,7 @@ import { EditQuestionComment } from './components/edit-question-comment';
 import { EditAnswerComment } from './components/edit-answer-comment';
 import { EditAnswer } from './components/edit-answer';
 import answerService from './components/services/answer-service';
+import { QuestionIcon } from './icons';
 
 class Menu extends Component {
   render() {
@@ -46,8 +47,8 @@ class Home extends Component {
   
           {/* Main content */}
           <Column>
-            <Card title='All Questions'><br />
-              
+            <Card title=''>
+            <h3>Welcome to askMorgan<QuestionIcon style={{ verticalAlign: '15px' }} /></h3> 
             </Card>
           </Column>
         </Row>
