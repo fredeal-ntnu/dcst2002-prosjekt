@@ -23,7 +23,6 @@ class Menu extends Component {
         <NavBar.Link to="/login">Log in</NavBar.Link>
 
         <NavBar.Link to="/signup">Sign up</NavBar.Link>
-        <NavBar.Link to="/createQuestion">Add question</NavBar.Link>
       </NavBar>
     );
   }

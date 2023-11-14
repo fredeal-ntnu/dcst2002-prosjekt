@@ -2,8 +2,6 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Card, Alert, Column, Row, Form, SideMenu, QuestionCard } from '../widgets';
 import service, { Question, Tag } from '../service';
-import { EyeIcon } from '../icons';
-import { NavLink } from 'react-router-dom';
 
 export class AllQuestions extends Component {
     questions: Question[] = [];
@@ -20,9 +18,9 @@ export class AllQuestions extends Component {
             <SideMenu header='Menu'
             items={[
               { label: "Questions", to: "/questions" },
-              { label: "Tags", to: "/tags" },
-              {label: "New Question", to: "createquestion"},
-              {label: "My Questions", to: "myquestion"}
+              { label: "My Questions", to: "myquestion" },
+              { label: "New Question", to: "createquestion" },
+              { label: "Tags", to: "/tags" }
             ]}/>
           </Column>
   
@@ -52,7 +50,7 @@ export class AllQuestions extends Component {
             {this.questions
               .filter((question) => (question.title.toLowerCase().includes(this.search.toLowerCase())))
               .map((question, i) => (
-                <QuestionCard key={i} question={question} />
+                <QuestionCard key={i} question={question}/>
               ))
             }
           </Column>
