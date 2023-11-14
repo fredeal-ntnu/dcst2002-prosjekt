@@ -5,7 +5,6 @@ import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { NavBar, Card, Alert, Row, Column, Button, SideMenu, MainCard, Form} from '../widgets';
 import service, { Question,Tag, Tag_Question_Relation, Answer, QuestionComment, AnswerComment} from '../service';
 import { createHashHistory } from 'history';
-import { useHistory } from "react-router-dom";
 
 const history = createHashHistory();
 // let history = useHistory();

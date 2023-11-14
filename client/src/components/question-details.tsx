@@ -3,15 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { NavBar, Card, Alert, Row, Column, Button, SideMenu, MainCard, Form } from '../widgets';
-import service, {
-  Question,
-  Tag,
-  Tag_Question_Relation,
-  Answer,
-  QuestionComment,
-  AnswerComment,
-  Vote,
-} from '../service';
+import service, { Question, Tag, Tag_Question_Relation, Answer, QuestionComment, AnswerComment, Vote } from '../service';
 import { createHashHistory } from 'history';
 import { CreateQuestion } from './create-question';
 
@@ -22,17 +14,12 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   tags: Tag[] = [];
   answers: Answer[] = [];
   questionComments: QuestionComment[] = [];
-  question: Question = {
-    question_id: 0,
-    title: '',
-    text: '',
-    view_count: 0,
-    has_answer: false, username: '',};
+  votes: Vote[] = []
+  question: Question = { question_id: 0, title: '', text: '', view_count: 0, has_answer: false, username: '',};
   answer: Answer = { answer_id: 0, text: '', confirmed_answer: false, question_id: 0 };
   questionComment: QuestionComment = { question_comment_id: 0, text: '', question_id: 0 };
   answerComment: AnswerComment = { answer_comment_id: 0, text: '', answer_id: 0 };
   vote: Vote = { user_id: 0, answer_id: 0, vote_type: false };
-  votes: Vote[] = []
   connectedUser = 2;
   score: number = 0;
 
@@ -40,9 +27,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   
     return (
       <>
-  
-        <Card title="">
-          <div className="row">
+        
             <SideMenu
               header="Public"
               items={[
@@ -51,15 +36,16 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
               ]}
             />
             <MainCard header="Question">
-              <Row>
-                <Column width={155}>
+              
+              
                   <Card title="Title">{this.question.title}</Card>
-                </Column>
-                <Column width={100}>
+                
+                
                   <Card title="Text">{this.question.text}</Card>
-                </Column>
+               
+                
                 <Row>
-                  <Column width={100}>
+                  
                     <Card title="Tags">
                       {this.relations
                         .filter((relation) => relation.question_id == this.props.match.params.id)
@@ -68,7 +54,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                         .map((tag) => tag.name)
                         .join(', ')}
                     </Card>
-                  </Column>
+                 
                 </Row>
                 <Row>
                   <Column width={2}>
@@ -81,11 +67,66 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                     </Button.Success>
                   </Column>
                 </Row>
-              </Row>
+              
+              
+                
+                  
+              
             </MainCard>
-            <Card title="">
-              <Column width={500}>
-                <Row>
+
+            <MainCard header="Comments">
+                    {this.questionComments.map((questionComment) => {
+                      if (questionComment.question_id == this.props.match.params.id) {
+                        return (
+                          <Card title="">
+                            <Row key={questionComment.question_comment_id}>
+                              {questionComment.text}
+                              <Row>
+                                <Column>
+                                  <Button.Success
+                                    onClick={() =>
+                                      history.push(
+                                        '/questions/' +
+                                          this.props.match.params.id +
+                                          '/comments/' +
+                                          questionComment.question_comment_id + '/edit',
+                                      )
+                                    }
+                                  >
+                                    Edit
+                                  </Button.Success>
+                                </Column>
+                              </Row>
+                            </Row>
+                          </Card>
+                        );
+                      }
+                    })}
+
+                    <Row>
+                      <Column>
+                        <Form.Textarea
+                          placeholder="Add comment"
+                          type="text"
+                          value={this.questionComment.text}
+                          onChange={(event) =>
+                            (this.questionComment.text = event.currentTarget.value)
+                          }
+                          rows={5}
+                        />
+                      </Column>
+                    </Row>
+                    <Row>
+                      <Column>
+                        <Button.Success onClick={this.createComment}>Add</Button.Success>
+                      </Column>
+                    </Row>
+                  </MainCard>
+            
+            
+            
+              
+                
                   <Card title="Answers HUSK SORTERING">
                     {this.answers.map((answer) => {
                       if (answer.question_id == this.props.match.params.id) {
@@ -166,63 +207,12 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                       </Column>
                     </Row>
                   </Card>
-                </Row>
-              </Column>
-              <Column width={500}>
-                <Row>
-                  <Card title="Comments">
-                    {this.questionComments.map((questionComment) => {
-                      if (questionComment.question_id == this.props.match.params.id) {
-                        return (
-                          <Card title="">
-                            <Row key={questionComment.question_comment_id}>
-                              {questionComment.text}
-                              <Row>
-                                <Column>
-                                  <Button.Success
-                                    onClick={() =>
-                                      history.push(
-                                        '/questions/' +
-                                          this.props.match.params.id +
-                                          '/comments/' +
-                                          questionComment.question_comment_id + '/edit',
-                                      )
-                                    }
-                                  >
-                                    Edit
-                                  </Button.Success>
-                                </Column>
-                              </Row>
-                            </Row>
-                          </Card>
-                        );
-                      }
-                    })}
-
-                    <Row>
-                      <Column>
-                        <Form.Textarea
-                          placeholder="Add comment"
-                          type="text"
-                          value={this.questionComment.text}
-                          onChange={(event) =>
-                            (this.questionComment.text = event.currentTarget.value)
-                          }
-                          rows={5}
-                        />
-                      </Column>
-                    </Row>
-                    <Row>
-                      <Column>
-                        <Button.Success onClick={this.createComment}>Add</Button.Success>
-                      </Column>
-                    </Row>
-                  </Card>
-                </Row>
-              </Column>
-            </Card>
-          </div>
-        </Card>
+                
+              
+              
+          
+          
+        
       </>
     );
   }
