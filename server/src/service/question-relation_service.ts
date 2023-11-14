@@ -7,7 +7,7 @@ export type Tag_Question_Relation = {
 };
 
 export type Question_User_Favourite = {
-  user_name: string;
+  user_id: number;
   question_id: number;
 };
 

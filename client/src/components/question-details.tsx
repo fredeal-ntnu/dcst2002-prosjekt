@@ -263,4 +263,19 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
       Alert.danger('You are not the owner of this question');
     }
   }
+
+  upvoteAnswer() {
+    if (this.connectedUser == this.question.username) {
+    service
+      .upvoteAnswer(this.answer.answer_id)
+      .then(() => location.reload())
+      .catch((error) => Alert.danger('Error saving answer: ' + error.message));
+  }
+
+  downwoteAnswer() {
+    service.downwoteAnswer(this.answer.answer_id)
+    .then(() => location.reload())
+    .catch((error) => Alert.danger('Error saving answer: ' + error.message));
+
+
 }
