@@ -174,18 +174,20 @@ class Service {
 
 updateQuestionComment(questionComment: QuestionComment) {
   return axios
-  .put('/comments', {questionComment})
+  .put('/comments/', questionComment)
   .then((response) => response.data);
 }
 
-  deleteQuestionComment(question_comment_id: number) {
+  deleteQuestionComment(id: number) {
     return axios
-      .delete('/questions/' + question_comment_id + '/comments')
+      .delete('/comments/' + id)
       .then((response) => response.data);
   }
 
   getQuestionCommentsForQuestion(id: number) {
-    return axios.get('/questions/' + id + '/comments').then((response) => response.data);
+    return axios
+    .get('/questions/' + id + '/comments')
+    .then((response) => response.data);
   }
 
   // ALLE SERVICES FOR ANSWER COMMENTS

@@ -42,7 +42,6 @@ answerRouter.post('/questions/:id/answers', (request, response) => {
 answerRouter.put('/answers', (request, response) => {
   const data = request.body;
   if (typeof data.answer_id == 'number' && typeof data.text == 'string' && data.text.length != 0) {
-    console.log(data);
     answerService
       .updateAnswer({
         answer_id: data.answer_id,

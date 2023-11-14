@@ -15,7 +15,6 @@ export class QuestionCommentDetails extends Component<{ match: { params: { id: n
   render() {
     return(
       <>
-    {console.log(this.questionComment)}
       <Card title="Edit Comment">
         <Row>
           <Column width={10}>
@@ -44,7 +43,6 @@ export class QuestionCommentDetails extends Component<{ match: { params: { id: n
   }
 
   save() {
-    console.log(this.questionComment)
     service
       .updateQuestionComment(this.questionComment)
       .then(() => history.push('/questions/' + this.questionComment.question_id))
@@ -52,6 +50,10 @@ export class QuestionCommentDetails extends Component<{ match: { params: { id: n
   }
 
   delete() {
+    service
+    .deleteQuestionComment(this.questionComment.question_comment_id)
+    .then(() => history.push('/questions/' + this.questionComment.question_id))
+    .catch((error) => Alert.danger('Error deleting question comment: ' + error.message));
 
   }
 
