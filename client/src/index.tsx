@@ -11,8 +11,8 @@ import { Login } from './components/login';
 import { AllQuestions } from './components/all-question';
 import { Tags } from './components/tags';
 import { AnswerDetails } from './components/answer-details';
-import { QuestionCommentDetails } from './components/question-comment-details';
-import { AnswerCommentDetails } from './components/answer-comment-details';
+import { QuestionCommentDetails } from './components/edit-question-comment';
+import { AnswerCommentDetails } from './components/edit-answer-comment';
 import { EditAnswer } from './components/edit-answer';
 
 class Menu extends Component {
