@@ -1,38 +1,59 @@
-// require("dotenv").config();
-// import express, { response } from "express";
-// import passport from "passport";
-// import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-// //import userService, { User } from "./../services/user-service";
-// const router = express.Router();
+// require('dotenv').config();
+import { NextFunction, Request, Response, Router } from 'express';
+import express from "express";
+import passport from "passport";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import {User, userService} from "../service/user_services";
 
 
+const router = express.Router();
+
+router.get('/login/federated/google', 
+passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get('/auth/google/callback', 
+ passport.authenticate('google'),
+function (req, res) { console.log(req.user);
+  // Successful authentication, redirect home or to another page.
+  res.redirect('/#/');
+}
+);
+
+passport.serializeUser(function (user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function (user, cb) {
+  cb(null, user);
+});
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: '847026350985-ski1ogfb6klvrfjfrjqkhiapg02219js.apps.googleusercontent.com',
+      clientSecret:  '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',
+      callbackURL: 'http://localhost:3000/api/v1/auth/google/callback',
+    },
+    function (accessToken, refreshToken, profile, cb) {
+      console.log(profile);
+      userService.findOrCreate({
+        google_id: profile.id,
+        username: profile.displayName,
+        email: profile._json.email || '',
+      }, cb);
+      }
+  )
+);
 
 
-// const GOOGLE_CLIENT_ID = process.env.ClientID
-// const GOOGLE_CLIENT_SECRET = process.env.ClientSecret;
-// passport.use(new GoogleStrategy({
-//     clientID: GOOGLE_CLIENT_ID,
-//     clientSecret: GOOGLE_CLIENT_SECRET,
-//     callbackURL: "http://localhost:3000/auth/google/callback"
-//   },
-//   function(accessToken, refreshToken, profile, done) {
-//       userProfile=profile;
-//       return done(null, userProfile);
-//   }
-// ));
+  router.post('/logout', function (req, res, next) {
+    req.logout(function (err) {
+      if (err) {
+        return next(err);
+      }
+      return res.send({ redirect: '/' });
+    });
+  });
+  
+  export default router;
  
-// app.get('/auth/google', 
-//   passport.authenticate('google', { scope : ['profile', 'email'] }));
- 
-// app.get('/auth/google/callback', 
-//   passport.authenticate('google', { failureRedirect: '/error' }),
-//   function(req, res) {
-//     // Successful authentication, redirect success.
-//     res.redirect('/success');
-//   });
-// /**
-//  * Express router containing task methods.
-//  */
-// const loginRouter = express.Router();
-
-// export default loginRouter;

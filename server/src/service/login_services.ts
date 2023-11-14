@@ -1,4 +1,4 @@
-/*import pool from '../mysql-pool';
+import pool from '../mysql-pool';
 import type { RowDataPacket, ResultSetHeader,  } from 'mysql2';
 
 export type Login_Content = {
@@ -27,4 +27,3 @@ class Service {
     
 }
 export const loginService = new Service(); 
-/*
