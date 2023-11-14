@@ -11,7 +11,7 @@ export type Answer_Content = {
 };
 
 class Service {
-  //get answer by question id
+  //get answer by question idxxx
 
   getAnswersByQuestionId(question_id: number) {
     return new Promise<Answer_Content[]>((resolve, reject) => {
@@ -82,6 +82,8 @@ class Service {
       pool.query(
         'UPDATE Answers SET text=?, confirmed_answer=? WHERE answer_id=?',
         [answer.text, answer.confirmed_answer, answer.answer_id],
+
+
         (error, results: ResultSetHeader) => {
           if (error) return reject(error);
           if (results.affectedRows == 0) return reject(new Error('No row updated'));
@@ -92,4 +94,6 @@ class Service {
     });
   }
 }
+
+
 export const answerService = new Service();
