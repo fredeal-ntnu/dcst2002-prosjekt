@@ -10,7 +10,7 @@ answerCommentRouter.get(
   (request, response) => {
     const answerId = Number(request.params.id);
     answerCommentService
-      .getAnswerCommentByAnswerId(answerId)
+      .getAnswerCommentsByAnswerId(answerId)
       .then((rows) => response.send(rows))
       .catch((error) => response.status(500).send(error));
   },
@@ -26,6 +26,38 @@ answerCommentRouter.post('/answers/:id/comments', (request, response) => {
       .then((id) => response.send({ id: id }))
       .catch((error) => response.status(500).send(error));
   else response.status(400).send('Missing answer comment properties');
+});
+
+//Get answer comment by id
+
+answerCommentRouter.get('/comments/:id', (request, response) => {
+  const commentId = Number(request.params.id);
+  answerCommentService
+    .getAnswerCommentById(commentId)
+    .then((rows) => response.send(rows))
+    .catch((error) => response.status(500).send(error));
+})
+
+
+//Delete answer comment
+
+answerCommentRouter.delete('/comments/:id', (request, response) => {
+  const commentId = Number(request.params.id);
+  answerCommentService
+    .deleteAnswerComment(commentId)
+    .then((rows) => response.send(rows))
+    .catch((error) => response.status(500).send(error));
+});
+
+//Update answer comment
+
+answerCommentRouter.put('/comments', (request, response) => {
+  const data = request.body;
+    answerCommentService
+      .updateAnswerComment({answer_comment_id: data.answer_comment_id, text: data.text, answer_id: data.answer_id})
+      .then(() => response.send())
+      .catch((error) => response.status(500).send(error));
+ 
 });
 
 

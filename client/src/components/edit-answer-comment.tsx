@@ -5,8 +5,10 @@ import { HashRouter, Route, NavLink } from 'react-router-dom';
 import { NavBar, Card, Alert, Row, Column, Button, SideMenu, MainCard, Form} from '../widgets';
 import service, { Question,Tag, Tag_Question_Relation, Answer, QuestionComment, AnswerComment} from '../service';
 import { createHashHistory } from 'history';
+import { useHistory } from "react-router-dom";
 
 const history = createHashHistory();
+// let history = useHistory();
 export class EditAnswerComment extends Component<{ match: { params: { id: number } } }> {
   answerComments: AnswerComment[] = [];
   answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0};
@@ -15,6 +17,7 @@ export class EditAnswerComment extends Component<{ match: { params: { id: number
   render() {
     return(
       <>
+      hei!
       <Card title="Edit Comment">
         <Row>
           <Column width={10}>
@@ -38,21 +41,21 @@ export class EditAnswerComment extends Component<{ match: { params: { id: number
 
   mounted() {
     service.getAnswerCommentById(this.props.match.params.id)
-    .then((answerComment) => (this.anwerComment = answerComment))
+    .then((answerComment) => (this.answerComment = answerComment))
     .catch((error: Error) => Alert.danger('Error getting answer comment: ' + error.message));
   }
 
   save() {
     service
       .updateAnswerComment(this.answerComment)
-      .then(() => history.push('/questions/' + this.questionComment.question_id))
+      .then(() => history.goBack())
       .catch((error) => Alert.danger('Error saving answer comment: ' + error.message));
   }
 
   delete() {
     service
     .deleteAnswerComment(this.answerComment.answer_comment_id)
-    .then(() => history.push('/questions/' + this.questionComment.question_id))
+    .then(() => history.goBack())
     .catch((error) => Alert.danger('Error deleting answer comment: ' + error.message));
 
   }

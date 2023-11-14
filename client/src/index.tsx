@@ -68,6 +68,9 @@ if (root)
         <Alert />
         <Menu />
         <Route exact path="/" component={Home} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/questions" component={AllQuestions} />
+        <Route exact path="/tags" component={Tags} />
         <Route exact path="/createQuestion" component={CreateQuestion} /> {/* er det index her? */}
         <Route exact path="/questions/:id(\d+)" component={QuestionDetails} />
         <Route exact path="/questions/:id(\d+)/answers/:id(\d+)" component={AnswerDetails}/>
@@ -84,10 +87,7 @@ if (root)
           path="/questions/:id(\d+)/answers/:id(\d+)/comments/:id(\d+)/edit"
           component={EditAnswerComment}
         />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/questions" component={AllQuestions} />
         {/* <Route exact path="/signup" component={Questions} /> */}
-        <Route exact path="/tags" component={Tags} />
      
     </HashRouter>,
   );
