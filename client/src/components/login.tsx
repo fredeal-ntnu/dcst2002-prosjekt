@@ -38,6 +38,9 @@ export class Login extends Component {
                 Login
               </Button.Success>
             </Column>
+            <h1>
+            <a href="/api/v1/login/federated/google">Sign in with Google</a>
+            </h1>
           </Row>
         </Card>
       </>
