@@ -10,10 +10,10 @@ import { EyeIcon } from './icons';
  *
  * Properties: title
  */
-export class Card extends Component<{ title: ReactNode, smallTitle?: boolean, width?: string }> {
+export class Card extends Component<{ title: ReactNode, smallTitle?: boolean }> {
   render() {
     return (
-      <div className="card" style={{ width: this.props.width || 'auto', marginTop: '20px'}}>
+      <div className="card" style={{ width: '600px' || 'auto', margin: '20px'}}> {/* skal det være eller her? */}
         <div className="card-body">
           {this.props.smallTitle ? <h6 className="card-title">{this.props.title}</h6> : <h5 className="card-title">{this.props.title}</h5>}
           <div className="card-text">{this.props.children}</div>
@@ -38,32 +38,16 @@ export class SideMenu extends Component<{ header: ReactNode, items?: {label: str
 
   render() {
     return (
-      <div className='col-md-3'>
-        <div className="card" style={{ width: '18rem', marginTop: '20px', marginLeft: '20px'}}>
-          <h5 className="card-header">{this.props.header}</h5>
-          {this.props.items ?
-            <ul className="list-group list-group-flush">{this.props.items.map((item, index) => (
-              <li key={index} className="list-group-item">
-                <Link to={item.to}>{item.label}</Link>
-              </li>))}
-            </ul>
-            : this.props.children
-            }
-        </div>
-      </div>
-    );
-  }
-}
-
-export class MainCard extends Component<{ header: ReactNode }> {
-  static Link = Link;
-  render() {
-    return (
-      <div className='col-md-6'>
-        <div className="card" style={{ width: '58rem', marginTop: '20px' }}>
-          <h5 className="card-header">{this.props.header}</h5>
-            <div className="card-text" style={{ padding: '15px' }}>{this.props.children}</div>
-        </div>
+      <div className="card" style={{ width: '300px', margin: '20px'}}>
+        <h5 className="card-header">{this.props.header}</h5>
+        {this.props.items ?
+          <ul className="list-group list-group-flush">{this.props.items.map((item, index) => (
+            <li key={index} className="list-group-item">
+              <Link to={item.to}>{item.label}</Link>
+            </li>))}
+          </ul>
+          : this.props.children
+          }
       </div>
     );
   }
@@ -81,7 +65,6 @@ export class QuestionCard extends Component<{ question: Question }> {
     )
   }
 }
-
 
 
 /**

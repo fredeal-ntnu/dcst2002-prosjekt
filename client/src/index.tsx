@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
-import { NavBar, Card, Alert, MainCard, SideMenu, Row, Column } from './widgets';
+import { NavBar, Card, Alert, SideMenu, Row, Column } from './widgets';
 import service, { Question } from './service';
 import { CreateQuestion } from './components/create-question';
 import { QuestionDetails } from './components/question-details';
@@ -21,7 +21,6 @@ class Menu extends Component {
     return (
       <NavBar brand="askMorgan">
         <NavBar.Link to="/login">Log in</NavBar.Link>
-
         <NavBar.Link to="/signup">Sign up</NavBar.Link>
       </NavBar>
     );
@@ -33,24 +32,25 @@ class Home extends Component {
 
   render() {
     return (
-      <Card title="">
-        <div className="row">
-          <SideMenu
-            header="Public"
+      <Row>
+          {/* Side Menu or other content */}
+          <Column width={3}>
+            <SideMenu header='Menu'
             items={[
-              { label: 'Questions', to: '/questions' },
-              { label: 'Tags', to: '/tags' },
-            ]}
-          />
-          <MainCard header="Top Questions">
-            {this.questions.map((question) => (
-              <Row key={question.question_id}>
-                <NavLink to={'/questions/' + question.question_id}>{question.title}</NavLink>
-              </Row>
-            ))}
-          </MainCard>
-        </div>
-      </Card>
+              { label: "Questions", to: "/questions" },
+              { label: "My Questions", to: "myquestion" },
+              { label: "New Question", to: "createquestion" },
+              { label: "Tags", to: "/tags" }
+            ]}/>
+          </Column>
+  
+          {/* Main content */}
+          <Column>
+            <Card title='All Questions'><br />
+              
+            </Card>
+          </Column>
+        </Row>
     );
   }
 

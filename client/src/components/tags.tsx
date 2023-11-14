@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Form, Card, Alert, MainCard, SideMenu, Row, Column, Button, RadioRow, QuestionCard } from '../widgets';
+import { Form, Card, Alert, SideMenu, Row, Column, Button, RadioRow, QuestionCard } from '../widgets';
 import service, { Question, Tag, Tag_Question_Relation } from '../service';
 import { NavLink } from 'react-router-dom';
 import { EyeIcon } from '../icons';
@@ -21,14 +21,14 @@ export class Tags extends Component {
   
     render() {
         return (
-            <Row>
+          <Row>
             <Column width={3}>
-                <SideMenu header='Menu'
+              <SideMenu header='Menu'
                 items={[
                   { label: "Questions", to: "/questions" },
-                  { label: "Tags", to: "/tags" },
-                  {label: "New Question", to: "createquestion"},
-                  {label: "My Questions", to: "myquestion"}
+                  { label: "My Questions", to: "myquestion" },
+                  { label: "New Question", to: "createquestion" },
+                  { label: "Tags", to: "/tags" }
                 ]}/>
               <SideMenu header="Select Tags">
               <div style={{ padding: '10px', paddingBottom: '0px'}}>
@@ -64,7 +64,7 @@ export class Tags extends Component {
 
             {/* Main content */}
             <Column>
-              <Card title="Top Questions" width='600px'><br />
+              <Card title="Top Questions"><br />
                 <Row>
                   <Column>
                     <Form.Input
