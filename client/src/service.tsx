@@ -191,29 +191,23 @@ updateQuestionComment(questionComment: QuestionComment) {
   }
 
   // ALLE SERVICES FOR ANSWER COMMENTS
-  createAnswerComment(text: string, answer_id: number) {
-    return axios
-      .post('/answers/' + answer_id + '/comments', { text, answer_id })
-      .then((response) => response.data);
-  }
-
-  updateAnswerComment(answer_comment_id: number, text: string) {
-    return axios
-      .put('/answers/' + answer_comment_id + '/comments', { answer_comment_id, text })
-      .then((response) => response.data);
-  }
-
-  deleteAnswerComment(answer_comment_id: number) {
-    return axios
-      .delete('/answers/' + answer_comment_id + '/comments')
-      .then((response) => response.data);
-  }
+  
 
   getAnswerCommentsForAnswer(id: number) {
     return axios.get('/answers/' + id + '/comments')
     .then((response) => response.data);
   }
 
+  createAnswerComment(text: string, answer_id: number) {
+    return axios
+      .post('/answers/' + answer_id + '/comments', { text, answer_id })
+      .then((response) => response.data);
+  }
+
+  
+
+
+  
   updateAnswer(answer: Answer) {
     return axios.put('/answers', answer)
     .then((response) => response.data);

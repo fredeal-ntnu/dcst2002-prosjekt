@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
-import { NavBar, Card, Alert, Row, Column, Button, SideMenu, MainCard } from '../widgets';
+import { NavBar, Card, Alert, Row, Column, Button, SideMenu, MainCard, Form } from '../widgets';
 
 import service, {
   Question,
@@ -18,6 +18,7 @@ const history = createHashHistory();
 export class AnswerDetails extends Component<{ match: { params: { id: number } } }> {
 answer: Answer = {answer_id: 0, text: '', confirmed_answer: false, question_id: 0};
 answerComments: AnswerComment[] = [];
+answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0};
   render() {
     return (
       <>
@@ -36,11 +37,27 @@ answerComments: AnswerComment[] = [];
             <Row key={answerComment.answer_comment_id}>
               <Column width={10}>
                 {answerComment.text}
-                
+                <Column>
+                <Button.Success  onClick={() => 
+                  history.push('/questions/' + this.answer.question_id + '/answers/' + answerComment.answer_id +'/comments/' + answerComment.answer_comment_id+'/edit')}>
+                  Edit</Button.Success></Column>
               </Column>
             </Row>
           ))}
+         
         </Card>
+      
+            <Card title="Add Comment">
+            <Form.Textarea
+                  placeholder="Add comment"
+                  type="text"
+                  value={this.answerComment.text}
+                  onChange={(event) => (this.answerComment.text = event.currentTarget.value)}
+                />
+            <Column>
+                  <Button.Success onClick={this.addAnswerComment}>Add Comment</Button.Success>
+            </Column>
+              </Card>          
       </>
     );
     
@@ -55,5 +72,12 @@ answerComments: AnswerComment[] = [];
       })
       .then((answerComments) => (this.answerComments = answerComments))
       .catch((error: Error) => Alert.danger('Error getting answer: ' + error.message));
+  }
+
+  addAnswerComment() {
+    service
+      .createAnswerComment(this.answerComment.text, this.answer.answer_id)
+      .then(() => history.push('/questions/' + this.answer.question_id + '/answers/' + this.answer.answer_id))
+      .catch((error) => Alert.danger('Error adding answer comment: ' + error.message));
   }
 }

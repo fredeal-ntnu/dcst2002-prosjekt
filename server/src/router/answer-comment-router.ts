@@ -18,45 +18,16 @@ answerCommentRouter.get(
 
 //create new answer comment
 
-answerCommentRouter.post(
-  '/questions/:questionId/answers/:answerId/comments',
-  (request, response) => {
-    const data = request.body;
-    if (typeof data.text == 'string' && data.text.length != 0)
-      answerCommentService
-        .createAnswerComment(data.text, data.answer_id)
-        .then((id) => response.send({ id: id }))
-        .catch((error) => response.status(500).send(error));
-    else response.status(400).send('Missing answer comment router 400');
-  },
-);
-
-// Delete answer comment
-
-answerCommentRouter.delete(
-  '/questions/:questionId/answers/:answerId/comments/:commentId',
-  (request, response) => {
-    const commentId = Number(request.params.commentId);
+answerCommentRouter.post('/answers/:id/comments', (request, response) => {
+  const data = request.body;
+  if (typeof data.text == 'string' && data.text.length != 0)
     answerCommentService
-      .deleteAnswerComment(commentId)
-      .then((rows) => response.send(rows))
+      .createAnswerComment(data.text, data.answer_id)
+      .then((id) => response.send({ id: id }))
       .catch((error) => response.status(500).send(error));
-  },
-);
+  else response.status(400).send('Missing answer comment properties');
+});
 
-// Update answer comment
 
-answerCommentRouter.put(
-  '/questions/:questionId/answers/:answerId/comments/:commentId',
-  (request, response) => {
-    const data = request.body;
-    if (typeof data.text == 'string' && data.text.length != 0)
-      answerCommentService
-        .updateAnswerComment(data.text, Number(data.answer_comment_id))
-        .then((id) => response.send({ id: id }))
-        .catch((error) => response.status(500).send(error));
-    else response.status(400).send('Missing answer comment router 400');
-  },
-);
 
 export default answerCommentRouter;

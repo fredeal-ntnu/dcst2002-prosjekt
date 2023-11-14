@@ -22,7 +22,7 @@ class Service {
           if (error) return reject(error);
 
           resolve(results as Answer_Content[]);
-        },
+        }, 
       );
     });
   }

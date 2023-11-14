@@ -24,63 +24,25 @@ class Service {
         });
     }
 
-  
+    //Create answer comment
 
-    //create answer comment by question id
-
-    createAnswerComment(text: string, question_id: number) {
-        return new Promise<number>((resolve, reject) => {
-            pool.query(
-            'INSERT INTO answer_comments SET text=?, question_id=?',
-            [text, question_id],
-            (error, results: ResultSetHeader) => {
-                if (error) return reject(error);
-    
-                resolve(results.insertId);
-            },
-            );
-        });
-        }
-
-  
-    /**
-     * Delete answer comment with answer id.
-     */
-  
-    deleteAnswerComment(answer_comment_id: number) {
-        return new Promise<void>((resolve, reject) => {
-            pool.query(
-            'DELETE FROM answer_comments WHERE answer_comment_id = ?',
-            [answer_comment_id],
-            (error, results: ResultSetHeader) => {
-                if (error) return reject(error);
-                if (results.affectedRows == 0) return reject(new Error('No row deleted'));
-    
-                resolve();
-            },
-            );
-        });
-        }
-  
-    /**
-     * Update answer Comment with given id.
-     */
-  
-    updateAnswerComment(text: string, answer_comment_id: number) {
-      return new Promise<void>((resolve, reject) => {
+    createAnswerComment(text: string, answer_id: number) {
+      return new Promise<number>((resolve, reject) => {
         pool.query(
-          'UPDATE answer_comments SET text=? WHERE answer_comment_id=?',
-          [text, answer_comment_id],
+          'INSERT INTO answer_comments SET text=?, answer_id=?',
+          [text, answer_id],
           (error, results: ResultSetHeader) => {
             if (error) return reject(error);
-            if (results.affectedRows == 0) return reject(new Error('No row updated'));
   
-            resolve();
+            resolve(results.insertId);
           },
         );
       });
     }
-}
 
+  
+  }
+  
+   
 
 export const answerCommentService = new Service(); 
