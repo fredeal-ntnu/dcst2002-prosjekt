@@ -256,10 +256,9 @@ getVotesByAnswerId(id: number) {
 
 }
 
-createVoteForAnswer(user_id: number, answer_id: string, vote_type: boolean) {
+createVote(user_id: number, answer_id: number, vote_type: boolean) {
   return axios
-  .post(answer_id + '/votes', { user_id, answer_id, vote_type })
-  .then((response) => response.data);
+  .post('/answers/' + answer_id + '/votes', { user_id, answer_id, vote_type })
 }
 
 
