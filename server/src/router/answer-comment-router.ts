@@ -41,7 +41,7 @@ answerCommentRouter.get('/comments/:id', (request, response) => {
 
 //Delete answer comment
 
-answerCommentRouter.delete('/comments/:id', (request, response) => {
+answerCommentRouter.delete('answers/:id/comments/:id', (request, response) => {
   const commentId = Number(request.params.id);
   answerCommentService
     .deleteAnswerComment(commentId)
@@ -51,7 +51,7 @@ answerCommentRouter.delete('/comments/:id', (request, response) => {
 
 //Update answer comment
 
-answerCommentRouter.put('/comments', (request, response) => {
+answerCommentRouter.put('/answers/:id/comments/:id', (request, response) => {
   const data = request.body;
     answerCommentService
       .updateAnswerComment({answer_comment_id: data.answer_comment_id, text: data.text, answer_id: data.answer_id})

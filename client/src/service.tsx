@@ -213,7 +213,7 @@ updateQuestionComment(questionComment: QuestionComment) {
 
   getAnswerCommentById(id: number) {
     return axios
-    .get('/comments/'+ id)
+    .get('/comments/' + id)
     .then((response) => response.data);
   }
 
