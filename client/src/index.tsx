@@ -61,6 +61,8 @@ class Home extends Component {
   }
 
   mounted() {
+    // service.getMe().then((user) => (console.log(user)));
+
     service.getAllQuestions().then((questions) => (this.questions = questions));
   }
 }

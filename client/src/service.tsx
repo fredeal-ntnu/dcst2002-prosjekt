@@ -7,7 +7,7 @@ export type Question = {
   title: string;
   text: string;
   view_count: number;
-  has_answer: boolean;
+  has_answer: number;
   user_id: number;
 };
 
@@ -22,8 +22,10 @@ export type Tag_Question_Relation = {
 };
 
 export type User = {
-  user_name: string;
-  password: string;
+  user_id: number;
+  google_id: string;
+  username: string;
+  email: string;
 };
 
 export type Answer = {
@@ -71,7 +73,9 @@ class Service {
    */
 
   getQuestion(id: number) {
-    return axios.get<Question>('/questions/' + id).then((response) => response.data);
+    return axios.
+    get<Question>('/questions/' + id)
+    .then((response) => response.data);
   }
 
   /**
@@ -114,6 +118,13 @@ class Service {
     return axios.delete('/questions/' + id).then((response) => response.data);
   }
 
+  //get all questions for a user
+  getQuestionsByUserid(user_id: number) {
+    return axios
+    .get('/user/' + user_id + '/questions')
+    .then((response) => response.data);
+  }
+
   /**
    * Get tags for a question.
    */
@@ -153,7 +164,7 @@ class Service {
 
   //get a user
   getUser(user: User) {
-    return axios.get<User>('/users/' + user.user_name).then((response) => response.data);
+    return axios.get<User>('/users/' + user.user_id).then((response) => response.data);
   }
 
   getAnswerById(id: number) {
@@ -266,6 +277,11 @@ createVote(user_id: number, answer_id: number, vote_type: boolean) {
   .post('/answers/' + answer_id + '/votes', { user_id, answer_id, vote_type })
 }
 
+getMe(){
+  return axios
+    .get("/user/me")
+    .then((response) => response.data)
+}
 
 
 

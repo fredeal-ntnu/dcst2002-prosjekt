@@ -5,8 +5,23 @@ import passport from 'passport';
 
 /**
  * Express router containing task methods.
- */
+*/
 const questionRouter = express.Router();
+
+questionRouter.get('/questions/me', passport.authenticate("session", {session: true}), (request, response) => {
+  
+  const user:User = request.user as User;
+  response.send(user);
+});
+
+//get questions by user id
+questionRouter.get('/user/:id/questions', (request, response) => {
+  const user_id = Number(request.params.id);
+  questionService
+    .getQuestionsByUserId(user_id)
+    .then((question) => question ? response.send(question) : response.status(404).send('Question not found'))
+    .catch((error) => response.status(500).send(error))
+});
 
 //Get all questions
 questionRouter.get('/questions', (_request, response) => {
@@ -21,8 +36,7 @@ questionRouter.get('/questions/:id', (request, response) => {
   const id = Number(request.params.id);
   questionService
     .getQuestion(id)
-    .then((question) =>
-      question ? response.send(question) : response.status(404).send('Question not found'),
+    .then((question) => question ? response.send(question) : response.status(404).send('Question not found'),
     )
     .catch((error) => response.status(500).send(error));
 });
@@ -46,6 +60,7 @@ questionRouter.get('/unansweredquestions', (_request, response) => {
 //Create new question
 questionRouter.post('/questions', passport.authenticate("session", {session: true}), (request, response) => {
   const data = request.body;
+  console.log(data)
   const user:User = request.user as User;
 
   console.log("fbrewbwb")
@@ -66,6 +81,9 @@ questionRouter.post('/questions', passport.authenticate("session", {session: tru
       .catch((error) => response.status(500).send(error));
   else response.status(400).send('Missing dobbeltsjekk mongo properties');
 });
+
+
+
 
 //Delete question
 questionRouter.delete('/questions/:id', (request, response) => {
@@ -94,12 +112,14 @@ questionRouter.put('/questions', (request, response) => {
         title: data.title,
         text: data.text,
         view_count: data.view_count,
-        confirmed_answer: data.confirmed_answer,
+        has_answer: data.has_answer,
         user_id: data.user_id,
       })
       .then(() => response.send())
       .catch((error) => response.status(500).send(error));
   } else response.status(400).send('Missing question properties');
 });
+
+
 
 export default questionRouter;

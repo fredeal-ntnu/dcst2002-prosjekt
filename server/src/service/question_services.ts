@@ -8,7 +8,7 @@ export type Question_Content = {
   title: string;
   text: string;
   view_count: number;
-  confirmed_answer: boolean;
+  has_answer: number;
   user_id: number;
 };
 
@@ -128,7 +128,7 @@ class Service {
           question.title,
           question.text,
           question.view_count,
-          question.confirmed_answer,
+          question.has_answer,
           question.user_id,
           question.question_id,
         ],
@@ -151,6 +151,22 @@ class Service {
           if (error) return reject(error);
 
           resolve();
+        },
+      );
+    });
+  }
+
+
+  //get all questions by user id
+  getQuestionsByUserId(user_id: number) {
+    return new Promise<Question_Content[]>((resolve, reject) => {
+      pool.query(
+        'SELECT * FROM Questions WHERE user_id=?',
+        [user_id],
+        (error, results: RowDataPacket[]) => {
+          if (error) return reject(error);
+
+          resolve(results as Question_Content[]);
         },
       );
     });
