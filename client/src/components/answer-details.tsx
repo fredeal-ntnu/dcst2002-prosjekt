@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
 import { HashRouter, Route, NavLink } from 'react-router-dom';
-import { NavBar, Card, Alert, Row, Column, Button, SideMenu, MainCard, Form } from '../widgets';
+import { NavBar, Card, Alert, Row, Column, Button, SideMenu, Form } from '../widgets';
 
 import service, {
   Question,

@@ -26,7 +26,7 @@ export class Tags extends Component {
               <SideMenu header='Menu'
                 items={[
                   { label: "Questions", to: "/questions" },
-                  { label: "My Questions", to: "myquestion" },
+                  { label: "My Questions", to: "myquestions" },
                   { label: "New Question", to: "createquestion" },
                   { label: "Tags", to: "/tags" }
                 ]}/>
@@ -69,7 +69,7 @@ export class Tags extends Component {
                   <Column>
                     <Form.Input
                     type='text' 
-                    placeholder={`Search`}
+                    placeholder={`Search...`}
                     value={this.questionSearch} 
                     onChange={(event) => this.questionSearch = event.currentTarget.value}/>
                   </Column>

@@ -18,7 +18,7 @@ export class AllQuestions extends Component {
             <SideMenu header='Menu'
             items={[
               { label: "Questions", to: "/questions" },
-              { label: "My Questions", to: "myquestion" },
+              { label: "My Questions", to: "myquestions" },
               { label: "New Question", to: "createquestion" },
               { label: "Tags", to: "/tags" }
             ]}/>
