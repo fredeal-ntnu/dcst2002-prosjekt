@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import {Card, Alert, Row, Column, Button, SideMenu, Form } from '../widgets';
-import service, { Question, Tag, Tag_Question_Relation, Answer, QuestionComment, AnswerComment, Vote } from '../service';
+import service, { Question, Tag, Tag_Question_Relation, Answer, QuestionComment, AnswerComment, Vote, User } from '../service';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();
@@ -17,13 +17,13 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   questionComment: QuestionComment = { question_comment_id: 0, text: '', question_id: 0 };
   answerComment: AnswerComment = { answer_comment_id: 0, text: '', answer_id: 0 };
   vote: Vote = { user_id: 0, answer_id: 0, vote_type: false };
-  connectedUser = 2;
+  connectedUser = 0;
   score: number = 0;
 
   render() {
   
     return (
-      <>
+      <>{this.connectedUser}
      
             <SideMenu
               header="Public"
@@ -64,13 +64,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                     </Button.Success>
                   </Column>
                 </Row>
-              
-              
-                
-                  
-              
             </Card>
-
             <Card title="Comments">
                     {this.questionComments.map((questionComment) => {
                       if (questionComment.question_id == this.props.match.params.id) {
@@ -96,10 +90,9 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                               </Row>
                             </Row>
                           </Card>
-                        );
+                        )
                       }
                     })}
-
                     <Row>
                       <Column>
                         <Form.Textarea
@@ -119,11 +112,6 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                       </Column>
                     </Row>
                   </Card>
-            
-            
-            
-              
-                
                   <Card title="Answers HUSK SORTERING">
                     {this.answers.map((answer) => {
                       if (answer.question_id == this.props.match.params.id) {
@@ -156,11 +144,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                                 <Column>
                                   <Button.Success
                                     onClick={() => {
-                                      this.sendToAnswerCommentPage(answer.answer_id);
-                                    }}
-                                  >
-                                    Comments
-                                  </Button.Success>
+                                      this.sendToAnswerCommentPage(answer.answer_id)}}>Comments</Button.Success>
                                 </Column>
                                 <Column>
                                   <Button.Success
@@ -186,9 +170,6 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                         );
                       }
                     })}
-
-
-
                     <Row>
                       <Column>
                         <Form.Textarea
