@@ -6,6 +6,7 @@ import questionRelationRouter from './router/question-relation_router';
 import loginRouter from './router/login-router';
 import questionCommentRouter from './router/question-comment-router';
 import answerCommentRouter from './router/answer-comment-router';
+import favouriteRouter from './router/favourite-router';
 import session from 'express-session';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
@@ -48,6 +49,7 @@ app.use('/api/v1', loginRouter);
 app.use('/api/v2', answerRouter);
 app.use('/api/v2', questionCommentRouter);
 app.use('/api/v2', answerCommentRouter);
+app.use('/api/v2', favouriteRouter);
 
 //app.use(cookieParser());
 
