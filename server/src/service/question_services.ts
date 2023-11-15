@@ -85,7 +85,7 @@ class Service {
    */
 
   createQuestion(
-    title: string,
+    title: string, 
     text: string,
     user_id: number,
   ) {

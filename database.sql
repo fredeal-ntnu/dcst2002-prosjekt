@@ -16,12 +16,12 @@ email       VARCHAR(255) NOT NULL,
 CONSTRAINT user_pk PRIMARY KEY(user_id))ENGINE=INNODB;
 
 CREATE TABLE question(
-question_id         INT UNSIGNED NOT NULL AUTO_INCREMENT,
-title               VARCHAR(250) NOT NULL,
-text                VARCHAR(5000),
-view_count          INT UNSIGNED DEFAULT 0,
-has_answer          BOOLEAN DEFAULT FALSE,
-user_id             INT UNSIGNED NOT NULL,
+question_id    INT UNSIGNED NOT NULL AUTO_INCREMENT,
+title          VARCHAR(250) NOT NULL,
+text           VARCHAR(5000),
+view_count     INT UNSIGNED DEFAULT 0,
+has_answer     BOOLEAN DEFAULT FALSE,
+user_id        INT UNSIGNED NOT NULL,
 CONSTRAINT question_pk PRIMARY KEY(question_id),
 CONSTRAINT question_fk FOREIGN KEY (user_id) REFERENCES user(user_id))ENGINE=INNODB;
 
@@ -33,12 +33,12 @@ CONSTRAINT question_comment_pk PRIMARY KEY(question_comment_id),
 CONSTRAINT question_comment_fk FOREIGN KEY (question_id) REFERENCES question(question_id) ON DELETE CASCADE)ENGINE=INNODB;
 
 CREATE TABLE answer(
-answer_id               INT UNSIGNED NOT NULL AUTO_INCREMENT,
-text                    VARCHAR(5000) NOT NULL,
-confirmed_answer        BOOLEAN DEFAULT FALSE,
-last_updated            TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-question_id             INT UNSIGNED NOT NULL,
-user_id                 INT UNSIGNED NOT NULL,
+answer_id         INT UNSIGNED NOT NULL AUTO_INCREMENT,
+text              VARCHAR(5000) NOT NULL,
+confirmed_answer  BOOLEAN DEFAULT FALSE,
+last_updated      TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+question_id       INT UNSIGNED NOT NULL,
+user_id           INT UNSIGNED NOT NULL,
 CONSTRAINT answer_pk PRIMARY KEY (answer_id),
 CONSTRAINT answer_fk FOREIGN KEY (question_id) REFERENCES question(question_id) ON DELETE CASCADE,
 CONSTRAINT answer_fk FOREIGN KEY (user_id) REFERENCES user(user_id))ENGINE=INNODB;
