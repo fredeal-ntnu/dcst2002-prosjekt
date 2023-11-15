@@ -9,14 +9,14 @@ export class IndexSigned extends Component {
     return (
       <Card title="">
         <div className="row">
-          <SideMenu
-            header="Private"
+        <SideMenu header='Menu'
             items={[
-              { label: 'Questions', to: '/all-questions' },
-              { label: 'New Question', to: 'createquestion' },
-              { label: 'My Questions', to: 'myquestion' },
-            ]}
-          />
+              { label: "Questions", to: "/questions" },
+              { label: "My Questions", to: "myquestions" },
+              { label: "My Favourite Answers", to: "favourites" },
+              { label: "New Question", to: "createquestion" },
+              { label: "Tags", to: "/tags" }
+            ]}/>
           <Card title="Top Questions">
             {this.questions.map((question) => (
               <Row key={question.question_id}>

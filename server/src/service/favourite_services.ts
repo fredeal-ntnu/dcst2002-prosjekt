@@ -43,19 +43,46 @@ class Service {
     }
 
     //create favourite relation with questionid and userid
-    createFavouriteRelation(question_id: number, user_id: number) {
-        return new Promise<ResultSetHeader>((resolve, reject) => {
-            pool.query(
-            'INSERT INTO question_user_favourites (question_id, user_id) VALUES (?, ?)',
-            [question_id, user_id],
-            (error, result: ResultSetHeader) => {
-                if (error) return reject(error);
-    
-                resolve(result);
-            },
-            );
-        });
-    }
+    createFavouriteRelation(answer_id: number, user_id: number) {
+      return new Promise<void>((resolve, reject) => {
+          pool.query(
+              'SELECT * FROM answer_user_favourite WHERE answer_id = ? AND user_id = ?',
+              [answer_id, user_id],
+              (selectError, results) => {
+                  if (selectError) {
+                      return reject(selectError);
+                  }
+  
+                  if (results.length === 0) {
+                      // If no matching row exists, insert a new one
+                      pool.query(
+                          'INSERT INTO answer_user_favourite (answer_id, user_id) VALUES (?, ?)',
+                          [answer_id, user_id],
+                          (insertError) => {
+                              if (insertError) {
+                                  return reject(insertError);
+                              }
+                              resolve();
+                          }
+                      );
+                  } else {
+                      // If a matching row exists, delete it
+                      pool.query(
+                          'DELETE FROM answer_user_favourite WHERE answer_id = ? AND user_id = ?',
+                          [answer_id, user_id],
+                          (deleteError) => {
+                              if (deleteError) {
+                                  return reject(deleteError);
+                              }
+                              resolve();
+                          }
+                      );
+                  }
+              }
+          );
+      });
+  }
+  
 
 
     //get all favourite relations

@@ -55,7 +55,7 @@ export type Vote = {
 }
 
 export type Favourite = {
-  question_id: number;
+  answer_id: number;
   user_id: number;
 }
 
@@ -86,11 +86,22 @@ class Service {
     return axios.get<Question[]>('/topfivequestions').then((response) => response.data);
   }
 
+  //get user top five questions
+  getUserTopFiveQuestions(user_id: number) {
+    return axios.get<Question[]>('/user/' + user_id + '/topfivequestions').then((response) => response.data);
+  }
+
+
   /**
    * Get all unaswered questions.
    */
   getUnansweredQuestions() {
     return axios.get<Question[]>('/unansweredquestions').then((response) => response.data);
+  }
+
+  //get user unanswered questions
+  getUserUnansweredQuestions(user_id: number) {
+    return axios.get<Question[]>('/user/' + user_id + '/unansweredquestions').then((response) => response.data);
   }
 
   /**
@@ -162,6 +173,10 @@ class Service {
     return axios.get('/question/:id').then((response) => response.data);
   }
 
+  getAllFavouriteAnswersByUserId(user_id: number) {
+    return axios.get<Answer[]>('/user/' + user_id + '/favourites').then((response) => response.data);
+  }
+
   //get a user
   getUser(user: User) {
     return axios.get<User>('/users/' + user.user_id).then((response) => response.data);
@@ -169,6 +184,10 @@ class Service {
 
   getAnswerById(id: number) {
     return axios.get('/answers/' + id).then((response) => response.data);
+  }
+
+  getAllAnswersByUserId(id: number) {
+    return axios.get('/user/' + id + '/answers').then((response) => response.data);
   }
 
   getAnswersForQuestion(id: number) {
@@ -210,6 +229,12 @@ updateQuestionComment(questionComment: QuestionComment) {
   getQuestionCommentsForQuestion(id: number) {
     return axios
     .get('/questions/' + id + '/comments')
+    .then((response) => response.data);
+  }
+
+  getQuestionsByAnswerId(answer_id: number) {
+    return axios
+    .get('/answer/' + answer_id + '/favourite')
     .then((response) => response.data);
   }
 
@@ -297,9 +322,9 @@ getFavouritesByUserId(user_id: number) {
 }
 
 //create a new favourite relation
-createFavouriteRelation(favourite: Favourite) {
+createFavouriteRelation(answer_id: number, user_id: number) {
   return axios
-  .post('/favourites', favourite)
+  .post('/users/'+ user_id + '/favourites/' + answer_id, {answer_id, user_id})
   .then((response) => response.data);
 }
 
@@ -311,16 +336,16 @@ getAllRelations() {
 }
 
 //gets a relation by questionid
-getFavouriteByQuestionId(question_id: number) {
+getFavouriteByAnswerId(answer_id: number) {
   return axios
-  .get('/favourites/' + question_id)
+  .get('/favourites/' + answer_id)
   .then((response) => response.data);
 }
 
 //deletes a relation with user_id and question_id
-deleteFavouriteRelation(favourite: Favourite) {
+deleteFavouriteRelation(answer_id: number, user_id: number) {
   return axios
-  .delete('/favourites/' + favourite.user_id + '/' + favourite.question_id)
+  .delete('/user/'+ user_id + '/favourites/' + answer_id)
   .then((response) => response.data);
 }
 

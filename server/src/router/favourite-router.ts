@@ -17,12 +17,14 @@ favouriteRouter.get('/users/:id/favourites', (request, response) => {
 
 
 //create new favourite relation
-favouriteRouter.post('/users/:id/favourites', (request, response) => {
+favouriteRouter.post('/users/:id/favourites/:id', (request, response) => {
     const data = request.body;
-    if (typeof data.user_id == 'number' && typeof data.question_id == 'number')
+
+
+    if (typeof data.answer_id == 'number' && typeof data.user_id == 'number')
     favouriteService
-    .createFavouriteRelation(data.user_id, data.question_id)
-    .then((id) => response.send({ id: id }))
+    .createFavouriteRelation(data.answer_id, data.user_id)
+    .then(() => response.send())
     .catch((error) => response.status(500).send(error));
     else response.status(400).send('Missing favourite properties');
 });

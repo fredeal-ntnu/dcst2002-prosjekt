@@ -23,13 +23,14 @@ export class Tags extends Component {
         return (
           <Row>
             <Column width={3}>
-              <SideMenu header='Menu'
-                items={[
-                  { label: "Questions", to: "/questions" },
-                  { label: "My Questions", to: "myquestions" },
-                  { label: "New Question", to: "createquestion" },
-                  { label: "Tags", to: "/tags" }
-                ]}/>
+            <SideMenu header='Menu'
+            items={[
+              { label: "Questions", to: "/questions" },
+              { label: "My Questions", to: "myquestions" },
+              { label: "My Favourite Answers", to: "favourites" },
+              { label: "New Question", to: "createquestion" },
+              { label: "Tags", to: "/tags" }
+            ]}/>
               <SideMenu header="Select Tags">
               <div style={{ padding: '10px', paddingBottom: '0px'}}>
                 <Form.Select value={this.sortOrder} onChange={this.handleFilterChange}>

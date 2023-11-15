@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Card, Row, Column, SideMenu, Button, Alert, Form } from '../widgets';
-import service, {Tag } from '../service';
+import service, { Tag } from '../service';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after successfully saving a student
@@ -12,88 +12,98 @@ export class CreateQuestion extends Component {
   text = '';
   user_id = 0;
 
-  
-
   render() {
     return (
       <>
-      
-    
-        <Card title="">
-          <div className="row">
+        <Row>
+          <Column width={3}>
             <SideMenu
-              header="Public"
+              header="Menu"
               items={[
                 { label: 'Questions', to: '/questions' },
+                { label: 'My Questions', to: 'myquestions' },
+                { label: 'My Favourite Answers', to: 'favourites' },
+                { label: 'New Question', to: 'createquestion' },
                 { label: 'Tags', to: '/tags' },
               ]}
             />
-            <Card title="Ask a Question">
-              <Row>
-                <Column width={2}>
-                  <Form.Label>Title:</Form.Label>
-                </Column>
-                <Column>
-                  <Form.Input
-                    type="text"
-                    value={this.title}
-                    onChange={(event) => (this.title = event.currentTarget.value)}
-                  />
-                </Column>
-              </Row>
-              <br />
-              <Row>
-                <Column width={2}>
-                  <Form.Label>Text:</Form.Label>
-                </Column>
-                <Column>
-                  <Form.Textarea
-                    placeholder="Text"
-                    value={this.text}
-                    onChange={(event) => (this.text = event.currentTarget.value)}
-                    rows={5}
-                  />
-                </Column>
-              </Row>
-              <br />
-              <Row>
-                <Column width={2}>
-                  <Form.Label>Tags:</Form.Label>
-                </Column>
-                <Column>
-                  <Row>
-                    {this.tags.map((tag) => (
-                      <Column>
-                        <Form.Label>
-                          {tag.name}
-                          <input
-                            type="checkbox"
-                            value={tag.tag_id}
-                            onChange={(event) => {
-                              this.handleCheckboxChange(event);
-                            }}
-                          />
-                        </Form.Label>
-                      </Column>
-                    ))}
-                  </Row>
-                </Column>
-              </Row>
-              <br />
-              <Row>
-                <Column>
-                  <Button.Success
-                    onClick={() => {
-                      this.handleAddQuestion();
-                    }}
-                  >
-                    AskMorgan
-                  </Button.Success>
-                </Column>
-              </Row>
-            </Card>
-          </div>
-        </Card>
+          </Column>
+          <Card title="">
+            <div className="row">
+              <SideMenu
+                header="Public"
+                items={[
+                  { label: 'Questions', to: '/questions' },
+                  { label: 'Tags', to: '/tags' },
+                ]}
+              />
+              <Card title="Ask a Question">
+                <Row>
+                  <Column width={2}>
+                    <Form.Label>Title:</Form.Label>
+                  </Column>
+                  <Column>
+                    <Form.Input
+                      type="text"
+                      value={this.title}
+                      onChange={(event) => (this.title = event.currentTarget.value)}
+                    />
+                  </Column>
+                </Row>
+                <br />
+                <Row>
+                  <Column width={2}>
+                    <Form.Label>Text:</Form.Label>
+                  </Column>
+                  <Column>
+                    <Form.Textarea
+                      placeholder="Text"
+                      value={this.text}
+                      onChange={(event) => (this.text = event.currentTarget.value)}
+                      rows={5}
+                    />
+                  </Column>
+                </Row>
+                <br />
+                <Row>
+                  <Column width={2}>
+                    <Form.Label>Tags:</Form.Label>
+                  </Column>
+                  <Column>
+                    <Row>
+                      {this.tags.map((tag) => (
+                        <Column key={tag.tag_id}>
+                          <Form.Label>
+                            {tag.name}
+                            <input
+                              type="checkbox"
+                              value={tag.tag_id}
+                              onChange={(event) => {
+                                this.handleCheckboxChange(event);
+                              }}
+                            />
+                          </Form.Label>
+                        </Column>
+                      ))}
+                    </Row>
+                  </Column>
+                </Row>
+                <br />
+                <Row>
+                  <Column>
+                    <Button.Success
+                      onClick={() => {
+                        this.handleAddQuestion();
+                      }}
+                    >
+                      AskMorgan
+                    </Button.Success>
+                  </Column>
+                </Row>
+              </Card>
+            </div>
+          </Card>
+        </Row>
       </>
     );
   }
@@ -104,7 +114,6 @@ export class CreateQuestion extends Component {
       .then((tags) => (this.tags = tags))
       .catch((error) => Alert.danger(error.message));
   }
-
 
   handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let tagId = Number(event.target.value);
@@ -123,7 +132,7 @@ export class CreateQuestion extends Component {
       alert('You must select at least one tag');
       return null;
     } else {
-      var question_id = await service.createQuestion(this.title, this.text,this.user_id);
+      var question_id = await service.createQuestion(this.title, this.text, this.user_id);
     }
 
     // For each selected tag, create a new relation in the Tag_question_relation tabl

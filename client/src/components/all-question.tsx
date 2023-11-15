@@ -15,10 +15,11 @@ export class AllQuestions extends Component {
         <Row>
           {/* Side Menu or other content */}
           <Column width={3}>
-            <SideMenu header='Menu'
+          <SideMenu header='Menu'
             items={[
               { label: "Questions", to: "/questions" },
               { label: "My Questions", to: "myquestions" },
+              { label: "My Favourite Answers", to: "favourites" },
               { label: "New Question", to: "createquestion" },
               { label: "Tags", to: "/tags" }
             ]}/>
