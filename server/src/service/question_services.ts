@@ -93,7 +93,7 @@ class Service {
   ) {
     return new Promise<number>((resolve, reject) => {
       pool.query(
-        'INSERT INTO Questions SET title=?, text=?, view_count=0, has_answer=0, user_id=2',
+        'INSERT INTO Questions SET title=?, text=?, view_count=0, has_answer=0, user_id=?',
         [title, text, view_count, confirmed_answer, user_id],
         (error, results: ResultSetHeader) => {
           if (error) return reject(error);

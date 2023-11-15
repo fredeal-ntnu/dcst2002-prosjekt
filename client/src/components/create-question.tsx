@@ -10,6 +10,7 @@ export class CreateQuestion extends Component {
   selectedTags: number[] = [];
   title = '';
   text = '';
+  user_id = 0;
 
   render() {
     return (
@@ -100,6 +101,13 @@ export class CreateQuestion extends Component {
       .catch((error) => Alert.danger(error.message));
   }
 
+  async componentDidMount() {
+    const response = await fetch('/api/current_user');
+    const user = await response.json();
+    console.log(user)
+    this.user_id = user.id;
+  }
+
   handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let tagId = Number(event.target.value);
     console.log(tagId);
@@ -117,7 +125,7 @@ export class CreateQuestion extends Component {
       alert('You must select at least one tag');
       return null;
     } else {
-      var question_id = await service.createQuestion(this.title, this.text);
+      var question_id = await service.createQuestion(this.title, this.text,this.user_id);
     }
 
     // For each selected tag, create a new relation in the Tag_question_relation tabl
