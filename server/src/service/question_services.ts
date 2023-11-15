@@ -87,14 +87,14 @@ class Service {
   createQuestion(
     title: string,
     text: string,
-    view_count: number,
-    confirmed_answer: boolean,
     user_id: number,
   ) {
+    console.log(user_id)
+
     return new Promise<number>((resolve, reject) => {
       pool.query(
-        'INSERT INTO Questions SET title=?, text=?, view_count=0, has_answer=0, user_id=?',
-        [title, text, view_count, confirmed_answer, user_id],
+        'INSERT INTO Questions (title,text,user_id) VALUES (?,?,?)',
+        [title, text, user_id],
         (error, results: ResultSetHeader) => {
           if (error) return reject(error);
 
