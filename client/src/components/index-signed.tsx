@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { NavLink } from 'react-router-dom';
-import { NavBar, Card, Alert, MainCard, SideMenu, Row, Column } from '../widgets';
+import { NavBar, Card, Alert, SideMenu, Row, Column } from '../widgets';
 import service, { Question } from '../service';
 export class IndexSigned extends Component {
   questions: Question[] = [];
@@ -17,7 +17,7 @@ export class IndexSigned extends Component {
               { label: 'My Questions', to: 'myquestion' },
             ]}
           />
-          <MainCard header="Top Questions">
+          <Card title="Top Questions">
             {this.questions.map((question) => (
               <Row key={question.question_id}>
                 {question.title}
@@ -25,7 +25,7 @@ export class IndexSigned extends Component {
                 {question.text}
               </Row>
             ))}
-          </MainCard>
+          </Card>
         </div>
       </Card>
     );

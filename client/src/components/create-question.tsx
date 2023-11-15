@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Card, Row, Column, SideMenu, Button, MainCard, Alert, Form } from '../widgets';
+import { Card, Row, Column, SideMenu, Button, Alert, Form } from '../widgets';
 import service, { Question, Tag_Question_Relation, Tag } from '../service';
 import { createHashHistory } from 'history';
 
@@ -23,7 +23,7 @@ export class CreateQuestion extends Component {
                 { label: 'Tags', to: '/tags' },
               ]}
             />
-            <MainCard header="Ask a Question">
+            <Card title="Ask a Question">
               <Row>
                 <Column width={2}>
                   <Form.Label>Title:</Form.Label>
@@ -86,7 +86,7 @@ export class CreateQuestion extends Component {
                   </Button.Success>
                 </Column>
               </Row>
-            </MainCard>
+            </Card>
           </div>
         </Card>
       </>
