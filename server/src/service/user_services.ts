@@ -12,7 +12,8 @@ export type User = {
 
 
 class UserService {
- // get user by if
+  
+ // get user by id
     get(userId: number) {
         return new Promise<User | undefined>((resolve, reject) => {
           pool.query(

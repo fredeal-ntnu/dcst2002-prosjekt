@@ -8,7 +8,7 @@ export type Question = {
   text: string;
   view_count: number;
   has_answer: boolean;
-  user_id: string;
+  user_id: number;
 };
 
 export type Tag = {
@@ -50,6 +50,11 @@ export type Vote = {
   user_id: number;
   answer_id: number;
   vote_type: boolean;
+}
+
+export type Favourite = {
+  question_id: number;
+  user_id: number;
 }
 
 class Service {
@@ -256,11 +261,53 @@ getVotesByAnswerId(id: number) {
 
 }
 
-createVoteForAnswer(user_id: number, answer_id: string, vote_type: boolean) {
+createVote(user_id: number, answer_id: number, vote_type: boolean) {
   return axios
-  .post(answer_id + '/votes', { user_id, answer_id, vote_type })
+  .post('/answers/' + answer_id + '/votes', { user_id, answer_id, vote_type })
+}
+
+
+
+
+
+
+// alle services for favourites
+
+//gets all favourites for a user
+getFavouritesByUserId(user_id: number) {
+  return axios
+  .get('/users/' + user_id + '/favourites')
   .then((response) => response.data);
 }
+
+//create a new favourite relation
+createFavouriteRelation(favourite: Favourite) {
+  return axios
+  .post('/favourites', favourite)
+  .then((response) => response.data);
+}
+
+//gets all relations
+getAllRelations() {
+  return axios
+  .get('/favourites')
+  .then((response) => response.data);
+}
+
+//gets a relation by questionid
+getFavouriteByQuestionId(question_id: number) {
+  return axios
+  .get('/favourites/' + question_id)
+  .then((response) => response.data);
+}
+
+//deletes a relation with user_id and question_id
+deleteFavouriteRelation(favourite: Favourite) {
+  return axios
+  .delete('/favourites/' + favourite.user_id + '/' + favourite.question_id)
+  .then((response) => response.data);
+}
+
 
 
 }

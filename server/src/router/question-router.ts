@@ -1,5 +1,8 @@
 import express from 'express';
 import { questionService } from '../service/question_services';
+import { User } from '../service/user_services';
+import passport from 'passport';
+
 /**
  * Express router containing task methods.
  */
@@ -41,8 +44,16 @@ questionRouter.get('/unansweredquestions', (_request, response) => {
 });
 
 //Create new question
-questionRouter.post('/questions', (request, response) => {
+questionRouter.post('/questions', passport.authenticate("session", {session: true}), (request, response) => {
   const data = request.body;
+  const user:User = request.user as User;
+
+  console.log("fbrewbwb")
+  console.log("fbrewbwb")
+  console.log(user)
+  console.log("fbrewbwb")
+  console.log("fbrewbwb")
+
   if (
     typeof data.title == 'string' &&
     data.title.length != 0 &&
@@ -50,7 +61,7 @@ questionRouter.post('/questions', (request, response) => {
     data.text.length != 0
   )
     questionService
-      .createQuestion(data.title, data.text, data.view_count, data.confirmed_answer, data.user_ID)
+      .createQuestion(data.title, data.text, user.user_id)
       .then((id) => response.send({ id: id }))
       .catch((error) => response.status(500).send(error));
   else response.status(400).send('Missing dobbeltsjekk mongo properties');

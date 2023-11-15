@@ -12,7 +12,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   answers: Answer[] = [];
   questionComments: QuestionComment[] = [];
   votes: Vote[] = []
-  question: Question = { question_id: 0, title: '', text: '', view_count: 0, has_answer: false, username: '',};
+  question: Question = { question_id: 0, title: '', text: '', view_count: 0, has_answer: false, user_id: 0};
   answer: Answer = { answer_id: 0, text: '', confirmed_answer: false, question_id: 0 };
   questionComment: QuestionComment = { question_comment_id: 0, text: '', question_id: 0 };
   answerComment: AnswerComment = { answer_comment_id: 0, text: '', answer_id: 0 };
@@ -24,7 +24,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   
     return (
       <>
-        
+     
             <SideMenu
               header="Public"
               items={[
@@ -134,7 +134,9 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                               {answer.text}
                               <Row>
                                 <Column>
-                                  <Button.Success onClick={() => {}}>Upvote</Button.Success>
+                                  <Button.Success  onClick={() => {
+                                      this.addUpvote(answer.answer_id);
+                                    }}>Upvote</Button.Success>
                                 </Column>
                                 <Column>
                                   <Button.Success onClick={() => {}}>Downvote</Button.Success>
@@ -266,6 +268,15 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     history.push(
       '/questions/' + this.props.match.params.id + '/answers/' + answer_id,
     );
+  }
+
+  addUpvote(answer_id: number) {
+    console.log(this.connectedUser, answer_id)
+    
+    service
+      .createVote(this.connectedUser, answer_id, true)
+      .then(() => location.reload())
+      .catch((error) => Alert.danger('Error saving answer: ' + error.message));
   }
 
   // setConfirmedAnswer() {

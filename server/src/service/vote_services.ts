@@ -29,15 +29,15 @@ class Service {
 
 
     //create vote for answer
-    createVoteForAnswer(user_id: number, answer_id: number, vote_type: boolean) {
-        return new Promise<number>((resolve, reject) => {
+    createVote(user_id: number, answer_id: number, vote_type: boolean) {
+        return new Promise<void>((resolve, reject) => {
             pool.query(
-            'INSERT INTO Votes SET user_id=?, answer_id=?, vote_type=?',
+            'INSERT INTO votes (user_id, answer_id, vote_type) VALUES (?, ?, ?)',
             [user_id, answer_id, vote_type],
-            (error, results: ResultSetHeader) => {
+            (error) => {
                 if (error) return reject(error);
     
-                resolve(results.insertId);
+                resolve();
             },
             );
         });

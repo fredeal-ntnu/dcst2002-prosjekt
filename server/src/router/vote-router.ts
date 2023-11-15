@@ -14,14 +14,14 @@ voteRouter.get('/answers/:id/votes', (request, response) => {
 });
 
 
-//Create vote for answer
+//Create vote 
 
-voteRouter.post('/:id/votes', (request, response) => {
+voteRouter.post('/answers/:id/votes', (request, response) => {
     const data = request.body;
     if (typeof data.user_id == 'number' && typeof data.answer_id == 'number' && typeof data.vote_type == 'boolean')
     voteService
-    .createVoteForAnswer(data.user_id, data.answer_id, data.vote_type)
-    .then((id) => response.send({ id: id }))
+    .createVote(data.user_id, data.answer_id, data.vote_type)
+    .then(() => response.send())
     .catch((error) => response.status(500).send(error));
     else response.status(400).send('Missing vote properties');
 });
