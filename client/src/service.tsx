@@ -8,7 +8,7 @@ export type Question = {
   text: string;
   view_count: number;
   has_answer: boolean;
-  user_id: string;
+  user_id: number;
 };
 
 export type Tag = {

@@ -12,7 +12,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   answers: Answer[] = [];
   questionComments: QuestionComment[] = [];
   votes: Vote[] = []
-  question: Question = { question_id: 0, title: '', text: '', view_count: 0, has_answer: false, user_id: '',};
+  question: Question = { question_id: 0, title: '', text: '', view_count: 0, has_answer: false, user_id: 0};
   answer: Answer = { answer_id: 0, text: '', confirmed_answer: false, question_id: 0 };
   questionComment: QuestionComment = { question_comment_id: 0, text: '', question_id: 0 };
   answerComment: AnswerComment = { answer_comment_id: 0, text: '', answer_id: 0 };
