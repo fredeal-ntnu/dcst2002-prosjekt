@@ -13,7 +13,8 @@ CREATE TABLE Questions (
     has_answer BOOLEAN DEFAULT FALSE,
     user_id INT,
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
-);
+); 
+
 CREATE TABLE question_comments (
     question_comment_id INT PRIMARY KEY AUTO_INCREMENT,
     text TEXT NOT NULL,
