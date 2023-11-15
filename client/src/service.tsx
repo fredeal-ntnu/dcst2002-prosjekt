@@ -52,6 +52,11 @@ export type Vote = {
   vote_type: boolean;
 }
 
+export type Favourite = {
+  question_id: number;
+  user_id: number;
+}
+
 class Service {
   /**
    * Get all questions.
@@ -261,6 +266,49 @@ createVoteForAnswer(user_id: number, answer_id: string, vote_type: boolean) {
   .post(answer_id + '/votes', { user_id, answer_id, vote_type })
   .then((response) => response.data);
 }
+
+
+
+
+
+
+// alle services for favourites
+
+//gets all favourites for a user
+getFavouritesByUserId(user_id: number) {
+  return axios
+  .get('/users/' + user_id + '/favourites')
+  .then((response) => response.data);
+}
+
+//create a new favourite relation
+createFavouriteRelation(favourite: Favourite) {
+  return axios
+  .post('/favourites', favourite)
+  .then((response) => response.data);
+}
+
+//gets all relations
+getAllRelations() {
+  return axios
+  .get('/favourites')
+  .then((response) => response.data);
+}
+
+//gets a relation by questionid
+getFavouriteByQuestionId(question_id: number) {
+  return axios
+  .get('/favourites/' + question_id)
+  .then((response) => response.data);
+}
+
+//deletes a relation with user_id and question_id
+deleteFavouriteRelation(favourite: Favourite) {
+  return axios
+  .delete('/favourites/' + favourite.user_id + '/' + favourite.question_id)
+  .then((response) => response.data);
+}
+
 
 
 }
