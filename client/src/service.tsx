@@ -212,8 +212,9 @@ updateQuestionComment(questionComment: QuestionComment) {
   }
 
   getAnswerCommentById(id: number) {
+    console.log('andre')
     return axios
-    .get('/comments/' + id)
+    .get('/answer/comments/' + id)
     .then((response) => response.data);
   }
 
