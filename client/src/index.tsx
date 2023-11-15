@@ -17,7 +17,6 @@ import { EditAnswer } from './components/edit-answer';
 import answerService from './components/services/answer-service';
 import { QuestionIcon } from './icons';
 import { MyQuestions } from './components/my-question';
-
 class Menu extends Component {
   render() {
     return (
@@ -87,6 +86,5 @@ if (root)
         <Route exact path="/questions/:id(\d+)/comments/:id(\d+)/edit" component={EditQuestionComment} />
         <Route exact path="/questions/:id(\d+)/answers/:id(\d+)/comments/:id(\d+)/edit" component={EditAnswerComment} />
         {/* <Route exact path="/signup" component={Questions} /> */}
-
     </HashRouter>,
   );
