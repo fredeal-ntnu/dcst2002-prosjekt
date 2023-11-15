@@ -1,16 +1,7 @@
 import * as React from 'react';
-import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
-import { HashRouter, Route } from 'react-router-dom';
-import { Card, Row, Column, SideMenu, Button, Alert, Form } from '../widgets';
-import service, {
-  Question,
-  Tag,
-  Tag_Question_Relation,
-  Answer,
-  AnswerComment,
-  QuestionComment,
-} from '../service';
+import { Card, Row, Column, Button, Alert, Form } from '../widgets';
+import service, { Answer,} from '../service';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();

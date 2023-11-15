@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { createRoot } from 'react-dom/client';
 import { Component } from 'react-simplified';
-import { HashRouter, Route, NavLink } from 'react-router-dom';
-import { NavBar, Card, Alert, Row, Column, Button, SideMenu, Form} from '../widgets';
+import { Card, Alert, Row, Column, Button, Form} from '../widgets';
 import service, {AnswerComment} from '../service';
 import { createHashHistory } from 'history';
 
@@ -39,6 +37,7 @@ export class EditAnswerComment extends Component<{ match: { params: { id: number
   }
 
   mounted() {
+    console.log('første')
     service.getAnswerCommentById(this.props.match.params.id)
     .then((answerComment) => (this.answerComment = answerComment))
     .catch((error: Error) => Alert.danger('Error getting answer comment: ' + error.message));

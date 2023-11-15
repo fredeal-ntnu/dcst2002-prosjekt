@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Card, Row, Column, SideMenu, Button, Alert, Form } from '../widgets';
-import service, { Question, Tag_Question_Relation, Tag } from '../service';
+import service, {Tag } from '../service';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after successfully saving a student
@@ -10,10 +10,15 @@ export class CreateQuestion extends Component {
   selectedTags: number[] = [];
   title = '';
   text = '';
+  user_id = 0;
+
+  
 
   render() {
     return (
       <>
+      
+    
         <Card title="">
           <div className="row">
             <SideMenu
@@ -100,6 +105,7 @@ export class CreateQuestion extends Component {
       .catch((error) => Alert.danger(error.message));
   }
 
+
   handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let tagId = Number(event.target.value);
     console.log(tagId);
@@ -117,7 +123,7 @@ export class CreateQuestion extends Component {
       alert('You must select at least one tag');
       return null;
     } else {
-      var question_id = await service.createQuestion(this.title, this.text);
+      var question_id = await service.createQuestion(this.title, this.text,this.user_id);
     }
 
     // For each selected tag, create a new relation in the Tag_question_relation tabl

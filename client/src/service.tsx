@@ -8,7 +8,7 @@ export type Question = {
   text: string;
   view_count: number;
   has_answer: boolean;
-  username: string;
+  user_id: string;
 };
 
 export type Tag = {
@@ -96,8 +96,8 @@ class Service {
    * Create a question.
    */
 
-  createQuestion(title: string, text: string) {
-    return axios.post('/questions', { title, text }).then((response) => response.data.id);
+  createQuestion(title: string, text: string, user_id: number) {
+    return axios.post('/questions', { title, text, user_id }).then((response) => response.data.id);
   }
 
   /**
@@ -212,8 +212,9 @@ updateQuestionComment(questionComment: QuestionComment) {
   }
 
   getAnswerCommentById(id: number) {
+    console.log('andre')
     return axios
-    .get('/comments/'+ id)
+    .get('/answer/comments/' + id)
     .then((response) => response.data);
   }
 
@@ -225,7 +226,7 @@ updateQuestionComment(questionComment: QuestionComment) {
 
   deleteAnswerComment(id: number) {
     return axios
-      .delete('/comments/' + id)
+      .delete('/answer/comments/' + id)
       .then((response) => response.data);
   }
 

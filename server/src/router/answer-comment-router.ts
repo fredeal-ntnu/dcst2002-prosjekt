@@ -28,9 +28,20 @@ answerCommentRouter.post('/answers/:id/comments', (request, response) => {
   else response.status(400).send('Missing answer comment properties');
 });
 
+
+
+
+
+
+
+
+
+
+
 //Get answer comment by id
 
-answerCommentRouter.get('/comments/:id', (request, response) => {
+answerCommentRouter.get('/answer/comments/:id', (request, response) => {
+  console.log('tredje')
   const commentId = Number(request.params.id);
   answerCommentService
     .getAnswerCommentById(commentId)
@@ -39,9 +50,19 @@ answerCommentRouter.get('/comments/:id', (request, response) => {
 })
 
 
+
+
+
+
+
+
+
+
+
+
 //Delete answer comment
 
-answerCommentRouter.delete('/comments/:id', (request, response) => {
+answerCommentRouter.delete('/answer/comments/:id', (request, response) => {
   const commentId = Number(request.params.id);
   answerCommentService
     .deleteAnswerComment(commentId)
@@ -51,7 +72,7 @@ answerCommentRouter.delete('/comments/:id', (request, response) => {
 
 //Update answer comment
 
-answerCommentRouter.put('/comments', (request, response) => {
+answerCommentRouter.put('/answers/:id/comments/:id', (request, response) => {
   const data = request.body;
     answerCommentService
       .updateAnswerComment({answer_comment_id: data.answer_comment_id, text: data.text, answer_id: data.answer_id})
