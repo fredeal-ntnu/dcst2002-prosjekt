@@ -226,7 +226,7 @@ updateQuestionComment(questionComment: QuestionComment) {
 
   deleteAnswerComment(id: number) {
     return axios
-      .delete('/comments/' + id)
+      .delete('/answer/comments/' + id)
       .then((response) => response.data);
   }
 

@@ -62,7 +62,7 @@ answerCommentRouter.get('/answer/comments/:id', (request, response) => {
 
 //Delete answer comment
 
-answerCommentRouter.delete('answers/:id/comments/:id', (request, response) => {
+answerCommentRouter.delete('/answer/comments/:id', (request, response) => {
   const commentId = Number(request.params.id);
   answerCommentService
     .deleteAnswerComment(commentId)

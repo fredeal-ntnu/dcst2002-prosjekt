@@ -12,9 +12,13 @@ export class CreateQuestion extends Component {
   text = '';
   user_id = 0;
 
+  
+
   render() {
     return (
       <>
+      
+    
         <Card title="">
           <div className="row">
             <SideMenu
@@ -101,12 +105,6 @@ export class CreateQuestion extends Component {
       .catch((error) => Alert.danger(error.message));
   }
 
-  async componentDidMount() {
-    const response = await fetch('/api/current_user');
-    const user = await response.json();
-    console.log(user)
-    this.user_id = user.id;
-  }
 
   handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let tagId = Number(event.target.value);
