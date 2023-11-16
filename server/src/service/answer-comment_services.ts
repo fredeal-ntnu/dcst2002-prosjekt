@@ -1,4 +1,3 @@
-
 import pool from '../mysql-pool';
 import type { RowDataPacket, ResultSetHeader } from 'mysql2';
 

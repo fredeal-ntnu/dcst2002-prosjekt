@@ -16,8 +16,7 @@ tagRouter.get('/tags/:id', (request, response) => {
 });
 
 //Get all tags
-
-tagRouter.get('/tags', (_request, response) => {
+tagRouter.get('/tags', (request, response) => {
   tagService
     .getAllTags()
     .then((rows) => response.send(rows))

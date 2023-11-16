@@ -6,15 +6,13 @@ import { questionService, Question_Content } from '../../src/service/question_se
 const testQuestions: Question_Content[] = [
     {question_id: 1, title: 'Test1', text: 'Dette er test 1', view_count: 0, has_answer: false, user_id: 1},
     {question_id: 2, title: 'Test2', text: 'Dette er test 2', view_count: 0, has_answer: false, user_id: 2},
-    {question_id: 3, title: 'Test3', text: 'Dette er test 3', view_count: 0, has_answer: false, user_id: 3},
+    {question_id: 3, title: 'Test3', text: 'Dette er test 3', view_count: 0, has_answer: false, user_id: 1},
 ];
 
-// Since API is not compatible with v1, API version is increased to v2
 axios.defaults.baseURL = 'http://localhost:3001/api/v2';
 
 let webServer: any;
 beforeAll((done) => {
-  // Use separate port for testing
   webServer = app.listen(3001, () => done());
 });
 
@@ -41,10 +39,9 @@ afterAll((done) => {
 
     // Test fetching the authenticated user's questions
     test('Fetch authenticated user questions (200 OK)', (done) => {
-      axios.get('/questions/me') // The route will need to be authenticated
+      axios.get('/questions/me')
         .then((response) => {
           expect(response.status).toEqual(200);
-          // Add more expectations here based on your data structure
           done();
         })
         .catch((error) => done(error));
@@ -75,8 +72,7 @@ afterAll((done) => {
   
     // Test fetching a single question by ID
     test('Fetch question by ID (200 OK)', (done) => {
-      const questionId = 2;
-      axios.get(`/questions/${questionId}`)
+      axios.get('/questions/2')
         .then((response) => {
           expect(response.status).toEqual(200);
           expect(response.data).toEqual(testQuestions[1]);
@@ -95,6 +91,17 @@ afterAll((done) => {
         })
         .catch((error) => done(error));
     });
+
+    //Test fetching top five questions for user
+    test('Fetch top five questions for user (200 OK)', (done) => {
+      const userId = 1; 
+      axios.get(`/user/${userId}/topfivequestions`)
+        .then((response) => {
+          expect(response.status).toEqual(200);
+          expect(response.data).toEqual(testQuestions.filter((question) => question.user_id === userId));
+          done();
+        })
+    });
   
     // Test fetching unanswered questions
     test('Fetch unanswered questions (200 OK)', (done) => {
@@ -104,27 +111,54 @@ afterAll((done) => {
           expect(response.data).toEqual(testQuestions);
           done();
         })
-        .catch((error) => done(error));
     });
+
+    //Test fetching unanswered questions for user
+    test('Fetch unanswered questions for user (200 OK)', (done) => {
+      const userId = 1; 
+      axios.get(`/user/${userId}/unansweredquestions`)
+        .then((response) => {
+          expect(response.status).toEqual(200);
+          expect(response.data).toEqual(testQuestions.filter((question) => question.user_id === userId));
+          done();
+        })
+    });
+
+  });
+
+  describe('Fetch questions (GET ERROR)', () => {
+    test('Fetch question that does not exist', (done) => {
+        axios.get('/questions/4').catch((error) => {
+          expect(error.response.status).toEqual(500);
+          done();
+        });
+      });
+
+    test('Fetch questions by user ID that does not exist', (done) => {
+        const userId = 4; 
+        axios.get(`/user/${userId}/questions`)
+          .catch((error) => {
+            expect(error.response.status).toEqual(500);
+            done();
+          });
+      });
+
   });
   
-  describe.skip('POST /questions', () => {
-    test('Create new question (201 Created)', (done) => {
+  describe('POST /questions', () => {
+    test.skip('Create new question (201 Created)', (done) => {
       const newQuestion = {
         title: 'New Question Title',
         text: 'New question text content',
+        user_id: 1 
       };
-      // Mock the authenticated user
-      // Make sure to adjust the authentication mechanism as per your setup
-      const user = { user_id: 1 }; // Mocked user object
       
-      axios.post('/questions', { auth: user },newQuestion) // Adjust this according to how you handle authentication
+      axios.post('/questions', newQuestion)
         .then((response) => {
           expect(response.status).toEqual(201);
           expect(response.data).toHaveProperty('id');
           done();
         })
-        .catch((error) => done(error));
     });
   
     test('Fail to create a new question with invalid data (400 Bad Request)', (done) => {
@@ -135,6 +169,19 @@ afterAll((done) => {
       axios.post('/questions', invalidQuestion)
         .catch((error) => {
           expect(error.response.status).toEqual(400);
+          done();
+        });
+    });
+
+    test('Fail to create a new question with invalid user id (400 Bad Request)', (done) => {
+      const invalidQuestion = {
+        title: 'New Question Title',
+        text: 'New question text content',
+        user_id: 9999 // Invalid user id
+      };
+      axios.post('/questions', invalidQuestion)
+        .catch((error) => {
+          expect(error.response.status).toEqual(500);
           done();
         });
     });
@@ -151,11 +198,12 @@ afterAll((done) => {
         .catch((error) => done(error));
     });
   
-    test('Fail to delete a non-existing question (404 Not Found)', (done) => {
+    test('Fail to delete a non-existing question (400 Not Found)', (done) => {
       const nonExistingQuestionId = 9999; // Assuming this question does not exist
       axios.delete(`/questions/${nonExistingQuestionId}`)
         .catch((error) => {
-          expect(error.response.status).toEqual(404);
+          expect(error.response.status).toEqual(400);
+          expect(error.response.data).toEqual('Question does not exist');
           done();
         });
     });

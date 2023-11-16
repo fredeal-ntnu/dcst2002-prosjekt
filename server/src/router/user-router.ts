@@ -6,7 +6,7 @@ import { questionService } from '../service/question_services';
 const userRouter = Router();
 
 
-
+// tror denne kan fjernes, fordi akkurat den samme finnes i question-router
 userRouter.get('/user/:id/questions', (request, response) => {
     const user_id = Number(request.params.id);
     questionService

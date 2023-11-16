@@ -19,7 +19,8 @@ questionRouter.get('/user/:id/questions', (request, response) => {
   const user_id = Number(request.params.id);
   questionService
     .getQuestionsByUserId(user_id)
-    .then((question) => question ? response.send(question) : response.status(404).send('Question not found'))
+    //.then((question) => question ? response.send(question) : response.status(404).send('Question not found'))
+    .then((question) => response.send(question))
     .catch((error) => response.status(500).send(error))
 });
 
@@ -123,7 +124,11 @@ questionRouter.delete('/questions/:id', (request, response) => {
   questionService
     .deleteQuestion(id)
     .then(() => response.send())
-    .catch((error) => response.status(500).send('Error deleting question'));
+    .catch((error) => {
+      if(error.affectedRows == 0){ 
+      response.status(400).send('Question does not exist');
+    } else {
+      response.status(500).send(error)}});
 });
 
 //Update question

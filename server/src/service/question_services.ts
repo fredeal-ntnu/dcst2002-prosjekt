@@ -26,8 +26,11 @@ class Service {
         [question_id],
         (error, results: RowDataPacket[]) => {
           if (error) return reject(error);
+          console.log('asdf', results);
+          if(results.length === 0) return reject(error);
 
-          this.incrementViewCount(results[0].question_id).catch((error) => console.error(error));
+
+          this.incrementViewCount(results[0].question_id);
 
           resolve(results[0] as Question_Content);
         },
@@ -140,9 +143,11 @@ class Service {
    */
   deleteQuestion(id: number) {
     return new Promise<void>((resolve, reject) => {
-      pool.query('DELETE FROM Questions WHERE question_id=?', [id], (error) => {
+      pool.query('DELETE FROM Questions WHERE question_id=?', [id], (error, results: ResultSetHeader) => {
         console.log(error);
         if (error) return reject(error);
+        if(results.affectedRows === 0) return reject(results);
+        
         resolve();
       });
     });
@@ -196,6 +201,7 @@ class Service {
         [user_id],
         (error, results: RowDataPacket[]) => {
           if (error) return reject(error);
+          if (results.length === 0) return reject(error);
 
           resolve(results as Question_Content[]);
         },
