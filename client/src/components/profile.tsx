@@ -5,7 +5,8 @@ import service, { Question, Tag, User, Answer } from '../service';
 
 export class Profile extends Component {
     questions: Question[] = [];
-    users: User[] = [] || null;
+    users: User[] = [];
+    user:User = { user_id: 0, google_id: '', username: '', email: ''};
 
   
     render() {
@@ -25,9 +26,9 @@ export class Profile extends Component {
 
             <Column>
               <Card title="Profile">
-                <Row>{"Welcome to your profile: " + this.users?.username}</Row>
-                <Row>{"Your email is: " + this.users?.email}</Row>
-                <Row>{"Your user id is: " + this.users?.user_id}</Row>
+                <Row>{"Welcome to your profile: " + this.user.username}</Row>
+                <Row>{"Your email is: " + this.user.username}</Row>
+                <Row>{"Your user id is: " + this.user.user_id}</Row>
               </Card>
               <Button.Danger onClick={() => {
                 this.logout();
@@ -38,13 +39,13 @@ export class Profile extends Component {
     }
   
     mounted() {
-      service.getMe().then((users) => { this.users = users})
+      service.getMe().then((user) => { this.user = user})
     }
       
 
     async logout() {
         try {
-        service.logOut()
+        const data = service.logOut()
         // this.users = null;
         // window.location.reload();
 
