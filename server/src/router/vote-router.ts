@@ -3,18 +3,18 @@ import { voteService } from '../service/vote_services';
 
 const voteRouter = express.Router();
 
-//Get all votes for answer
+//create vote funker
 
-voteRouter.post('/vote/', (request, response) => {
-    const data = request.body;
-    console.log(data)
-    if (typeof data.user_id == 'number' && typeof data.answer_id == 'number' && typeof data.vote_type == 'number')
-    voteService
-    .createVote(data.user_id, data.answer_id, data.vote_type)
-    .then(() => response.send())
-    .catch((error) => response.status(500).send(error));
-    else response.status(400).send('Missing vote properties');
-});
+// voteRouter.post('/vote/', (request, response) => {
+//     const data = request.body;
+//     console.log(data)
+//     if (typeof data.user_id == 'number' && typeof data.answer_id == 'number' && typeof data.vote_type == 'number')
+//     voteService
+//     .createVote(data.user_id, data.answer_id, data.vote_type)
+//     .then(() => response.send())
+//     .catch((error) => response.status(500).send(error));
+//     else response.status(400).send('Missing vote properties');
+// });
 
 
 
@@ -28,23 +28,20 @@ voteRouter.get('/answers/:id/votes', (request, response) => {
 });
 
 
-//Create vote 
+// Create vote funker ikke
 
-<<<<<<< HEAD
-voteRouter.post('/answers/:id/votes', (request, response) => {
-    console.log('kuk')
-    console.log('kukdata',request.body);
-    const data = request.body;
-    if (data.user_id && data.answer_id && data.vote_type){
-        console.log('kuk',data);
-    voteService
-    .createVote(data.user_id, data.answer_id, data.vote_type)
-    .then(() => response.send())
-    .catch((error) => response.status(500).send(error));}
-    else{ response.status(400).send('Missing vote properties');}
-});
-=======
->>>>>>> 6f017b9bcd498fcb2444f595b5df7f52cf5165bc
+    voteRouter.post('/vote', (request, response) => {
+        console.log('kuk')
+        console.log('kukdata',request.body);
+        const data = request.body;
+        if (data.user_id && data.answer_id && data.vote_type){
+            console.log('kuk',data);
+        voteService
+        .createVote(data.user_id, data.answer_id, data.vote_type)
+        .then(() => response.send())
+        .catch((error) => response.status(500).send(error));}
+        else{ response.status(400).send('Missing vote properties');}
+    });
 
 
 

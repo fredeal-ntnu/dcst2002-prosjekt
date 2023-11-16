@@ -27,7 +27,7 @@ export class Profile extends Component {
             <Column>
               <Card title="Profile">
                 <Row>{"Welcome to your profile: " + this.user.username}</Row>
-                <Row>{"Your email is: " + this.user.username}</Row>
+                <Row>{"Your email is: " + this.user.email}</Row>
                 <Row>{"Your user id is: " + this.user.user_id}</Row>
               </Card>
               <Button.Danger onClick={() => {

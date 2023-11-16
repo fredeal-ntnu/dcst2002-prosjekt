@@ -28,16 +28,6 @@ class Service {
     }
 
 
-<<<<<<< HEAD
-    //create vote for answer
-    createVote(user_id: number, answer_id: number, vote_type: boolean) {
-        return new Promise<void>((resolve, reject) => {
-            pool.query(
-            'INSERT INTO Votes (user_id, answer_id, vote_type) VALUES (?, ?, ?)',
-            [user_id, answer_id, vote_type],
-            (error) => {
-                if (error) return reject(error);
-=======
     // //create vote for answer
     // createVote(user_id: number, answer_id: number, vote_type: number) {
     //     return new Promise<void>((resolve, reject) => {
@@ -46,7 +36,6 @@ class Service {
     //         [user_id, answer_id, vote_type],
     //         (error) => {
     //             if (error) return reject(error);
->>>>>>> 6f017b9bcd498fcb2444f595b5df7f52cf5165bc
     
     //             resolve();
     //         },
@@ -184,29 +173,8 @@ getAllVotesByAnswerId(answer_id: number) {
 }
 
 
-// // Get all votes for an answer and calculate total votes
-// getAllVotesForAnswer(answer_id: number) {
-//     return new Promise<number>((resolve, reject) => {
-//       pool.query(
-//         'SELECT * FROM Votes WHERE answer_id = ?',
-//         [answer_id],
-//         (error, results: RowDataPacket[]) => {
-//           if (error) return reject(error);
-
-//           const votes: Vote_Content[] = results as Vote_Content[];
-
-//           // Calculate total votes
-//           const totalVotes = votes.reduce((total, vote) => {
-//             return total + (vote.vote_type ? 1 : -1);
-//           }, 0);
-
-//           resolve(totalVotes);
-//         },
-//       );
-//     });
-//   }
 
 
-
+            
 }
 export const voteService = new Service();
