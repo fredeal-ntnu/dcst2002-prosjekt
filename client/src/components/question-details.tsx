@@ -267,7 +267,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     service
       .createAnswer(this.answer.text, this.props.match.params.id)
       .then(() => this.setHasAnswered())
-      .then(() => location.reload())
+      .then(() => this.mounted())
       .catch((error) => Alert.danger('Error saving answer: ' + error.message));
   }
   async setHasAnswered() {
