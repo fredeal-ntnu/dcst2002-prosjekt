@@ -60,7 +60,7 @@ questionRouter.get('/unansweredquestions', (_request, response) => {
 //Create new question
 questionRouter.post('/questions', passport.authenticate("session", {session: true}), (request, response) => {
   const data = request.body;
-  console.log(data)
+  console.log('shitau', data)
   const user:User = request.user as User;
 
   console.log("fbrewbwb")

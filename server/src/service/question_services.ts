@@ -8,7 +8,7 @@ export type Question_Content = {
   title: string;
   text: string;
   view_count: number;
-  has_answer: number;
+  has_answer: boolean;
   user_id: number;
 };
 
@@ -89,8 +89,6 @@ class Service {
     text: string,
     user_id: number,
   ) {
-    console.log(user_id)
-
     return new Promise<number>((resolve, reject) => {
       pool.query(
         'INSERT INTO Questions (title,text,user_id) VALUES (?,?,?)',
