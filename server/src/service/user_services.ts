@@ -121,19 +121,19 @@ class UserService {
   }
   
 // update user
-  update(user: User) {
-    return new Promise<void>((resolve, reject) => {
-      pool.query(
-        'UPDATE Users SET username = ?, email = ? WHERE user_id = ?',
-        [user.username, user.email, user.user_id],
-        (error) => {
-          if (error) return reject(error);
+  // update(user: User) {
+  //   return new Promise<void>((resolve, reject) => {
+  //     pool.query(
+  //       'UPDATE Users SET username = ?, email = ? WHERE user_id = ?',
+  //       [user.username, user.email, user.user_id],
+  //       (error) => {
+  //         if (error) return reject(error);
 
-          resolve();
-        },
-      );
-    });
-  }
+  //         resolve();
+  //       },
+  //     );
+  //   });
+  // }
   
   delete(user_id: number) {
     return new Promise<void>((resolve, reject) => {

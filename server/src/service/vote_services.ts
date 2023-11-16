@@ -28,20 +28,38 @@ class Service {
     }
 
 
-    //create vote for answer
-    createVote(user_id: number, answer_id: number, vote_type: boolean) {
-        return new Promise<void>((resolve, reject) => {
-            pool.query(
-            'INSERT INTO votes (user_id, answer_id, vote_type) VALUES (?, ?, ?)',
-            [user_id, answer_id, vote_type],
-            (error) => {
-                if (error) return reject(error);
+    // //create vote for answer
+    // createVote(user_id: number, answer_id: number, vote_type: number) {
+    //     return new Promise<void>((resolve, reject) => {
+    //         pool.query(
+    //         'INSERT INTO Votes (user_id, answer_id, vote_type) VALUES (?, ?, ?)',
+    //         [user_id, answer_id, vote_type],
+    //         (error) => {
+    //             if (error) return reject(error);
     
-                resolve();
-            },
-            );
-        });
-        }
+    //             resolve();
+    //         },
+    //         );
+    //     });
+    //     }
+
+
+    //create a vote for answer
+    createVote(user_id: number, answer_id: number, vote_type: number) {
+      console.log(user_id)
+      console.log(answer_id)
+      console.log(vote_type)
+      return new Promise<void>((resolve, reject) => {
+        pool.query(
+          'INSERT INTO Votes (user_id, answer_id, vote_type) VALUES (?, ?, ?)', [user_id, answer_id, vote_type],
+          (error) => {
+            if (error) return reject(error);
+
+            resolve();
+          },
+        )
+      });
+    }
 
 
 

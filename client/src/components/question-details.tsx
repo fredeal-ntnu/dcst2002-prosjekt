@@ -39,7 +39,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   answer: Answer = { answer_id: 0, text: '', confirmed_answer: false, question_id: 0 };
   questionComment: QuestionComment = { question_comment_id: 0, text: '', question_id: 0 };
   answerComment: AnswerComment = { answer_comment_id: 0, text: '', answer_id: 0 };
-  vote: Vote = { user_id: 0, answer_id: 0, vote_type: false };
+  vote: Vote = { user_id: 0, answer_id: 0, vote_type: 0 };
   user: User = { user_id: 0, google_id: '', username: '', email: '' };
   score: number = 0;
   connectedUser: number = 0;
@@ -284,11 +284,8 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   }
 
   addUpvote(answer_id: number) {
-    console.log(this.connectedUser, answer_id);
-
     service
-      .createVote(this.connectedUser, answer_id, true)
-      .then(() => location.reload())
+      .createVote(this.connectedUser, answer_id, 1)
       .catch((error) => Alert.danger('Error saving answer: ' + error.message));
   }
 

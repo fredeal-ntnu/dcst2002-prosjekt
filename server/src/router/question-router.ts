@@ -94,11 +94,7 @@ questionRouter.post('/questions', passport.authenticate("session", {session: tru
   console.log('shitau', data)
   const user:User = request.user as User;
 
-  console.log("fbrewbwb")
-  console.log("fbrewbwb")
   console.log(user)
-  console.log("fbrewbwb")
-  console.log("fbrewbwb")
 
   if (
     typeof data.title == 'string' &&
