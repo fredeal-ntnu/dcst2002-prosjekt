@@ -2,7 +2,9 @@ import * as React from 'react';
 import { ReactNode, ChangeEvent } from 'react';
 import { Component } from 'react-simplified';
 import { NavLink } from 'react-router-dom';
-import { Question } from './service';
+import { Question, Answer } from './service';
+import service from './service';
+
 import { EyeIcon } from './icons';
 
 /**
@@ -66,6 +68,23 @@ export class QuestionCard extends Component<{ question: Question }> {
   }
 }
 
+export class AnswerCard extends Component<{ answer: Answer }> {
+  questions: Question[] = [];
+
+  render() {
+    return (
+      <Card title={<NavLink to={'/questions/' + this.props.answer.question_id}>{this.questions.title}</NavLink>}>
+            <Row>
+              <Column>{this.props.answer.text}</Column>
+            </Row>
+      </Card>
+    )
+  }
+  mounted(): void {
+    service.getQuestionsByAnswerId(this.props.answer.answer_id).then((questions) => (this.questions = questions));
+  }
+
+}
 
 /**
  * Renders a row using Bootstrap classes.

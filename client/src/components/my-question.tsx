@@ -16,10 +16,11 @@ export class MyQuestions extends Component {
         <Row>
           {/* Side Menu or other content */}
           <Column width={3}>
-            <SideMenu header='Menu'
+          <SideMenu header='Menu'
             items={[
               { label: "Questions", to: "/questions" },
               { label: "My Questions", to: "myquestions" },
+              { label: "My Favourite Answers", to: "favourites" },
               { label: "New Question", to: "createquestion" },
               { label: "Tags", to: "/tags" }
             ]}/>
@@ -78,13 +79,13 @@ export class MyQuestions extends Component {
           break;
         case 'popular':
             service
-                .getTopFiveQuestions()
+                .getUserTopFiveQuestions(this.user.user_id)
                 .then((questions) => (this.questions = questions))
                 .catch((error) => Alert.danger(error.message));
           break;
         case 'unanswered':
             service
-                .getUnansweredQuestions()
+                .getUserUnansweredQuestions(this.user.user_id)
                 .then((questions) => (this.questions = questions))
                 .catch((error) => Alert.danger(error.message));
           break;
@@ -98,15 +99,15 @@ export class MyQuestions extends Component {
     .then((user) => {
       this.user = user;
     return service.getQuestionsByUserid(this.user.user_id);
-  })
-  .then(questions => (this.questions = questions))
-  .catch((error: Error) => Alert.danger('Error getting answer: ' + error.message));
-      this.loadQuestions();
+    })
+    .then(questions => (this.questions = questions))
+    .catch((error: Error) => Alert.danger('Error getting answer: ' + error.message));
+    this.loadQuestions();
 
-      service
-        .getAllTags()
-        .then((tags) => (this.tags = tags))
-        .catch((error) => Alert.danger(error.message));   
+    service
+      .getAllTags()
+      .then((tags) => (this.tags = tags))
+      .catch((error) => Alert.danger(error.message));   
   }
 }
 

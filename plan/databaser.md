@@ -146,3 +146,31 @@ INSERT INTO question_user_favourite(question_id, user_id) VALUES
 
 
 insert into `Answers` (`text`, `confirmed_answer`, `question_id`) values ('heii', 0, 1);
+
+
+
+
+
+-- First, drop the existing foreign key constraints
+ALTER TABLE question_user_favourite
+DROP FOREIGN KEY question_user_favourite_ibfk_1, 
+DROP FOREIGN KEY question_user_favourite_ibfk_2;
+
+-- Change the table name and rename the columns
+ALTER TABLE question_user_favourite
+CHANGE COLUMN question_id answer_id INT,
+CHANGE COLUMN user_id answer_id INT,
+CHANGE COLUMN question_user_favourite_id answer_user_favourite_id INT AUTO_INCREMENT,
+ADD PRIMARY KEY (answer_user_favourite_id);
+
+-- Recreate the foreign key constraints with the updated column names
+ALTER TABLE question_user_favourite
+ADD CONSTRAINT fk_answer_user_favourite_answer_id
+FOREIGN KEY (answer_id) REFERENCES Answers(answer_id) ON DELETE CASCADE;
+
+ALTER TABLE question_user_favourite
+ADD CONSTRAINT fk_answer_user_favourite_user_id
+FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE;
+
+-- Rename the table
+RENAME TABLE question_user_favourite TO answer_user_favourite;

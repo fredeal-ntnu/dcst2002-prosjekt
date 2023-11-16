@@ -23,6 +23,18 @@ questionRouter.get('/user/:id/questions', (request, response) => {
     .catch((error) => response.status(500).send(error))
 });
 
+
+//Get all questions by answer id
+questionRouter.get('/answer/:id/favourite', (_request, response) => {
+  const answer_id = Number(_request.params.id);
+  questionService
+    .getQuestionsByAnswerId(answer_id)
+    .then((rows) => response.send(rows))
+    .catch((error) => response.status(500).send(error));
+});
+
+
+
 //Get all questions
 questionRouter.get('/questions', (_request, response) => {
   questionService
@@ -41,6 +53,15 @@ questionRouter.get('/questions/:id', (request, response) => {
     .catch((error) => response.status(500).send(error));
 });
 
+//Get top five questions for user
+questionRouter.get('/user/:id/topfivequestions/', (request, response) => {
+  const user_id = Number(request.params.id);
+  questionService
+    .getUserTopFiveQuestions(user_id)
+    .then((question) => response.send(question))
+    .catch((error) => response.status(500).send(error));
+});
+
 //Get top five questions
 questionRouter.get('/topfivequestions', (_request, response) => {
   questionService
@@ -53,9 +74,19 @@ questionRouter.get('/topfivequestions', (_request, response) => {
 questionRouter.get('/unansweredquestions', (_request, response) => {
   questionService
     .getUnansweredQuestions()
-    .then((rows) => response.send(rows))
+    .then((question) => response.send(question))
     .catch((error) => response.status(500).send(error));
 });
+
+//Get unanswered questions for user
+questionRouter.get('/user/:id/unansweredquestions/', (request, response) => {
+  const user_id = Number(request.params.id);
+  questionService
+    .getUserUnansweredQuestions(user_id)
+    .then((question) => response.send(question))
+    .catch((error) => response.status(500).send(error));
+});
+
 
 //Create new question
 questionRouter.post('/questions', passport.authenticate("session", {session: true}), (request, response) => {

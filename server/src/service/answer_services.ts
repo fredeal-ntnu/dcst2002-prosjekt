@@ -9,6 +9,7 @@ export type Answer_Content = {
   question_id: number;
   user_id: number;
   score?: number;
+  result?: any;
 };
 
 class Service {
@@ -62,6 +63,49 @@ class Service {
       );
     });
   }
+
+  //get answers by user id
+  getAllAnswersByUserId(user_id: number) {
+    return new Promise<Answer_Content[]>((resolve, reject) => {
+      pool.query(
+        'SELECT * FROM Answers WHERE user_id = ?',
+        [user_id],
+        (error, results: RowDataPacket[]) => {
+          if (error) return reject(error);
+
+          resolve(results as Answer_Content[]);
+        },
+      );
+    });
+  }
+
+getAllFavouriteAnswersByUserId(user_id: number){
+    return new Promise<Answer_Content[]>((resolve, reject) => {
+    // First query to get all answer_ids associated with the user_id
+  pool.query(
+    'SELECT * FROM answer_user_favourite WHERE user_id = ?',
+    [user_id],
+    (error, favoriteResults) => {
+        if (error) return reject(error);
+        // Extract answer_ids from the favoriteResults
+        const answer_id = (favoriteResults as RowDataPacket[]).map(result => result.answer_id);
+
+        // Second query to get answers based on the extracted answer_ids
+        pool.query(
+            'SELECT * FROM Answers WHERE answer_id IN (?)',
+            [answer_id],
+            (secondError, answerResults) => {
+                if (secondError) return reject(secondError);
+                  
+                
+
+                resolve(answerResults as Answer_Content[]);
+            }
+        );
+    });
+  });
+}
+
 
   //create answer by question id
 
@@ -125,6 +169,8 @@ class Service {
         })})
     }
 }
+
+
 
 
 

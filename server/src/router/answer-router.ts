@@ -13,6 +13,15 @@ answerRouter.get('/questions/:id/answers', (request, response) => {
     .catch((error) => response.status(500).send(error));
 });
 
+//Get all favourite answers by user id
+answerRouter.get('/user/:id/favourites', (request, response) => {
+  const id = Number(request.params.id);
+  answerService
+  .getAllFavouriteAnswersByUserId(id)
+  .then((rows) => response.send(rows))
+  .catch((error) => response.status(500).send(error));
+});
+
 //Get answer by id
 
 answerRouter.get('/answers/:id', (request, response) => {

@@ -3,6 +3,8 @@
 import pool from '../mysql-pool';
 import type { RowDataPacket, ResultSetHeader } from 'mysql2';
 
+
+
 export type Question_Content = {
   question_id: number;
   title: string;
@@ -11,6 +13,7 @@ export type Question_Content = {
   has_answer: boolean;
   user_id: number;
 };
+
 
 class Service {
   /**
@@ -61,6 +64,19 @@ class Service {
       );
     });
   }
+  //get top 5 questions by user id
+  getUserTopFiveQuestions(user_id: number) {
+    return new Promise<Question_Content[]>((resolve, reject) => {
+      pool.query(
+        'SELECT * FROM Questions WHERE user_id=? ORDER BY view_count DESC LIMIT 5', [user_id],
+        (error, results: RowDataPacket[]) => {
+          if (error) return reject(error);
+
+          resolve(results as Question_Content[]);
+        },
+      );
+    });
+  }
 
   /**
    * Get all unanswered questions.
@@ -69,6 +85,23 @@ class Service {
     return new Promise<Question_Content[]>((resolve, reject) => {
       pool.query(
         'SELECT * FROM Questions WHERE has_answer=0 OR has_answer IS NULL',
+        (error, results: RowDataPacket[]) => {
+          if (error) return reject(error);
+
+          resolve(results as Question_Content[]);
+        },
+      );
+    });
+  }
+
+   /**
+   * Get all unanswered questions for user
+   */
+   getUserUnansweredQuestions(user_id: number) {
+    return new Promise<Question_Content[]>((resolve, reject) => {
+      pool.query(
+        'SELECT * FROM Questions WHERE (has_answer = 0 OR has_answer IS NULL) AND user_id = ?',
+        [user_id],
         (error, results: RowDataPacket[]) => {
           if (error) return reject(error);
 
@@ -169,5 +202,24 @@ class Service {
       );
     });
   }
+
+  getQuestionsByAnswerId(answer_id: number) {
+    return new Promise<Question_Content[]>((resolve, reject) => {
+      pool.query(
+        'SELECT * FROM Questions WHERE question_id IN (SELECT question_id FROM Answers WHERE answer_id=?)',
+        [answer_id],
+        (error, results: RowDataPacket[]) => {
+          if (error) return reject(error);
+
+          resolve(results as Question_Content[]);
+        },
+      );
+    });
+  }
+
+
+
+
 }
+
 export const questionService = new Service();
