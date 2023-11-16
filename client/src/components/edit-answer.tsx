@@ -7,7 +7,7 @@ import { createHashHistory } from 'history';
 const history = createHashHistory();
 
 export class EditAnswer extends Component<{ match: { params: { id: number } } }> {
-  answer: Answer = { answer_id: 0, text: '', confirmed_answer: false, question_id: 0 };
+  answer: Answer = { answer_id: 0, text: '', confirmed_answer: 0, last_updated: new Date(), question_id: 0, user_id: 0};
 
   render() {
     return (

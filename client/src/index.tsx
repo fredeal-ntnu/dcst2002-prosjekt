@@ -18,6 +18,7 @@ import { QuestionIcon } from './icons';
 import { MyQuestions } from './components/my-question';
 import { Favourites } from './components/favourites';
 import { Profile } from './components/profile';
+import { User } from './service';
 
 class Menu extends Component {
   render() {
@@ -36,6 +37,7 @@ class Menu extends Component {
 
 class Home extends Component {
   questions: Question[] = [];
+  user:User = { user_id: 0, google_id: '', username: '', email: ''};
 
   render() {
     return (
@@ -68,7 +70,7 @@ class Home extends Component {
   }
 
   mounted() {
-    // service.getMe().then((user) => (console.log(user)));
+    service.getMe().then((user) => (this.user = user));
 
     service.getAllQuestions().then((questions) => (this.questions = questions));
   }

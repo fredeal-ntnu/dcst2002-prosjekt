@@ -31,9 +31,12 @@ export type User = {
 export type Answer = {
   answer_id: number;
   text: string;
-  confirmed_answer: boolean;
+  confirmed_answer: Number;
+  last_updated: Date;
   question_id: number;
+  user_id: number;
   score?: number;
+  result?: any;
 };
 
 export type QuestionComment = {

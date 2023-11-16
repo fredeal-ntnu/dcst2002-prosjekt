@@ -19,6 +19,7 @@ const history = createHashHistory();
 
 interface State {
   isFavorite: boolean;
+  isConfirmedAnswer: boolean;
   // define other state properties here
 }
 
@@ -36,7 +37,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     has_answer: 0,
     user_id: 0,
   };
-  answer: Answer = { answer_id: 0, text: '', confirmed_answer: false, question_id: 0 };
+  answer: Answer = { answer_id: 0, text: '', confirmed_answer: 0, last_updated: new Date(), question_id: 0, user_id: 0 };
   questionComment: QuestionComment = { question_comment_id: 0, text: '', question_id: 0 };
   answerComment: AnswerComment = { answer_comment_id: 0, text: '', answer_id: 0 };
   vote: Vote = { user_id: 0, answer_id: 0, vote_type: 0 };
@@ -46,12 +47,15 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
 
   state: State = {
     isFavorite: false,
+    isConfirmedAnswer: false,
   };
 
   render() {
 
     return (
       <>
+
+      
         <SideMenu
           header="Public"
           items={[
@@ -184,7 +188,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                         </Button.Success>
                       </Column>
                       <Column>
-                        <Button.Success onClick={() => {}}>Mark as best</Button.Success>
+                        <Button.Success onClick={()=> this.setConfirmedAnswer(answer.answer_id)}>Mark as best</Button.Success>
                       </Column>
                       <Column>
                         <Button.Success
@@ -246,8 +250,13 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     service.getAllTagQuestionsRelations().then((relations) => (this.relations = relations));
 
     service
+
       .getAnswersForQuestion(this.props.match.params.id)
-      .then((answers) => (this.answers = answers));
+      .then((answers) => (this.answers = answers))
+      .then(() => {
+        console.log(this.answers)
+        //this.answers.sort((a, b) => b.confirmed_answer - a.confirmed_answer);
+      })
 
     service
       .getQuestionCommentsForQuestion(this.props.match.params.id)
@@ -311,25 +320,31 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
       .catch((error) => Alert.danger('Error saving answer: ' + error.message));
   }
 
-  // setConfirmedAnswer() {
-  //   if (this.connectedUser == this.question.user_id) {
-  //     this.answer.confirmed_answer = true;
-  //     service
-  //       .updateAnswer(this.answer)
-  //       .then(() => location.reload())
-  //       .catch((error) => Alert.danger('Error saving answer: ' + error.message));
-  //   } else {
-  //     Alert.danger('You are not the owner of this question');
-  //   }
-  // }
+  // Set confirmed answer for connected user
 
-  // createVoteForAnswer() {
-  //   service
-  //     .createVoteForAnswer(this.vote.user_id, this.vote.answer_id, this.vote.vote_type)
-  //     .then(() => location.reload())
-  //     .catch((error) => Alert.danger('Error saving answer: ' + error.message));
-  // }
+   setConfirmedAnswer(answer_id: number) {
 
+    console.log(this.question, this.connectedUser)
+    
+
+    if(this.question.user_id == this.connectedUser) {
+    service.getAnswerById(answer_id)
+      .then((answer) => this.answer = answer)
+      .then(()=> {
+          this.answer.confirmed_answer = 1;
+          service.updateAnswer(this.answer)
+          .then(() => this.mounted())
+          .catch((error) => Alert.danger('Error saving answer: ' + error.message));
+        
+      })
+    .catch((error) => Alert.danger('Error getting answer: ' + error.message));
+
+      
+    
+
+   }}
+
+  
   // getVotesByAnswerId(id: number) {
   //   console.log(id)
   //   service
