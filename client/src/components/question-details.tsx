@@ -148,7 +148,13 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                         </Button.Success>
                       </Column>
                       <Column>
-                        <Button.Success onClick={() => {}}>Downvote</Button.Success>
+                      <Button.Success
+                          onClick={() => {
+                            this.addDownvote(answer.answer_id);
+                          }}
+                        >
+                          Downvote
+                        </Button.Success>
                       </Column>
                       <Column>
                         <Card title="Votes">{answer.score}</Card>
@@ -286,6 +292,14 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   addUpvote(answer_id: number) {
     service
       .createVote(this.connectedUser, answer_id, 1)
+      .then(() => this.mounted())
+      .catch((error) => Alert.danger('Error saving answer: ' + error.message));
+  }
+
+  addDownvote(answer_id: number) {
+    service
+      .createVote(this.connectedUser, answer_id, 0)
+      .then(() => this.mounted())
       .catch((error) => Alert.danger('Error saving answer: ' + error.message));
   }
 
