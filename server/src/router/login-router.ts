@@ -51,7 +51,7 @@ passport.use(
       if (err) {
         return next(err);
       }
-      return res.send({ redirect: '/' });
+      return res.send({ redirect: '/questions' });
     });
   });
   

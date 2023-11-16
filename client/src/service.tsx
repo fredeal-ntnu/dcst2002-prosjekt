@@ -304,12 +304,33 @@ getVotesByAnswerId(id: number) {
 
 
 
-getMe(){
-  return axios
-    .get("/user/me")
-    .then((response) => response.data)
+async getMe(){
+  try {
+    const response = await axios.get("/user/me");
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("getMe failed")
+    }
+  } catch (error) {
+    throw error;
+  }
 }
 
+
+async logOut() {
+  try {
+    const response = await axios.post("/logout");
+    if (response.status === 200) {
+      return response.status;
+    } else {
+      throw new Error("logout failed")
+    }
+
+  } catch (error) {
+    throw error;
+  }
+}
 
 
 

@@ -17,12 +17,15 @@ import answerService from './components/services/answer-service';
 import { QuestionIcon } from './icons';
 import { MyQuestions } from './components/my-question';
 import { Favourites } from './components/favourites';
+import { Profile } from './components/profile';
+
 class Menu extends Component {
   render() {
     return (
       <NavBar brand="askMorgan">
         <Button.Success onClick={this.loginLink}>Login</Button.Success>
         <NavBar.Link to="/signup">Sign up</NavBar.Link>
+        <NavBar.Link to="/profile">My Profile</NavBar.Link>
       </NavBar>
     );
   }
@@ -82,6 +85,7 @@ if (root)
         <Menu />
         <Route exact path="/" component={Home} />
         <Route exact path="/questions" component={AllQuestions} />
+        <Route exact path="/profile" component={Profile} />
         <Route exact path="/tags" component={Tags} />
         <Route exact path="/myquestions" component={MyQuestions} />
         <Route exact path="/favourites" component={Favourites} />
