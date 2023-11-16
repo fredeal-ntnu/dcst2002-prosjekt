@@ -54,8 +54,6 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
 
     return (
       <>
-
-      
         <SideMenu
           header="Public"
           items={[
@@ -250,11 +248,10 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     service.getAllTagQuestionsRelations().then((relations) => (this.relations = relations));
 
     service
-
       .getAnswersForQuestion(this.props.match.params.id)
       .then((answers) => (this.answers = answers))
       .then(() => {
-        console.log(this.answers)
+        console.log
         //this.answers.sort((a, b) => b.confirmed_answer - a.confirmed_answer);
       })
 
