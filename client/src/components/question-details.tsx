@@ -222,7 +222,7 @@ createQuestionEditButton() {
 
 handleQuestionCommentDisplay() {
   
-  if(this.connectedUser == this.questionComment.user_id) {
+  if(this.connectedUser) {
    return(
     <Card title="Comments">
     {this.questionComments.map((questionComment) => {
@@ -233,19 +233,7 @@ handleQuestionCommentDisplay() {
               {questionComment.text}
               <Row>
                 <Column>
-                  <Button.Success
-                    onClick={() =>
-                      history.push(
-                        '/questions/' +
-                          this.props.match.params.id +
-                          '/comments/' +
-                          questionComment.question_comment_id +
-                          '/edit',
-                      )
-                    }
-                  >
-                    Edit
-                  </Button.Success>
+                 {this.handleQuestionCommentEdit(questionComment)}
                 </Column>
               </Row>
             </Row>
@@ -277,6 +265,26 @@ handleQuestionCommentDisplay() {
     </Card>
     )
   }
+}
+
+handleQuestionCommentEdit(questionComment: QuestionComment) {
+  if(this.connectedUser == questionComment.user_id) {
+    return(
+      <Button.Success
+      onClick={() =>
+        history.push(
+          '/questions/' +
+            this.props.match.params.id +
+            '/comments/' +
+            questionComment.question_comment_id +
+            '/edit',
+        )
+      }
+    >
+      Edit
+    </Button.Success>
+    )
+  } else return
 }
 
 
