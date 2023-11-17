@@ -30,7 +30,6 @@ voteRouter.get('/answers/:id/votes', (request, response) => {
 
 //Create vote 
 
-<<<<<<< HEAD
 voteRouter.post('/answers/:id/votes', (request, response) => {
     console.log('kuk')
     console.log('kukdata',request.body);
@@ -43,8 +42,6 @@ voteRouter.post('/answers/:id/votes', (request, response) => {
     .catch((error) => response.status(500).send(error));}
     else{ response.status(400).send('Missing vote properties');}
 });
-=======
->>>>>>> 6f017b9bcd498fcb2444f595b5df7f52cf5165bc
 
 
 
