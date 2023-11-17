@@ -8,16 +8,6 @@ import {User, userService} from "../service/user_services";
 
 const logoutRouter = express.Router();
 
-// loginRouter.get('/login/federated/google', 
-// passport.authenticate('google', { scope: ['profile', 'email'] }));
-
-// loginRouter.get('/auth/google/callback', 
-//  passport.authenticate('google'),
-// function (req, res) { console.log(req.user.user_id);
-//   // Successful authentication, redirect home or to another page.
-//   res.redirect('/#/');
-// }
-// );
 
 passport.serializeUser(function (user, cb) {
   cb(null, user);
@@ -35,7 +25,6 @@ passport.use(
       callbackURL: 'http://localhost:3000/api/v1/auth/google/callback',
     },
     function (accessToken, refreshToken, profile, cb) {
-      console.log(profile);
       userService.findOrCreate({
         google_id: profile.id,
         username: profile.displayName,

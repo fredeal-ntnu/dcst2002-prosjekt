@@ -102,7 +102,6 @@ class Service {
     deleteFavouriteRelation(question_id: number, user_id: number) {
         return new Promise<void>((resolve, reject) => {
             pool.query('DELETE FROM question_user_favourites WHERE question_id=? AND user_id=?', [question_id, user_id], (error) => {
-            console.log(error);
             if (error) return reject(error);
             resolve();
             });

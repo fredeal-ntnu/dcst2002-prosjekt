@@ -133,7 +133,6 @@ class Service {
    */
 
   deleteQuestion(id: number) {
-    console.log(typeof id);
     return axios.delete('/questions/' + id).then((response) => response.data);
   }
 
@@ -268,7 +267,6 @@ updateQuestionComment(questionComment: QuestionComment) {
   }
 
   getAnswerCommentById(id: number) {
-    console.log('andre')
     return axios
     .get('/answer/comments/' + id)
     .then((response) => response.data);

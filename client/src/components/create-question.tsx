@@ -117,7 +117,6 @@ export class CreateQuestion extends Component {
 
   handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let tagId = Number(event.target.value);
-    console.log(tagId);
 
     if (event.target.checked) {
       this.selectedTags.push(tagId);

@@ -35,7 +35,6 @@ class Service {
 
 
     getAnswerCommentById(answer_comment_id: number) {
-      console.log('alsdfh')
       return new Promise<Answer_Comment_Content>((resolve, reject) => {
         pool.query(
           'SELECT * FROM answer_comments WHERE answer_comment_id = ?',

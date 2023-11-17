@@ -41,7 +41,6 @@ answerCommentRouter.post('/answers/:id/comments', (request, response) => {
 //Get answer comment by id
 
 answerCommentRouter.get('/answer/comments/:id', (request, response) => {
-  console.log('tredje')
   const commentId = Number(request.params.id);
   answerCommentService
     .getAnswerCommentById(commentId)

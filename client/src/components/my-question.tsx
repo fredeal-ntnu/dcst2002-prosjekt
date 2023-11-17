@@ -62,7 +62,6 @@ export class MyQuestions extends Component {
 
     handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         this.filter = event.target.value;
-        console.log(this.filter);
         this.loadQuestions() // Call a method to load questions based on the selected filter
       };
   

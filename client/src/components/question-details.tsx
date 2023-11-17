@@ -230,7 +230,6 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     service
       .getVotesBs(this.props.match.params.id)
       .then((answers_votes) => (this.answers_votes = answers_votes))
-      .then(() =>(console.log(this.answers)))
       .catch((error: Error) => Alert.danger('Error getting answers: ' + error.message));
 
     service
@@ -241,7 +240,6 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     service
     .getAnswersByQuestionId(this.props.match.params.id)
     .then((answers) => (this.answers = answers))
-    .then(() =>(console.log(this.answers)))
     .catch((error: Error) => Alert.danger('Error getting answers: ' + error.message))
 
     // this.answers.map((answer) => {
@@ -298,7 +296,6 @@ createQuestionEditButton() {
 
   
   createComment() {
-    console.log(this.connectedUser)
     if(this.connectedUser) {
       service
       .createQuestionComment(this.questionComment.text, this.props.match.params.id)
@@ -345,7 +342,6 @@ createQuestionEditButton() {
   }
   async setHasAnswered() {
     this.question.has_answer = 1;
-    console.log(this.question);
     await service
       .updateQuestion(this.question)
       .catch((error) => Alert.danger('Error saving question: ' + error.message));
@@ -381,7 +377,6 @@ createQuestionEditButton() {
   }
 
   addFavourite(answer_id: number, user_id: number) {
-    console.log(answer_id, user_id);
     if(this.connectedUser) {
       service
       .createFavouriteRelation(answer_id, user_id)
@@ -395,7 +390,6 @@ createQuestionEditButton() {
 
    setConfirmedAnswer(answer_id: number) {
 
-    console.log(this.question.user_id, this.connectedUser)
     
 
     if (this.question.user_id == this.connectedUser) {
@@ -418,17 +412,4 @@ createQuestionEditButton() {
   
   }
 
-  
-  // getVotesByAnswerId(id: number) {
-  //   console.log(id)
-  //   service
-  //   .getVotesByAnswerId(id)
-  //   .then((votes) => (this.votes = votes))
-  //   .catch((error: Error) => Alert.danger('Error getting votes: ' + error.message))
-  // }
-
-  // downwoteAnswer() {
-  //   service.downwoteAnswer(this.answer.answer_id)
-  //   .then(() => location.reload())
-  //   .catch((error) => Alert.danger('Error saving answer: ' + error.message));
 }

@@ -31,7 +31,6 @@ class Service {
         [question_id],
         (error, results: RowDataPacket[]) => {
           if (error) return reject(error);
-          console.log('asdf', results);
           if(results.length === 0) return reject(error);
 
 
@@ -149,7 +148,6 @@ class Service {
   deleteQuestion(id: number) {
     return new Promise<void>((resolve, reject) => {
       pool.query('DELETE FROM Questions WHERE question_id=?', [id], (error, results: ResultSetHeader) => {
-        console.log(error);
         if (error) return reject(error);
         if(results.affectedRows === 0) return reject(results);
         

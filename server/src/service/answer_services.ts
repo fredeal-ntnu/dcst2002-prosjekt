@@ -146,7 +146,6 @@ getAllFavouriteAnswersByUserId(user_id: number){
   deleteAnswer(id: number) {
     return new Promise<void>((resolve, reject) => {
       pool.query('DELETE FROM Answers WHERE answer_id=?', [id], (error) => {
-        console.log(error);
         if (error) return reject(error);
         resolve();
       });
@@ -179,7 +178,6 @@ getAllFavouriteAnswersByUserId(user_id: number){
         'SELECT * FROM Answers ORDER BY last_edited DESC',
         [answer.answer_id, answer.confirmed_answer, answer.question_id, answer.text, answer.user_id ,answer.last_edited],
         (error, results: RowDataPacket[]) => {
-          console.log(error);
           if (error) return reject(error);
           resolve(results as Answer_Content[]);
         })})

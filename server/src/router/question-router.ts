@@ -91,10 +91,7 @@ questionRouter.get('/user/:id/unansweredquestions/', (request, response) => {
 //Create new question
 questionRouter.post('/questions', passport.authenticate("session", {session: true}), (request, response) => {
   const data = request.body;
-  console.log('shitau', data)
   const user:User = request.user as User;
-
-  console.log(user)
 
   if (
     typeof data.title == 'string' &&
@@ -135,7 +132,6 @@ questionRouter.put('/questions', (request, response) => {
     data.title.length != 0 &&
     typeof data.text == 'string'
   ) {
-    console.log(data);
     questionService
       // .updateQuestion(Question_Content: data.question)
       .updateQuestion({

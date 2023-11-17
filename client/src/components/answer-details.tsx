@@ -12,7 +12,6 @@ answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0};
   render() {
     return (
       <>
-      {console.log(this.answerComments)}
         <Card title="Answer">
           <Row>
             <Column width={10}>

@@ -37,7 +37,6 @@ export class EditAnswerComment extends Component<{ match: { params: { id: number
   }
 
   mounted() {
-    console.log('første')
     service.getAnswerCommentById(this.props.match.params.id)
     .then((answerComment) => (this.answerComment = answerComment))
     .catch((error: Error) => Alert.danger('Error getting answer comment: ' + error.message));

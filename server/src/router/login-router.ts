@@ -35,7 +35,6 @@ passport.use(
       callbackURL: 'http://localhost:3000/api/v1/auth/google/callback',
     },
     function (accessToken, refreshToken, profile, cb) {
-      console.log(profile);
       userService.findOrCreate({
         google_id: profile.id,
         username: profile.displayName,
