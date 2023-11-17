@@ -99,23 +99,24 @@ createVote(user_id: number, answer_id: number, vote_type: number) {
                   return;
               }
 
-              if (selectResult.length === 0) {
-                  // No existing vote, insert the new vote
-                  pool.query(
-                      'INSERT INTO Votes (user_id, answer_id, vote_type) VALUES (?, ?, ?)',
-                      [user_id, answer_id, vote_type],
-                      (insertError) => {
-                          if (insertError) {
-                              console.error('Error inserting record:', insertError);
-                              reject(insertError);
-                              return;
-                          }
-                          console.log('Record inserted successfully');
-                          resolve();
-                      }
-                  );
+              if (Array.isArray(selectResult) && selectResult.length === 0) {
+                // No existing vote, insert the new vote
+                pool.query(
+                  'INSERT INTO Votes (user_id, answer_id, vote_type) VALUES (?, ?, ?)',
+                  [user_id, answer_id, vote_type],
+                  (insertError) => {
+                    if (insertError) {
+                      console.error('Error inserting record:', insertError);
+                      reject(insertError);
+                      return;
+                    }
+                    console.log('Record inserted successfully');
+                    resolve();
+                  }
+                );
               } else {
-                  const existingVoteType = selectResult[0].vote_type;
+                const existingVoteType = (selectResult[0] as RowDataPacket)?.vote_type;
+
 
                   if (existingVoteType === vote_type || (existingVoteType === 0 && vote_type === 0)) {
                       // Existing vote is the same as the new vote or both are 0, delete the entry

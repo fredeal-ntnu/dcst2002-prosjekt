@@ -100,9 +100,11 @@ export class MyQuestions extends Component {
       this.user = user;
     return service.getQuestionsByUserid(this.user.user_id);
     })
-    .then(questions => (this.questions = questions))
+    .then(questions =>  {
+      this.questions = questions
+      return this.loadQuestions();
+    })
     .catch((error: Error) => Alert.danger('Error getting answer: ' + error.message));
-    this.loadQuestions();
 
     service
       .getAllTags()

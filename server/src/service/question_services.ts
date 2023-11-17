@@ -16,6 +16,11 @@ export type Question_Content = {
 
 
 class Service {
+
+
+
+
+
   /**
    * Get question with given id.
    */
@@ -209,15 +214,15 @@ class Service {
     });
   }
 
-  getQuestionsByAnswerId(answer_id: number) {
-    return new Promise<Question_Content[]>((resolve, reject) => {
+  getQuestionByAnswerId(answer_id: number) {
+    return new Promise<Question_Content>((resolve, reject) => {
       pool.query(
-        'SELECT * FROM Questions WHERE question_id IN (SELECT question_id FROM Answers WHERE answer_id=?)',
+        'SELECT Q.* FROM Questions Q JOIN Answers A ON Q.question_id = A.question_id JOIN answer_user_favourite AF ON A.answer_id = AF.answer_id WHERE AF.answer_id =?',
         [answer_id],
         (error, results: RowDataPacket[]) => {
           if (error) return reject(error);
 
-          resolve(results as Question_Content[]);
+          resolve(results[0] as Question_Content);
         },
       );
     });
