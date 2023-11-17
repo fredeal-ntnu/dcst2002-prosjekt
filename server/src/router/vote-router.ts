@@ -27,6 +27,20 @@ voteRouter.get('/answers/:id/votes', (request, response) => {
 });
 
 
+//Create vote 
+
+voteRouter.post('/answers/:id/votes', (request, response) => {
+    console.log('kuk')
+    console.log('kukdata',request.body);
+    const data = request.body;
+    if (data.user_id && data.answer_id && data.vote_type){
+        console.log('kuk',data);
+    voteService
+    .createVote(data.user_id, data.answer_id, data.vote_type)
+    .then(() => response.send())
+    .catch((error) => response.status(500).send(error));}
+    else{ response.status(400).send('Missing vote properties');}
+});
 
 
 
