@@ -88,40 +88,8 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
             </Column>
           </Row>
         </Card>
-        <Card title="Comments">
-          {this.questionComments.map((questionComment) => {
-            if (questionComment.question_id == this.props.match.params.id) {
-              return (
-                <Card title="" key={questionComment.question_comment_id}>
-                  <Row>
-                    {questionComment.text}
-                    <Row>
-                      <Column>
-                        <Button.Success
-                          onClick={() =>
-                            history.push(
-                              '/questions/' +
-                                this.props.match.params.id +
-                                '/comments/' +
-                                questionComment.question_comment_id +
-                                '/edit',
-                            )
-                          }
-                        >
-                          Edit
-                        </Button.Success>
-                      </Column>
-                    </Row>
-                  </Row>
-                </Card>
-              );
-            }
-          })}
-
-          {this.addQuestionCommentInput()}
-
-
-        </Card>
+        {this.handleQuestionCommentDisplay()}
+        {this.addQuestionCommentInput()}
        {this.handleAnswerMapDisplay()}
        {this.addAnswerInput()}
       </>
@@ -250,6 +218,66 @@ createQuestionEditButton() {
     }else return
   } 
 
+
+
+handleQuestionCommentDisplay() {
+  
+  if(this.connectedUser == this.questionComment.user_id) {
+   return(
+    <Card title="Comments">
+    {this.questionComments.map((questionComment) => {
+      if (questionComment.question_id == this.props.match.params.id) {
+        return (
+          <Card title="" key={questionComment.question_comment_id}>
+            <Row>
+              {questionComment.text}
+              <Row>
+                <Column>
+                  <Button.Success
+                    onClick={() =>
+                      history.push(
+                        '/questions/' +
+                          this.props.match.params.id +
+                          '/comments/' +
+                          questionComment.question_comment_id +
+                          '/edit',
+                      )
+                    }
+                  >
+                    Edit
+                  </Button.Success>
+                </Column>
+              </Row>
+            </Row>
+          </Card>
+        );
+      }
+    })}
+
+
+  </Card>
+   )
+  }
+  else {
+    return(
+      <Card title="Comments">
+      {this.questionComments.map((questionComment) => {
+        if (questionComment.question_id == this.props.match.params.id) {
+          return (
+            <Card title="" key={questionComment.question_comment_id}>
+              <Row>
+                {questionComment.text}
+              </Row>
+            </Card>
+          );
+        }
+      })}
+
+
+    </Card>
+    )
+  }
+}
 
 
 handleAnswerMapDisplay () {
