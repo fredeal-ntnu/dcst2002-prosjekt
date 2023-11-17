@@ -29,16 +29,8 @@ export class CreateQuestion extends Component {
               ]}
             />
           </Column>
-          <Card title="">
-            <div className="row">
-              <SideMenu
-                header="Public"
-                items={[
-                  { label: 'Questions', to: '/questions' },
-                  { label: 'Tags', to: '/tags' },
-                ]}
-              />
-              <Card title="Ask a Question">
+          <Card title="Ask a Question">
+
                 <Row>
                   <Column width={2}>
                     <Form.Label>Title:</Form.Label>
@@ -102,8 +94,6 @@ export class CreateQuestion extends Component {
                   </Column>
                 </Row>
               </Card>
-            </div>
-          </Card>
         </Row>
       </>
     );
