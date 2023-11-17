@@ -5,10 +5,13 @@ import service, {Answer, AnswerComment} from '../service';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();
+
 export class AnswerDetails extends Component<{ match: { params: { id: number } } }> {
-answer: Answer = {answer_id: 0, text: '', confirmed_answer: false, question_id: 0};
+
+answer: Answer = {answer_id: 0, text: '', confirmed_answer: 0, last_updated: new Date(), question_id: 0, user_id: 0};
 answerComments: AnswerComment[] = [];
 answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0};
+
   render() {
     return (
       <>
