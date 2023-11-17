@@ -46,7 +46,7 @@ class Menu extends Component {
   }
 
   handleNavbar() {
-    if (this.connectedUser === 85) {
+    if (this.connectedUser) {
     
       return (
         
