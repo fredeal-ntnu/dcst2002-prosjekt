@@ -399,7 +399,6 @@ return(
 
 handleEditAnswer(answer_id: number, user_id: number) {
   
-  console.log(this.answer.answer_id)
 
   if(this.connectedUser == user_id) {
     return(
