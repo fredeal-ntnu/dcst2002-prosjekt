@@ -69,7 +69,8 @@ answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0};
   addAnswerComment() {
     service
       .createAnswerComment(this.answerComment.text, this.answer.answer_id)
-      .then(() => history.push('/questions/' + this.answer.question_id + '/answers/' + this.answer.answer_id))
+      // .then(() => history.push('/questions/' + this.answer.question_id + '/answers/' + this.answer.answer_id))
+      .then(() => this.mounted())
       .catch((error) => Alert.danger('Error adding answer comment: ' + error.message));
   }
 }
