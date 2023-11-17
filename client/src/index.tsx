@@ -21,18 +21,50 @@ import { Profile } from './components/profile';
 import { User } from './service';
 
 class Menu extends Component {
+  user:User = { user_id: 0, google_id: '', username: '', email: ''};
+  connectedUser: number = 0;
+
   render() {
     return (
-      <NavBar brand="askMorgan">
-        <Button.Success onClick={this.loginLink}>Login</Button.Success>
-        <NavBar.Link to="/signup">Sign up</NavBar.Link>
-        <NavBar.Link to="/profile">My Profile</NavBar.Link>
-      </NavBar>
-    );
+      
+      <>
+      {this.handleNavbar()}
+      </> 
+   );
+    
   }
   loginLink() {
     window.location.href = '/api/v1/login/federated/google';
   }
+
+
+
+  mounted(): void {
+    service.getMe().then((user) => { this.user = user
+    this.connectedUser = this.user.user_id;
+    });
+  }
+
+  handleNavbar() {
+    if (this.connectedUser === 85) {
+    
+      return (
+        
+        <NavBar brand="askMorgan">
+        <NavBar.Link to="/profile">My Profile</NavBar.Link>
+      </NavBar>
+      );
+    } else {
+      return (
+        <NavBar brand="askMorgan">
+        <Button.Success onClick={this.loginLink}>Login</Button.Success>
+      </NavBar>
+    )}
+
+  }
+
+
+
 }
 
 class Home extends Component {
@@ -69,11 +101,18 @@ class Home extends Component {
     );
   }
 
+
+
+
+
+
+
   mounted() {
     service.getMe().then((user) => (this.user = user));
 
     service.getAllQuestions().then((questions) => (this.questions = questions));
   }
+
 
   
 }
