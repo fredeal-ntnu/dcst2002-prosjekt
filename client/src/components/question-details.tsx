@@ -324,7 +324,7 @@ return(
                   </Button.Success>
                 </Column>
                 <Column>
-                {this.handleEditAnswer(answer.user_id)}
+                {this.handleEditAnswer(answer.answer_id,answer.user_id)}
                 </Column>
                 <Column>
                   <Button.Success onClick={() => this.setConfirmedAnswer(answer.answer_id)}>
@@ -389,13 +389,14 @@ return(
 }
 
 
-handleEditAnswer(user_id: number) {
-  console.log(this.connectedUser,user_id)
+handleEditAnswer(answer_id: number, user_id: number) {
+  
+  console.log(this.answer.answer_id)
 
   if(this.connectedUser == user_id) {
     return(
       <Button.Success
-      onClick={() =>  history.push('/questions/' + this.props.match.params.id + '/answers/' + this.answer.answer_id + '/edit')}
+      onClick={() =>  history.push('/questions/' + this.props.match.params.id + '/answers/' + answer_id + '/edit')}
     >
       Edit
     </Button.Success>

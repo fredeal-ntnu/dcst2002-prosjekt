@@ -39,6 +39,7 @@ export class EditAnswer extends Component<{ match: { params: { id: number } } }>
   }
 
   mounted() {
+    console.log(this.props.match.params.id)
     service
       .getAnswerById(this.props.match.params.id)
       .then((answer) => (this.answer = answer))
