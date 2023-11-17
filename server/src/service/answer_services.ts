@@ -18,20 +18,22 @@ class Service {
     return new Promise<Answer_Content[]>((resolve, reject) => {
       const query = `
       SELECT
-      a.*,
-      COALESCE(SUM(
-          CASE
-              WHEN ap.vote_type = 1 THEN 1
-              WHEN ap.vote_type = 0 THEN -1
-              ELSE 0
-          END
-      ), 0) AS score
-  FROM
-      Answers AS a
-  LEFT JOIN
-      Votes AS ap ON a.answer_id = ap.answer_id
-  GROUP BY
-      a.answer_id;
+    a.*,
+    COALESCE(SUM(
+        CASE
+            WHEN ap.vote_type = 1 THEN 1
+            WHEN ap.vote_type = 0 THEN -1
+            ELSE 0
+        END
+    ), 0) AS score
+FROM
+    Answers AS a
+LEFT JOIN
+    Votes AS ap ON a.answer_id = ap.answer_id
+WHERE
+    a.question_id = ?
+GROUP BY
+    a.answer_id;
       `;
       pool.query(
         query,
