@@ -19,18 +19,17 @@ questionRouter.get('/user/:id/questions', (request, response) => {
   const user_id = Number(request.params.id);
   questionService
     .getQuestionsByUserId(user_id)
-    //.then((question) => question ? response.send(question) : response.status(404).send('Question not found'))
     .then((question) => response.send(question))
     .catch((error) => response.status(500).send(error))
 });
 
 
 //Get all questions by answer id
-questionRouter.get('/answer/:id/favourite', (_request, response) => {
-  const answer_id = Number(_request.params.id);
+questionRouter.get('/answer/:id/question', (request, response) => {
+  const answer_id = Number(request.params.id);
   questionService
-    .getQuestionsByAnswerId(answer_id)
-    .then((rows) => response.send(rows))
+    .getQuestionByAnswerId(answer_id)
+    .then((question) => response.send(question))
     .catch((error) => response.status(500).send(error));
 });
 

@@ -240,12 +240,13 @@ updateQuestionComment(questionComment: QuestionComment) {
     .then((response) => response.data);
   }
 
-  getQuestionsByAnswerId(answer_id: number) {
+  getQuestionByAnswerId(answer_id: number) {
     return axios
-    .get('/answer/' + answer_id + '/favourite')
+    .get<Question>('/answer/' + answer_id + '/question')
     .then((response) => response.data);
   }
 
+  
   // ALLE SERVICES FOR ANSWER COMMENTS
   
 

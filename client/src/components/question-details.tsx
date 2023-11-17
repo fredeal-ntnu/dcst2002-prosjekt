@@ -16,7 +16,6 @@ import { useState } from 'react';
 
 const history = createHashHistory();
 
-
 interface State {
   isFavorite: boolean;
   isConfirmedAnswer: boolean;
@@ -37,7 +36,14 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     has_answer: 0,
     user_id: 0,
   };
-  answer: Answer = { answer_id: 0, text: '', confirmed_answer: 0, last_updated: new Date(), question_id: 0, user_id: 0 };
+  answer: Answer = {
+    answer_id: 0,
+    text: '',
+    confirmed_answer: 0,
+    last_updated: new Date(),
+    question_id: 0,
+    user_id: 0,
+  };
   questionComment: QuestionComment = { question_comment_id: 0, text: '', question_id: 0 };
   answerComment: AnswerComment = { answer_comment_id: 0, text: '', answer_id: 0 };
   vote: Vote = { user_id: 0, answer_id: 0, vote_type: 0 };
@@ -51,11 +57,8 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   };
 
   render() {
-
     return (
       <>
-
-      
         <SideMenu
           header="Public"
           items={[
@@ -136,6 +139,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
         </Card>
         <Card title="Answers HUSK SORTERING">
           {this.answers.map((answer) => {
+            const isFavoriteKey = `isFavorite_${answer.answer_id}`;
             if (answer.question_id == this.props.match.params.id) {
               return (
                 <Card title="" key={answer.answer_id}>
@@ -152,7 +156,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                         </Button.Success>
                       </Column>
                       <Column>
-                      <Button.Success
+                        <Button.Success
                           onClick={() => {
                             this.addDownvote(answer.answer_id);
                           }}
@@ -188,21 +192,23 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                         </Button.Success>
                       </Column>
                       <Column>
-                        <Button.Success onClick={()=> this.setConfirmedAnswer(answer.answer_id)}>Mark as best</Button.Success>
+                        <Button.Success onClick={() => this.setConfirmedAnswer(answer.answer_id)}>
+                          Mark as best
+                        </Button.Success>
                       </Column>
                       <Column>
                         <Button.Success
                           onClick={() => {
-                            if (this.state.isFavorite) {
+                            if (this.state[isFavoriteKey as keyof State]) {
                               this.addFavourite(answer.answer_id, this.connectedUser);
-                              this.setState({ isFavorite: false });
+                              this.setState({ [isFavoriteKey]: false });
                             } else {
                               this.addFavourite(answer.answer_id, this.connectedUser);
-                              this.setState({ isFavorite: true });
+                              this.setState({ [isFavoriteKey]: true });
                             }
                           }}
                         >
-                          {this.state.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                          {this.state[isFavoriteKey as keyof State] ? 'Remove from favorites' : 'Add to favorites'}
                         </Button.Success>
                       </Column>
                     </Row>
@@ -254,9 +260,9 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
       .getAnswersForQuestion(this.props.match.params.id)
       .then((answers) => (this.answers = answers))
       .then(() => {
-        console.log(this.answers)
+        console.log(this.answers);
         //this.answers.sort((a, b) => b.confirmed_answer - a.confirmed_answer);
-      })
+      });
 
     service
       .getQuestionCommentsForQuestion(this.props.match.params.id)
@@ -322,29 +328,24 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
 
   // Set confirmed answer for connected user
 
-   setConfirmedAnswer(answer_id: number) {
+  setConfirmedAnswer(answer_id: number) {
+    console.log(this.question, this.connectedUser);
 
-    console.log(this.question, this.connectedUser)
-    
-
-    if(this.question.user_id == this.connectedUser) {
-    service.getAnswerById(answer_id)
-      .then((answer) => this.answer = answer)
-      .then(()=> {
+    if (this.question.user_id == this.connectedUser) {
+      service
+        .getAnswerById(answer_id)
+        .then((answer) => (this.answer = answer))
+        .then(() => {
           this.answer.confirmed_answer = 1;
-          service.updateAnswer(this.answer)
-          .then(() => this.mounted())
-          .catch((error) => Alert.danger('Error saving answer: ' + error.message));
-        
-      })
-    .catch((error) => Alert.danger('Error getting answer: ' + error.message));
+          service
+            .updateAnswer(this.answer)
+            .then(() => this.mounted())
+            .catch((error) => Alert.danger('Error saving answer: ' + error.message));
+        })
+        .catch((error) => Alert.danger('Error getting answer: ' + error.message));
+    }
+  }
 
-      
-    
-
-   }}
-
-  
   // getVotesByAnswerId(id: number) {
   //   console.log(id)
   //   service

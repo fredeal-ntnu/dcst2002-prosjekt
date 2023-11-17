@@ -69,19 +69,22 @@ export class QuestionCard extends Component<{ question: Question }> {
 }
 
 export class AnswerCard extends Component<{ answer: Answer }> {
-  questions: Question[] = [];
+  question: Question = { question_id: 0, title: '', text: '',  view_count: 0, has_answer: 0, user_id: 0, };
+  
 
   render() {
     return (
-      <Card title={<NavLink to={'/questions/' + this.props.answer.question_id}>{this.questions.title}</NavLink>}>
+      
+       <Card title={<NavLink to={'/questions/' + this.question.question_id}>{this.question.title}</NavLink>}>
             <Row>
               <Column>{this.props.answer.text}</Column>
             </Row>
-      </Card>
+       </Card> 
     )
   }
+
   mounted(): void {
-    service.getQuestionsByAnswerId(this.props.answer.answer_id).then((questions) => (this.questions = questions));
+    service.getQuestionByAnswerId(this.props.answer.answer_id).then(question => (this.question = question));
   }
 
 }

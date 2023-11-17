@@ -13,7 +13,7 @@ passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 loginRouter.get('/auth/google/callback', 
  passport.authenticate('google'),
-function (req, res) { console.log(req.user.user_id);
+function (req, res) { 
   // Successful authentication, redirect home or to another page.
   res.redirect('/#/');
 }
@@ -45,15 +45,6 @@ passport.use(
   )
 );
 
-
-  // loginRouter.post('/logout', function (req, res, next) {
-  //   req.logout(function (err) {
-  //     if (err) {
-  //       return next(err);
-  //     }
-  //     return res.send({ redirect: '/' });
-  //   });
-  // });
   
   export default loginRouter;
  

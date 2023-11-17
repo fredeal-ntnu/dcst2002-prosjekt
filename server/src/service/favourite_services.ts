@@ -53,7 +53,7 @@ class Service {
                       return reject(selectError);
                   }
   
-                  if (results.length === 0) {
+                if ((results as RowDataPacket[]).length === 0) {
                       // If no matching row exists, insert a new one
                       pool.query(
                           'INSERT INTO answer_user_favourite (answer_id, user_id) VALUES (?, ?)',

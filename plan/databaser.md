@@ -62,11 +62,11 @@ CREATE TABLE tag_question_relation (
     FOREIGN KEY (question_id) REFERENCES Questions(question_id) ON DELETE CASCADE
 );
 
-CREATE TABLE question_user_favourite (
-    question_id INT,
+CREATE TABLE answer_user_favourite (
+    answer_id INT,
     user_id INT,
-    PRIMARY KEY (question_id, user_id),
-    FOREIGN KEY (question_id) REFERENCES Questions(question_id) ON DELETE CASCADE,
+    PRIMARY KEY (answer_id, user_id),
+    FOREIGN KEY (answer_id) REFERENCES Answers(answer_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
