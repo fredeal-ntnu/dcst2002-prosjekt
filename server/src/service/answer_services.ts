@@ -13,8 +13,6 @@ export type Answer_Content = {
 };
 
 class Service {
-  //get answer by question idxxx
-  // SELECT answer_id, SUM(CASE WHEN vote_type = 1 THEN 1 ELSE -1 END) AS total_votes FROM Votes WHERE answer_id = ? GROUP BY answer_id;
 
   getVotesBs(question_id: number) {
     return new Promise<Answer_Content[]>((resolve, reject) => {
