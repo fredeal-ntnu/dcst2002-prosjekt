@@ -63,7 +63,7 @@ answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0, us
         return service.getAnswerCommentsForAnswer(this.answer.answer_id);
       })
       .then((answerComments) => (this.answerComments = answerComments))
-      .catch((error: Error) => Alert.danger('Error getting answer: ' + error.message));
+      .catch((error: Error) => console.error('Error getting answer: ' + error.message));
   }
 
   addAnswerComment() {
@@ -71,6 +71,6 @@ answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0, us
       .createAnswerComment(this.answerComment.text, this.answer.answer_id, this.answer.user_id)
       // .then(() => history.push('/questions/' + this.answer.question_id + '/answers/' + this.answer.answer_id))
       .then(() => this.mounted())
-      .catch((error) => Alert.danger('Error adding answer comment: ' + error.message));
+      .catch((error) => console.error('Error adding answer comment: ' + error.message));
   }
 }

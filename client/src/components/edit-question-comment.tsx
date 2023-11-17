@@ -49,21 +49,21 @@ export class EditQuestionComment extends Component<{ match: { params: { id: numb
 
     service.getQuestionCommentById(this.props.match.params.id)
     .then((questionComment) => (this.questionComment = questionComment))
-    .catch((error: Error) => Alert.danger('Error getting question comment: ' + error.message));
+    .catch((error: Error) => console.error('Error getting question comment: ' + error.message));
   }
 
   save() {
     service
       .updateQuestionComment(this.questionComment)
       .then(() => history.push('/questions/' + this.questionComment.question_id))
-      .catch((error) => Alert.danger('Error saving question comment: ' + error.message));
+      .catch((error) => console.error('Error saving question comment: ' + error.message));
   }
 
   delete() {
     service
     .deleteQuestionComment(this.questionComment.question_comment_id)
     .then(() => history.push('/questions/' + this.questionComment.question_id))
-    .catch((error) => Alert.danger('Error deleting question comment: ' + error.message));
+    .catch((error) => console.error('Error deleting question comment: ' + error.message));
 
   }
 

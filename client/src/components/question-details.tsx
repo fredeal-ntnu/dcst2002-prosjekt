@@ -104,12 +104,12 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     service
       .getAllTags()
       .then((tags) => (this.tags = tags))
-      .catch((error) => Alert.danger(error.message));
+      .catch((error) => console.error(error.message));
 
     service
       .getQuestion(this.props.match.params.id)
       .then((question) => (this.question = question))
-      .catch((error: Error) => Alert.danger('Error getting question: ' + error.message));
+      .catch((error: Error) => console.error('Error getting question: ' + error.message));
 
     service.getAllTagQuestionsRelations()
     .then((relations) => (this.relations = relations));
@@ -117,17 +117,17 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     service
       .getVotesBs(this.props.match.params.id)
       .then((answers_votes) => (this.answers_votes = answers_votes))
-      .catch((error: Error) => Alert.danger('Error getting answers: ' + error.message));
+      .catch((error: Error) => console.error('Error getting answers: ' + error.message));
 
     service
       .getQuestionCommentsForQuestion(this.props.match.params.id)
       .then((questionComments) => (this.questionComments = questionComments))
-      .catch((error: Error) => Alert.danger('Error getting question comments: ' + error.message));
+      .catch((error: Error) => console.error('Error getting question comments: ' + error.message));
 
     service
     .getAnswersByQuestionId(this.props.match.params.id)
     .then((answers) => (this.answers = answers))
-    .catch((error: Error) => Alert.danger('Error getting answers: ' + error.message))
+    .catch((error: Error) => console.error('Error getting answers: ' + error.message))
 
     // this.answers.map((answer) => {
     //   service.getVotesByAnswerId(answer.answer_id)
@@ -188,7 +188,7 @@ createQuestionEditButton() {
       service
       .createQuestionComment(this.questionComment.text, this.props.match.params.id, this.connectedUser)
       .then(() => this.mounted())
-      .catch((error) => Alert.danger('Error saving comment: ' + error.message));
+      .catch((error) => console.error('Error saving comment: ' + error.message));
     }
     else alert("You have to be logged in to comment")
   }
@@ -424,7 +424,7 @@ handleEditAnswer(answer_id: number, user_id: number) {
       .createAnswer(this.answer.text, this.props.match.params.id, this.connectedUser)
       .then(() => this.setHasAnswered())
       .then(() => this.mounted())
-      .catch((error) => Alert.danger('Error saving answer: ' + error.message));
+      .catch((error) => console.error('Error saving answer: ' + error.message));
     }
     else(alert("You have to be logged in to answer"))
   }
@@ -432,7 +432,7 @@ handleEditAnswer(answer_id: number, user_id: number) {
     this.question.has_answer = 1;
     await service
       .updateQuestion(this.question)
-      .catch((error) => Alert.danger('Error saving question: ' + error.message));
+      .catch((error) => console.error('Error saving question: ' + error.message));
   }
 
   sendToAnswerCommentPage(answer_id: number) {
@@ -448,7 +448,7 @@ handleEditAnswer(answer_id: number, user_id: number) {
       service
       .createVote(this.connectedUser, answer_id, 1)
       .then(() => this.mounted())
-      .catch((error) => Alert.danger('Error saving answer: ' + error.message));
+      .catch((error) => console.error('Error saving answer: ' + error.message));
     }
     else(alert("You have to be logged in to vote"))
   }
@@ -458,7 +458,7 @@ handleEditAnswer(answer_id: number, user_id: number) {
       service
       .createVote(this.connectedUser, answer_id, 0)
       .then(() => this.mounted())
-      .catch((error) => Alert.danger('Error saving answer: ' + error.message));
+      .catch((error) => console.error('Error saving answer: ' + error.message));
     }
     else alert("You have to be logged in to vote")
    
@@ -468,7 +468,7 @@ handleEditAnswer(answer_id: number, user_id: number) {
     if(this.connectedUser) {
       service
       .createFavouriteRelation(answer_id, user_id)
-      .catch((error) => Alert.danger('Error saving answer: ' + error.message));
+      .catch((error) => console.error('Error saving answer: ' + error.message));
     }
     else alert("You have to be logged in to add to favorites")
     
@@ -488,10 +488,10 @@ handleEditAnswer(answer_id: number, user_id: number) {
           this.answer.confirmed_answer = 1;
           service.updateAnswer(this.answer)
           .then(() => this.mounted())
-          .catch((error) => Alert.danger('Error saving answer: ' + error.message));
+          .catch((error) => console.error('Error saving answer: ' + error.message));
         
       })
-    .catch((error) => Alert.danger('Error getting answer: ' + error.message));
+    .catch((error) => console.error('Error getting answer: ' + error.message));
 
       
     

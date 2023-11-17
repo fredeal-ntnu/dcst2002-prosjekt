@@ -74,20 +74,20 @@ export class EditQuestion extends Component<{ match: { params: { id: number } } 
     service
       .getQuestion(this.props.match.params.id)
       .then((question) => (this.question = question))
-      .catch((error: Error) => Alert.danger('Error getting question: ' + error.message));
+      .catch((error: Error) => console.error('Error getting question: ' + error.message));
   }
 
   save() {
     service
       .updateQuestion(this.question)
       .then(() => history.push('/questions/' + this.question.question_id))
-      .catch((error) => Alert.danger('Error saving question: ' + error.message));
+      .catch((error) => console.error('Error saving question: ' + error.message));
   }
 
   delete() {
     service
       .deleteQuestion(this.props.match.params.id)
       .then(() => history.push('/questions'))
-      .catch((error) => Alert.danger('Error deleting question: ' + error.message));
+      .catch((error) => console.error('Error deleting question: ' + error.message));
   }
 }

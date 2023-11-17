@@ -116,7 +116,7 @@ export class CreateQuestion extends Component {
     service
       .getAllTags()
       .then((tags) => (this.tags = tags))
-      .catch((error) => Alert.danger(error.message));
+      .catch((error) => console.error(error.message));
   }
 
   handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {

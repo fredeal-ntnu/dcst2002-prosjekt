@@ -32,21 +32,21 @@ export class EditAnswer extends Component<{ match: { params: { id: number } } }>
     service
       .getAnswerById(this.props.match.params.id)
       .then((answer) => (this.answer = answer))
-      .catch((error: Error) => Alert.danger('Error getting answer: ' + error.message));
+      .catch((error: Error) => console.error('Error getting answer: ' + error.message));
   }
 
   save() {
     service
       .updateAnswer(this.answer)
       .then(() => history.push('/questions/' + this.answer.question_id))
-      .catch((error) => Alert.danger('Error saving answer: ' + error.message));
+      .catch((error) => console.error('Error saving answer: ' + error.message));
   }
 
   delete() {
     service
       .deleteAnswer(this.props.match.params.id)
       .then(() => history.push('/questions/' + this.answer.question_id))
-      .catch((error) => Alert.danger('Error deleting answer: ' + error.message));
+      .catch((error) => console.error('Error deleting answer: ' + error.message));
   }
 
   renderPage() {
@@ -77,7 +77,7 @@ export class EditAnswer extends Component<{ match: { params: { id: number } } }>
       </>
     } else {
       history.push('/questions/' + this.answer.question_id)
-      Alert.danger('You are not the author of this answer')
+      console.error('You are not the author of this answer')
     }
       
       

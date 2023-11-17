@@ -74,19 +74,19 @@ export class AllQuestions extends Component {
             service
                 .getAllQuestions()
                 .then((questions) => (this.questions = questions))
-                .catch((error) => Alert.danger(error.message));
+                .catch((error) => console.error(error.message));
           break;
         case 'popular':
             service
                 .getTopFiveQuestions()
                 .then((questions) => (this.questions = questions))
-                .catch((error) => Alert.danger(error.message));
+                .catch((error) => console.error(error.message));
           break;
         case 'unanswered':
             service
                 .getUnansweredQuestions()
                 .then((questions) => (this.questions = questions))
-                .catch((error) => Alert.danger(error.message));
+                .catch((error) => console.error(error.message));
           break;
       }
     }
@@ -98,6 +98,6 @@ export class AllQuestions extends Component {
       service
         .getAllTags()
         .then((tags) => (this.tags = tags))
-        .catch((error) => Alert.danger(error.message));   
+        .catch((error) => console.error(error.message));   
   }
 }

@@ -53,7 +53,7 @@ export class Favourites extends Component {
     return service.getAllFavouriteAnswersByUserId(this.user.user_id);
     })
     .then(answers => (this.answers = answers))
-    .catch((error: Error) => Alert.danger('Error getting answer: ' + error.message));
+    .catch((error: Error) => console.error('Error getting answer: ' + error.message));
   }
 }
 

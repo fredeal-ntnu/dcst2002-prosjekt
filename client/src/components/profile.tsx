@@ -49,7 +49,7 @@ export class Profile extends Component {
     logout() {
       service.logOut()
       .then(() => window.location.assign('/'))
-      .catch((error) => Alert.danger(error.message));
+      .catch((error) => console.error(error.message));
     }
 
 }

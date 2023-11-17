@@ -97,10 +97,10 @@ export class Tags extends Component {
           service
             .getQuestion(relation.question_id)
             .then((question) => this.questions.push(question))
-            .catch((error) => Alert.danger(error.message));
+            .catch((error) => console.error(error.message));
         });
       })
-      .catch((error) => Alert.danger(error.message));
+      .catch((error) => console.error(error.message));
   }
 
     handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -142,9 +142,9 @@ export class Tags extends Component {
             .then(() => {
               this.tags[i].questions = this.relations.length;
             })
-            .catch((error) => Alert.danger(error.message));
+            .catch((error) => console.error(error.message));
         });
       })
-      .catch((error) => Alert.danger(error.message));
+      .catch((error) => console.error(error.message));
   }
 }

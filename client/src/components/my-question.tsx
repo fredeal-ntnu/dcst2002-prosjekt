@@ -74,19 +74,19 @@ export class MyQuestions extends Component {
             service
                 .getQuestionsByUserid(this.user.user_id)
                 .then((questions) => (this.questions = questions))
-                .catch((error) => Alert.danger(error.message));
+                .catch((error) => console.error(error.message));
           break;
         case 'popular':
             service
                 .getUserTopFiveQuestions(this.user.user_id)
                 .then((questions) => (this.questions = questions))
-                .catch((error) => Alert.danger(error.message));
+                .catch((error) => console.error(error.message));
           break;
         case 'unanswered':
             service
                 .getUserUnansweredQuestions(this.user.user_id)
                 .then((questions) => (this.questions = questions))
-                .catch((error) => Alert.danger(error.message));
+                .catch((error) => console.error(error.message));
           break;
       }
     }
@@ -103,12 +103,12 @@ export class MyQuestions extends Component {
       this.questions = questions
       return this.loadQuestions();
     })
-    .catch((error: Error) => Alert.danger('Error getting answer: ' + error.message));
+    .catch((error: Error) => console.error('Error getting answer: ' + error.message));
 
     service
       .getAllTags()
       .then((tags) => (this.tags = tags))
-      .catch((error) => Alert.danger(error.message));   
+      .catch((error) => console.error(error.message));   
   }
 }
 
@@ -176,7 +176,7 @@ export class MyQuestions extends Component {
 //     return service.getQuestionsByUserid(this.user.user_id);
 //   })
 //   .then(questions => (this.questions = questions))
-//   .catch((error: Error) => Alert.danger('Error getting answer: ' + error.message));
+//   .catch((error: Error) => console.error('Error getting answer: ' + error.message));
 
 // }
 // }

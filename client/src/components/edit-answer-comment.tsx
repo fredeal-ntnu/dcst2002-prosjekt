@@ -53,21 +53,21 @@ export class EditAnswerComment extends Component<{ match: { params: { id: number
 
     service.getAnswerCommentById(this.props.match.params.id)
     .then((answerComment) => (this.answerComment = answerComment))
-    .catch((error: Error) => Alert.danger('Error getting answer comment: ' + error.message));
+    .catch((error: Error) => console.error('Error getting answer comment: ' + error.message));
   }
 
   save() {
     service
       .updateAnswerComment(this.answerComment)
       .then(() => history.goBack())
-      .catch((error) => Alert.danger('Error saving answer comment: ' + error.message));
+      .catch((error) => console.error('Error saving answer comment: ' + error.message));
   }
 
   delete() {
     service
     .deleteAnswerComment(this.answerComment.answer_comment_id)
     .then(() => history.goBack())
-    .catch((error) => Alert.danger('Error deleting answer comment: ' + error.message));
+    .catch((error) => console.error('Error deleting answer comment: ' + error.message));
 
   }
 
