@@ -19,8 +19,6 @@ favouriteRouter.get('/users/:id/favourites', (request, response) => {
 //create new favourite relation
 favouriteRouter.post('/users/:id/favourites/:id', (request, response) => {
     const data = request.body;
-
-
     if (typeof data.answer_id == 'number' && typeof data.user_id == 'number')
     favouriteService
     .createFavouriteRelation(data.answer_id, data.user_id)
@@ -37,22 +35,22 @@ favouriteRouter.get('/favourites', (_request, response) => {
     .catch((error) => response.status(500).send(error));
 });
 
-//get favourite relation by question id
+//get favourite relation by answer id
 favouriteRouter.get('/favourites/:id', (request, response) => {
     const id = Number(request.params.id);
     favouriteService
-    .getAllFavouritesByQuestionId(id)
+    .getAllFavouritesByAnswerId(id)
     .then((rows) => response.send(rows))
     .catch((error) => response.status(500).send(error));
 });
 
 
-//delete favourite relation by question id and user id
+//delete favourite relation by answer id and user id
 favouriteRouter.delete('/favourites/:id', (request, response) => {
     const data = request.body;
-    if (typeof data.user_id == 'number' && typeof data.question_id == 'number')
+    if (typeof data.user_id == 'number' && typeof data.answer_id == 'number')
     favouriteService
-    .deleteFavouriteRelation(data.user_id, data.question_id)
+    .deleteFavouriteRelation(data.user_id, data.answer_id)
     .then(() => response.send())
     .catch((error) => response.status(500).send(error));
     else response.status(400).send('Missing favourite properties');

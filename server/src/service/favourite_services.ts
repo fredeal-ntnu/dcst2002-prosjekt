@@ -2,8 +2,8 @@ import pool from '../mysql-pool';
 import type { RowDataPacket, ResultSetHeader } from 'mysql2';
 
 export type Favourite_Content = {
-question_id: number;
-user_id: number;
+    answer_id: number;
+    user_id: number;
 };
 
 
@@ -14,10 +14,11 @@ class Service {
     getAllFavouritesForUser(user_id: number) {
         return new Promise<Favourite_Content[]>((resolve, reject) => {
             pool.query(
-            'SELECT * FROM question_user_favourites WHERE user_id = ?',
+            'SELECT * FROM answer_user_favourite WHERE user_id = ?',
             [user_id],
             (error, results: RowDataPacket[]) => {
                 if (error) return reject(error);
+                if (results.length === 0) return reject('No favourite found');
                 
                 resolve(results as Favourite_Content[]);
             },
@@ -27,22 +28,25 @@ class Service {
 
 
 
-    //get all favourites by question id
-    getAllFavouritesByQuestionId(question_id: number) {
+    //get all favourites by answer id
+    getAllFavouritesByAnswerId(answer_id: number) {
         return new Promise<Favourite_Content[]>((resolve, reject) => {
             pool.query(
-            'SELECT * FROM question_user_favourites WHERE question_id = ?',
-            [question_id],
+            'SELECT * FROM answer_user_favourite WHERE answer_id = ?',
+            [answer_id],
             (error, results: RowDataPacket[]) => {
                 if (error) return reject(error);
-    
+                if (results.length === 0) return reject('No favourite found');
+
                 resolve(results as Favourite_Content[]);
             },
             );
         });
     }
 
-    //create favourite relation with questionid and userid
+    // denne kunne med fordel vært en post, delete og en get, istedenfor at post kan resultere i både delete, insert og get
+    // Dette må i så fall fikses lenger oppe. Fikse om vi har tid
+    //create favourite relation with answerid and userid
     createFavouriteRelation(answer_id: number, user_id: number) {
       return new Promise<void>((resolve, reject) => {
           pool.query(
@@ -71,9 +75,8 @@ class Service {
                           'DELETE FROM answer_user_favourite WHERE answer_id = ? AND user_id = ?',
                           [answer_id, user_id],
                           (deleteError) => {
-                              if (deleteError) {
-                                  return reject(deleteError);
-                              }
+                              if (deleteError) return reject(deleteError);
+
                               resolve();
                           }
                       );
@@ -88,7 +91,7 @@ class Service {
     //get all favourite relations
     getAllFavouriteRelations() {
         return new Promise<Favourite_Content[]>((resolve, reject) => {
-            pool.query('SELECT * FROM question_user_favourites', (error, results: RowDataPacket[]) => {
+            pool.query('SELECT * FROM answer_user_favourite', (error, results: RowDataPacket[]) => {
             if (error) return reject(error);
     
             resolve(results as Favourite_Content[]);
@@ -98,11 +101,13 @@ class Service {
 
 
 
-    //delete favourite relation with questionid and userid
-    deleteFavouriteRelation(question_id: number, user_id: number) {
+    //delete favourite relation with answerid and userid
+    deleteFavouriteRelation(answer_id: number, user_id: number) {
         return new Promise<void>((resolve, reject) => {
-            pool.query('DELETE FROM question_user_favourites WHERE question_id=? AND user_id=?', [question_id, user_id], (error) => {
+            pool.query('DELETE FROM answer_user_favourite WHERE answer_id=? AND user_id=?', [answer_id, user_id], (error, response: ResultSetHeader) => {
             if (error) return reject(error);
+            if (response.affectedRows == 0) return reject('No row deleted');
+
             resolve();
             });
         });

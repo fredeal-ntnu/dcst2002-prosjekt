@@ -104,18 +104,15 @@ import { Answer_Comment_Content, answerCommentService } from '../../src/service/
             });
         });
   
-    test('PUT /answers/:id/comments/:id - update an answer comment', (done) => {
+    test('PUT /comments/:id - update an answer comment', (done) => {
       const answerId = 1; // Assuming this answer ID exists
       const commentId = 1; // Assuming this comment ID exists
       const updateData = { answer_comment_id: commentId, text: 'Updated comment', answer_id: answerId };
-      axios.put(`/answers/${answerId}/comments/${commentId}`, updateData)
+      axios.put(`/comments/${commentId}`, updateData)
         .then((response) => {
           expect(response.status).toEqual(200);
           done();
         })
-        .catch((error) => {
-          done(error);
-        });
     });
   
     //post missing answer comment properties
