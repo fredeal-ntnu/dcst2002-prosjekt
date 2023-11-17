@@ -13,6 +13,44 @@ export class EditAnswer extends Component<{ match: { params: { id: number } } }>
 
   render() {
     return (
+      this.renderPage()
+    )
+  }
+
+  mounted() {
+    service.getMe()
+    .then((user) => {
+      this.user.user_id = user.user_id
+      this.connectedUser = this.user.user_id;
+    })
+    .catch((error)=>{
+      console.error(error.message)
+      history.push('/')
+      alert('You must be logged in to edit answer')
+    })
+
+    service
+      .getAnswerById(this.props.match.params.id)
+      .then((answer) => (this.answer = answer))
+      .catch((error: Error) => Alert.danger('Error getting answer: ' + error.message));
+  }
+
+  save() {
+    service
+      .updateAnswer(this.answer)
+      .then(() => history.push('/questions/' + this.answer.question_id))
+      .catch((error) => Alert.danger('Error saving answer: ' + error.message));
+  }
+
+  delete() {
+    service
+      .deleteAnswer(this.props.match.params.id)
+      .then(() => history.push('/questions/' + this.answer.question_id))
+      .catch((error) => Alert.danger('Error deleting answer: ' + error.message));
+  }
+
+  renderPage() {
+    if(this.answer.user_id == this.connectedUser) {
       <>
         <Row>
           <Card title="Edit Answer">
@@ -37,39 +75,13 @@ export class EditAnswer extends Component<{ match: { params: { id: number } } }>
           </Column>
         </Row>
       </>
-    );
-  }
+    } else {
+      history.push('/questions/' + this.answer.question_id)
+      Alert.danger('You are not the author of this answer')
+    }
+      
+      
 
-  mounted() {
-    service.getMe()
-    .then((user) => {
-      this.user.user_id = user.user_id
-      this.connectedUser = this.user.user_id;
-    })
-    .catch((error)=>{
-      console.error(error.message)
-      history.push('/')
-      alert('You must be logged in to edit answer')
-    })
-
-    console.log(this.props.match.params.id)
-    service
-      .getAnswerById(this.props.match.params.id)
-      .then((answer) => (this.answer = answer))
-      .catch((error: Error) => Alert.danger('Error getting answer: ' + error.message));
-  }
-
-  save() {
-    service
-      .updateAnswer(this.answer)
-      .then(() => history.push('/questions/' + this.answer.question_id))
-      .catch((error) => Alert.danger('Error saving answer: ' + error.message));
-  }
-
-  delete() {
-    service
-      .deleteAnswer(this.props.match.params.id)
-      .then(() => history.push('/questions/' + this.answer.question_id))
-      .catch((error) => Alert.danger('Error deleting answer: ' + error.message));
-  }
+    
+}
 }
