@@ -3,15 +3,16 @@ import { answerService } from '../service/answer_services';
 
 const answerRouter = express.Router();
 
-//Get all answers by question id
+//vot bs her
 
-answerRouter.get('/questions/:id/answers', (request, response) => {
+answerRouter.get('/questions/:id/answer/votes', (request, response) => {
   const id = Number(request.params.id);
   answerService
-    .getAnswersByQuestionId(id)
+    .getVotesBs(id)
     .then((rows) => response.send(rows))
     .catch((error) => response.status(500).send(error));
 });
+
 
 //Get all favourite answers by user id
 answerRouter.get('/user/:id/favourites', (request, response) => {
@@ -32,6 +33,18 @@ answerRouter.get('/answers/:id', (request, response) => {
       answer ? response.send(answer) : response.status(404).send('Answer not found'),
     )
     .catch((error) => response.status(500).send(error));
+});
+
+//Get answers by question id
+
+answerRouter.get('/questions/:id/answers', (request, response) => {
+  const questionId = Number(request.params.id);
+  
+  answerService
+  .getAnswersByQuestionId(questionId)
+  .then((rows) => response.send(rows))
+  .catch((error) => response.status(500).send(error))
+  
 });
 
 //Create new answer

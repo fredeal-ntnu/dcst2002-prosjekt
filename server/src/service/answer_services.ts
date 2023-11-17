@@ -16,7 +16,7 @@ class Service {
   //get answer by question idxxx
   // SELECT answer_id, SUM(CASE WHEN vote_type = 1 THEN 1 ELSE -1 END) AS total_votes FROM Votes WHERE answer_id = ? GROUP BY answer_id;
 
-  getAnswersByQuestionId(question_id: number) {
+  getVotesBs(question_id: number) {
     return new Promise<Answer_Content[]>((resolve, reject) => {
       const query = `
       SELECT
@@ -59,6 +59,22 @@ class Service {
           if (results.length == 0) return reject(new Error('No answer found'));
 
           resolve(results[0] as Answer_Content);
+        },
+      );
+    });
+  }
+
+  //get answers by question id
+
+  getAnswersByQuestionId(question_id: number) {
+    return new Promise<Answer_Content[]>((resolve, reject) => {
+      pool.query(
+        'SELECT * FROM Answers WHERE question_id = ?',
+        [question_id],
+        (error, results: RowDataPacket[]) => {
+          if (error) return reject(error);
+
+          resolve(results as Answer_Content[]);
         },
       );
     });

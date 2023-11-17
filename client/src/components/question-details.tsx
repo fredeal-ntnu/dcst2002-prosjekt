@@ -44,6 +44,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   user: User = { user_id: 0, google_id: '', username: '', email: '' };
   score: number = 0;
   connectedUser: number = 0;
+  answers_votes: Answer[] = [];
 
   state: State = {
     isFavorite: false,
@@ -78,11 +79,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
           </Row>
           <Row>
             <Column width={2}>
-              <Button.Success
-                onClick={() => history.push('/questions/' + this.props.match.params.id + '/edit')}
-              >
-                Edit
-              </Button.Success>
+             {this.createQuestionEditButton()}
             </Column>
           </Row>
         </Card>
@@ -115,25 +112,13 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
               );
             }
           })}
-          <Row>
-            <Column>
-              <Form.Textarea
-                placeholder="Add comment"
-                type="text"
-                value={this.questionComment.text}
-                onChange={(event) => (this.questionComment.text = event.currentTarget.value)}
-                rows={5}
-              />
-            </Column>
-          </Row>
-          <Row>
-            <Column>
-              <Button.Success onClick={this.createComment}>Add</Button.Success>
-            </Column>
-          </Row>
+
+          {this.addQuestionCommentInput()}
+
+
         </Card>
         <Card title="Answers HUSK SORTERING">
-          {this.answers.map((answer) => {
+          {this.answers_votes.map((answer) => {
             if (answer.question_id == this.props.match.params.id) {
               return (
                 <Card title="" key={answer.answer_id}>
@@ -209,22 +194,8 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
               );
             }
           })}
-          <Row>
-            <Column>
-              <Form.Textarea
-                placeholder="add answer"
-                type="text"
-                value={this.answer.text}
-                onChange={(event) => (this.answer.text = event.currentTarget.value)}
-                rows={5}
-              />
-            </Column>
-          </Row>
-          <Row>
-            <Column>
-              <Button.Success onClick={this.createAnswer}>Add</Button.Success>
-            </Column>
-          </Row>
+          
+         
         </Card>
       </>
     );
@@ -245,20 +216,25 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
       .then((question) => (this.question = question))
       .catch((error: Error) => Alert.danger('Error getting question: ' + error.message));
 
-    service.getAllTagQuestionsRelations().then((relations) => (this.relations = relations));
+    service.getAllTagQuestionsRelations()
+    .then((relations) => (this.relations = relations));
 
     service
-      .getAnswersForQuestion(this.props.match.params.id)
-      .then((answers) => (this.answers = answers))
-      .then(() => {
-        console.log
-        //this.answers.sort((a, b) => b.confirmed_answer - a.confirmed_answer);
-      })
+      .getVotesBs(this.props.match.params.id)
+      .then((answers_votes) => (this.answers_votes = answers_votes))
+      .then(() =>(console.log(this.answers)))
+      .catch((error: Error) => Alert.danger('Error getting answers: ' + error.message));
 
     service
       .getQuestionCommentsForQuestion(this.props.match.params.id)
       .then((questionComments) => (this.questionComments = questionComments))
       .catch((error: Error) => Alert.danger('Error getting question comments: ' + error.message));
+
+    service
+    .getAnswersByQuestionId(this.props.match.params.id)
+    .then((answers) => (this.answers = answers))
+    .then(() =>(console.log(this.answers)))
+    .catch((error: Error) => Alert.danger('Error getting answers: ' + error.message))
 
     // this.answers.map((answer) => {
     //   service.getVotesByAnswerId(answer.answer_id)
@@ -269,12 +245,95 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     // });
   }
 
+ 
+
+createQuestionEditButton() {
+  if(this.connectedUser == this.question.user_id) {
+    return(
+      <Button.Success
+      onClick={() =>  history.push('/questions/' + this.props.match.params.id + '/edit')}
+    >
+      Edit
+    </Button.Success>
+    )
+  }
+    else return
+}
+
+
+  addQuestionCommentInput() {
+    if(this.connectedUser) {
+      return(
+        <Card title="Add comment">
+        <Row>
+          <Column>
+            <Form.Textarea
+              placeholder="Add comment"
+              type="text"
+              value={this.questionComment.text}
+              onChange={(event) => (this.questionComment.text = event.currentTarget.value)}
+              rows={5}
+            />
+          </Column>
+        </Row>
+        <Row>
+          <Column>
+            <Button.Success onClick={this.createComment}>Add</Button.Success>
+          </Column>
+        </Row>
+      </Card>
+      )
+      
+    }else return
+   
+  }
+
+  
+  createComment() {
+    console.log(this.connectedUser)
+    if(this.connectedUser) {
+      service
+      .createQuestionComment(this.questionComment.text, this.props.match.params.id)
+      .then(() => this.mounted())
+      .catch((error) => Alert.danger('Error saving comment: ' + error.message));
+    }
+    else alert("You have to be logged in to comment")
+  }
+
+  addAnswerInput() {
+    if(this.connectedUser && this.connectedUser != this.question.user_id) {
+      return(
+        <Card title="Add answer">
+          <Row>
+            <Column>
+              <Form.Textarea
+                placeholder="add answer"
+                type="text"
+                value={this.answer.text}
+                onChange={(event) => (this.answer.text = event.currentTarget.value)}
+                rows={5}
+              />
+            </Column>
+          </Row>
+          <Row>
+            <Column>
+              <Button.Success onClick={this.createAnswer}>Add</Button.Success>
+            </Column>
+          </Row>
+          </Card>
+      )
+    }else return
+  } 
+
   createAnswer() {
-    service
+    if(this.connectedUser && this.connectedUser != this.question.user_id) {
+      service
       .createAnswer(this.answer.text, this.props.match.params.id)
       .then(() => this.setHasAnswered())
       .then(() => this.mounted())
       .catch((error) => Alert.danger('Error saving answer: ' + error.message));
+    }
+    else(alert("You have to be logged in to answer"))
   }
   async setHasAnswered() {
     this.question.has_answer = 1;
@@ -284,44 +343,51 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
       .catch((error) => Alert.danger('Error saving question: ' + error.message));
   }
 
-  createComment() {
-    service
-      .createQuestionComment(this.questionComment.text, this.props.match.params.id)
-      .then(() => location.reload())
-      .catch((error) => Alert.danger('Error saving comment: ' + error.message));
-  }
-
   sendToAnswerCommentPage(answer_id: number) {
     history.push('/questions/' + this.props.match.params.id + '/answers/' + answer_id);
   }
 
+  handleVoteDisplay(answer_id: number) {
+
+  }
+
   addUpvote(answer_id: number) {
-    service
+    if(this.connectedUser) {
+      service
       .createVote(this.connectedUser, answer_id, 1)
       .then(() => this.mounted())
       .catch((error) => Alert.danger('Error saving answer: ' + error.message));
+    }
+    else(alert("You have to be logged in to vote"))
   }
 
   addDownvote(answer_id: number) {
-    service
+    if(this.connectedUser) {
+      service
       .createVote(this.connectedUser, answer_id, 0)
       .then(() => this.mounted())
       .catch((error) => Alert.danger('Error saving answer: ' + error.message));
+    }
+    else alert("You have to be logged in to vote")
+   
   }
 
   addFavourite(answer_id: number, user_id: number) {
     console.log(answer_id, user_id);
-
-    service
+    if(this.connectedUser) {
+      service
       .createFavouriteRelation(answer_id, user_id)
       .catch((error) => Alert.danger('Error saving answer: ' + error.message));
+    }
+    else alert("You have to be logged in to add to favorites")
+    
   }
 
   // Set confirmed answer for connected user
 
    setConfirmedAnswer(answer_id: number) {
 
-    console.log(this.question, this.connectedUser)
+    console.log(this.question.user_id, this.connectedUser)
     
 
     if(this.question.user_id == this.connectedUser) {
@@ -339,7 +405,9 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
       
     
 
-   }}
+   }else alert("You are not the owner of this question")
+  
+  }
 
   
   // getVotesByAnswerId(id: number) {

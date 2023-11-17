@@ -198,9 +198,15 @@ class Service {
     return axios.get('/user/' + id + '/answers').then((response) => response.data);
   }
 
-  getAnswersForQuestion(id: number) {
+  getAnswersByQuestionId(id: number) {
     return axios.get('/questions/' + id + '/answers').then((response) => response.data);
   }
+
+  getVotesBs(id: number) {
+    return axios.get('/questions/' + id + '/answer/votes').then((response) => response.data);
+  }
+
+
 
   createAnswer(text: string, question_id: number) {
     return axios
