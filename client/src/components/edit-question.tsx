@@ -15,10 +15,10 @@ export class EditQuestion extends Component<{ match: { params: { id: number } } 
     has_answer: 0,
     user_id: 0,
   };
-  questionComment: QuestionComment = { question_comment_id: 0, text: '', question_id: 0, user_id: 0 };
 
-  user: User = { user_id: 0, google_id: '', username: '', email: '' };
-  connectedUser: number = 0;  
+  answers: Answer = { answer_id: 0, text: '', confirmed_answer: 0, question_id: 0, last_updated: new Date(), user_id: 0 };
+  answerComment: AnswerComment = { answer_comment_id: 0, text: '', answer_id: 0, user_id: 0 };
+  questionComment: QuestionComment = { question_comment_id: 0, text: '', question_id: 0, user_id: 0 };
 
   render() {
     return (
