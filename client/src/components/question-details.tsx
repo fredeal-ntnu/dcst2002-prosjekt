@@ -26,6 +26,8 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   tags: Tag[] = [];
   answers: Answer[] = [];
   questionComments: QuestionComment[] = [];
+  filter: string = 'all'; // State to manage the filter type
+
   votes: Vote[] = [];
   question: Question = {
     question_id: 0,
@@ -133,10 +135,12 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
       .then((questionComments) => (this.questionComments = questionComments))
       .catch((error: Error) => console.error('Error getting question comments: ' + error.message));
 
-    service
-    .getAnswersByQuestionId(this.props.match.params.id)
-    .then((answers) => (this.answers = answers))
-    .catch((error: Error) => console.error('Error getting answers: ' + error.message))
+
+      //DENNE FUNKER MED Å HENTE VOTES FOR EN ANSWER
+    // service
+    // .getAnswersByQuestionId(this.props.match.params.id)
+    // .then((answers) => (this.answers = answers))
+    // .catch((error: Error) => console.error('Error getting answers: ' + error.message))
 
     // this.answers.map((answer) => {
     //   service.getVotesByAnswerId(answer.answer_id)
@@ -147,7 +151,46 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     // });
   }
 
+
+  handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(event.target.value);
+    this.filter = event.target.value;
+    this.loadAnswers() // Call a method to load questions based on the selected filter
+  };
+
  
+  loadAnswers() {
+    console.log(this.answers)
+    // Add logic here to fetch and filter questions accordingly
+    // This is a placeholder for whatever your service methods might be
+    switch (this.filter) {
+      case 'all':
+        service
+        .getVotesBs(this.props.match.params.id)
+        .then((answers_votes) => (this.answers_votes = answers_votes))
+        .catch((error: Error) => console.error('Error getting answers: ' + error.message));
+        break;
+      case 'popular':
+        service
+          .getVotesBs(this.props.match.params.id)
+          .then((answers_votes) => {
+            // Sort answers by score in descending order
+            this.answers_votes = answers_votes.sort((a, b) => b.score - a.score);
+          })
+          .catch((error: Error) => console.error('Error getting answers: ' + error.message));
+        break;
+      case 'mostRecent':
+        service
+          .getVotesBs(this.props.match.params.id)
+          .then((answers_votes) => {
+            // Sort answers by last_updated in descending order
+            this.answers_votes = answers_votes.sort((a, b) => new Date(b.last_updated) - new Date(a.last_updated));
+          })
+          .catch((error: Error) => console.error('Error getting answers: ' + error.message));
+        break;
+    }
+  }
+  
 
 createQuestionEditButton() {
   
@@ -301,6 +344,11 @@ handleAnswerMapDisplay () {
   if(this.connectedUser) {
 return(
   <Card title="Answers HUSK SORTERING">
+    <Form.Select value={this.filter} onChange={this.handleFilterChange}>
+                    <option value="all">All Answers</option>
+                    <option value="popular">Most Popular Answers</option>
+                    <option value="mostRecent">Most Recent</option>
+    </Form.Select>
     {this.answers_votes.map((answer) => {
       
       const isFavoriteKey = `isFavorite_${answer.answer_id}`;
@@ -378,7 +426,7 @@ return(
   }
 
   else return (
-    <Card title="Answers HUSK SORTERING">
+    <Card title="Answers">
     {this.answers_votes.map((answer) => {
       const isFavoriteKey = `isFavorite_${answer.answer_id}`;
       if (answer.question_id == this.props.match.params.id) {
