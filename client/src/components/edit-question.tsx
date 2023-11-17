@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Card, Row, Column, Button, Alert, Form } from '../widgets';
-import service, { Question, Answer, AnswerComment, QuestionComment } from '../service';
+import service, { Question, QuestionComment, User } from '../service';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();
@@ -15,9 +15,10 @@ export class EditQuestion extends Component<{ match: { params: { id: number } } 
     has_answer: 0,
     user_id: 0,
   };
-  answers: Answer = { answer_id: 0, text: '', confirmed_answer: false, question_id: 0 };
-  answerComment: AnswerComment = { answer_comment_id: 0, text: '', answer_id: 0 };
-  questionComment: QuestionComment = { question_comment_id: 0, text: '', question_id: 0 };
+  questionComment: QuestionComment = { question_comment_id: 0, text: '', question_id: 0, user_id: 0 };
+
+  user: User = { user_id: 0, google_id: '', username: '', email: '' };
+  connectedUser: number = 0;  
 
   render() {
     return (
@@ -58,6 +59,18 @@ export class EditQuestion extends Component<{ match: { params: { id: number } } 
   }
 
   mounted() {
+    service.getMe()
+    .then((user) => {
+      this.user.user_id = user.user_id
+      this.connectedUser = this.user.user_id;
+    })
+    .catch((error)=>{
+      console.error(error.message)
+      history.push('/')
+      alert('You must be logged in to edit question')
+    })
+
+
     service
       .getQuestion(this.props.match.params.id)
       .then((question) => (this.question = question))

@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Card, Alert, Row, Column, Button, Form} from '../widgets';
-import service, { QuestionComment } from '../service';
+import service, { QuestionComment, User } from '../service';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();
 export class EditQuestionComment extends Component<{ match: { params: { id: number } } }> {
   questionComments: QuestionComment[] = [];
   questionComment: QuestionComment = {question_comment_id: 0, text: '', question_id: 0, user_id: 0};
-
+  user: User = { user_id: 0, google_id: '', username: '', email: ''};
+  connectedUser: number = 0;
 
   render() {
     return(
@@ -35,6 +36,17 @@ export class EditQuestionComment extends Component<{ match: { params: { id: numb
   }
 
   mounted() {
+    service.getMe()
+    .then((user) => {
+      this.user.user_id = user.user_id
+      this.connectedUser = this.user.user_id;
+    })
+    .catch((error)=>{
+      console.error(error.message)
+      history.push('/')
+      alert('You must be logged in to edit comment')
+    })
+
     service.getQuestionCommentById(this.props.match.params.id)
     .then((questionComment) => (this.questionComment = questionComment))
     .catch((error: Error) => Alert.danger('Error getting question comment: ' + error.message));

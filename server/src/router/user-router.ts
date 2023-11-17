@@ -18,12 +18,17 @@ userRouter.get('/user/:id/questions', (request, response) => {
 
 
 userRouter.get('/user/me', passport.authenticate("session", {session: true}), (request, response) => {
-  
-    const user:User = request.user as User;
-    response.send(user);
-  });
-
-  //get all questions by user id
+  try {
+    const user: User = request.user as User;
+    if (!user) {
+      response.status(404).send('User not found');
+    } else {
+      response.send(user);
+    }
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
 
 
 

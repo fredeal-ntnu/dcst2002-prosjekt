@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Card, Row, Column, Button, Alert, Form } from '../widgets';
-import service, { Answer,} from '../service';
+import service, { Answer, User} from '../service';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();
 
 export class EditAnswer extends Component<{ match: { params: { id: number } } }> {
   answer: Answer = { answer_id: 0, text: '', confirmed_answer: 0, last_updated: new Date(), question_id: 0, user_id: 0};
+  user: User = { user_id: 0, google_id: '', username: '', email: ''};
+  connectedUser: number = 0;
 
   render() {
     return (
@@ -39,6 +41,17 @@ export class EditAnswer extends Component<{ match: { params: { id: number } } }>
   }
 
   mounted() {
+    service.getMe()
+    .then((user) => {
+      this.user.user_id = user.user_id
+      this.connectedUser = this.user.user_id;
+    })
+    .catch((error)=>{
+      console.error(error.message)
+      history.push('/')
+      alert('You must be logged in to edit answer')
+    })
+
     console.log(this.props.match.params.id)
     service
       .getAnswerById(this.props.match.params.id)
