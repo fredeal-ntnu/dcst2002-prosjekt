@@ -19,7 +19,7 @@ questionCommentRouter.post('/questions/:questionId/comments', (request, response
   const data = request.body;
   if (typeof data.text == 'string' && data.text.length != 0)
     questionCommentService
-      .createQuestionComment(data.text, data.question_id)
+      .createQuestionComment(data.text, data.question_id,data.user_id)
       .then((id) => response.send({ id: id }))
       .catch((error) => response.status(500).send(error));
   else response.status(400).send('Missing question comment router 400');
@@ -40,7 +40,7 @@ questionCommentRouter.delete('/comments/:id', (request, response) => {
 questionCommentRouter.put('/comments', (request, response) => {
   const data = request.body;
     questionCommentService
-      .updateQuestionComment({question_comment_id: data.question_comment_id, text: data.text, question_id: data.question_id})
+      .updateQuestionComment({question_comment_id: data.question_comment_id, text: data.text, question_id: data.question_id, user_id: data.user_id})
       .then(() => response.send())
       .catch((error) => response.status(500).send(error));
  
