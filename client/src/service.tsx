@@ -276,7 +276,7 @@ updateQuestionComment(questionComment: QuestionComment) {
 
   updateAnswerComment(answerComment: AnswerComment) {
     return axios
-    .put('/comments/', answerComment)
+    .put('/comments/' + answerComment.answer_comment_id, answerComment)
     .then((response) => response.data);
   }
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Card, Alert, Row, Column, Button, Form} from '../widgets';
-import service, {AnswerComment, User} from '../service';
+import service, {AnswerComment} from '../service';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();
@@ -9,8 +9,6 @@ const history = createHashHistory();
 export class EditAnswerComment extends Component<{ match: { params: { id: number } } }> {
   answerComments: AnswerComment[] = [];
   answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0, user_id: 0};
-  user: User = { user_id: 0, google_id: '', username: '', email: ''};
-  connectedUser: number = 0;
 
 
   render() {
@@ -38,36 +36,23 @@ export class EditAnswerComment extends Component<{ match: { params: { id: number
   }
 
   mounted() {
-
-    service.getMe()
-    .then((user) => {
-      this.user.user_id = user.user_id
-      this.connectedUser = this.user.user_id;
-    })
-    .catch((error)=>{
-      console.error(error.message)
-      history.push('/')
-      alert('You must be logged in to edit comment')
-    })
-
-
     service.getAnswerCommentById(this.props.match.params.id)
     .then((answerComment) => (this.answerComment = answerComment))
-    .catch((error: Error) => console.error('Error getting answer comment: ' + error.message));
+    .catch((error: Error) => Alert.danger('Error getting answer comment: ' + error.message));
   }
 
   save() {
     service
       .updateAnswerComment(this.answerComment)
       .then(() => history.goBack())
-      .catch((error) => console.error('Error saving answer comment: ' + error.message));
+      .catch((error) => Alert.danger('Error saving answer comment: ' + error.message));
   }
 
   delete() {
     service
     .deleteAnswerComment(this.answerComment.answer_comment_id)
     .then(() => history.goBack())
-    .catch((error) => console.error('Error deleting answer comment: ' + error.message));
+    .catch((error) => Alert.danger('Error deleting answer comment: ' + error.message));
 
   }
 

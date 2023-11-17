@@ -65,9 +65,9 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
         <SideMenu header='Menu'
             items={[
               { label: "Questions", to: "/questions" },
-              { label: "My Questions", to: "myquestions" },
-              { label: "My Favourite Answers", to: "favourites" },
-              { label: "New Question", to: "createquestion" },
+              { label: "My Questions", to: "/myquestions" },
+              { label: "My Favourite Answers", to: "/favourites" },
+              { label: "New Question", to: "/createquestion" },
               { label: "Tags", to: "/tags" }
             ]}/>
         </Column>

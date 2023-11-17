@@ -15,7 +15,7 @@ import { EyeIcon } from './icons';
 export class Card extends Component<{ title: ReactNode, smallTitle?: boolean }> {
   render() {
     return (
-      <div className="card" style={{ width: '600px' || 'auto', margin: '20px'}}> {/* skal det være eller her? */}
+      <div className="card" style={{ width: '800px' || 'auto', margin: '20px'}}> {/* skal det være eller her? */}
         <div className="card-body">
           {this.props.smallTitle ? <h6 className="card-title">{this.props.title}</h6> : <h5 className="card-title">{this.props.title}</h5>}
           <div className="card-text">{this.props.children}</div>
