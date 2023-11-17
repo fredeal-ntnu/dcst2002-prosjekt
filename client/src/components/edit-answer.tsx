@@ -13,7 +13,30 @@ export class EditAnswer extends Component<{ match: { params: { id: number } } }>
 
   render() {
     return (
-      this.renderPage()
+      <>
+      <Row>
+        <Card title="Edit Answer">
+          <Row>
+            <Column>
+              <Form.Textarea
+                placeholder="Edit answer"
+                type="text"
+                value={this.answer.text}
+                onChange={(event) => (this.answer.text = event.currentTarget.value)}
+              />
+            </Column>
+          </Row>
+        </Card>
+      </Row>
+      <Row>
+        <Column width={6}>
+          <Button.Success onClick={this.save}>Save</Button.Success>
+        </Column>
+        <Column width={6}>
+          <Button.Danger onClick={this.delete}>Delete</Button.Danger>
+        </Column>
+      </Row>
+    </>
     )
   }
 
@@ -49,39 +72,18 @@ export class EditAnswer extends Component<{ match: { params: { id: number } } }>
       .catch((error) => console.error('Error deleting answer: ' + error.message));
   }
 
-  renderPage() {
-    if(this.answer.user_id == this.connectedUser) {
-      <>
-        <Row>
-          <Card title="Edit Answer">
-            <Row>
-              <Column>
-                <Form.Textarea
-                  placeholder="Edit answer"
-                  type="text"
-                  value={this.answer.text}
-                  onChange={(event) => (this.answer.text = event.currentTarget.value)}
-                />
-              </Column>
-            </Row>
-          </Card>
-        </Row>
-        <Row>
-          <Column width={6}>
-            <Button.Success onClick={this.save}>Save</Button.Success>
-          </Column>
-          <Column width={6}>
-            <Button.Danger onClick={this.delete}>Delete</Button.Danger>
-          </Column>
-        </Row>
-      </>
-    } else {
-      history.push('/questions/' + this.answer.question_id)
-      console.error('You are not the author of this answer')
-    }
+
+  //Funker ike lenger :(  
+//   renderPage() {
+//     if(this.answer.user_id == this.connectedUser) {
+      
+//     } else {
+//       history.push('/questions/' + this.answer.question_id)
+//       console.error('You are not the author of this answer')
+//     }
       
       
 
     
-}
+// }
 }
