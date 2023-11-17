@@ -12,7 +12,6 @@ import service, {
   User,
 } from '../service';
 import { createHashHistory } from 'history';
-import { useState } from 'react';
 
 const history = createHashHistory();
 
@@ -60,13 +59,16 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   render() {
     return (
       <>
-        <SideMenu
-          header="Public"
-          items={[
-            { label: 'Questions', to: '/questions' },
-            { label: 'Tags', to: '/tags' },
-          ]}
-        />
+      <Column width={3}>
+        <SideMenu header='Menu'
+            items={[
+              { label: "Questions", to: "/questions" },
+              { label: "My Questions", to: "myquestions" },
+              { label: "My Favourite Answers", to: "favourites" },
+              { label: "New Question", to: "createquestion" },
+              { label: "Tags", to: "/tags" }
+            ]}/>
+        </Column>
         <Card title="Question">
           <Card title="Title">{this.question.title}</Card>
 
@@ -83,15 +85,22 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
             </Card>
           </Row>
           <Row>
-            <Column width={2}>
+            <Column width={8}>
              {this.createQuestionEditButton()}
             </Column>
           </Row>
         </Card>
-        {this.handleQuestionCommentDisplay()}
-        {this.addQuestionCommentInput()}
-       {this.handleAnswerMapDisplay()}
-       {this.addAnswerInput()}
+        <Row>
+          <Column width={6}>
+          {this.handleQuestionCommentDisplay()}
+          {this.addQuestionCommentInput()}
+          </Column>
+          <Column width={6}>
+            {this.handleAnswerMapDisplay()}
+            {this.addAnswerInput()}
+          </Column>  
+        </Row>
+        
       </>
     );
   }
