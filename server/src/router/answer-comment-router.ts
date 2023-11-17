@@ -74,7 +74,7 @@ answerCommentRouter.delete('/answer/comments/:id', (request, response) => {
 answerCommentRouter.put('/answers/:id/comments/:id', (request, response) => {
   const data = request.body;
     answerCommentService
-      .updateAnswerComment({answer_comment_id: data.answer_comment_id, text: data.text, answer_id: data.answer_id})
+      .updateAnswerComment(data)
       .then(() => response.send())
       .catch((error) => response.status(500).send(error));
  

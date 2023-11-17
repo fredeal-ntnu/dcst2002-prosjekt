@@ -66,7 +66,7 @@ class Service {
         [question_comment_id],
         (error, results: ResultSetHeader) => {
           if (error) return reject(error);
-          if (results.affectedRows == 0) return reject(new Error('No row deleted'));
+          if (results.affectedRows == 0) return reject('No row deleted');
 
           resolve();
         },

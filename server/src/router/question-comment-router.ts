@@ -22,7 +22,7 @@ questionCommentRouter.post('/questions/:questionId/comments', (request, response
       .createQuestionComment(data.text, data.question_id,data.user_id)
       .then((id) => response.send({ id: id }))
       .catch((error) => response.status(500).send(error));
-  else response.status(400).send('Missing question comment router 400');
+  else response.status(400).send('Missing question comment properties');
 });
 
 //Delete question comment
@@ -40,7 +40,7 @@ questionCommentRouter.delete('/comments/:id', (request, response) => {
 questionCommentRouter.put('/comments', (request, response) => {
   const data = request.body;
     questionCommentService
-      .updateQuestionComment({question_comment_id: data.question_comment_id, text: data.text, question_id: data.question_id, user_id: data.user_id})
+      .updateQuestionComment(data)
       .then(() => response.send())
       .catch((error) => response.status(500).send(error));
  

@@ -1,3 +1,4 @@
+// DENNE ER GOOD MED QUESTION OG ANSWER
 import axios from 'axios';
 import pool from '../../src/mysql-pool';
 import app from '../../src/app';
@@ -21,7 +22,7 @@ beforeEach((done) => {
   pool.query('TRUNCATE TABLE Tags', (error) => {
     if (error) return done.fail(error);
     
-    tagService
+    tagService 
     .createTag(testTags[0].name)
     .then(() => tagService.createTag(testTags[1].name)) 
     .then(() => tagService.createTag(testTags[2].name)) 
