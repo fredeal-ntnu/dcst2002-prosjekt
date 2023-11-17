@@ -11,6 +11,7 @@ export class CreateQuestion extends Component {
   title = '';
   text = '';
   user_id = 0;
+  connectedUser: number = 0;
 
   render() {
     return (
@@ -109,6 +110,19 @@ export class CreateQuestion extends Component {
   }
 
   mounted() {
+    service.getMe()
+    .then((user) => {
+      this.user_id = user.user_id
+      this.connectedUser = this.user_id;
+    })
+    .catch((error)=>{
+      console.error(error.message)
+      history.push('/')
+      alert('You must be logged in to create a question')
+    })
+    
+
+
     service
       .getAllTags()
       .then((tags) => (this.tags = tags))
@@ -117,7 +131,6 @@ export class CreateQuestion extends Component {
 
   handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let tagId = Number(event.target.value);
-    console.log(tagId);
 
     if (event.target.checked) {
       this.selectedTags.push(tagId);

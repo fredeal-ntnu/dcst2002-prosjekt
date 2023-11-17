@@ -105,7 +105,6 @@ export class Tags extends Component {
 
     handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         this.sortOrder = event.target.value;
-        console.log(this.sortOrder);
         this.handleSortChange() // Call a method to load questions based on the selected filter
       };
 

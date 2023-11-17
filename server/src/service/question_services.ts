@@ -16,6 +16,11 @@ export type Question_Content = {
 
 
 class Service {
+
+
+
+
+
   /**
    * Get question with given id.
    */
@@ -26,7 +31,6 @@ class Service {
         [question_id],
         (error, results: RowDataPacket[]) => {
           if (error) return reject(error);
-          console.log('asdf', results);
           if(results.length === 0) return reject(error);
 
 
@@ -144,7 +148,6 @@ class Service {
   deleteQuestion(id: number) {
     return new Promise<void>((resolve, reject) => {
       pool.query('DELETE FROM Questions WHERE question_id=?', [id], (error, results: ResultSetHeader) => {
-        console.log(error);
         if (error) return reject(error);
         if(results.affectedRows === 0) return reject(results);
         
@@ -209,15 +212,15 @@ class Service {
     });
   }
 
-  getQuestionsByAnswerId(answer_id: number) {
-    return new Promise<Question_Content[]>((resolve, reject) => {
+  getQuestionByAnswerId(answer_id: number) {
+    return new Promise<Question_Content>((resolve, reject) => {
       pool.query(
-        'SELECT * FROM Questions WHERE question_id IN (SELECT question_id FROM Answers WHERE answer_id=?)',
+        'SELECT Q.* FROM Questions Q JOIN Answers A ON Q.question_id = A.question_id JOIN answer_user_favourite AF ON A.answer_id = AF.answer_id WHERE AF.answer_id =?',
         [answer_id],
         (error, results: RowDataPacket[]) => {
           if (error) return reject(error);
 
-          resolve(results as Question_Content[]);
+          resolve(results[0] as Question_Content);
         },
       );
     });

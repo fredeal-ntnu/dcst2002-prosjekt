@@ -22,7 +22,7 @@ answerCommentRouter.post('/answers/:id/comments', (request, response) => {
   const data = request.body;
   if (typeof data.text == 'string' && data.text.length != 0)
     answerCommentService
-      .createAnswerComment(data.text, data.answer_id)
+      .createAnswerComment(data.text, data.answer_id, data.user_id)
       .then((id) => response.send({ id: id }))
       .catch((error) => response.status(500).send(error));
   else response.status(400).send('Missing answer comment properties');
@@ -41,7 +41,6 @@ answerCommentRouter.post('/answers/:id/comments', (request, response) => {
 //Get answer comment by id
 
 answerCommentRouter.get('/answer/comments/:id', (request, response) => {
-  console.log('tredje')
   const commentId = Number(request.params.id);
   answerCommentService
     .getAnswerCommentById(commentId)

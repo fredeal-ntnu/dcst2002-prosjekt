@@ -5,7 +5,7 @@ export type Answer_Content = {
   answer_id: number;
   text: string;
   confirmed_answer: boolean;
-  last_edited: Date;
+  last_updated: Date;
   question_id: number;
   user_id: number;
   score?: number;
@@ -13,27 +13,27 @@ export type Answer_Content = {
 };
 
 class Service {
-  //get answer by question idxxx
-  // SELECT answer_id, SUM(CASE WHEN vote_type = 1 THEN 1 ELSE -1 END) AS total_votes FROM Votes WHERE answer_id = ? GROUP BY answer_id;
 
-  getAnswersByQuestionId(question_id: number) {
+  getVotesBs(question_id: number) {
     return new Promise<Answer_Content[]>((resolve, reject) => {
       const query = `
       SELECT
-      a.*,
-      COALESCE(SUM(
-          CASE
-              WHEN ap.vote_type = 1 THEN 1
-              WHEN ap.vote_type = 0 THEN -1
-              ELSE 0
-          END
-      ), 0) AS score
-  FROM
-      Answers AS a
-  LEFT JOIN
-      Votes AS ap ON a.answer_id = ap.answer_id
-  GROUP BY
-      a.answer_id;
+    a.*,
+    COALESCE(SUM(
+        CASE
+            WHEN ap.vote_type = 1 THEN 1
+            WHEN ap.vote_type = 0 THEN -1
+            ELSE 0
+        END
+    ), 0) AS score
+FROM
+    Answers AS a
+LEFT JOIN
+    Votes AS ap ON a.answer_id = ap.answer_id
+WHERE
+    a.question_id = ?
+GROUP BY
+    a.answer_id;
       `;
       pool.query(
         query,
@@ -59,6 +59,22 @@ class Service {
           if (results.length == 0) return reject(new Error('No answer found'));
 
           resolve(results[0] as Answer_Content);
+        },
+      );
+    });
+  }
+
+  //get answers by question id
+
+  getAnswersByQuestionId(question_id: number) {
+    return new Promise<Answer_Content[]>((resolve, reject) => {
+      pool.query(
+        'SELECT * FROM Answers WHERE question_id = ?',
+        [question_id],
+        (error, results: RowDataPacket[]) => {
+          if (error) return reject(error);
+
+          resolve(results as Answer_Content[]);
         },
       );
     });
@@ -109,11 +125,11 @@ getAllFavouriteAnswersByUserId(user_id: number){
 
   //create answer by question id
 
-  createAnswer(text: string, question_id: number) {
+  createAnswer(text: string, question_id: number, user_id: number) {
     return new Promise<number>((resolve, reject) => {
       pool.query(
-        'INSERT INTO Answers SET text=?, question_id=?',
-        [text, question_id],
+        'INSERT INTO Answers SET text=?, question_id=?, user_id=?',
+        [text, question_id, user_id],
         (error, results: ResultSetHeader) => {
           if (error) return reject(error);
 
@@ -130,7 +146,6 @@ getAllFavouriteAnswersByUserId(user_id: number){
   deleteAnswer(id: number) {
     return new Promise<void>((resolve, reject) => {
       pool.query('DELETE FROM Answers WHERE answer_id=?', [id], (error) => {
-        console.log(error);
         if (error) return reject(error);
         resolve();
       });
@@ -161,9 +176,8 @@ getAllFavouriteAnswersByUserId(user_id: number){
     return new Promise<Answer_Content[]>((resolve, reject) => {
       pool.query(
         'SELECT * FROM Answers ORDER BY last_edited DESC',
-        [answer.answer_id, answer.confirmed_answer, answer.question_id, answer.text, answer.user_id ,answer.last_edited],
+        [answer.answer_id, answer.confirmed_answer, answer.question_id, answer.text, answer.user_id ,answer.last_updated],
         (error, results: RowDataPacket[]) => {
-          console.log(error);
           if (error) return reject(error);
           resolve(results as Answer_Content[]);
         })})

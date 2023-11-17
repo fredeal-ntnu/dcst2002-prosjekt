@@ -3,15 +3,16 @@ import { answerService } from '../service/answer_services';
 
 const answerRouter = express.Router();
 
-//Get all answers by question id
+//vot bs her
 
-answerRouter.get('/questions/:id/answers', (request, response) => {
+answerRouter.get('/questions/:id/answer/votes', (request, response) => {
   const id = Number(request.params.id);
   answerService
-    .getAnswersByQuestionId(id)
+    .getVotesBs(id)
     .then((rows) => response.send(rows))
     .catch((error) => response.status(500).send(error));
 });
+
 
 //Get all favourite answers by user id
 answerRouter.get('/user/:id/favourites', (request, response) => {
@@ -34,13 +35,25 @@ answerRouter.get('/answers/:id', (request, response) => {
     .catch((error) => response.status(500).send(error));
 });
 
+//Get answers by question id
+
+answerRouter.get('/questions/:id/answers', (request, response) => {
+  const questionId = Number(request.params.id);
+  
+  answerService
+  .getAnswersByQuestionId(questionId)
+  .then((rows) => response.send(rows))
+  .catch((error) => response.status(500).send(error))
+  
+});
+
 //Create new answer
 
 answerRouter.post('/questions/:id/answers', (request, response) => {
   const data = request.body;
   if (typeof data.text == 'string' && data.text.length != 0)
     answerService
-      .createAnswer(data.text, data.question_id)
+      .createAnswer(data.text, data.question_id,data.user_id)
       .then((id) => response.send({ id: id }))
       .catch((error) => response.status(500).send(error));
   else response.status(400).send('Missing dobbeltsjekk mongo properties');
@@ -56,7 +69,7 @@ answerRouter.put('/answers', (request, response) => {
         answer_id: data.answer_id,
         text: data.text,
         confirmed_answer: data.confirmed_answer,
-        last_edited: data.last_edited,
+        last_updated: data.last_updated,
         question_id: data.question_id,
         user_id: data.user_id,
       })

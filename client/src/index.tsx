@@ -17,22 +17,60 @@ import answerService from './components/services/answer-service';
 import { QuestionIcon } from './icons';
 import { MyQuestions } from './components/my-question';
 import { Favourites } from './components/favourites';
+import { Profile } from './components/profile';
+import { User } from './service';
+
 class Menu extends Component {
+  user:User = { user_id: 0, google_id: '', username: '', email: ''};
+  connectedUser: number = 0;
+
   render() {
     return (
-      <NavBar brand="askMorgan">
-        <Button.Success onClick={this.loginLink}>Login</Button.Success>
-        <NavBar.Link to="/signup">Sign up</NavBar.Link>
-      </NavBar>
-    );
+      
+      <>
+      {this.handleNavbar()}
+      </> 
+   );
+    
   }
   loginLink() {
     window.location.href = '/api/v1/login/federated/google';
   }
+
+
+
+  mounted(): void {
+    service.getMe().then((user) => { this.user = user
+    this.connectedUser = this.user.user_id;
+    });
+  }
+
+  handleNavbar() {
+    if (this.connectedUser) {
+    
+      return (
+        
+        <NavBar brand="askMorgan">
+        <NavBar.Link to="/profile">My Profile</NavBar.Link>
+      </NavBar>
+      );
+    } else {
+      return (
+        <NavBar brand="askMorgan">
+        <Button.Success onClick={this.loginLink}>Login</Button.Success>
+      </NavBar>
+    )}
+
+  }
+
+
+
 }
 
 class Home extends Component {
   questions: Question[] = [];
+  user:User = { user_id: 0, google_id: '', username: '', email: ''}
+  connectedUser: number = 0;
 
   render() {
     return (
@@ -64,11 +102,21 @@ class Home extends Component {
     );
   }
 
+
+
+
+
+
+
   mounted() {
-    // service.getMe().then((user) => (console.log(user)));
+    service.getMe().then((user) => {
+      this.user = user;
+      this.connectedUser = user.user_id;
+    });
 
     service.getAllQuestions().then((questions) => (this.questions = questions));
   }
+
 
   
 }
@@ -82,17 +130,16 @@ if (root)
         <Menu />
         <Route exact path="/" component={Home} />
         <Route exact path="/questions" component={AllQuestions} />
+        <Route exact path="/profile" component={Profile} />
         <Route exact path="/tags" component={Tags} />
         <Route exact path="/myquestions" component={MyQuestions} />
         <Route exact path="/favourites" component={Favourites} />
         <Route exact path="/createQuestion" component={CreateQuestion} /> {/* er det index her? */}
         <Route exact path="/questions/:id(\d+)" component={QuestionDetails} />
         <Route exact path="/questions/:id(\d+)/answers/:id(\d+)" component={AnswerDetails}/>
-        {/* huske å endre index */}
         <Route exact path="/questions/:id(\d+)/edit" component={EditQuestion} />
         <Route exact path="/questions/:id(\d+)/answers/:id(\d+)/edit" component={EditAnswer} />
         <Route exact path="/questions/:id(\d+)/comments/:id(\d+)/edit" component={EditQuestionComment} />
         <Route exact path="/questions/:id(\d+)/answers/:id(\d+)/comments/:id(\d+)/edit" component={EditAnswerComment} />
-        {/* <Route exact path="/signup" component={Questions} /> */}
     </HashRouter>,
   );

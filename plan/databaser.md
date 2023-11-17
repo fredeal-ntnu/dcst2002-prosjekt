@@ -19,7 +19,9 @@ CREATE TABLE question_comments (
     question_comment_id INT PRIMARY KEY AUTO_INCREMENT,
     text TEXT NOT NULL,
     question_id INT,
-    FOREIGN KEY (question_id) REFERENCES Questions(question_id) ON DELETE CASCADE
+    user_id INT,
+    FOREIGN KEY (question_id) REFERENCES Questions(question_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Answers (
@@ -46,7 +48,9 @@ CREATE TABLE answer_comments (
     answer_comment_id INT PRIMARY KEY AUTO_INCREMENT,
     text TEXT NOT NULL,
     answer_id INT,
-    FOREIGN KEY (answer_id) REFERENCES Answers(answer_id) ON DELETE CASCADE
+    user_id INT,
+    FOREIGN KEY (answer_id) REFERENCES Answers(answer_id) ON DELETE CASCADE,
+    FOREIGN key (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Tags (
@@ -62,24 +66,17 @@ CREATE TABLE tag_question_relation (
     FOREIGN KEY (question_id) REFERENCES Questions(question_id) ON DELETE CASCADE
 );
 
-CREATE TABLE question_user_favourite (
-    question_id INT,
+CREATE TABLE answer_user_favourite (
+    answer_id INT,
     user_id INT,
-    PRIMARY KEY (question_id, user_id),
-    FOREIGN KEY (question_id) REFERENCES Questions(question_id) ON DELETE CASCADE,
+    PRIMARY KEY (answer_id, user_id),
+    FOREIGN KEY (answer_id) REFERENCES Answers(answer_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
 --Eksempeldata:
 
--- User Table
-INSERT INTO Users( user_id, google_id, username, email) VALUES 
-(1, "asdasda" ,'alice', "alice@gmail.com"),
-(2, "asdasdads" ,'bob', "bob@gmail.com"),
-(3, "qfafsf" ,'charlie', "charlie@gmail.com"),
-(4, "fdafadf" ,'david', "david@gmail.com"),
-(5, "dasdasda" ,'eve', "eve@gmail.com"),
-(6, "lkafnjasl" ,'frank', "frank@gmail.com");
+
 
 -- Question Table
 INSERT INTO Questions(question_id, title, text, view_count, has_answer, user_id) VALUES 
@@ -136,41 +133,12 @@ INSERT INTO tag_question_relation(tag_id, question_id) VALUES
 (6, 6);
 
 -- question_user_favourite Table
-INSERT INTO question_user_favourite(question_id, user_id) VALUES 
+INSERT INTO answer_user_favourite(answer_id, user_id) VALUES 
 (1, 1),
 (2, 2),
-(3, 3),
-(4, 4),
-(5, 5),
-(6, 6);
+(3, 1),
+(4, 2),
+(5, 1),
+(6, 2);
 
 
-insert into `Answers` (`text`, `confirmed_answer`, `question_id`) values ('heii', 0, 1);
-
-
-
-
-
--- First, drop the existing foreign key constraints
-ALTER TABLE question_user_favourite
-DROP FOREIGN KEY question_user_favourite_ibfk_1, 
-DROP FOREIGN KEY question_user_favourite_ibfk_2;
-
--- Change the table name and rename the columns
-ALTER TABLE question_user_favourite
-CHANGE COLUMN question_id answer_id INT,
-CHANGE COLUMN user_id answer_id INT,
-CHANGE COLUMN question_user_favourite_id answer_user_favourite_id INT AUTO_INCREMENT,
-ADD PRIMARY KEY (answer_user_favourite_id);
-
--- Recreate the foreign key constraints with the updated column names
-ALTER TABLE question_user_favourite
-ADD CONSTRAINT fk_answer_user_favourite_answer_id
-FOREIGN KEY (answer_id) REFERENCES Answers(answer_id) ON DELETE CASCADE;
-
-ALTER TABLE question_user_favourite
-ADD CONSTRAINT fk_answer_user_favourite_user_id
-FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE;
-
--- Rename the table
-RENAME TABLE question_user_favourite TO answer_user_favourite;

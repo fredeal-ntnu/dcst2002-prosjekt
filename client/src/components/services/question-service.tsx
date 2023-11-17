@@ -72,7 +72,6 @@ class Service {
    */
 
   deleteQuestion(id: number) {
-    console.log(typeof id);
     return axios.delete('/questions/' + id).then((response) => response.data);
   }
 

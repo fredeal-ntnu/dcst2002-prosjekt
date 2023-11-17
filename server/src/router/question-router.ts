@@ -19,18 +19,17 @@ questionRouter.get('/user/:id/questions', (request, response) => {
   const user_id = Number(request.params.id);
   questionService
     .getQuestionsByUserId(user_id)
-    //.then((question) => question ? response.send(question) : response.status(404).send('Question not found'))
     .then((question) => response.send(question))
     .catch((error) => response.status(500).send(error))
 });
 
 
 //Get all questions by answer id
-questionRouter.get('/answer/:id/favourite', (_request, response) => {
-  const answer_id = Number(_request.params.id);
+questionRouter.get('/answer/:id/question', (request, response) => {
+  const answer_id = Number(request.params.id);
   questionService
-    .getQuestionsByAnswerId(answer_id)
-    .then((rows) => response.send(rows))
+    .getQuestionByAnswerId(answer_id)
+    .then((question) => response.send(question))
     .catch((error) => response.status(500).send(error));
 });
 
@@ -92,10 +91,7 @@ questionRouter.get('/user/:id/unansweredquestions/', (request, response) => {
 //Create new question
 questionRouter.post('/questions', passport.authenticate("session", {session: true}), (request, response) => {
   const data = request.body;
-  console.log('shitau', data)
   const user:User = request.user as User;
-
-  console.log(user)
 
   if (
     typeof data.title == 'string' &&
@@ -136,7 +132,6 @@ questionRouter.put('/questions', (request, response) => {
     data.title.length != 0 &&
     typeof data.text == 'string'
   ) {
-    console.log(data);
     questionService
       // .updateQuestion(Question_Content: data.question)
       .updateQuestion({

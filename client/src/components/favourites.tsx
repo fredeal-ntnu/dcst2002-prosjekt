@@ -7,6 +7,7 @@ export class Favourites extends Component {
     answers: Answer[] = [];
     questions: Question[] = [];
     user:User = { user_id: 0, google_id: '', username: '', email: ''};
+    search = '';
   
     render() {
       let answersCount = this.answers.length;
@@ -23,19 +24,20 @@ export class Favourites extends Component {
               { label: "Tags", to: "/tags" }
             ]}/>
           </Column>
+          
+          {/* Main content */}
           <Column>
             <Card title='My Favourite Answers!'><br />
               <Row>
                 <Column>{answersCount} answers in total</Column>
-                <Column>
+                </Row>
+            </Card>
+            <Column>
                     {this.answers.map((answer, i) => (
                 <AnswerCard key={i} answer={answer}/>
               ))
             }
                 </Column>
-                
-              </Row>
-            </Card>
           </Column>
         </Row>
       );

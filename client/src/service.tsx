@@ -31,21 +31,26 @@ export type User = {
 export type Answer = {
   answer_id: number;
   text: string;
-  confirmed_answer: boolean;
+  confirmed_answer: Number;
+  last_updated: Date;
   question_id: number;
+  user_id: number;
   score?: number;
+  result?: any;
 };
 
 export type QuestionComment = {
   question_comment_id: number;
   text: string;
   question_id: number;
+  user_id: number;
 };
 
 export type AnswerComment = {
   answer_comment_id: number;
   text: string;
   answer_id: number;
+  user_id: number;
 };
 
 export type Vote = {
@@ -130,7 +135,6 @@ class Service {
    */
 
   deleteQuestion(id: number) {
-    console.log(typeof id);
     return axios.delete('/questions/' + id).then((response) => response.data);
   }
 
@@ -195,13 +199,19 @@ class Service {
     return axios.get('/user/' + id + '/answers').then((response) => response.data);
   }
 
-  getAnswersForQuestion(id: number) {
+  getAnswersByQuestionId(id: number) {
     return axios.get('/questions/' + id + '/answers').then((response) => response.data);
   }
 
-  createAnswer(text: string, question_id: number) {
+  getVotesBs(id: number) {
+    return axios.get('/questions/' + id + '/answer/votes').then((response) => response.data);
+  }
+
+
+
+  createAnswer(text: string, question_id: number, user_id: number) {
     return axios
-      .post('/questions/' + question_id + '/answers', { text, question_id })
+      .post('/questions/' + question_id + '/answers', { text, question_id, user_id })
       .then((response) => response.data);
   }
 
@@ -213,9 +223,9 @@ class Service {
     .then((response) => response.data);
   }
 
-  createQuestionComment(text: string, question_id: number) {
+  createQuestionComment(text: string, question_id: number, user_id: number) {
     return axios
-      .post('/questions/' + question_id + '/comments', { text, question_id })
+      .post('/questions/' + question_id + '/comments', { text, question_id, user_id })
       .then((response) => response.data);
   }
 
@@ -237,12 +247,13 @@ updateQuestionComment(questionComment: QuestionComment) {
     .then((response) => response.data);
   }
 
-  getQuestionsByAnswerId(answer_id: number) {
+  getQuestionByAnswerId(answer_id: number) {
     return axios
-    .get('/answer/' + answer_id + '/favourite')
+    .get<Question>('/answer/' + answer_id + '/question')
     .then((response) => response.data);
   }
 
+  
   // ALLE SERVICES FOR ANSWER COMMENTS
   
 
@@ -251,14 +262,13 @@ updateQuestionComment(questionComment: QuestionComment) {
     .then((response) => response.data);
   }
 
-  createAnswerComment(text: string, answer_id: number) {
+  createAnswerComment(text: string, answer_id: number, user_id: number) {
     return axios
-      .post('/answers/' + answer_id + '/comments', { text, answer_id })
+      .post('/answers/' + answer_id + '/comments', { text, answer_id, user_id })
       .then((response) => response.data);
   }
 
   getAnswerCommentById(id: number) {
-    console.log('andre')
     return axios
     .get('/answer/comments/' + id)
     .then((response) => response.data);
@@ -304,11 +314,34 @@ getVotesByAnswerId(id: number) {
 
 
 
-getMe(){
-  return axios
-    .get("/user/me")
-    .then((response) => response.data)
+async getMe(){
+  try {
+    const response = await axios.get("/user/me");
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("getMe failed")
+    }
+  } catch (error) {
+    throw error;
+  }
 }
+
+
+async logOut() {
+  try {
+    const response = await axios.post("/logout");
+    if (response.status === 200) {
+      return response.status;
+    } else {
+      throw new Error("logout failed")
+    }
+
+  } catch (error) {
+    throw error;
+  }
+}
+
 
 
 

@@ -3,11 +3,10 @@ import { voteService } from '../service/vote_services';
 
 const voteRouter = express.Router();
 
-//Get all votes for answer
+//create vote funker
 
 voteRouter.post('/vote/', (request, response) => {
     const data = request.body;
-    console.log(data)
     if (typeof data.user_id == 'number' && typeof data.answer_id == 'number' && typeof data.vote_type == 'number')
     voteService
     .createVote(data.user_id, data.answer_id, data.vote_type)

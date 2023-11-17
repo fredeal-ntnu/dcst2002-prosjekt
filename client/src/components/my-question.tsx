@@ -62,7 +62,6 @@ export class MyQuestions extends Component {
 
     handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         this.filter = event.target.value;
-        console.log(this.filter);
         this.loadQuestions() // Call a method to load questions based on the selected filter
       };
   
@@ -100,9 +99,11 @@ export class MyQuestions extends Component {
       this.user = user;
     return service.getQuestionsByUserid(this.user.user_id);
     })
-    .then(questions => (this.questions = questions))
+    .then(questions =>  {
+      this.questions = questions
+      return this.loadQuestions();
+    })
     .catch((error: Error) => Alert.danger('Error getting answer: ' + error.message));
-    this.loadQuestions();
 
     service
       .getAllTags()

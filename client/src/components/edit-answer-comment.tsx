@@ -1,20 +1,21 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Card, Alert, Row, Column, Button, Form} from '../widgets';
-import service, {AnswerComment} from '../service';
+import service, {AnswerComment, User} from '../service';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();
 // let history = useHistory();
 export class EditAnswerComment extends Component<{ match: { params: { id: number } } }> {
   answerComments: AnswerComment[] = [];
-  answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0};
+  answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0, user_id: 0};
+  user: User = { user_id: 0, google_id: '', username: '', email: ''};
+  connectedUser: number = 0;
 
 
   render() {
     return(
       <>
-      hei!
       <Card title="Edit Comment">
         <Row>
           <Column width={10}>
@@ -37,7 +38,19 @@ export class EditAnswerComment extends Component<{ match: { params: { id: number
   }
 
   mounted() {
-    console.log('første')
+
+    service.getMe()
+    .then((user) => {
+      this.user.user_id = user.user_id
+      this.connectedUser = this.user.user_id;
+    })
+    .catch((error)=>{
+      console.error(error.message)
+      history.push('/')
+      alert('You must be logged in to edit comment')
+    })
+
+
     service.getAnswerCommentById(this.props.match.params.id)
     .then((answerComment) => (this.answerComment = answerComment))
     .catch((error: Error) => Alert.danger('Error getting answer comment: ' + error.message));

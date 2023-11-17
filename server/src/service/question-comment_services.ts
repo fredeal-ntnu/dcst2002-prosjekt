@@ -5,6 +5,7 @@ export type Question_Comment_Content = {
   question_comment_id: number;
   text: string;
   question_id: number;
+  user_id: number;
 };
 
 class Service {
@@ -39,12 +40,12 @@ class Service {
     });
   }
 
-  //create answer comment by question id
-  createQuestionComment(text: string, question_id: number) {
+  //create question comment by question id
+  createQuestionComment(text: string, question_id: number, user_id: number) {
     return new Promise<number>((resolve, reject) => {
       pool.query(
-        'INSERT INTO question_comments SET text=?, question_id=?',
-        [text, question_id],
+        'INSERT INTO question_comments SET text=?, question_id=?, user_id=?',
+        [text, question_id, user_id],
         (error, results: ResultSetHeader) => {
           if (error) return reject(error);
 
