@@ -12,19 +12,6 @@ class Service {
   /*
    * Get tag with given id.
    */
-  createTag(name: string) {
-    return new Promise<void>((resolve, reject) => {
-      pool.query(
-        'INSERT INTO Tags (name) VALUES (?)',
-        [name],
-        (error, results) => {
-          if (error) return reject(error);
-
-          resolve();
-        },
-      );
-    });
-  }
 
   getTag(tag_id: number) {
     return new Promise<Tag_Content>((resolve, reject) => {
