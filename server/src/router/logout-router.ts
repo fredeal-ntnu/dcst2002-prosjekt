@@ -6,18 +6,18 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import {User, userService} from "../service/user_services";
 
 
-const loginRouter = express.Router();
+const logoutRouter = express.Router();
 
-loginRouter.get('/login/federated/google', 
-passport.authenticate('google', { scope: ['profile', 'email'] }));
+// loginRouter.get('/login/federated/google', 
+// passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-loginRouter.get('/auth/google/callback', 
- passport.authenticate('google'),
-function (req, res) { console.log(req.user.user_id);
-  // Successful authentication, redirect home or to another page.
-  res.redirect('/#/');
-}
-);
+// loginRouter.get('/auth/google/callback', 
+//  passport.authenticate('google'),
+// function (req, res) { console.log(req.user.user_id);
+//   // Successful authentication, redirect home or to another page.
+//   res.redirect('/#/');
+// }
+// );
 
 passport.serializeUser(function (user, cb) {
   cb(null, user);
@@ -46,14 +46,21 @@ passport.use(
 );
 
 
-  // loginRouter.post('/logout', function (req, res, next) {
-  //   req.logout(function (err) {
-  //     if (err) {
-  //       return next(err);
-  //     }
-  //     return res.send({ redirect: '/' });
-  //   });
-  // });
+  logoutRouter.post('/logout', function (req, res, next) {
+    req.logout(function (err) {
+      if (err) {
+        return next(err);
+      }
+      req.session.destroy((err) => {
+        if (err) {
+            return next(err);
+        }
+        res.clearCookie('connect.sid');
+        res.redirect('/#/');
+    });
+    });
+    });
+
   
-  export default loginRouter;
+  export default logoutRouter;
  

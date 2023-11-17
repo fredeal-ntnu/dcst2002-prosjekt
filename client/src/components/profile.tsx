@@ -2,6 +2,9 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Card, Alert, Column, Row, Form, SideMenu, QuestionCard, AnswerCard, Button } from '../widgets';
 import service, { Question, Tag, User, Answer } from '../service';
+import { createHashHistory } from 'history';
+
+const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after successfully saving a student
 
 export class Profile extends Component {
     questions: Question[] = [];
@@ -43,16 +46,10 @@ export class Profile extends Component {
     }
       
 
-    async logout() {
-        try {
-        const data = service.logOut()
-        // this.users = null;
-        // window.location.reload();
-
-        } catch (error) {
-            console.log(error)
-        }
-    
-  }
+    logout() {
+      service.logOut()
+      .then(() => window.location.assign('/'))
+      .catch((error) => Alert.danger(error.message));
+    }
 
 }

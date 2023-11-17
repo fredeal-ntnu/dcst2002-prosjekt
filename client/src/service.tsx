@@ -338,6 +338,8 @@ async logOut() {
 
 
 
+
+
 // alle services for favourites
 
 //gets all favourites for a user

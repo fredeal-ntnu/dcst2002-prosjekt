@@ -10,7 +10,7 @@ import { config } from 'dotenv';
 // Serve client files
 app.use(express.static(path.join(__dirname, '/../../client/public')));
 
-app.get('/api/v2/current_user', (req, res) => {
+app.get('/api/v1/current_user', (req, res) => {
   res.send(req.user);
 });
 
