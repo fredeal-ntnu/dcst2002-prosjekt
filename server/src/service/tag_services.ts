@@ -9,10 +9,26 @@ export type Tag_Content = {
 };
 
 class Service {
+  
+ // Create tag
+ // DO NOT DELETE ITS FOR TESTING
+  createTag(name: string) {
+    return new Promise<number>((resolve, reject) => {
+      pool.query(
+        'INSERT INTO Tags (name) VALUES (?)',
+        [name],
+        (error, result: ResultSetHeader) => {
+          if (error) return reject(error);
+
+          resolve(result.insertId);
+        },
+      );
+    });
+  }
+
   /*
    * Get tag with given id.
    */
-
   getTag(tag_id: number) {
     return new Promise<Tag_Content>((resolve, reject) => {
       pool.query(

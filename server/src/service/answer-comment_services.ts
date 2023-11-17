@@ -5,6 +5,7 @@ export type Answer_Comment_Content = {
   answer_comment_id: number;
   text: string;
   answer_id: number;
+  user_id: number;
 };
 
 class Service {
@@ -30,7 +31,7 @@ class Service {
         [answer_comment_id],
         (error, results: RowDataPacket[]) => {
           if (error) return reject(error);
-          if (results.length == 0) return reject(new Error('No answer comment found'));
+          if (results.length === 0) return reject('No answer comment found');
 
           resolve(results[0] as Answer_Comment_Content);
         },
@@ -65,7 +66,7 @@ class Service {
         [answer_comment_id],
         (error, results: ResultSetHeader) => {
           if (error) return reject(error);
-          if (results.affectedRows == 0) return reject(new Error('No row deleted'));
+          if (results.affectedRows == 0) return reject('No row deleted');
 
           resolve();
         },

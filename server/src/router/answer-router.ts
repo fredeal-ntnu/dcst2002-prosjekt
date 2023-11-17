@@ -36,7 +36,7 @@ answerRouter.get('/answers/:id', (request, response) => {
 });
 
 //Get answers by question id
-
+//testes av answer.test.ts
 answerRouter.get('/questions/:id/answers', (request, response) => {
   const questionId = Number(request.params.id);
   
@@ -48,7 +48,7 @@ answerRouter.get('/questions/:id/answers', (request, response) => {
 });
 
 //Create new answer
-
+// testes av answer.test.ts
 answerRouter.post('/questions/:id/answers', (request, response) => {
   const data = request.body;
   if (typeof data.text == 'string' && data.text.length != 0)
@@ -56,7 +56,7 @@ answerRouter.post('/questions/:id/answers', (request, response) => {
       .createAnswer(data.text, data.question_id,data.user_id)
       .then((id) => response.send({ id: id }))
       .catch((error) => response.status(500).send(error));
-  else response.status(400).send('Missing dobbeltsjekk mongo properties');
+  else response.status(400).send('Missing required properties');
 });
 
 //update answer
