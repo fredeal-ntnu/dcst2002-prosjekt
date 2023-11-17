@@ -86,7 +86,8 @@ class Service {
 
 
   // create a vote for answer
-createVote(user_id: number, answer_id: number, vote_type: number) {
+  // Her bør vi kommentere hva som skjer i koden, hva som skjer i de forskjellige if-setningene
+createVote(user_id: number, answer_id: number, vote_type: boolean) {
   return new Promise<void>((resolve, reject) => {
       // Check if there is an existing vote for the user and answer
       pool.query(
@@ -163,6 +164,7 @@ getAllVotesByAnswerId(answer_id: number) {
         [answer_id],
         (error, results: RowDataPacket[]) => {
           if (error) return reject(error);
+          if (results.length === 0) return reject('Votes not found');
 
           resolve(results as Vote_Content[]);
         },
