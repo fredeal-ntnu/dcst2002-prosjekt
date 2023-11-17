@@ -5,7 +5,7 @@ export type Answer_Content = {
   answer_id: number;
   text: string;
   confirmed_answer: boolean;
-  last_edited: Date;
+  last_updated: Date;
   question_id: number;
   user_id: number;
   score?: number;
@@ -123,11 +123,11 @@ getAllFavouriteAnswersByUserId(user_id: number){
 
   //create answer by question id
 
-  createAnswer(text: string, question_id: number) {
+  createAnswer(text: string, question_id: number, user_id: number) {
     return new Promise<number>((resolve, reject) => {
       pool.query(
-        'INSERT INTO Answers SET text=?, question_id=?',
-        [text, question_id],
+        'INSERT INTO Answers SET text=?, question_id=?, user_id=?',
+        [text, question_id, user_id],
         (error, results: ResultSetHeader) => {
           if (error) return reject(error);
 
@@ -174,7 +174,7 @@ getAllFavouriteAnswersByUserId(user_id: number){
     return new Promise<Answer_Content[]>((resolve, reject) => {
       pool.query(
         'SELECT * FROM Answers ORDER BY last_edited DESC',
-        [answer.answer_id, answer.confirmed_answer, answer.question_id, answer.text, answer.user_id ,answer.last_edited],
+        [answer.answer_id, answer.confirmed_answer, answer.question_id, answer.text, answer.user_id ,answer.last_updated],
         (error, results: RowDataPacket[]) => {
           if (error) return reject(error);
           resolve(results as Answer_Content[]);

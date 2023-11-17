@@ -207,9 +207,9 @@ class Service {
 
 
 
-  createAnswer(text: string, question_id: number) {
+  createAnswer(text: string, question_id: number, user_id: number) {
     return axios
-      .post('/questions/' + question_id + '/answers', { text, question_id })
+      .post('/questions/' + question_id + '/answers', { text, question_id, user_id })
       .then((response) => response.data);
   }
 

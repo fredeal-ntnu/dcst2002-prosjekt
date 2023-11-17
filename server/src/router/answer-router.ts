@@ -53,7 +53,7 @@ answerRouter.post('/questions/:id/answers', (request, response) => {
   const data = request.body;
   if (typeof data.text == 'string' && data.text.length != 0)
     answerService
-      .createAnswer(data.text, data.question_id)
+      .createAnswer(data.text, data.question_id,data.user_id)
       .then((id) => response.send({ id: id }))
       .catch((error) => response.status(500).send(error));
   else response.status(400).send('Missing dobbeltsjekk mongo properties');
@@ -69,7 +69,7 @@ answerRouter.put('/answers', (request, response) => {
         answer_id: data.answer_id,
         text: data.text,
         confirmed_answer: data.confirmed_answer,
-        last_edited: data.last_edited,
+        last_updated: data.last_updated,
         question_id: data.question_id,
         user_id: data.user_id,
       })

@@ -173,6 +173,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
  
 
 createQuestionEditButton() {
+  
   if(this.connectedUser == this.question.user_id) {
     return(
       <Button.Success
@@ -256,6 +257,7 @@ handleAnswerMapDisplay () {
 return(
   <Card title="Answers HUSK SORTERING">
     {this.answers_votes.map((answer) => {
+      
       const isFavoriteKey = `isFavorite_${answer.answer_id}`;
       if (answer.question_id == this.props.match.params.id) {
         return (
@@ -294,20 +296,7 @@ return(
                   </Button.Success>
                 </Column>
                 <Column>
-                {}
-                  <Button.Success
-                    onClick={() =>
-                      history.push(
-                        '/questions/' +
-                          this.props.match.params.id +
-                          '/answers/' +
-                          answer.answer_id +
-                          '/edit',
-                      )
-                    }
-                  >
-                    Edit
-                  </Button.Success>
+                {this.handleEditAnswer(answer.user_id)}
                 </Column>
                 <Column>
                   <Button.Success onClick={() => this.setConfirmedAnswer(answer.answer_id)}>
@@ -372,13 +361,30 @@ return(
 }
 
 
+handleEditAnswer(user_id: number) {
+  console.log(this.connectedUser,user_id)
+
+  if(this.connectedUser == user_id) {
+    return(
+      <Button.Success
+      onClick={() =>  history.push('/questions/' + this.props.match.params.id + '/answers/' + this.answer.answer_id + '/edit')}
+    >
+      Edit
+    </Button.Success>
+    )
+  }
+
+  else return
+}
+
+
 
 
 
   createAnswer() {
     if(this.connectedUser) {
       service
-      .createAnswer(this.answer.text, this.props.match.params.id)
+      .createAnswer(this.answer.text, this.props.match.params.id, this.connectedUser)
       .then(() => this.setHasAnswered())
       .then(() => this.mounted())
       .catch((error) => Alert.danger('Error saving answer: ' + error.message));
