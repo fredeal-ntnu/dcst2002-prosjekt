@@ -43,12 +43,14 @@ export type QuestionComment = {
   question_comment_id: number;
   text: string;
   question_id: number;
+  user_id: number;
 };
 
 export type AnswerComment = {
   answer_comment_id: number;
   text: string;
   answer_id: number;
+  user_id: number;
 };
 
 export type Vote = {
@@ -221,9 +223,9 @@ class Service {
     .then((response) => response.data);
   }
 
-  createQuestionComment(text: string, question_id: number) {
+  createQuestionComment(text: string, question_id: number, user_id: number) {
     return axios
-      .post('/questions/' + question_id + '/comments', { text, question_id })
+      .post('/questions/' + question_id + '/comments', { text, question_id, user_id })
       .then((response) => response.data);
   }
 
@@ -260,9 +262,9 @@ updateQuestionComment(questionComment: QuestionComment) {
     .then((response) => response.data);
   }
 
-  createAnswerComment(text: string, answer_id: number) {
+  createAnswerComment(text: string, answer_id: number, user_id: number) {
     return axios
-      .post('/answers/' + answer_id + '/comments', { text, answer_id })
+      .post('/answers/' + answer_id + '/comments', { text, answer_id, user_id })
       .then((response) => response.data);
   }
 

@@ -8,7 +8,7 @@ const history = createHashHistory();
 // let history = useHistory();
 export class EditAnswerComment extends Component<{ match: { params: { id: number } } }> {
   answerComments: AnswerComment[] = [];
-  answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0};
+  answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0, user_id: 0};
 
 
   render() {

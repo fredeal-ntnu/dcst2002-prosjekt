@@ -44,8 +44,8 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     question_id: 0,
     user_id: 0,
   };
-  questionComment: QuestionComment = { question_comment_id: 0, text: '', question_id: 0 };
-  answerComment: AnswerComment = { answer_comment_id: 0, text: '', answer_id: 0 };
+  questionComment: QuestionComment = { question_comment_id: 0, text: '', question_id: 0, user_id: 0};
+  answerComment: AnswerComment = { answer_comment_id: 0, text: '', answer_id: 0, user_id: 0};
   vote: Vote = { user_id: 0, answer_id: 0, vote_type: 0 };
   user: User = { user_id: 0, google_id: '', username: '', email: '' };
   score: number = 0;
@@ -186,7 +186,7 @@ createQuestionEditButton() {
   createComment() {
     if(this.connectedUser) {
       service
-      .createQuestionComment(this.questionComment.text, this.props.match.params.id)
+      .createQuestionComment(this.questionComment.text, this.props.match.params.id, this.connectedUser)
       .then(() => this.mounted())
       .catch((error) => Alert.danger('Error saving comment: ' + error.message));
     }

@@ -10,7 +10,7 @@ export class AnswerDetails extends Component<{ match: { params: { id: number } }
 
 answer: Answer = {answer_id: 0, text: '', confirmed_answer: 0, last_updated: new Date(), question_id: 0, user_id: 0};
 answerComments: AnswerComment[] = [];
-answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0};
+answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0, user_id: 0};
 
   render() {
     return (
@@ -68,7 +68,7 @@ answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0};
 
   addAnswerComment() {
     service
-      .createAnswerComment(this.answerComment.text, this.answer.answer_id)
+      .createAnswerComment(this.answerComment.text, this.answer.answer_id, this.answer.user_id)
       // .then(() => history.push('/questions/' + this.answer.question_id + '/answers/' + this.answer.answer_id))
       .then(() => this.mounted())
       .catch((error) => Alert.danger('Error adding answer comment: ' + error.message));

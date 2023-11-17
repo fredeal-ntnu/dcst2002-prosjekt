@@ -40,11 +40,11 @@ class Service {
 
   //Create answer comment
 
-  createAnswerComment(text: string, answer_id: number) {
+  createAnswerComment(text: string, answer_id: number, user_id: number) {
     return new Promise<number>((resolve, reject) => {
       pool.query(
-        'INSERT INTO answer_comments SET text=?, answer_id=?',
-        [text, answer_id],
+        'INSERT INTO answer_comments SET text=?, answer_id=?, user_id=?',
+        [text, answer_id, user_id],
         (error, results: ResultSetHeader) => {
           if (error) return reject(error);
 
