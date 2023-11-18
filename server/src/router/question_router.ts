@@ -8,21 +8,14 @@ import passport from 'passport';
 */
 const questionRouter = express.Router();
 
-questionRouter.get('/questions/me', passport.authenticate("session", {session: true}), (request, response) => {
-  
-  const user:User = request.user as User;
-  response.send(user);
-});
 
-//get questions by user id
-questionRouter.get('/user/:id/questions', (request, response) => {
-  const user_id = Number(request.params.id);
+//Get all questions
+questionRouter.get('/questions', (_request, response) => {
   questionService
-    .getQuestionsByUserId(user_id)
-    .then((question) => response.send(question))
-    .catch((error) => response.status(500).send(error))
+    .getAllQuestions()
+    .then((rows) => response.send(rows))
+    .catch((error) => response.status(500).send(error));
 });
-
 
 //Get all questions by answer id
 questionRouter.get('/answer/:id/question', (request, response) => {
@@ -34,15 +27,6 @@ questionRouter.get('/answer/:id/question', (request, response) => {
 });
 
 
-
-//Get all questions
-questionRouter.get('/questions', (_request, response) => {
-  questionService
-    .getAllQuestions()
-    .then((rows) => response.send(rows))
-    .catch((error) => response.status(500).send(error));
-});
-
 //Get question by id
 questionRouter.get('/questions/:id', (request, response) => {
   const id = Number(request.params.id);
@@ -52,6 +36,17 @@ questionRouter.get('/questions/:id', (request, response) => {
     )
     .catch((error) => response.status(500).send(error));
 });
+
+
+//get questions by user id
+questionRouter.get('/user/:id/questions', (request, response) => {
+  const user_id = Number(request.params.id);
+  questionService
+    .getQuestionsByUserId(user_id)
+    .then((question) => response.send(question))
+    .catch((error) => response.status(500).send(error))
+});
+
 
 //Get top five questions for user
 questionRouter.get('/user/:id/topfivequestions/', (request, response) => {
@@ -133,7 +128,6 @@ questionRouter.put('/questions', (request, response) => {
     typeof data.text == 'string'
   ) {
     questionService
-      // .updateQuestion(Question_Content: data.question)
       .updateQuestion({
         question_id: data.question_id,
         title: data.title,

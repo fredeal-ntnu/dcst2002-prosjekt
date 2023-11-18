@@ -10,25 +10,9 @@ export type Favourite_Content = {
 
 class Service {
 
-    //get all favourites for user
-    getAllFavouritesForUser(user_id: number) {
-        return new Promise<Favourite_Content[]>((resolve, reject) => {
-            pool.query(
-            'SELECT * FROM answer_user_favourite WHERE user_id = ?',
-            [user_id],
-            (error, results: RowDataPacket[]) => {
-                if (error) return reject(error);
-                if (results.length === 0) return reject('No favourite found');
-                
-                resolve(results as Favourite_Content[]);
-            },
-            );
-        });
-    }
 
+    //get all favourite answers by answer id
 
-
-    //get all favourites by answer id
     getAllFavouritesByAnswerId(answer_id: number) {
         return new Promise<Favourite_Content[]>((resolve, reject) => {
             pool.query(
@@ -46,8 +30,11 @@ class Service {
 
     // denne kunne med fordel vært en post, delete og en get, istedenfor at post kan resultere i både delete, insert og get
     // Dette må i så fall fikses lenger oppe. Fikse om vi har tid
+    //HUSKE Å SPØRRE SIMON
+
+    
     //create favourite relation with answerid and userid
-    createFavouriteRelation(answer_id: number, user_id: number) {
+    handleFavouriteRelation(answer_id: number, user_id: number) {
       return new Promise<void>((resolve, reject) => {
           pool.query(
               'SELECT * FROM answer_user_favourite WHERE answer_id = ? AND user_id = ?',
@@ -85,33 +72,6 @@ class Service {
           );
       });
   }
-  
-
-
-    //get all favourite relations
-    getAllFavouriteRelations() {
-        return new Promise<Favourite_Content[]>((resolve, reject) => {
-            pool.query('SELECT * FROM answer_user_favourite', (error, results: RowDataPacket[]) => {
-            if (error) return reject(error);
-    
-            resolve(results as Favourite_Content[]);
-            });
-        });
-    }
-
-
-
-    //delete favourite relation with answerid and userid
-    deleteFavouriteRelation(answer_id: number, user_id: number) {
-        return new Promise<void>((resolve, reject) => {
-            pool.query('DELETE FROM answer_user_favourite WHERE answer_id=? AND user_id=?', [answer_id, user_id], (error, response: ResultSetHeader) => {
-            if (error) return reject(error);
-            if (response.affectedRows == 0) return reject('No row deleted');
-
-            resolve();
-            });
-        });
-    }
 
 
 }

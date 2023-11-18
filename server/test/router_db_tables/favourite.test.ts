@@ -21,9 +21,10 @@ beforeEach((done) => {
     pool.query('TRUNCATE TABLE answer_user_favourite', (error) => {
       if (error) return done.fail(error);
 
-      favouriteService.createFavouriteRelation(testFavorites[0].answer_id, testFavorites[0].user_id)
-        .then(() => favouriteService.createFavouriteRelation(testFavorites[1].answer_id, testFavorites[1].user_id))
-        .then(() => favouriteService.createFavouriteRelation(testFavorites[2].answer_id, testFavorites[2].user_id))
+        //Hei ingrid, byttet navn på disse fordi dette navnet gir mer mening
+      favouriteService.handleFavouriteRelation(testFavorites[0].answer_id, testFavorites[0].user_id)
+        .then(() => favouriteService.handleFavouriteRelation(testFavorites[1].answer_id, testFavorites[1].user_id))
+        .then(() => favouriteService.handleFavouriteRelation(testFavorites[2].answer_id, testFavorites[2].user_id))
         .then(() => done())
     });
 });

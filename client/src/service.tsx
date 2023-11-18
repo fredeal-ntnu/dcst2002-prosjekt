@@ -169,7 +169,7 @@ class Service {
    * Get a tag by name.
    */
 
-  getQuestionsByTagId(tag: number) {
+  getAllQuestionsByTagId(tag: number) {
     return axios.get('/tag/' + tag + '/questions').then((response) => response.data);
   }
 
@@ -178,13 +178,11 @@ class Service {
     return axios.get('/questions/' + id + '/tags').then((response) => response.data);
   }
 
-  getAllTagQuestionsRelations() {
+  getAllTagQuestionRelations() {
     return axios.get('/question/:id').then((response) => response.data);
   }
 
-  getAllFavouriteAnswersByUserId(user_id: number) {
-    return axios.get<Answer[]>('/user/' + user_id + '/favourites').then((response) => response.data);
-  }
+ 
 
   //get a user
   getUser(user: User) {
@@ -199,11 +197,15 @@ class Service {
     return axios.get('/user/' + id + '/answers').then((response) => response.data);
   }
 
-  getAnswersByQuestionId(id: number) {
-    return axios.get('/questions/' + id + '/answers').then((response) => response.data);
-  }
+  //KAN KANKSJE FJERNES FORDI UNDER GJØR DET SAMME MEN KANSKJE BEDRE Å BRUKE DENNE ISTEDET
+  //FORDI DEN UNDER GJØR SÅ MYE, MEN VANSKELIG Å DELE OPP OGSÅ KANSKJE. BRUKES I 
+  //QUESTION DETAILS (ER KOMMENTERT DER OGSÅ)
 
-  getVotesBs(id: number) {
+  // getAnswersByQuestionId(id: number) {
+  //   return axios.get('/questions/' + id + '/answers').then((response) => response.data);
+  // }
+
+  getAnswerScoresByQuestionId(id: number) {
     return axios.get('/questions/' + id + '/answer/votes').then((response) => response.data);
   }
 
@@ -349,24 +351,15 @@ async logOut() {
 
 // alle services for favourites
 
-//gets all favourites for a user
-getFavouritesByUserId(user_id: number) {
-  return axios
-  .get('/users/' + user_id + '/favourites')
-  .then((response) => response.data);
+
+getAllFavouriteAnswersByUserId(user_id: number) {
+  return axios.get<Answer[]>('/user/' + user_id + '/favourites').then((response) => response.data);
 }
 
-//create a new favourite relation
-createFavouriteRelation(answer_id: number, user_id: number) {
+//creates/deletes favourite relation
+handleFavouriteRelation(answer_id: number, user_id: number) {
   return axios
   .post('/users/'+ user_id + '/favourites/' + answer_id, {answer_id, user_id})
-  .then((response) => response.data);
-}
-
-//gets all relations
-getAllRelations() {
-  return axios
-  .get('/favourites')
   .then((response) => response.data);
 }
 

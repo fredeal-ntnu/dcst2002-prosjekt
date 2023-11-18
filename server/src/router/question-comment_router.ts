@@ -13,6 +13,16 @@ questionCommentRouter.get('/questions/:questionId/comments', (request, response)
     .catch((error) => response.status(500).send(error));
 });
 
+//Get question comment by id
+
+questionCommentRouter.get('/comments/:id', (request, response) => {
+  const commentId = Number(request.params.id);
+  questionCommentService
+    .getQuestionCommentById(commentId)
+    .then((rows) => response.send(rows))
+    .catch((error) => response.status(500).send(error));
+})
+
 //Create new question comment
 
 questionCommentRouter.post('/questions/:questionId/comments', (request, response) => {
@@ -46,14 +56,6 @@ questionCommentRouter.put('/comments', (request, response) => {
  
 });
 
-//Get question comment by id
 
-questionCommentRouter.get('/comments/:id', (request, response) => {
-  const commentId = Number(request.params.id);
-  questionCommentService
-    .getQuestionCommentById(commentId)
-    .then((rows) => response.send(rows))
-    .catch((error) => response.status(500).send(error));
-})
 
 export default questionCommentRouter;

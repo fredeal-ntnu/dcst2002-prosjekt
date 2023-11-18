@@ -89,7 +89,7 @@ export class Tags extends Component {
 
   showQuestionsByTag(tag_id: number) {
     service
-      .getQuestionsByTagId(tag_id)
+      .getAllQuestionsByTagId(tag_id)
       .then((relations) => (this.relations = relations))
       .then(() => {
         this.questions = [];
@@ -137,7 +137,7 @@ export class Tags extends Component {
       .then(() => {
         this.tags.map((tag, i) => {
           service
-            .getQuestionsByTagId(tag.tag_id)
+            .getAllQuestionsByTagId(tag.tag_id)
             .then((relations) => (this.relations = relations))
             .then(() => {
               this.tags[i].questions = this.relations.length;

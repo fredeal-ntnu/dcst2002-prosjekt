@@ -14,7 +14,11 @@ export type Answer_Content = {
 
 class Service {
 
-  getVotesBs(question_id: number) {
+
+
+  //Gets vote scores for answers to a specific question
+
+  getAnswerScoresByQuestionId(question_id: number) {
     return new Promise<Answer_Content[]>((resolve, reject) => {
       const query = `
       SELECT
@@ -65,6 +69,7 @@ GROUP BY
   }
 
   //get answers by question id
+  //BRUKES IKKE ATM, SE KOMMENTAR PÅ SERVICE MED SAMME NAVN PÅ CLIENT SIDE
 
   getAnswersByQuestionId(question_id: number) {
     return new Promise<Answer_Content[]>((resolve, reject) => {
@@ -171,17 +176,6 @@ getAllFavouriteAnswersByUserId(user_id: number){
       );
     });
   }
-  
-  sortByLastEdited(answer: Answer_Content) {
-    return new Promise<Answer_Content[]>((resolve, reject) => {
-      pool.query(
-        'SELECT * FROM Answers ORDER BY last_edited DESC',
-        [answer.answer_id, answer.confirmed_answer, answer.question_id, answer.text, answer.user_id ,answer.last_updated],
-        (error, results: RowDataPacket[]) => {
-          if (error) return reject(error);
-          resolve(results as Answer_Content[]);
-        })})
-    }
 }
 
 

@@ -28,16 +28,6 @@ answerCommentRouter.post('/answers/:id/comments', (request, response) => {
   else response.status(400).send('Missing answer comment properties');
 });
 
-
-
-
-
-
-
-
-
-
-
 //Get answer comment by id
 
 answerCommentRouter.get('/answer/comments/:id', (request, response) => {
@@ -47,17 +37,6 @@ answerCommentRouter.get('/answer/comments/:id', (request, response) => {
     .then((rows) => response.send(rows))
     .catch((error) => response.status(500).send(error));
 })
-
-
-
-
-
-
-
-
-
-
-
 
 //Delete answer comment
 

@@ -50,7 +50,7 @@ class Service {
    * Get a tag by name.
    */
 
-  getQuestionsByTagId(tag: number) {
+  getAllQuestionsByTagId(tag: number) {
     return axios.get('/tag/' + tag + '/questions').then((response) => response.data);
   }
 
@@ -59,7 +59,7 @@ class Service {
     return axios.get('/questions/' + id + '/tags').then((response) => response.data);
   }
 
-  getAllTagQuestionsRelations() {
+  getAllTagQuestionRelations() {
     return axios.get('/question/:id').then((response) => response.data);
   }
 

@@ -3,12 +3,12 @@ import { answerService } from '../service/answer_services';
 
 const answerRouter = express.Router();
 
-//vot bs her
+//Gets vote scores for answers to a specific question
 
 answerRouter.get('/questions/:id/answer/votes', (request, response) => {
   const id = Number(request.params.id);
   answerService
-    .getVotesBs(id)
+    .getAnswerScoresByQuestionId(id)
     .then((rows) => response.send(rows))
     .catch((error) => response.status(500).send(error));
 });
@@ -36,6 +36,7 @@ answerRouter.get('/answers/:id', (request, response) => {
 });
 
 //Get answers by question id
+//BRUKES IKKE ATM, SE KOMMENTAR I SERVICE PÅ CLIENT SIDE.
 //testes av answer.test.ts
 answerRouter.get('/questions/:id/answers', (request, response) => {
   const questionId = Number(request.params.id);

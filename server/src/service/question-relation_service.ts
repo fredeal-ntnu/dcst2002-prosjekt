@@ -12,7 +12,9 @@ export type Question_User_Favourite = {
 };
 
 class Service {
+
   //gets all tags using question id
+
   getAllTagsByQuestionId(question_id: number) {
     return new Promise<Tag_Question_Relation[]>((resolve, reject) => {
       pool.query(
@@ -28,6 +30,7 @@ class Service {
   }
 
   //puts tagid and question id into the relation table
+
   createTagQuestionRelation(tag_id: number, question_id: number) {
     return new Promise<ResultSetHeader>((resolve, reject) => {
       pool.query(
@@ -43,6 +46,7 @@ class Service {
   }
 
   //gets all relations from the relation table
+
   getAllTagQuestionRelations() {
     return new Promise<Tag_Question_Relation[]>((resolve, reject) => {
       pool.query('SELECT * FROM tag_question_relation', (error, results: RowDataPacket[]) => {
@@ -54,6 +58,7 @@ class Service {
   }
 
   //gets all relations from the relation table using tag id
+  
   getAllQuestionsByTagId(tag_id: number) {
     return new Promise<Tag_Question_Relation[]>((resolve, reject) => {
       pool.query(

@@ -9,7 +9,9 @@ export type Answer_Comment_Content = {
 };
 
 class Service {
-  //get answer comment by answer id
+
+  //get answer comment by answer_id
+
   getAnswerCommentsByAnswerId(answer_id: number) {
     return new Promise<Answer_Comment_Content[]>((resolve, reject) => {
       pool.query(
@@ -23,6 +25,9 @@ class Service {
       );
     });
   }
+
+
+  //Get answer comment by answer_comment_id
 
   getAnswerCommentById(answer_comment_id: number) {
     return new Promise<Answer_Comment_Content>((resolve, reject) => {
@@ -55,9 +60,7 @@ class Service {
     });
   }
 
-  /**
-   * Delete answer comment with answer id.
-   */
+   //Delete answer comment with answer id.
 
   deleteAnswerComment(answer_comment_id: number) {
     return new Promise<void>((resolve, reject) => {
@@ -74,9 +77,7 @@ class Service {
     });
   }
 
-  /**
-   * Update answer Comment with given id.
-   */
+   //Update answer Comment with given id.
 
   updateAnswerComment(answer_comment: Answer_Comment_Content) {
     return new Promise<void>((resolve, reject) => {

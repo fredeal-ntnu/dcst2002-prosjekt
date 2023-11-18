@@ -15,7 +15,7 @@ import { EditAnswerComment } from './components/edit-answer-comment';
 import { EditAnswer } from './components/edit-answer';
 import answerService from './components/services/answer-service';
 import { QuestionIcon } from './icons';
-import { MyQuestions } from './components/my-question';
+import { MyQuestions } from './components/my-questions';
 import { Favourites } from './components/favourites';
 import { Profile } from './components/profile';
 import { User } from './service';

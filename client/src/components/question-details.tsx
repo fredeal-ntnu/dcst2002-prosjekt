@@ -122,11 +122,11 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
       .then((question) => (this.question = question))
       .catch((error: Error) => console.error('Error getting question: ' + error.message));
 
-    service.getAllTagQuestionsRelations()
+    service.getAllTagQuestionRelations()
     .then((relations) => (this.relations = relations));
 
     service
-      .getVotesBs(this.props.match.params.id)
+      .getAnswerScoresByQuestionId(this.props.match.params.id)
       .then((answers_votes) => (this.answers_votes = answers_votes))
       .catch((error: Error) => console.error('Error getting answers: ' + error.message));
 
@@ -166,13 +166,13 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     switch (this.filter) {
       case 'all':
         service
-        .getVotesBs(this.props.match.params.id)
+        .getAnswerScoresByQuestionId(this.props.match.params.id)
         .then((answers_votes) => (this.answers_votes = answers_votes))
         .catch((error: Error) => console.error('Error getting answers: ' + error.message));
         break;
       case 'popular':
         service
-          .getVotesBs(this.props.match.params.id)
+          .getAnswerScoresByQuestionId(this.props.match.params.id)
           .then((answers_votes) => {
             // Sort answers by score in descending order
             this.answers_votes = answers_votes.sort((a, b) => b.score - a.score);
@@ -181,7 +181,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
         break;
       case 'mostRecent':
         service
-          .getVotesBs(this.props.match.params.id)
+          .getAnswerScoresByQuestionId(this.props.match.params.id)
           .then((answers_votes) => {
             // Sort answers by last_updated in descending order
             this.answers_votes = answers_votes.sort((a, b) => new Date(b.last_updated) - new Date(a.last_updated));
@@ -523,7 +523,7 @@ handleEditAnswer(answer_id: number, user_id: number) {
   addFavourite(answer_id: number, user_id: number) {
     if(this.connectedUser) {
       service
-      .createFavouriteRelation(answer_id, user_id)
+      .handleFavouriteRelation(answer_id, user_id)
       .catch((error) => console.error('Error saving answer: ' + error.message));
     }
     else alert("You have to be logged in to add to favorites")
