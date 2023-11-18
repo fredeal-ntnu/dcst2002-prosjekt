@@ -13,21 +13,7 @@ export type User = {
 
 class UserService {
   
- // get user by id
-    get(userId: number) {
-        return new Promise<User | undefined>((resolve, reject) => {
-          pool.query(
-            'SELECT * FROM Users WHERE user_id=?',
-            [userId], (error, results: RowDataPacket[]) => {
-              if (error) return reject(error);
-
-              resolve(results[0] as User);
-            },
-          );
-        });
-      }
-
-      // gets given user_id based on google_id //tror er feil
+      // gets given user_id based on google_id
 
       getUserwithGoogleId(google_id: User['google_id']) {
         return new Promise<User | undefined>((resolve, reject) => {
@@ -40,32 +26,6 @@ class UserService {
       }
 
 
-  // Gets a user by username
-  getUser(username: string) {
-    return new Promise<User | undefined>((resolve, reject) => {
-      pool.query(
-        'SELECT * FROM Users WHERE username = ?',
-        [username],
-        (error, results: RowDataPacket[]) => {
-          if (error) return reject(error);
-          if (results.length === 0) return resolve(undefined);
-
-          resolve(results[0] as User);
-        },
-      );
-    });
-  }
-
-  // Gets all users
-  getAllUsers() {
-    return new Promise<User[]>((resolve, reject) => {
-      pool.query('SELECT * FROM Users', (error, results: RowDataPacket[]) => {
-        if (error) return reject(error);
-
-        resolve(results as User[]);
-      });
-    });
-  }
 // create new user
 
   create(newUser: Omit<User, 'user_id'>): Promise<User> {
@@ -120,37 +80,7 @@ class UserService {
     });
   }
   
-// update user
-  // update(user: User) {
-  //   return new Promise<void>((resolve, reject) => {
-  //     pool.query(
-  //       'UPDATE Users SET username = ?, email = ? WHERE user_id = ?',
-  //       [user.username, user.email, user.user_id],
-  //       (error) => {
-  //         if (error) return reject(error);
 
-  //         resolve();
-  //       },
-  //     );
-  //   });
-  // }
-  
-  delete(user_id: number) {
-    return new Promise<void>((resolve, reject) => {
-      pool.query(
-        'DELETE FROM Users WHERE user_id = ?',
-        [user_id],
-        (error) => {
-          if (error) return reject(error);
-
-          resolve();
-        },
-      );
-    }
-
-       
- 
-)}
   }
 
 
