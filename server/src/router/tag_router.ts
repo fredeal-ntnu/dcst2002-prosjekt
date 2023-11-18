@@ -1,9 +1,6 @@
 import express from 'express';
 import { tagService } from '../service/tag_services';
 
-/**
- * Express router containing task methods.
- */
 const tagRouter = express.Router();
 
 //Get tag

@@ -5,10 +5,7 @@ import { questionService } from '../service/question_services';
 
 const userRouter = Router();
 
-
-
-
-
+//Get logged in user:
 
 userRouter.get('/user/me', passport.authenticate("session", {session: true}), (request, response) => {
   try {

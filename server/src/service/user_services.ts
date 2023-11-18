@@ -49,6 +49,11 @@ class UserService {
     });
   }
 
+  /*
+  Combining above methods to create a new user if it doesn't exist,
+   or return the existing user if it does:
+   */
+
 
   findOrCreate(providerUser: Omit<User, 'user_id'>,
    callback:(error: string | Error | null, user: Express.User | undefined) => void
