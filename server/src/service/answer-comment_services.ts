@@ -15,7 +15,7 @@ class Service {
   getAnswerCommentsByAnswerId(answer_id: number) {
     return new Promise<Answer_Comment_Content[]>((resolve, reject) => {
       pool.query(
-        'SELECT * FROM answer_comments WHERE answer_id = ?',
+        'SELECT * FROM Answer_comments WHERE answer_id = ?',
         [answer_id],
         (error, results: RowDataPacket[]) => {
           if (error) return reject(error);
@@ -32,7 +32,7 @@ class Service {
   getAnswerCommentById(answer_comment_id: number) {
     return new Promise<Answer_Comment_Content>((resolve, reject) => {
       pool.query(
-        'SELECT * FROM answer_comments WHERE answer_comment_id = ?',
+        'SELECT * FROM Answer_comments WHERE Answer_comment_id = ?',
         [answer_comment_id],
         (error, results: RowDataPacket[]) => {
           if (error) return reject(error);
@@ -49,7 +49,7 @@ class Service {
   createAnswerComment(text: string, answer_id: number, user_id: number) {
     return new Promise<number>((resolve, reject) => {
       pool.query(
-        'INSERT INTO answer_comments SET text=?, answer_id=?, user_id=?',
+        'INSERT INTO Answer_comments SET text=?, answer_id=?, user_id=?',
         [text, answer_id, user_id],
         (error, results: ResultSetHeader) => {
           if (error) return reject(error);
@@ -65,7 +65,7 @@ class Service {
   deleteAnswerComment(answer_comment_id: number) {
     return new Promise<void>((resolve, reject) => {
       pool.query(
-        'DELETE FROM answer_comments WHERE answer_comment_id = ?',
+        'DELETE FROM Answer_comments WHERE Answer_comment_id = ?',
         [answer_comment_id],
         (error, results: ResultSetHeader) => {
           if (error) return reject(error);
@@ -82,7 +82,7 @@ class Service {
   updateAnswerComment(answer_comment: Answer_Comment_Content) {
     return new Promise<void>((resolve, reject) => {
       pool.query(
-        'UPDATE answer_comments SET text=? WHERE answer_comment_id=?',
+        'UPDATE Answer_comments SET text=? WHERE Answer_comment_id=?',
         [answer_comment.text, answer_comment.answer_comment_id],
         (error, _results) => {
           if (error) return reject(error);

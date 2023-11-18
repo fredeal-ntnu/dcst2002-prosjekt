@@ -16,7 +16,7 @@ class Service {
     getAllFavouritesByAnswerId(answer_id: number) {
         return new Promise<Favourite_Content[]>((resolve, reject) => {
             pool.query(
-            'SELECT * FROM answer_user_favourite WHERE answer_id = ?',
+            'SELECT * FROM Answer_user_favourite WHERE answer_id = ?',
             [answer_id],
             (error, results: RowDataPacket[]) => {
                 if (error) return reject(error);
@@ -32,12 +32,12 @@ class Service {
     // Dette må i så fall fikses lenger oppe. Fikse om vi har tid
     //HUSKE Å SPØRRE SIMON
 
-    
+
     //create favourite relation with answerid and userid
     handleFavouriteRelation(answer_id: number, user_id: number) {
       return new Promise<void>((resolve, reject) => {
           pool.query(
-              'SELECT * FROM answer_user_favourite WHERE answer_id = ? AND user_id = ?',
+              'SELECT * FROM Answer_user_favourite WHERE answer_id = ? AND user_id = ?',
               [answer_id, user_id],
               (selectError, results) => {
                   if (selectError) {
@@ -47,7 +47,7 @@ class Service {
                 if ((results as RowDataPacket[]).length === 0) {
                       // If no matching row exists, insert a new one
                       pool.query(
-                          'INSERT INTO answer_user_favourite (answer_id, user_id) VALUES (?, ?)',
+                          'INSERT INTO Answer_user_favourite (answer_id, user_id) VALUES (?, ?)',
                           [answer_id, user_id],
                           (insertError) => {
                               if (insertError) {
@@ -59,7 +59,7 @@ class Service {
                   } else {
                       // If a matching row exists, delete it
                       pool.query(
-                          'DELETE FROM answer_user_favourite WHERE answer_id = ? AND user_id = ?',
+                          'DELETE FROM Answer_user_favourite WHERE answer_id = ? AND user_id = ?',
                           [answer_id, user_id],
                           (deleteError) => {
                               if (deleteError) return reject(deleteError);
@@ -72,8 +72,6 @@ class Service {
           );
       });
   }
-
-
 }
 
 export const favouriteService = new Service();

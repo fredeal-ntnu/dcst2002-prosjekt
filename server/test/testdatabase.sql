@@ -24,7 +24,8 @@ text           VARCHAR(5000),
 view_count     INT UNSIGNED DEFAULT 0,
 has_answer     BOOLEAN DEFAULT FALSE,
 user_id        INT UNSIGNED NOT NULL,
-CONSTRAINT question_pk PRIMARY KEY(question_id))ENGINE=INNODB;
+CONSTRAINT question_pk PRIMARY KEY(question_id))ENGINE=INNODB,
+
 
 CREATE TABLE question_comments(
 question_comment_id INT UNSIGNED NOT NULL AUTO_INCREMENT,

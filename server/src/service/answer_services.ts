@@ -104,7 +104,7 @@ getAllFavouriteAnswersByUserId(user_id: number){
     return new Promise<Answer_Content[]>((resolve, reject) => {
     // First query to get all answer_ids associated with the user_id
   pool.query(
-    'SELECT * FROM answer_user_favourite WHERE user_id = ?',
+    'SELECT * FROM Answer_user_favourite WHERE user_id = ?',
     [user_id],
     (error, favoriteResults) => {
         if (error) return reject(error);

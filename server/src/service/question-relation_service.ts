@@ -18,7 +18,7 @@ class Service {
   getAllTagsByQuestionId(question_id: number) {
     return new Promise<Tag_Question_Relation[]>((resolve, reject) => {
       pool.query(
-        'SELECT * FROM Tag_Question_Relation WHERE question_id = ?',
+        'SELECT * FROM Tag_question_relation WHERE question_id = ?',
         [question_id],
         (error, results: RowDataPacket[]) => {
           if (error) return reject(error);
@@ -34,7 +34,7 @@ class Service {
   createTagQuestionRelation(tag_id: number, question_id: number) {
     return new Promise<ResultSetHeader>((resolve, reject) => {
       pool.query(
-        'INSERT INTO tag_question_relation (tag_id, question_id) VALUES (?, ?)',
+        'INSERT INTO Tag_question_relation (tag_id, question_id) VALUES (?, ?)',
         [tag_id, question_id],
         (error, result: ResultSetHeader) => {
           if (error) return reject(error);
@@ -49,7 +49,7 @@ class Service {
 
   getAllTagQuestionRelations() {
     return new Promise<Tag_Question_Relation[]>((resolve, reject) => {
-      pool.query('SELECT * FROM tag_question_relation', (error, results: RowDataPacket[]) => {
+      pool.query('SELECT * FROM Tag_question_relation', (error, results: RowDataPacket[]) => {
         if (error) return reject(error);
 
         resolve(results as Tag_Question_Relation[]);
@@ -62,7 +62,7 @@ class Service {
   getAllQuestionsByTagId(tag_id: number) {
     return new Promise<Tag_Question_Relation[]>((resolve, reject) => {
       pool.query(
-        'SELECT * FROM tag_question_relation WHERE tag_id=?',
+        'SELECT * FROM Tag_question_relation WHERE tag_id=?',
         [tag_id],
         (error, results: RowDataPacket[]) => {
           if (error) return reject(error);

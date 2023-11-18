@@ -146,7 +146,7 @@ class Service {
     getQuestionByAnswerId(answer_id: number) {
       return new Promise<Question_Content>((resolve, reject) => {
         pool.query(
-          'SELECT Q.* FROM Questions Q JOIN Answers A ON Q.question_id = A.question_id JOIN answer_user_favourite AF ON A.answer_id = AF.answer_id WHERE AF.answer_id =?',
+          'SELECT Q.* FROM Questions Q JOIN Answers A ON Q.question_id = A.question_id JOIN Answer_user_favourite AF ON A.answer_id = AF.answer_id WHERE AF.answer_id =?',
           [answer_id],
           (error, results: RowDataPacket[]) => {
             if (error) return reject(error);

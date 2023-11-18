@@ -495,9 +495,6 @@ handleEditAnswer(answer_id: number, user_id: number) {
     history.push('/questions/' + this.props.match.params.id + '/answers/' + answer_id);
   }
 
-  handleVoteDisplay(answer_id: number) {
-
-  }
 
   addUpvote(answer_id: number) {
     if(this.connectedUser) {
@@ -534,8 +531,6 @@ handleEditAnswer(answer_id: number, user_id: number) {
 
    setConfirmedAnswer(answer_id: number) {
 
-    
-
     if (this.question.user_id == this.connectedUser) {
       service
         .getAnswerById(answer_id)
@@ -548,12 +543,6 @@ handleEditAnswer(answer_id: number, user_id: number) {
         
       })
     .catch((error) => console.error('Error getting answer: ' + error.message));
-
-      
-    
-
    }else alert("You are not the owner of this question")
-  
   }
-
 }
