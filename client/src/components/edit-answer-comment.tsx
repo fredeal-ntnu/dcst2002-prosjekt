@@ -42,7 +42,6 @@ export class EditAnswerComment extends Component<{ match: { params: { id: number
     service.getMe().then((user) => {
       this.user = user;
       this.connectedUser = user.user_id;
-      console.log(this.connectedUser)
     });
 
 
