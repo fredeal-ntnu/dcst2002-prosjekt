@@ -38,6 +38,17 @@ describe('Site renders', () => {
       done()
     })
   });
+  
 })
+
+describe('site functionality', () => {
+  test('search onchange works', (done) => {
+    const wrapper = shallow(<AllQuestions/>);
+    console.log(wrapper.debug())
+      wrapper.find('FormInput').simulate('change',{currentTarget:{value:'test'}});
+      expect(wrapper).toMatchSnapshot();
+      done()
+    })
+  });
 
   

@@ -22,7 +22,7 @@ describe('Collum widget test', () => {
   });
 })
 
-describe('Collum widget test', () => {
+describe('Column widget test', () => {
   test('Draws a column with width', () => {
     const wrapper = shallow(<Column width={3}>Test</Column>);
 
@@ -38,7 +38,7 @@ describe('Collum widget test', () => {
   });
 })
 
-describe('Collum widget test', () => {
+describe('Column widget test', () => {
   test('Draws a column with width and right', () => {
     const wrapper = shallow(<Column width={3} right>Test</Column>);
 
