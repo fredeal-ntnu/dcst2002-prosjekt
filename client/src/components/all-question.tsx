@@ -47,7 +47,6 @@ export class AllQuestions extends Component {
                   />
                 </Column>
               </Row>
-              {/* ... rest of your component */}
             </Card>
             {this.questions
               .filter((question) => (question.title.toLowerCase().includes(this.search.toLowerCase())))

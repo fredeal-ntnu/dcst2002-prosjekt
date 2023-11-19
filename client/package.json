@@ -12,7 +12,11 @@
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],
-    "collectCoverage": true
+    "collectCoverage": true,
+    "moduleNameMapper": {
+      "^src/(.*)$": "<rootDir>/src/$1"
+    }
+    
   },
   "browserslist": [
     "last 1 chrome version",
