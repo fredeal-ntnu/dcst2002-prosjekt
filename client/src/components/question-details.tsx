@@ -175,7 +175,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
           .getAnswerScoresByQuestionId(this.props.match.params.id)
           .then((answers_votes) => {
             // Sort answers by score in descending order
-            this.answers_votes = answers_votes.sort((a, b) => b.score - a.score);
+            this.answers_votes = answers_votes.sort((a: any, b: any) => b.score - a.score);
           })
           .catch((error: Error) => console.error('Error getting answers: ' + error.message));
         break;
@@ -184,7 +184,11 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
           .getAnswerScoresByQuestionId(this.props.match.params.id)
           .then((answers_votes) => {
             // Sort answers by last_updated in descending order
-            this.answers_votes = answers_votes.sort((a, b) => new Date(b.last_updated) - new Date(a.last_updated));
+            this.answers_votes = answers_votes.sort((a: any, b: any) => {
+              const dateA = new Date(a.last_updated);
+              const dateB = new Date(b.last_updated);
+              return dateB.getTime() - dateA.getTime();
+            });
           })
           .catch((error: Error) => console.error('Error getting answers: ' + error.message));
         break;
@@ -229,9 +233,7 @@ createQuestionEditButton() {
         </Row>
       </Card>
       )
-      
     }else return
-   
   }
 
   
@@ -244,7 +246,6 @@ createQuestionEditButton() {
     }
     else alert("You have to be logged in to comment")
   }
-
   addAnswerInput() {
     if(this.connectedUser) {
       return(
@@ -293,8 +294,6 @@ handleQuestionCommentDisplay() {
         );
       }
     })}
-
-
   </Card>
    )
   }
@@ -312,8 +311,6 @@ handleQuestionCommentDisplay() {
           );
         }
       })}
-
-
     </Card>
     )
   }
@@ -469,11 +466,6 @@ handleEditAnswer(answer_id: number, user_id: number) {
 
   else return
 }
-
-
-
-
-
   createAnswer() {
     if(this.connectedUser) {
       service
