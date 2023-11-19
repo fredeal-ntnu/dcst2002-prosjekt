@@ -53,17 +53,26 @@ export class EditQuestionComment extends Component<{ match: { params: { id: numb
   }
 
   save() {
+    if(this.connectedUser == this.questionComment.user_id){
     service
       .updateQuestionComment(this.questionComment)
       .then(() => history.push('/questions/' + this.questionComment.question_id))
       .catch((error) => console.error('Error saving question comment: ' + error.message));
+  }else{
+    Alert.danger('You are not the owner of this comment');
   }
+}
 
   delete() {
-    service
-    .deleteQuestionComment(this.questionComment.question_comment_id)
-    .then(() => history.push('/questions/' + this.questionComment.question_id))
-    .catch((error) => console.error('Error deleting question comment: ' + error.message));
+    if(this.connectedUser == this.questionComment.user_id) {
+      service
+      .deleteQuestionComment(this.questionComment.question_comment_id)
+      .then(() => history.push('/questions/' + this.questionComment.question_id))
+      .catch((error) => console.error('Error deleting question comment: ' + error.message));
+    }else{
+      Alert.danger('You are not the owner of this comment');
+    }
+   
 
   }
 

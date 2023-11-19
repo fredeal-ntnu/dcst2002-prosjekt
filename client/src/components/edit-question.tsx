@@ -21,6 +21,7 @@ export class EditQuestion extends Component<{ match: { params: { id: number } } 
 
   render() {
     return (
+
       <>
         <Row>
           <Card title="Edit Question">
@@ -62,6 +63,7 @@ export class EditQuestion extends Component<{ match: { params: { id: number } } 
     .then((user) => {
       this.user.user_id = user.user_id
       this.connectedUser = this.user.user_id;
+      
     })
     .catch((error)=>{
       console.error(error.message)
@@ -77,16 +79,25 @@ export class EditQuestion extends Component<{ match: { params: { id: number } } 
   }
 
   save() {
+    if(this.connectedUser == this.question.user_id){
     service
       .updateQuestion(this.question)
       .then(() => history.push('/questions/' + this.question.question_id))
       .catch((error) => console.error('Error saving question: ' + error.message));
+  }else{
+    Alert.danger('You are not the owner of this question');
   }
+}
 
   delete() {
+    
+    if(this.connectedUser == this.question.user_id) {
     service
       .deleteQuestion(this.props.match.params.id)
       .then(() => history.push('/questions'))
       .catch((error) => console.error('Error deleting question: ' + error.message));
+  }else{
+    Alert.danger('You are not the owner of this question');
   }
+}
 }

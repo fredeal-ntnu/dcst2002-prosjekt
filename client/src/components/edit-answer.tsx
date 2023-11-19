@@ -59,31 +59,29 @@ export class EditAnswer extends Component<{ match: { params: { id: number } } }>
   }
 
   save() {
+    if(this.answer.user_id == this.connectedUser) {
     service
       .updateAnswer(this.answer)
       .then(() => history.push('/questions/' + this.answer.question_id))
       .catch((error) => console.error('Error saving answer: ' + error.message));
+  }else{
+    history.push('/questions/' + this.answer.question_id)
+    console.error('You are not the author of this answer')
   }
+}
 
   delete() {
-    service
+    if(this.answer.user_id == this.connectedUser)  {
+      service
       .deleteAnswer(this.props.match.params.id)
       .then(() => history.push('/questions/' + this.answer.question_id))
       .catch((error) => console.error('Error deleting answer: ' + error.message));
+    }else{
+      history.push('/questions/' + this.answer.question_id)
+      console.error('You are not the author of this answer')
+    }
+   
   }
-
-
-  //Funker ike lenger :(  
-//   renderPage() {
-//     if(this.answer.user_id == this.connectedUser) {
-      
-//     } else {
-//       history.push('/questions/' + this.answer.question_id)
-//       console.error('You are not the author of this answer')
-//     }
-      
-      
-
-    
-// }
 }
+
+
