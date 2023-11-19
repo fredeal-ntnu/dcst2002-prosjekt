@@ -44,11 +44,30 @@ describe('Site renders', () => {
 describe('site functionality', () => {
   test('search onchange works', (done) => {
     const wrapper = shallow(<AllQuestions/>);
-    console.log(wrapper.debug())
       wrapper.find('FormInput').simulate('change',{currentTarget:{value:'test'}});
       expect(wrapper).toMatchSnapshot();
       done()
     })
   });
 
-  
+
+ 
+
+describe('switchcase', () => {
+ 
+  const wrapper = shallow(<AllQuestions />);
+ 
+  test('switchcase popular', () => {
+    wrapper.find('FormSelect').simulate('change', { target: { value: 'popular' } });
+
+    expect(wrapper).toMatchSnapshot();   
+  })
+
+    test('switchcase unanswered', () => {
+      wrapper.find('FormSelect').simulate('change', { target: { value: 'unanswered' } });
+      expect(wrapper).toMatchSnapshot();
+    })
+    
+   
+  });
+
