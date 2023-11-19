@@ -1,12 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { EditAnswerComment } from 'src/components/edit-answer-comment'; // Adjust the import path as needed
-import { Column } from '../src/widgets';
+import { Column, Button } from '../src/widgets';
 import { Answer, AnswerComment } from 'src/service';
+import { createHashHistory } from 'history';
 
+const history = createHashHistory();
 jest.mock('../src/service',()=>{
   class Service{
-    getAnswerCommentById(id: number){
+    getAnswerCommentById(id: number){ 
       return new Promise((resolve,reject)=>{
         resolve([{answer_comment_id:1,text:'test',answer_id:1,user_id:1}]);
       });
@@ -69,14 +71,34 @@ describe('site functionality', () => {
         done()
     });
     
-    test('save button registers click', (done) => {
+    test('save button registers click', () => {
         let buttonClicked = false
         const wrapper = shallow(
-            //@ts-ignore
         <Button.Success onClick={() => (buttonClicked = true)}>test</Button.Success>,
         );
-        
-        wrapper.find('ButtonSuccess').simulate('click'); 
+        console.log(wrapper.debug());
+        wrapper.find('button').simulate('click'); 
         expect(buttonClicked).toEqual(true);   
     }); 
-});
+
+    test('delete button registers click', () => {
+      let buttonClicked = false
+      const wrapper = shallow(
+      <Button.Danger onClick={() => (buttonClicked = true)}>test</Button.Danger>,
+      );
+      console.log(wrapper.debug());
+      wrapper.find('button').simulate('click'); 
+      expect(buttonClicked).toEqual(true);   
+  }); 
+
+  test('TaskEdit correctly sets location on delete', async () => {
+    const wrapper = shallow(<EditAnswerComment match={{ params: { id: 1 } }} />);
+    console.log(wrapper.debug());
+  
+    await wrapper.find(Button.Danger).simulate('click');
+  
+    expect(location.hash).toEqual('#/questions/1');
+  });
+  });
+
+
