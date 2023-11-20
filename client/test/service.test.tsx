@@ -70,10 +70,9 @@ describe('Service', () => {
     // Override any conflicting fields if necessary
   };
 
-
   // // Mock axios.post implementation
   axios.put = jest.fn().mockImplementation((url: string, data: any) => Promise.resolve({ data }));
-  
+
   // Mock axios.delete implementation
   axios.delete = jest.fn().mockImplementation((url) => Promise.resolve({ data: {} }));
 
@@ -322,94 +321,50 @@ describe('Service', () => {
 
   describe('getAnswerScoresByQuestionId', () => {
     it('should get answer scores by question id', async () => {
-      // Set up the question ID and the expected URL pattern
-      const questionId = 1; // or use a specific question ID if available
-      const expectedUrl = `/questions/${questionId}/answer/votes`; // Replace with the actual URL pattern used in your service
-
-      // Mock axios.get to resolve with an array containing mockQuestionComment when called with the expected URL
+      const questionId = 1;
+      const expectedUrl = `/questions/${questionId}/answer/votes`;
       jest.spyOn(axios, 'get').mockResolvedValueOnce({ data: [mockQuestionComment] });
-
-      // Call the service method with the question ID
       const result = await service.getAnswerScoresByQuestionId(questionId);
-
-      // Assert that the service returned the expected array of answer scores (mockQuestionComment)
       expect(result).toEqual([mockQuestionComment]);
-
-      // Assert that axios.get was called with the correct URL
       expect(axios.get).toHaveBeenCalledWith(expectedUrl);
     });
   });
 
   describe('createAnswer', () => {
     it('should create an answer', async () => {
-      // Prepare the data to be sent with the request
       const answerText = 'Test answer';
       const question_id = 1;
       const user_id = 1;
-
-      // Set up the expected URL pattern for creating an answer
-      const expectedUrl = `/questions/${question_id}/answers`; // Replace with the actual URL pattern used in your service
-
-      // Prepare the expected payload
+      const expectedUrl = `/questions/${question_id}/answers`;
       const expectedPayload = { text: answerText, question_id, user_id };
-
-      // Mock axios.post to resolve with mockQuestionComment
       jest.spyOn(axios, 'post').mockResolvedValueOnce({ data: mockQuestionComment });
-
-      // Call the service method to create an answer
       const result = await service.createAnswer(answerText, question_id, user_id);
-
-      // Assert that the service returned the expected mockQuestionComment object
       expect(result).toEqual(mockQuestionComment);
-
-      // Assert that axios.post was called with the correct URL and payload
       expect(axios.post).toHaveBeenCalledWith(expectedUrl, expectedPayload);
     });
   });
 
   describe('getQuestionCommentById', () => {
     it('should get a question comment by id', async () => {
-      // Set up the question comment ID and the expected URL pattern
       const commentId = mockQuestionComment.question_comment_id;
-      const expectedUrl = `/comments/${commentId}`; // Replace with the actual URL pattern used in your service
-
-      // Mock axios.get to resolve with mockQuestionComment when called with the expected URL
+      const expectedUrl = `/comments/${commentId}`;
       jest.spyOn(axios, 'get').mockResolvedValueOnce({ data: mockQuestionComment });
-
-      // Call the service method with the question comment ID
       const result = await service.getQuestionCommentById(commentId);
-
-      // Assert that the service returned the expected question comment
       expect(result).toEqual(mockQuestionComment);
-
-      // Assert that axios.get was called with the correct URL
       expect(axios.get).toHaveBeenCalledWith(expectedUrl);
     });
   });
 
   describe('createQuestionComment', () => {
     it('should create a question comment', async () => {
-      // Prepare the data to be sent with the request
       const commentText = 'Test comment';
       const question_id = 1;
       const user_id = 1;
-
-      // Set up the expected URL pattern for creating a question comment
-      const expectedUrl = `/questions/${question_id}/comments`; // Replace with the actual URL pattern used in your service
-
-      // Prepare the expected payload
+      const expectedUrl = `/questions/${question_id}/comments`;
       const expectedPayload = { text: commentText, question_id, user_id };
-
-      // Mock axios.post to resolve with mockQuestionComment
       jest.spyOn(axios, 'post').mockResolvedValueOnce({ data: mockQuestionComment });
-
-      // Call the service method to create a question comment
       const result = await service.createQuestionComment(commentText, question_id, user_id);
-
-      // Assert that the service returned the expected mockQuestionComment object
       expect(result).toEqual(mockQuestionComment);
-
-      // Assert that axios.post was called with the correct URL and payload
       expect(axios.post).toHaveBeenCalledWith(expectedUrl, expectedPayload);
     });
   });
@@ -430,60 +385,33 @@ describe('Service', () => {
 
   describe('getQuestionCommentsForQuestion', () => {
     it('should get question comments for a specific question', async () => {
-      // Set up the question ID and the expected URL pattern
       const questionId = mockQuestion.question_id;
-      const expectedUrl = `/questions/${questionId}/comments`; // Replace with the actual URL pattern used in your service
-
-      // Mock axios.get to resolve with an array containing mockQuestionComment when called with the expected URL
+      const expectedUrl = `/questions/${questionId}/comments`;
       jest.spyOn(axios, 'get').mockResolvedValueOnce({ data: [mockQuestionComment] });
-
-      // Call the service method with the question ID
       const result = await service.getQuestionCommentsForQuestion(questionId);
-
-      // Assert that the service returned the expected array of question comments
       expect(result).toEqual([mockQuestionComment]);
-
-      // Assert that axios.get was called with the correct URL
       expect(axios.get).toHaveBeenCalledWith(expectedUrl);
     });
   });
 
   describe('getQuestionByAnswerId', () => {
     it('should get a question by answer id', async () => {
-      // Set up the answer ID and the expected URL pattern
       const answerId = mockAnswer.answer_id;
-      const expectedUrl = `/answer/${answerId}/question`; // Replace with the actual URL pattern used in your service
-
-      // Mock axios.get to resolve with mockQuestion when called with the expected URL
+      const expectedUrl = `/answer/${answerId}/question`;
       jest.spyOn(axios, 'get').mockResolvedValueOnce({ data: mockQuestion });
-
-      // Call the service method with the answer ID
       const result = await service.getQuestionByAnswerId(answerId);
-
-      // Assert that the service returned the expected question
       expect(result).toEqual(mockQuestion);
-
-      // Assert that axios.get was called with the correct URL
       expect(axios.get).toHaveBeenCalledWith(expectedUrl);
     });
   });
 
   describe('getAnswerCommentsForAnswer', () => {
     it('should get answer comments for a specific answer', async () => {
-      // Set up the answer ID and the expected URL pattern
       const answerId = mockAnswer.answer_id;
-      const expectedUrl = `/answers/${answerId}/comments`; // Replace with the actual URL pattern used in your service
-
-      // Mock axios.get to resolve with an array containing mockAnswerComment when called with the expected URL
+      const expectedUrl = `/answers/${answerId}/comments`;
       jest.spyOn(axios, 'get').mockResolvedValueOnce({ data: [mockAnswerComment] });
-
-      // Call the service method with the answer ID
       const result = await service.getAnswerCommentsForAnswer(answerId);
-
-      // Assert that the service returned the expected array of answer comments
       expect(result).toEqual([mockAnswerComment]);
-
-      // Assert that axios.get was called with the correct URL
       expect(axios.get).toHaveBeenCalledWith(expectedUrl);
     });
   });
@@ -600,35 +528,35 @@ describe('Service', () => {
     });
   });
 
-// THIS IS IMPOSSIBLE TO TEST BECAUSE OF THE IFS IN SQL
-//   describe('getVotesByAnswerId', () => {
-//     it('should get votes by answer id', async () => {
-//       const result = await service.getVotesByAnswerId(mockAnswer.answer_id);
-//       expect(result).toEqual(mockVote);
-//     });
-//   });
+  // THIS IS IMPOSSIBLE TO TEST BECAUSE OF THE IFS IN SQL
+  //   describe('getVotesByAnswerId', () => {
+  //     it('should get votes by answer id', async () => {
+  //       const result = await service.getVotesByAnswerId(mockAnswer.answer_id);
+  //       expect(result).toEqual(mockVote);
+  //     });
+  //   });
 
-// CANT FIGURE OUT HOW TO TEST GETME()
-//   describe('getMe', () => {
-//     it('should get user information for the logged-in user', async () => {
-//       const mockUserData = {
-//         user_id: 1,
-//         google_id: 'test',
-//         username: 'test',
-//         email: 'test',
-//       };
-//       (axios.get as jest.Mock).mockResolvedValueOnce({ data: mockUserData });
-//       const result = await service.getMe();
-//       expect(result).toEqual(mockUserData);
-//     });
+  // CANT FIGURE OUT HOW TO TEST GETME()
+  //   describe('getMe', () => {
+  //     it('should get user information for the logged-in user', async () => {
+  //       const mockUserData = {
+  //         user_id: 1,
+  //         google_id: 'test',
+  //         username: 'test',
+  //         email: 'test',
+  //       };
+  //       (axios.get as jest.Mock).mockResolvedValueOnce({ data: mockUserData });
+  //       const result = await service.getMe();
+  //       expect(result).toEqual(mockUserData);
+  //     });
 
-//     it('should throw an error if getMe fails', async () => {
-//       const errorMessage = 'Network Error';
-//       (axios.get as jest.Mock).mockRejectedValueOnce(new Error(errorMessage));
+  //     it('should throw an error if getMe fails', async () => {
+  //       const errorMessage = 'Network Error';
+  //       (axios.get as jest.Mock).mockRejectedValueOnce(new Error(errorMessage));
 
-//       await expect(service.getMe()).rejects.toThrowError(errorMessage);
-//     });
-//   });
+  //       await expect(service.getMe()).rejects.toThrowError(errorMessage);
+  //     });
+  //   });
 
   describe('logOut', () => {
     // Test for successful logout

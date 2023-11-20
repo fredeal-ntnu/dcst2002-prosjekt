@@ -34,5 +34,19 @@ test('title input works ', () => {
     wrapper.find('FormTextarea').simulate('change',{currentTarget:{value:'test'}});
     expect(wrapper).toMatchSnapshot();
     }
+
+ 
+ )
+ //Økte ikke prosenten...
+ test('tag checkbox input works ', () => {
+  let checkboxClicked = false
+  const wrapper = shallow(
+      <input type="checkbox" onChange={()=> (checkboxClicked = true)}/>,
+  )
+  wrapper.find('input').simulate('change');
+  expect(checkboxClicked).toEqual(true);
+  }
  )})
+
+
 
