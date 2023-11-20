@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Card, Alert, Row, Column, Button, SideMenu, Form } from '../widgets';
+import { Card, Alert, Row, Column, Button, SideMenu, Form, ButtonFavourite, ButtonUpvote, ButtonDownVote, ButtonCommentBuble } from '../widgets';
+
 import service, {
   Question,
   Tag,
@@ -72,9 +73,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
             ]}/>
         </Column>
         <Card title="Question">
-          <Card title="Title">{this.question.title}</Card>
-
-          <Card title="Text">{this.question.text}</Card>
+          <Card title={this.question.title}>{this.question.text}</Card>
 
           <Row>
             <Card title="Tags">
@@ -348,62 +347,44 @@ return(
       const isConfirmedAnswerKey = `isConfirmedAnswer_${answer.answer_id}`;
       if (answer.question_id == this.props.match.params.id) {
         return (
-          <Card title="" key={answer.answer_id}>
-            <Row>
+          <Card title="hei" key={answer.answer_id}>
+            
               {answer.text}
-              <Row>
                 <Column>
-                  <Button.Success
+                  <ButtonUpvote
                     onClick={() => {
                       this.addUpvote(answer.answer_id);
                     }}
                   >
-                    Upvote
-                  </Button.Success>
+                  </ButtonUpvote>
                 </Column>
                 <Column>
-                  <Button.Success
+                  
+                </Column>
+                <Column>
+                 {answer.score}
+                </Column>
+                <ButtonDownVote
                     onClick={() => {
                       this.addDownvote(answer.answer_id);
                     }}
                   >
-                    Downvote
-                  </Button.Success>
-                </Column>
-                <Column>
-                  <Card title="Votes">{answer.score}</Card>
-                </Column>
-                <Column>
-                  <Button.Success
+                  </ButtonDownVote>
+               
+                  <ButtonCommentBuble
                     onClick={() => {
                       this.sendToAnswerCommentPage(answer.answer_id);
                     }}
                   >
-                    Comments
-                  </Button.Success>
-                </Column>
+                  </ButtonCommentBuble>
+             
                 <Column>
                 {this.handleEditAnswer(answer.answer_id,answer.user_id)}
                 </Column>
-                <Column>
-                <Button.Success
-                    onClick={() => {
-                      if (this.state[isConfirmedAnswerKey as keyof State]) {
-                  
-                        this.setConfirmedAnswer(answer.answer_id);
-                        this.setState({ [isConfirmedAnswerKey]: false });
-                      } else {
+                
                     
-                        this.setConfirmedAnswer(answer.answer_id);
-                        this.setState({ [isConfirmedAnswerKey]: true });
-                      }
-                    }}
-                  >
-                    {this.state[isConfirmedAnswerKey as keyof State] ? 'Remove as confirmed answer' : 'Mark as confirmed answer'}
-                  </Button.Success>
-                </Column>
-                <Column>
-                  <Button.Success
+                  <ButtonFavourite
+
                     onClick={() => {
                       if (this.state[isFavoriteKey as keyof State]) {
                         this.addFavourite(answer.answer_id, this.connectedUser);
@@ -414,11 +395,17 @@ return(
                       }
                     }}
                   >
-                    {this.state[isFavoriteKey as keyof State] ? 'Remove from favorites' : 'Add to favorites'}
+
+                    {this.state[isFavoriteKey as keyof State] ? 'Remove from favorites' : ''}
+                  </ButtonFavourite>
+           
+                
+                  <Button.Success onClick={() => this.setConfirmedAnswer(answer.answer_id)}>
+                    Mark as best
                   </Button.Success>
-                </Column>
-              </Row>
-            </Row>
+                    
+              
+            
           </Card>
         );
       }
@@ -505,6 +492,7 @@ handleEditAnswer(answer_id: number, user_id: number) {
 
 
   addUpvote(answer_id: number) {
+
     if(this.connectedUser) {
       service
       .createVote(this.connectedUser, answer_id, 1)

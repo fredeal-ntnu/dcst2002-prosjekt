@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { Question, Answer } from './service';
 import service from './service';
 
-import { EyeIcon } from './icons';
+import { EyeIcon, FavouriteIcon, UpvoteIcon, DownvoteIcon, CommentBubleIcon } from './icons';
 
 /**
  * Renders an information card using Bootstrap classes.
@@ -22,7 +22,7 @@ export class Card extends Component<{ title: ReactNode; smallTitle?: boolean }> 
   }
 
   render() {
-    const maxCharsPerLine = 40;
+    const maxCharsPerLine = 30;
 
     return (
       <div className="card" style={{ width: '800px' || 'auto', margin: '20px' }}>
@@ -41,7 +41,7 @@ export class Card extends Component<{ title: ReactNode; smallTitle?: boolean }> 
       </div>
     );
   }
-}
+} 
 
 class Link extends Component<{ to: string }> {
   render() {
@@ -161,8 +161,117 @@ class ButtonSuccess extends Component<{
     );
   }
 }
+export class ButtonFavourite extends Component<{
+  small?: boolean;
+  onClick: () => void;
+}> {
+  render() {
+    return (
+      <button
+        type="button"
+        className="btn btn-danger"
+        style={
+          this.props.small
+            ? {
+                padding: '5px 5px',
+                fontSize: '16px',
+                lineHeight: '0.7',
+              }
+            : {}
+        }
+        onClick={this.props.onClick}
+      >
+     <FavouriteIcon style={{ verticalAlign: '-2px', scale: '150%', alignItems: 'center' }} />{' '}
+        {this.props.children}
+      </button>
+    );
+  }
+}
+export class ButtonUpvote extends Component<{
+  small?: boolean;
+  onClick: () => void;
+}> {
+  render() {
+    return (
+      <button
+        type="button"
+        className="btn btn-light"
+        style={
+          this.props.small
+            ? {
+                padding: '5px 5px',
+                fontSize: '16px',
+                lineHeight: '0.7',
+          
+               
+              }
+            : {}
+        }
+        onClick={this.props.onClick}
+      >
+     <UpvoteIcon style={{ verticalAlign: '-2px', scale: '150%', alignItems: 'center' }} />{' '}
+        {this.props.children}
+      </button>
+    );
+  }
+}
+export class ButtonCommentBuble extends Component<{
+  small?: boolean;
+  onClick: () => void;
+}> {
+  render() {
+    return (
+      <button
+        type="button"
+        className="btn btn-light"
+        style={
+          this.props.small
+            ? {
+                padding: '5px 5px',
+                fontSize: '16px',
+                lineHeight: '0.7',
+          
+               
+              }
+            : {}
+        }
+        onClick={this.props.onClick}
+      >
+     <CommentBubleIcon style={{ verticalAlign: '-2px', scale: '200%', alignItems: 'center'}} />{' '}
+        {this.props.children}
+      </button>
+    );
+  }
+}
 
-
+export class ButtonDownVote extends Component<{
+  small?: boolean;
+  onClick: () => void;
+}> {
+  render() {
+    return (
+      <button
+        type="button"
+        className="btn btn-light"
+        style={
+          this.props.small
+            ? {
+                padding: '5px 5px',
+                fontSize: '16px',
+                lineHeight: '0.7',
+          
+               
+              }
+            : {}
+        }
+        onClick={this.props.onClick}
+      >
+     <DownvoteIcon style={{ verticalAlign: '-2px', scale: '150%', alignItems: 'center'}} />{' '}
+        {this.props.children}
+      </button>
+    );
+  }
+}
 /**
  * Renders a danger button using Bootstrap styles.
  *
