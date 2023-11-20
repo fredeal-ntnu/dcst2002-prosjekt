@@ -66,8 +66,7 @@ export class AllQuestions extends Component {
   
     // Method to load questions based on the current filter
     loadQuestions() {
-      // Add logic here to fetch and filter questions accordingly
-      // This is a placeholder for whatever your service methods might be
+      
       switch (this.filter) {
         case 'all':
             service
