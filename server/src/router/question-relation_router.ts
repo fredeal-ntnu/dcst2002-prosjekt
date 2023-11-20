@@ -13,18 +13,19 @@ questionRelationRouter.get(`/questions/:id/tag`, (request, response) => {
 });
 
 //Create new tag_question_relation
-questionRelationRouter.post(`/questions/:id`, (request, response) => {
+questionRelationRouter.post(`/questiontagrelation`, (request, response) => {
   const data = request.body;
 
   if (data.question_id && data.tag_id)
     questionRelationService
       .createTagQuestionRelation(data.tag_id, data.question_id)
+      .then((rows) => response.status(201).send(rows))
       .catch((error) => response.status(500).send(error));
   else response.status(400).send('Missing properties');
 });
 
 //gets a list of all tag_question_relations
-questionRelationRouter.get('/question/:id', (_request, response) => {
+questionRelationRouter.get('/questiontagrelations', (request, response) => {
   questionRelationService
     .getAllTagQuestionRelations()
     .then((rows) => response.send(rows))

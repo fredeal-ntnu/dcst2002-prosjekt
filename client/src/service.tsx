@@ -68,7 +68,7 @@ class Service {
 
   createVote(user_id: number, answer_id: number, vote_type: number) {
     return axios
-    .post('/vote/', { user_id, answer_id, vote_type })
+    .post('/vote', { user_id, answer_id, vote_type })
   }
   /**
    * Get all questions.
@@ -162,7 +162,7 @@ class Service {
   }
 
   createTagQuestionRelation(tag_id: number, question_id: number) {
-    return axios.post('/questions/' + question_id, { tag_id, question_id });
+    return axios.post('/questiontagrelation', { tag_id, question_id });
   }
 
   /**
@@ -179,7 +179,7 @@ class Service {
   }
 
   getAllTagQuestionRelations() {
-    return axios.get('/question/:id').then((response) => response.data);
+    return axios.get('/questiontagrelations').then((response) => response.data);
   }
 
  
@@ -191,10 +191,6 @@ class Service {
 
   getAnswerById(id: number) {
     return axios.get('/answers/' + id).then((response) => response.data);
-  }
-
-  getAllAnswersByUserId(id: number) {
-    return axios.get('/user/' + id + '/answers').then((response) => response.data);
   }
 
   //KAN KANKSJE FJERNES FORDI UNDER GJØR DET SAMME MEN KANSKJE BEDRE Å BRUKE DENNE ISTEDET
@@ -306,6 +302,7 @@ deleteAnswer(id: number) {
 
 
 // alle services for votes
+//BRUKES DENNE?
 
 getVotesByAnswerId(id: number) {
   return axios

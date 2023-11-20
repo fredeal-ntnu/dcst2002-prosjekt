@@ -45,18 +45,15 @@ import { Answer_Comment_Content, answerCommentService } from '../../src/service/
         })
     });
   
-    test.skip('POST /answer/:id/comments - create a new answer comment', (done) => {
+    test('POST /answer/:id/comments - create a new answer comment', (done) => {
       const answerId = 1; // Assuming this answer ID exists
-      const newCommentData = { text: 'New comment', answer_id: answerId };
-      axios.post(`/answers/${answerId}/comments`, newCommentData)
+      const newCommentData = { text: 'New comment', answer_id: 5, user_id: 5 };
+      axios.post(`/answer/${answerId}/comments`, newCommentData)
         .then((response) => {
           expect(response.status).toEqual(200);
           expect(response.data).toHaveProperty('id');
           done();
         })
-        .catch((error) => {
-          done(error);
-        });
     });
   
     test('GET /answer/comments/:id - retrieve a specific answer comment by id', (done) => {

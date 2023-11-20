@@ -16,12 +16,12 @@ export type AnswerComment = {
 };
 
 class Service {
-  // create answer comment
-  createAnswerComment(text: string, answer_id: number) {
-    return axios
-      .post('/answers/' + answer_id + '/comments', { text, answer_id })
-      .then((response) => response.data);
-  }
+  // create answer comment GANSKE SIKKER PÅ AT DENNE IKKE BRUKES
+  // createAnswerComment(text: string, answer_id: number) {
+  //   return axios
+  //     .post('/answers/' + answer_id + '/comments', { text, answer_id })
+  //     .then((response) => response.data);
+  // }
 
   // update answer comment
   updateAnswerComment(answer_comment_id: number, text: string) {

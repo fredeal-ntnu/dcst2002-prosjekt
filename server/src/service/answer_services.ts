@@ -77,21 +77,6 @@ GROUP BY a.answer_id;`,
     });
   }
 
-  //get answers by user id
-  getAllAnswersByUserId(user_id: number) {
-    return new Promise<Answer_Content[]>((resolve, reject) => {
-      pool.query(
-        'SELECT * FROM Answers WHERE user_id = ?',
-        [user_id],
-        (error, results: RowDataPacket[]) => {
-          if (error) return reject(error);
-
-          resolve(results as Answer_Content[]);
-        },
-      );
-    });
-  }
-
 getAllFavouriteAnswersByUserId(user_id: number){
     return new Promise<Answer_Content[]>((resolve, reject) => {
     // First query to get all answer_ids associated with the user_id
