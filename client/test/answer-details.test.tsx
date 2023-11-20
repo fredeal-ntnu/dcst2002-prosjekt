@@ -13,6 +13,7 @@ describe('AnswerDetails component', () => {
 
 })
 
+//øker ikke prosenten :(
 describe('Page functionality', () => {
   test('Add comment button registers click', () => {
     let buttonClicked = false

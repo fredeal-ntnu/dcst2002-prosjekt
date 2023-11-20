@@ -98,3 +98,201 @@ exports[`CreateQuestion component CreateQuestion component renders 1`] = `
   </Row>
 </Fragment>
 `;
+
+exports[`Page functionality text input works  1`] = `
+<Fragment>
+  <Row>
+    <Column
+      width={3}
+    >
+      <SideMenu
+        header="Menu"
+        items={
+          [
+            {
+              "label": "Questions",
+              "to": "/questions",
+            },
+            {
+              "label": "My Questions",
+              "to": "myquestions",
+            },
+            {
+              "label": "My Favourite Answers",
+              "to": "favourites",
+            },
+            {
+              "label": "New Question",
+              "to": "createquestion",
+            },
+            {
+              "label": "Tags",
+              "to": "/tags",
+            },
+          ]
+        }
+      />
+    </Column>
+    <Card
+      title="Ask a Question"
+    >
+      <Row>
+        <Column
+          width={2}
+        >
+          <FormLabel>
+            Title:
+          </FormLabel>
+        </Column>
+        <Column>
+          <FormInput
+            onChange={[Function]}
+            type="text"
+            value=""
+          />
+        </Column>
+      </Row>
+      <br />
+      <Row>
+        <Column
+          width={2}
+        >
+          <FormLabel>
+            Text:
+          </FormLabel>
+        </Column>
+        <Column>
+          <FormTextarea
+            onChange={[Function]}
+            placeholder="Text"
+            rows={5}
+            value="test"
+          />
+        </Column>
+      </Row>
+      <br />
+      <Row>
+        <Column
+          width={2}
+        >
+          <FormLabel>
+            Tags:
+          </FormLabel>
+        </Column>
+        <Column>
+          <Row />
+        </Column>
+      </Row>
+      <br />
+      <Row>
+        <Column>
+          <ButtonSuccess
+            onClick={[Function]}
+          >
+            AskMorgan
+          </ButtonSuccess>
+        </Column>
+      </Row>
+    </Card>
+  </Row>
+</Fragment>
+`;
+
+exports[`Page functionality title input works  1`] = `
+<Fragment>
+  <Row>
+    <Column
+      width={3}
+    >
+      <SideMenu
+        header="Menu"
+        items={
+          [
+            {
+              "label": "Questions",
+              "to": "/questions",
+            },
+            {
+              "label": "My Questions",
+              "to": "myquestions",
+            },
+            {
+              "label": "My Favourite Answers",
+              "to": "favourites",
+            },
+            {
+              "label": "New Question",
+              "to": "createquestion",
+            },
+            {
+              "label": "Tags",
+              "to": "/tags",
+            },
+          ]
+        }
+      />
+    </Column>
+    <Card
+      title="Ask a Question"
+    >
+      <Row>
+        <Column
+          width={2}
+        >
+          <FormLabel>
+            Title:
+          </FormLabel>
+        </Column>
+        <Column>
+          <FormInput
+            onChange={[Function]}
+            type="text"
+            value="test"
+          />
+        </Column>
+      </Row>
+      <br />
+      <Row>
+        <Column
+          width={2}
+        >
+          <FormLabel>
+            Text:
+          </FormLabel>
+        </Column>
+        <Column>
+          <FormTextarea
+            onChange={[Function]}
+            placeholder="Text"
+            rows={5}
+            value=""
+          />
+        </Column>
+      </Row>
+      <br />
+      <Row>
+        <Column
+          width={2}
+        >
+          <FormLabel>
+            Tags:
+          </FormLabel>
+        </Column>
+        <Column>
+          <Row />
+        </Column>
+      </Row>
+      <br />
+      <Row>
+        <Column>
+          <ButtonSuccess
+            onClick={[Function]}
+          >
+            AskMorgan
+          </ButtonSuccess>
+        </Column>
+      </Row>
+    </Card>
+  </Row>
+</Fragment>
+`;
