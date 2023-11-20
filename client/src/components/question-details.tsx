@@ -174,6 +174,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
             });
           })
           .catch((error: Error) => console.error('Error getting answers: ' + error.message));
+          break;
         
       case 'confirmed':
         service.getAnswerScoresByQuestionId(this.props.match.params.id)
@@ -232,6 +233,7 @@ createQuestionEditButton() {
       service
       .createQuestionComment(this.questionComment.text, this.props.match.params.id, this.connectedUser)
       .then(() => this.mounted())
+      .then(()=> this.questionComment.text = '')
       .catch((error) => console.error('Error saving comment: ' + error.message));
     }
     else alert("You have to be logged in to comment")
@@ -479,6 +481,7 @@ handleEditAnswer(answer_id: number, user_id: number) {
       .createAnswer(this.answer.text, this.props.match.params.id, this.connectedUser)
       .then(() => this.setHasAnswered())
       .then(() => this.mounted())
+      .then(()=> this.answer.text = '')
       .catch((error) => console.error('Error saving answer: ' + error.message));
     }
     else(alert("You have to be logged in to answer"))
@@ -487,6 +490,7 @@ handleEditAnswer(answer_id: number, user_id: number) {
     this.question.has_answer = 1;
     await service
       .updateQuestion(this.question)
+
       .catch((error) => console.error('Error saving question: ' + error.message));
   }
 
@@ -539,6 +543,7 @@ handleEditAnswer(answer_id: number, user_id: number) {
           this.answer.confirmed_answer = this.answer.confirmed_answer == 1 ? 0 : 1;
           service.updateAnswer(this.answer)
           .then(() => this.mounted())
+          .then(()=> this.answer.text = '')
           .then(() => Alert.success('Answer marked as best answer'))
           .catch((error) => console.error('Error saving answer: ' + error.message));
         
