@@ -4,12 +4,6 @@ import express from "express";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import {User, userService} from "../service/user_services";
-/**
-  * Passport.js authentication middleware for Google OAuth2.
- * - `GOOGLE_Client_ID`
- * - `GOOGLE_Client_Secret`
- * - `callbackURL`
- */
 
 
 const loginRouter = express.Router();
@@ -36,17 +30,17 @@ passport.deserializeUser(function (user: User, cb) {
 passport.use(
   new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_Client_ID || '',
-      clientSecret: process.env.GOOGLE_Client_Secret || '',
-      callbackURL: process.env.callbackURL || '',
+      clientID: '847026350985-ski1ogfb6klvrfjfrjqkhiapg02219js.apps.googleusercontent.com',
+      clientSecret:  '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',
+      callbackURL: 'http://localhost:3000/api/v1/auth/google/callback',
     },
-    function (accessToken: string, refreshToken: string, profile: any, cb: any) {
+    function (accessToken, refreshToken, profile, cb) {
       userService.findOrCreate({
         google_id: profile.id,
         username: profile.displayName,
         email: profile._json.email || '',
       }, cb);
-    }
+      }
   )
 );
 
