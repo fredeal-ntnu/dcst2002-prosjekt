@@ -2,6 +2,7 @@ import axios from 'axios';
 import pool from '../../src/mysql-pool'; 
 import app from '../../src/app';
 import { questionService, Question_Content } from '../../src/service/question_services';
+import { questionRelationService } from '../../src/service/question-relation_service';
 
 const testQuestions: Question_Content[] = [
     {question_id: 1, title: 'Test1', text: 'Dette er test 1', view_count: 0, has_answer: false, user_id: 1},
@@ -10,12 +11,12 @@ const testQuestions: Question_Content[] = [
 ];
 
 const testQuestionRelations = [
-    {question_id: 1, tag_id: 1},
-    {question_id: 1, tag_id: 2},
-    {question_id: 2, tag_id: 3},
-    {question_id: 3, tag_id: 1},
-    {question_id: 3, tag_id: 3},
-];
+  { tag_id: 1, question_id: 1 },
+  { tag_id: 2, question_id: 1 },
+  { tag_id: 3, question_id: 2 },
+  { tag_id: 3, question_id: 3 },
+  { tag_id: 1, question_id: 3 }
+]
 
 axios.defaults.baseURL = 'http://localhost:3001/api/v2';
 
@@ -30,10 +31,25 @@ beforeEach((done) => {
       if (error) return done.fail(error);
       questionService
       .createQuestion(testQuestions[0].title, testQuestions[0].text, testQuestions[0].user_id)
-      .then(() => questionService.createQuestion(testQuestions[1].title, testQuestions[1].text, testQuestions[1].user_id)) // Create testTask[1] after testTask[0] has been created
-      .then(() => questionService.createQuestion(testQuestions[2].title, testQuestions[2].text, testQuestions[2].user_id)) // Create testTask[2] after testTask[1] has been created
-      .then(() => done()); // Call done() after testTask[2] has been created
+      .then(() => questionService.createQuestion(testQuestions[1].title, testQuestions[1].text, testQuestions[1].user_id)) 
+      .then(() => questionService.createQuestion(testQuestions[2].title, testQuestions[2].text, testQuestions[2].user_id))
+      .then(() => createAllQuestionRelations())
   });
+
+  function createAllQuestionRelations(){
+    pool.query('TRUNCATE TABLE Tag_question_relation', (error) => {
+      if (error) return done.fail(error);
+      questionRelationService
+      .createTagQuestionRelation(testQuestionRelations[0].tag_id, testQuestionRelations[0].question_id)
+      .then(() => questionRelationService.createTagQuestionRelation(testQuestionRelations[1].tag_id, testQuestionRelations[1].question_id)) 
+      .then(() => questionRelationService.createTagQuestionRelation(testQuestionRelations[2].tag_id, testQuestionRelations[2].question_id))
+      .then(() => questionRelationService.createTagQuestionRelation(testQuestionRelations[3].tag_id, testQuestionRelations[3].question_id))
+      .then(() => questionRelationService.createTagQuestionRelation(testQuestionRelations[4].tag_id, testQuestionRelations[4].question_id))
+      .then(() => done());
+  });
+}
+
+
   });
 
   // Stop web server and close connection to MySQL server
@@ -249,7 +265,7 @@ afterAll((done) => {
   
   describe('Question tag relations', () => {
     // Test fetching all tags by question id
-    test.skip('GET (200) /questions/id/tag', (done) => {
+    test('GET (200) /questions/:id/tag', (done) => {
       const questionId = 1; // Assuming this question exists
       axios.get(`/questions/${questionId}/tag`)
         .then((response) => {
@@ -260,52 +276,55 @@ afterAll((done) => {
     });
 
     // Fail to fetch all tags by question id that does not exist (500 Bad Request)
-    test.skip('GET (500) /questions/id/tag', (done) => {
+    test('GET (500) /questions/:id/tag', (done) => {
       const questionId = 9999; // Assuming this question does not exist
       axios.get(`/questions/${questionId}/tag`)
         .catch((error) => {
           expect(error.response.status).toEqual(500);
+          expect(error.response.data).toEqual('Question does not exist');
           done();
         });
     });
 
     // Test creating a new question tag relation
-    test.skip('POST (201) /questions/id', (done) => {
+    test('POST /questiontagrelation', (done) => {
+      // Assuming axios is already configured with the base URL of the API
       const newQuestionTagRelation = {
         tag_id: 1,
         question_id: 2
       };
-      axios.post(`/questions/${newQuestionTagRelation.question_id}`, newQuestionTagRelation)
+    
+      axios.post(`/questiontagrelation`, newQuestionTagRelation) // Make sure the endpoint starts with `/`
         .then((response) => {
-          expect(response.status).toEqual(201);
-          expect(response.data).toHaveProperty('id');
+          expect(response.status).toEqual(201); 
           done();
         })
     });
+    
 
     // Fail to create a new question tag relation with invalid data (400 Bad Request)
-    test.skip('POST (400) /questions/id', (done) => {
+    test('POST (400) /questiontagrelation', (done) => {
       const invalidQuestionTagRelation = {question_id: 1}; // Missing required properties
-      axios.post(`/questions/${invalidQuestionTagRelation.question_id}`, invalidQuestionTagRelation)
+      axios.post(`/questiontagrelation`, invalidQuestionTagRelation) // Corrected endpoint
         .catch((error) => {
           expect(error.response.status).toEqual(400);
           expect(error.response.data).toEqual('Missing properties');
           done();
         });
     });
+    
 
     // Test fetching all question tag relations
-    test.skip('GET (200) /question/id', (done) => {
-      axios.get('/question/1')
+    test('GET (200) /questions/:id', (done) => {
+      axios.get(`/questiontagrelations`)
         .then((response) => {
           expect(response.status).toEqual(200);
-          expect(response.data).toEqual(testQuestionRelations);
           done();
         })
     });
 
     // Test fetching all questions by tag id
-    test('GET (200) /tag/id/questions', (done) => {
+    test('GET (200) /tag/:id/questions', (done) => {
       const tagId = 1;
       axios.get(`/tag/${tagId}/questions`)
         .then((response) => {

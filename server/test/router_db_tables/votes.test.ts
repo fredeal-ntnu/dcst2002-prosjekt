@@ -58,15 +58,15 @@ describe('Vote Routes', () => {
   });
 
 
-// does not work
-//   test.skip('POST /vote (200 OK)', (done) => {
-//     const voteData = { user_id: 1, answer_id: 1, vote_type: true };
-//     axios.post('/vote', voteData)
-//       .then((response) => {
-//         expect(response.status).toEqual(200);
-//         done();
-//       })
-//   });
+  test.skip('POST /answers/:id/votes (200 OK)', (done) => {
+    const answerId = 1; // Assuming this answer ID exists and can be voted on
+    const voteData = { user_id: 1, answer_id: answerId, vote_type: true };
+    axios.post(`/vote`, voteData)
+      .then((response) => {
+        expect(response.status).toEqual(200);
+        done();
+      })
+  });
 
     // Test creating a vote with missing properties
     test('POST ERROR /vote (400 Bad Request)', (done) => {
@@ -78,8 +78,8 @@ describe('Vote Routes', () => {
         });
     });
 
-  // Test creating a vote with correct properties
-  test('POST /answers/:id/votes (200 OK)', (done) => {
+  // Positive vote
+  test('POST Positive vote /answers/:id/votes (200 OK)', (done) => {
     const answerId = 1; // Assuming this answer ID exists and can be voted on
     const voteData = { user_id: 1, answer_id: answerId, vote_type: true };
     axios.post(`/answers/${answerId}/votes`, voteData)
@@ -87,6 +87,21 @@ describe('Vote Routes', () => {
         expect(response.status).toEqual(200);
         done();
       })
+  });
+
+  // Negative vote
+  //DENNE GJØR INGENTING FORDI JEG IKKE FORSTÅR LOGIKKEN
+  test.skip('POST Negative vote /answers/:id/votes (200 OK)', (done) => {
+    const answerId = 1; // Assuming this answer ID exists and can be voted on
+    const voteData = { user_id: 3, answer_id: answerId, vote_type: false };
+    axios.post(`/answers/${answerId}/votes`, voteData)
+      .then((response) => {
+        expect(response.status).toEqual(200);
+        done();
+      }).catch((error) => {
+        expect(error.response.status).toEqual(400);
+        done();
+      });
   });
 
   // Test creating a vote with missing properties

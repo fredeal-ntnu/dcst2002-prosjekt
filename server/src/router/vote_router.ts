@@ -4,7 +4,7 @@ import { voteService } from '../service/vote_services';
 const voteRouter = express.Router();
 
 //create vote funker
-voteRouter.post('/vote/', (request, response) => {
+voteRouter.post('/vote', (request, response) => {
     const data = request.body;
     if (typeof data.user_id == 'number' && typeof data.answer_id == 'number' && typeof data.vote_type == 'number')
     voteService
@@ -13,9 +13,6 @@ voteRouter.post('/vote/', (request, response) => {
     .catch((error) => response.status(500).send(error));
     else response.status(400).send('Missing vote properties');
 });
-
-
-
 
 voteRouter.get('/answers/:id/votes', (request, response) => {
     const id = Number(request.params.id);
