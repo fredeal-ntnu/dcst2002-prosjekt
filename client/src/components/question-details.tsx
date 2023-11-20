@@ -347,7 +347,7 @@ return(
       const isConfirmedAnswerKey = `isConfirmedAnswer_${answer.answer_id}`;
       if (answer.question_id == this.props.match.params.id) {
         return (
-          <Card title="hei" key={answer.answer_id}>
+          <Card title="" key={answer.answer_id}>
             
               {answer.text}
                 <Column>
@@ -400,8 +400,16 @@ return(
                   </ButtonFavourite>
            
                 
-                  <Button.Success onClick={() => this.setConfirmedAnswer(answer.answer_id)}>
-                    Mark as best
+                  <Button.Success  onClick={() => {
+                      if (this.state[isConfirmedAnswerKey as keyof State]) {
+                        this.setConfirmedAnswer(answer.answer_id);
+                        this.setState({ [isConfirmedAnswerKey]: false });
+                      } else {
+                        this.setConfirmedAnswer(answer.answer_id);
+                        this.setState({ [isConfirmedAnswerKey]: true });
+                      }
+                    }}>
+                     {this.state[isConfirmedAnswerKey as keyof State] ? 'Remove confirmed answer' : 'Set as confirmed answer'}
                   </Button.Success>
                     
               
