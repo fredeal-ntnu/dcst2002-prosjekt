@@ -198,8 +198,8 @@ createQuestionEditButton() {
     </Button.Success>
     )
   }
-    else return
-}
+    else return <Row><div style={{minHeight:"1em"}}/></Row>
+}   
 
 
   addQuestionCommentInput() {
