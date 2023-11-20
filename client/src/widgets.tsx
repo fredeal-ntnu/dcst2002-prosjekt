@@ -597,9 +597,9 @@ export class Alert extends Component {
     );
   }
 
-  /**
-   * Show success alert.
-   */
+  
+   //Show success alert.
+   
   static success(text: ReactNode) {
     // To avoid 'Cannot update during an existing state transition' errors, run after current event through setTimeout
     setTimeout(() => {
@@ -608,9 +608,9 @@ export class Alert extends Component {
     });
   }
 
-  /**
-   * Show info alert.
-   */
+  
+  //Show info alert.
+   
   static info(text: ReactNode) {
     // To avoid 'Cannot update during an existing state transition' errors, run after current event through setTimeout
     setTimeout(() => {
@@ -619,10 +619,9 @@ export class Alert extends Component {
     });
   }
 
-  /**
-   * Show warning alert.
-   */
-  static warning(text: ReactNode) {
+  
+   // Show warning alert. 
+     static warning(text: ReactNode) {
     // To avoid 'Cannot update during an existing state transition' errors, run after current event through setTimeout
     setTimeout(() => {
       let instance = Alert.instance(); // Get rendered Alert component instance
@@ -630,9 +629,9 @@ export class Alert extends Component {
     });
   }
 
-  /**
-   * Show danger alert.
-   */
+  
+   // Show danger alert.
+   
   static danger(text: ReactNode) {
     // To avoid 'Cannot update during an existing state transition' errors, run after current event through setTimeout
     setTimeout(() => {
