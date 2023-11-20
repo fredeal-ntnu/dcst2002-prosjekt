@@ -36,12 +36,7 @@ exports[`Site renders Site renders correct 1`] = `
   <Card
     title="Question"
   >
-    <Card
-      title="Title"
-    />
-    <Card
-      title="Text"
-    />
+    <Card />
     <Row>
       <Card
         title="Tags"
@@ -151,12 +146,7 @@ exports[`switchcase switchcase confirmed 1`] = `
   <Card
     title="Question"
   >
-    <Card
-      title="Title"
-    />
-    <Card
-      title="Text"
-    />
+    <Card />
     <Row>
       <Card
         title="Tags"
@@ -266,12 +256,7 @@ exports[`switchcase switchcase most recent 1`] = `
   <Card
     title="Question"
   >
-    <Card
-      title="Title"
-    />
-    <Card
-      title="Text"
-    />
+    <Card />
     <Row>
       <Card
         title="Tags"
@@ -381,12 +366,7 @@ exports[`switchcase switchcase popular 1`] = `
   <Card
     title="Question"
   >
-    <Card
-      title="Title"
-    />
-    <Card
-      title="Text"
-    />
+    <Card />
     <Row>
       <Card
         title="Tags"

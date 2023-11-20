@@ -173,6 +173,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
             });
           })
           .catch((error: Error) => console.error('Error getting answers: ' + error.message));
+          break;
         
       case 'confirmed':
         service.getAnswerScoresByQuestionId(this.props.match.params.id)
