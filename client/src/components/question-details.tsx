@@ -345,6 +345,7 @@ return(
     {this.answers_votes.map((answer) => {
       
       const isFavoriteKey = `isFavorite_${answer.answer_id}`;
+      const isConfirmedAnswerKey = `isConfirmedAnswer_${answer.answer_id}`;
       if (answer.question_id == this.props.match.params.id) {
         return (
           <Card title="" key={answer.answer_id}>
@@ -385,8 +386,20 @@ return(
                 {this.handleEditAnswer(answer.answer_id,answer.user_id)}
                 </Column>
                 <Column>
-                  <Button.Success onClick={() => this.setConfirmedAnswer(answer.answer_id)}>
-                    Mark as best
+                <Button.Success
+                    onClick={() => {
+                      if (this.state[isConfirmedAnswerKey as keyof State]) {
+                  
+                        this.setConfirmedAnswer(answer.answer_id);
+                        this.setState({ [isConfirmedAnswerKey]: false });
+                      } else {
+                    
+                        this.setConfirmedAnswer(answer.answer_id);
+                        this.setState({ [isConfirmedAnswerKey]: true });
+                      }
+                    }}
+                  >
+                    {this.state[isConfirmedAnswerKey as keyof State] ? 'Remove as confirmed answer' : 'Mark as confirmed answer'}
                   </Button.Success>
                 </Column>
                 <Column>
@@ -531,7 +544,7 @@ handleEditAnswer(answer_id: number, user_id: number) {
         .getAnswerById(answer_id)
         .then((answer) => (this.answer = answer))
         .then(() => {
-          this.answer.confirmed_answer = 1;
+          this.answer.confirmed_answer = this.answer.confirmed_answer == 1 ? 0 : 1;
           service.updateAnswer(this.answer)
           .then(() => this.mounted())
           .then(() => Alert.success('Answer marked as best answer'))
