@@ -85,7 +85,6 @@ describe('Button widget tests', () => {
   test('Draws a button with favourite type', () => {
     //@ts-ignore
     const wrapper = shallow(<ButtonFavourite>Test</ButtonFavourite>);
-    console.log(wrapper.debug())
 
     expect(
       wrapper.containsMatchingElement(
@@ -128,7 +127,6 @@ test('Draws a button with downvote type', () => {
 test('Draws a button with comment buble type', () => {
   //@ts-ignore
   const wrapper = shallow(<ButtonCommentBuble>Test</ButtonCommentBuble>);
-  console.log(wrapper.debug())
 
   expect(
     wrapper.containsMatchingElement(
