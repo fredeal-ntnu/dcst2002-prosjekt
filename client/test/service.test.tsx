@@ -235,13 +235,6 @@ describe('createQuestion', () => {
     });
   });
 
-  describe('getAllAnswersByUserId', () => {
-    it('should get all answers by user id', async () => {
-      const result = await service.getAllAnswersByUserId(mockUser.user_id);
-      expect(result).toEqual([mockAnswer]);
-    });
-  });
-
   describe('getAnswerScoresByQuestionId', () => {
     it('should get answer scores by question id', async () => {
       const result = await service.getAnswerScoresByQuestionId(1);

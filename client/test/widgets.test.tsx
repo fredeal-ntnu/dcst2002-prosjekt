@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { AllQuestions } from 'src/components/all-question'; // Adjust the import path as needed
-import { Column, Button } from 'src/widgets';
+import { Column, Button, ButtonFavourite } from 'src/widgets';
 import service from 'src/service'; // Adjust the import path as needed
 
 jest.mock('src/service'); // Mock the service module
@@ -81,6 +81,20 @@ describe('Button widget tests', () => {
     ).toEqual(true);
   });
 
+  test('Draws a button with favourite type', () => {
+    //@ts-ignore
+    const wrapper = shallow(<ButtonFavourite>Test</ButtonFavourite>);
+    console.log(wrapper.debug())
+
+    expect(
+      wrapper.containsMatchingElement(
+        <button type="button" className="btn btn-danger">
+          Test
+        </button>
+      )
+    ).toEqual(true);
+  }
+  )
 })
 
 
