@@ -553,55 +553,7 @@ class FormSelect extends Component<{
   }
 }
 
-/**
- * Renders a form radio button using Bootstrap styles.
- */
-class FormRadio extends Component<{
-  checked: boolean;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  [prop: string]: any;
-}> {
-  render() {
-    const { checked, onChange, ...rest } = this.props;
-    return (
-      <input
-        {...rest}
-        className="form-check-input"
-        type="radio"
-        checked={checked}
-        onChange={onChange}
-      />
-    );
-  }
-}
 
-export class RadioRow extends Component<{
-  label: string;
-  checked: boolean; 
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void; 
-  [prop: string]: any;
-}> {
-  render() {
-    const { checked, label, onChange, ...rest } = this.props;
-
-    return(
-        <Row>  
-            <Column>
-                {label}
-            </Column>
-            <Column right>
-                <Form.Radio
-                    {...rest}
-                    className="form-check-input"
-                    type="radio"
-                    checked={checked}
-                    onChange={onChange}
-                    label={label}
-                />
-            </Column>
-        </Row> 
-)}
-    }
 
 /**
  * Renders form components using Bootstrap styles.
@@ -612,7 +564,6 @@ export class Form {
   static Textarea = FormTextarea;
   static Checkbox = FormCheckbox;
   static Select = FormSelect;
-  static Radio = FormRadio;
 }
 
 /**

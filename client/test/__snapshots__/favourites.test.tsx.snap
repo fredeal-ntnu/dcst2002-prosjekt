@@ -40,21 +40,12 @@ exports[`Site renders Site renders correct 1`] = `
       <br />
       <Row>
         <Column>
-          1
+          0
            answers in total
         </Column>
       </Row>
     </Card>
-    <Column>
-      <AnswerCard
-        answer={
-          {
-            "user_id": 1,
-          }
-        }
-        key="0"
-      />
-    </Column>
+    <Column />
   </Column>
 </Row>
 `;

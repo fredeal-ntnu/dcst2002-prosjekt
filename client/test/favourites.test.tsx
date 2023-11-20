@@ -8,13 +8,13 @@ jest.mock('../src/service', () => {
   class Service {
     getAllFavouriteAnswersByUserId(user_id: number) {
       return new Promise((resolve, reject) => {
-        resolve([{ user_id: 1 }]);
+        resolve({ user_id: 1 });
       });
     }
 
     getMe() {
       return new Promise((resolve, reject) => {
-        resolve([{ user_id: 1, google_id: 'test', username: 'test', email: 'test' }]);
+        resolve({ user_id: 1, google_id: 'test', username: 'test', email: 'test' });
       });
     }
   }
