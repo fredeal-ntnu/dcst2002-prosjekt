@@ -20,9 +20,8 @@ class Service {
 
   getAnswerScoresByQuestionId(question_id: number) {
     return new Promise<Answer_Content[]>((resolve, reject) => {
-      const query = `
-      SELECT
-    a.*,
+      pool.query(`
+      SELECT a.*,
     COALESCE(SUM(
         CASE
             WHEN ap.vote_type = 1 THEN 1
@@ -30,17 +29,10 @@ class Service {
             ELSE 0
         END
     ), 0) AS score
-FROM
-    Answers AS a
-LEFT JOIN
-    Votes AS ap ON a.answer_id = ap.answer_id
-WHERE
-    a.question_id = ?
-GROUP BY
-    a.answer_id;
-      `;
-      pool.query(
-        query,
+FROM Answers AS a
+LEFT JOIN Votes AS ap ON a.answer_id = ap.answer_id
+WHERE a.question_id = ?
+GROUP BY a.answer_id;`,
         [question_id],
         (error, results: RowDataPacket[]) => {
           if (error) return reject(error);
@@ -60,7 +52,7 @@ GROUP BY
         [answer_id],
         (error, results: RowDataPacket[]) => {
           if (error) return reject(error);
-          if (results.length == 0) return reject(new Error('No answer found'));
+          if (results.length === 0) return reject('Answer not found');
 
           resolve(results[0] as Answer_Content);
         },

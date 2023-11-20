@@ -16,11 +16,11 @@ questionRelationRouter.get(`/questions/:id/tag`, (request, response) => {
 questionRelationRouter.post(`/questions/:id`, (request, response) => {
   const data = request.body;
 
-  if (typeof data.question_id != null)
+  if (data.question_id && data.tag_id)
     questionRelationService
       .createTagQuestionRelation(data.tag_id, data.question_id)
       .catch((error) => response.status(500).send(error));
-  else response.status(400).send('Missing asmfamsfsafa properties');
+  else response.status(400).send('Missing properties');
 });
 
 //gets a list of all tag_question_relations

@@ -23,21 +23,17 @@ answerRouter.get('/user/:id/favourites', (request, response) => {
   .catch((error) => response.status(500).send(error));
 });
 
-//Get answer by id
-
+//Get answer by answer id
 answerRouter.get('/answers/:id', (request, response) => {
   const id = Number(request.params.id);
   answerService
     .getAnswerById(id)
-    .then((answer) =>
-      answer ? response.send(answer) : response.status(404).send('Answer not found'),
-    )
+    .then((answer) => response.send(answer))
     .catch((error) => response.status(500).send(error));
 });
 
 //Get answers by question id
 //BRUKES IKKE ATM, SE KOMMENTAR I SERVICE PÅ CLIENT SIDE.
-//testes av answer.test.ts
 answerRouter.get('/questions/:id/answers', (request, response) => {
   const questionId = Number(request.params.id);
   

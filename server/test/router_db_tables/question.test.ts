@@ -9,6 +9,14 @@ const testQuestions: Question_Content[] = [
     {question_id: 3, title: 'Test3', text: 'Dette er test 3', view_count: 0, has_answer: false, user_id: 1},
 ];
 
+const testQuestionRelations = [
+    {question_id: 1, tag_id: 1},
+    {question_id: 1, tag_id: 2},
+    {question_id: 2, tag_id: 3},
+    {question_id: 3, tag_id: 1},
+    {question_id: 3, tag_id: 3},
+];
+
 axios.defaults.baseURL = 'http://localhost:3001/api/v2';
 
 let webServer: any;
@@ -124,9 +132,7 @@ afterAll((done) => {
         })
     });
 
-  });
 
-  describe('Fetch questions (GET ERROR)', () => {
     test('Fetch question that does not exist', (done) => {
         axios.get('/questions/4').catch((error) => {
           expect(error.response.status).toEqual(500);
@@ -241,3 +247,72 @@ afterAll((done) => {
     });
   });
   
+  describe('Question tag relations', () => {
+    // Test fetching all tags by question id
+    test.skip('GET (200) /questions/id/tag', (done) => {
+      const questionId = 1; // Assuming this question exists
+      axios.get(`/questions/${questionId}/tag`)
+        .then((response) => {
+          expect(response.status).toEqual(200);
+          expect(response.data).toEqual(testQuestionRelations.filter((relation) => relation.question_id === questionId));
+          done();
+        })
+    });
+
+    // Fail to fetch all tags by question id that does not exist (500 Bad Request)
+    test.skip('GET (500) /questions/id/tag', (done) => {
+      const questionId = 9999; // Assuming this question does not exist
+      axios.get(`/questions/${questionId}/tag`)
+        .catch((error) => {
+          expect(error.response.status).toEqual(500);
+          done();
+        });
+    });
+
+    // Test creating a new question tag relation
+    test.skip('POST (201) /questions/id', (done) => {
+      const newQuestionTagRelation = {
+        tag_id: 1,
+        question_id: 2
+      };
+      axios.post(`/questions/${newQuestionTagRelation.question_id}`, newQuestionTagRelation)
+        .then((response) => {
+          expect(response.status).toEqual(201);
+          expect(response.data).toHaveProperty('id');
+          done();
+        })
+    });
+
+    // Fail to create a new question tag relation with invalid data (400 Bad Request)
+    test.skip('POST (400) /questions/id', (done) => {
+      const invalidQuestionTagRelation = {question_id: 1}; // Missing required properties
+      axios.post(`/questions/${invalidQuestionTagRelation.question_id}`, invalidQuestionTagRelation)
+        .catch((error) => {
+          expect(error.response.status).toEqual(400);
+          expect(error.response.data).toEqual('Missing properties');
+          done();
+        });
+    });
+
+    // Test fetching all question tag relations
+    test.skip('GET (200) /question/id', (done) => {
+      axios.get('/question/1')
+        .then((response) => {
+          expect(response.status).toEqual(200);
+          expect(response.data).toEqual(testQuestionRelations);
+          done();
+        })
+    });
+
+    // Test fetching all questions by tag id
+    test('GET (200) /tag/id/questions', (done) => {
+      const tagId = 1;
+      axios.get(`/tag/${tagId}/questions`)
+        .then((response) => {
+          expect(response.status).toEqual(200);
+          expect(response.data).toEqual(testQuestionRelations.filter((relation) => relation.tag_id === tagId));
+          done();
+        })
+    });
+  });
+

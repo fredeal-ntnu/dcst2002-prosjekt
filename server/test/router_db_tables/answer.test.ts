@@ -3,6 +3,7 @@ import axios from 'axios';
 import pool from '../../src/mysql-pool';
 import app from '../../src/app';
 import { Answer_Content, answerService } from '../../src/service/answer_services';
+import e from 'express';
 
 // NEW ANSWER 
 // CREATE TABLE Answers (
@@ -56,6 +57,37 @@ describe('Answer Routes', () => {
         })
         .catch((error) => done(error));
     });
+
+// get answer by answer id
+    test('GET (200) /answers/:id', (done) => {
+        axios.get(`/answers/${testAnswers[0].answer_id}`)
+          .then((response) => {
+            expect(response.status).toEqual(200);
+            expect(response.data).toHaveProperty('text');
+            done();
+          })
+      });
+
+// get answer by non-existing id
+    test('GET (500) /answers/:id', (done) => {
+      const answerId = 9999;
+        axios.get(`/answers/${answerId}`)
+          .catch((error) => {
+            expect(error.response.status).toEqual(500);
+            done();
+          });
+      });
+
+
+// get all votes for all answers to a specific question
+    test('GET (200) /questions/:id/answer/votes', (done) => {
+        const questionId = 1;
+        axios.get(`/questions/${questionId}/answer/votes`)
+          .then((response) => {
+            expect(response.status).toEqual(200);
+            done();
+          })
+      });
     
     test('Create new answer (200 OK)', (done) => {
       const questionId = 3; // Assuming you want to post to a new question ID

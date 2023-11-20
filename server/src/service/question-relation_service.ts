@@ -22,6 +22,7 @@ class Service {
         [question_id],
         (error, results: RowDataPacket[]) => {
           if (error) return reject(error);
+          if (results.length === 0) return reject('Question does not exist');
 
           resolve(results as Tag_Question_Relation[]);
         },
