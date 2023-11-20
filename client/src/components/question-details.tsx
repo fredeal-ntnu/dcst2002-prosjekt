@@ -135,20 +135,6 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
       .then((questionComments) => (this.questionComments = questionComments))
       .catch((error: Error) => console.error('Error getting question comments: ' + error.message));
 
-
-      //DENNE FUNKER MED Å HENTE VOTES FOR EN ANSWER
-    // service
-    // .getAnswersByQuestionId(this.props.match.params.id)
-    // .then((answers) => (this.answers = answers))
-    // .catch((error: Error) => console.error('Error getting answers: ' + error.message))
-
-    // this.answers.map((answer) => {
-    //   service.getVotesByAnswerId(answer.answer_id)
-    //     .then((vote) => { this.vote = vote })
-    //     .catch((error) => {
-    //       console.error(error);
-    //     });
-    // });
   }
 
 
@@ -158,11 +144,8 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     this.loadAnswers() // Call a method to load questions based on the selected filter
   };
 
- 
+  //Logic for fetching and filtering answers
   loadAnswers() {
-    console.log(this.answers)
-    // Add logic here to fetch and filter questions accordingly
-    // This is a placeholder for whatever your service methods might be
     switch (this.filter) {
       case 'all':
         service
@@ -281,7 +264,7 @@ createQuestionEditButton() {
 
 
 handleQuestionCommentDisplay() {
-  
+  //If logged in
   if(this.connectedUser) {
    return(
     <Card title="Comments">
@@ -304,6 +287,8 @@ handleQuestionCommentDisplay() {
   </Card>
    )
   }
+
+  //If not logged in
   else {
     return(
       <Card title="Comments">
@@ -324,6 +309,7 @@ handleQuestionCommentDisplay() {
 }
 
 handleQuestionCommentEdit(questionComment: QuestionComment) {
+  //if logged in
   if(this.connectedUser == questionComment.user_id) {
     return(
       <Button.Success
@@ -340,11 +326,13 @@ handleQuestionCommentEdit(questionComment: QuestionComment) {
       Edit
     </Button.Success>
     )
+    //if not logged in
   } else return
 }
 
 
 handleAnswerMapDisplay () {
+  //if logged in
   if(this.connectedUser) {
 return(
   <Card title="Answers">
@@ -430,6 +418,7 @@ return(
 
   }
 
+  //If not logged in
   else return (
      <Card title="Answers">
     <Form.Select value={this.filter} onChange={this.handleFilterChange}>
@@ -467,7 +456,7 @@ return(
 
 handleEditAnswer(answer_id: number, user_id: number) {
   
-
+//if logged in as owner of answer
   if(this.connectedUser == user_id) {
     return(
       <Button.Success
