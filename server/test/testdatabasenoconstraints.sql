@@ -136,7 +136,7 @@ CREATE TABLE Answer_comments (
 )ENGINE=InnoDB;
 
 CREATE TABLE Tags (
-    tag_id INT PRIMARY KEY,
+    tag_id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL
 )ENGINE=InnoDB;
 

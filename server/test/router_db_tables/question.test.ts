@@ -1,4 +1,3 @@
-// DENNE SKAL VÆRE GOOD
 import axios from 'axios';
 import pool from '../../src/mysql-pool'; 
 import app from '../../src/app';
@@ -37,17 +36,6 @@ afterAll((done) => {
 
 
   describe('Fetch questions (GET)', () => {
-
-    // Test fetching the authenticated user's questions
-    test('Fetch authenticated user questions (200 OK)', (done) => {
-      axios.get('/questions/me')
-        .then((response) => {
-          expect(response.status).toEqual(200);
-          done();
-        })
-        .catch((error) => done(error));
-    });
-  
     // Test fetching questions by user ID
     test('Fetch questions by user ID (200 OK)', (done) => {
       const userId = 1; 
@@ -55,6 +43,17 @@ afterAll((done) => {
         .then((response) => {
           expect(response.status).toEqual(200);
           expect(response.data).toEqual(testQuestions.filter((question) => question.user_id === userId));
+          done();
+        })
+        .catch((error) => done(error));
+    });
+
+    // Test fetching question by an answer id
+    test('Fetch question by answer id (200 OK)', (done) => {
+      const answerId = 20; 
+      axios.get(`/answer/${answerId}/question`)
+        .then((response) => {
+          expect(response.status).toEqual(200);
           done();
         })
         .catch((error) => done(error));

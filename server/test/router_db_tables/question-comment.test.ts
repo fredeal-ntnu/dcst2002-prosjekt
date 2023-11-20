@@ -17,7 +17,7 @@ beforeAll((done) => {
 });
 
 beforeEach((done) => {
-  pool.query('TRUNCATE TABLE question_comments', (error) => {
+  pool.query('TRUNCATE TABLE Question_comments', (error) => {
     if (error) return done.fail(error);
 
     questionCommentService.createQuestionComment(testQuestionComments[0].text, testQuestionComments[0].question_id, testQuestionComments[0].user_id)

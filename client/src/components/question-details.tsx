@@ -344,6 +344,7 @@ return(
     {this.answers_votes.map((answer) => {
       
       const isFavoriteKey = `isFavorite_${answer.answer_id}`;
+      const isConfirmedAnswerKey = `isConfirmedAnswer_${answer.answer_id}`;
       if (answer.question_id == this.props.match.params.id) {
         return (
           <Card title="hei" key={answer.answer_id}>
@@ -531,7 +532,7 @@ handleEditAnswer(answer_id: number, user_id: number) {
         .getAnswerById(answer_id)
         .then((answer) => (this.answer = answer))
         .then(() => {
-          this.answer.confirmed_answer = 1;
+          this.answer.confirmed_answer = this.answer.confirmed_answer == 1 ? 0 : 1;
           service.updateAnswer(this.answer)
           .then(() => this.mounted())
           .then(() => Alert.success('Answer marked as best answer'))

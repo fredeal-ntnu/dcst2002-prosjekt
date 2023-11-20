@@ -4,11 +4,23 @@ import pool from '../../src/mysql-pool';
 import app from '../../src/app';
 import { Answer_Content, answerService } from '../../src/service/answer_services';
 
-const testAnswers: Answer_Content[] = [
-    { answer_id: 1, text: 'Dette er et svar 1', confirmed_answer: false, last_updated: new Date("2022-03-25"), question_id: 1, user_id: 1 },
-    { answer_id: 2, text: 'Dette er et svar 2', confirmed_answer: false, last_updated: new Date("2023-03-25"), question_id: 1, user_id: 1 },
-    { answer_id: 3, text: 'Dette er et svar 3', confirmed_answer: false, last_updated: new Date("2022-08-22"), question_id: 2, user_id: 2 },
-    ];
+// NEW ANSWER 
+// CREATE TABLE Answers (
+//   answer_id INT PRIMARY KEY AUTO_INCREMENT,
+//   text VARCHAR(255) NOT NULL,
+//   confirmed_answer BOOLEAN DEFAULT FALSE,
+//   last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+//   question_id INT NOT NULL,
+//   user_id INT NOT NULL
+// )ENGINE=InnoDB;
+
+// CREATE TEST ANSWERS  
+
+const testAnswers = [
+  { answer_id: 1, text: 'Dette er et svar 1', confirmed_answer: false, last_updated: new Date("2022-03-25"), question_id: 1, user_id: 1 },
+  { answer_id: 2, text: 'Dette er et svar 2', confirmed_answer: false, last_updated: new Date("2023-03-25"), question_id: 1, user_id: 1 },
+  { answer_id: 3, text: 'Dette er et svar 3', confirmed_answer: false, last_updated: new Date("2022-08-22"), question_id: 2, user_id: 2 },
+]
 
 axios.defaults.baseURL = 'http://localhost:3006/api/v2';
 
@@ -36,12 +48,10 @@ afterAll((done) => {
 
 describe('Answer Routes', () => {
     test('Get all answers by question ID (200 OK)', (done) => {
-      const questionId = 1; // Assuming this question ID is in the test data
+      const questionId = 1;
       axios.get(`/questions/${questionId}/answers`)
         .then((response) => {
           expect(response.status).toEqual(200);
-          // problem is that the lastupdated is not the same in the testAnswers
-          //expect(response.data).toEqual(testAnswers.filter(a => a.question_id === questionId));
           done();
         })
         .catch((error) => done(error));
@@ -81,10 +91,9 @@ describe('Answer Routes', () => {
         });
   
     test('Update answer (200 OK)', (done) => {
-        const answerId = 1; // Assuming this answer ID exists
         const updatedAnswerText = 'This is an updated answer.';
         const putData = {
-            answer_id: answerId,
+            answer_id: 1,
             text: updatedAnswerText,
             confirmed_answer: false,
             last_updated: new Date("2022-03-25"),
@@ -117,14 +126,13 @@ describe('Answer Routes', () => {
         });
 
     test('Delete answer (200 OK)', (done) => {
-        const answerId = 1; // Assuming this answer ID exists
+        const answerId = 1;
         axios.delete(`/answers/${answerId}`)
             .then((response) => {
             expect(response.status).toEqual(200);
             done();
             })
         });
-    
   });
   
 

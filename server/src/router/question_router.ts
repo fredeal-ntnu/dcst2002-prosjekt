@@ -17,7 +17,7 @@ questionRouter.get('/questions', (_request, response) => {
     .catch((error) => response.status(500).send(error));
 });
 
-//Get all questions by answer id
+//Get question by answer id
 questionRouter.get('/answer/:id/question', (request, response) => {
   const answer_id = Number(request.params.id);
   questionService
@@ -82,7 +82,6 @@ questionRouter.get('/user/:id/unansweredquestions/', (request, response) => {
     .catch((error) => response.status(500).send(error));
 });
 
-
 //Create new question
 questionRouter.post('/questions', passport.authenticate("session", {session: true}), (request, response) => {
   const data = request.body;
@@ -100,9 +99,6 @@ questionRouter.post('/questions', passport.authenticate("session", {session: tru
       .catch((error) => response.status(500).send(error));
   else response.status(400).send('Missing dobbeltsjekk mongo properties');
 });
-
-
-
 
 //Delete question
 questionRouter.delete('/questions/:id', (request, response) => {

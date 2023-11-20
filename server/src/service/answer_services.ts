@@ -108,6 +108,8 @@ getAllFavouriteAnswersByUserId(user_id: number){
     [user_id],
     (error, favoriteResults) => {
         if (error) return reject(error);
+
+        if((favoriteResults as RowDataPacket[]).length === 0) return reject('No favourite found');
         // Extract answer_ids from the favoriteResults
         const answer_id = (favoriteResults as RowDataPacket[]).map(result => result.answer_id);
 
