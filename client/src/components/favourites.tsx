@@ -69,7 +69,7 @@ export class Favourites extends Component {
     console.log(answerId);
     
     service
-    .deleteFavouriteRelation(answerId, this.user.user_id)
+    .handleFavouriteRelation(answerId, this.user.user_id)
     .then(() =>  Alert.success('Favourite deleted'))
     .then(() => this.mounted())
   }
