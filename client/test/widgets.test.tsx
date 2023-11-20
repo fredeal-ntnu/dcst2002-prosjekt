@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { AllQuestions } from 'src/components/all-question'; // Adjust the import path as needed
-import { Column, Button, Card, MiniCard, InsideMiniCard, Link } from 'src/widgets';
+import { Column, Button, ButtonFavourite, ButtonUpvote, ButtonDownVote, ButtonCommentBuble, Card, MiniCard, InsideMiniCard, Link } from 'src/widgets';
+import { FavouriteIcon, UpvoteIcon, DownvoteIcon, CommentBubleIcon } from 'src/icons';
 import service from 'src/service'; // Adjust the import path as needed
 
 jest.mock('src/service'); // Mock the service module

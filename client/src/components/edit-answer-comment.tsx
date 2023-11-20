@@ -50,10 +50,11 @@ export class EditAnswerComment extends Component<{ match: { params: { id: number
   }
 
   save() {
+    console.log(this.connectedUser, this.answerComment.user_id)
     if(this.connectedUser == this.answerComment.user_id){
     service
       .updateAnswerComment(this.answerComment)
-      .then(() => history.goBack())
+     .then(() => history.goBack())
       .catch((error) => Alert.danger('Error saving answer comment: ' + error.message));
   }else{
     Alert.danger('You are not the owner of this comment');
@@ -61,10 +62,12 @@ export class EditAnswerComment extends Component<{ match: { params: { id: number
 }
 
   delete() {
+    console.log(this.connectedUser, this.answerComment.user_id)
+
     if(this.connectedUser == this.answerComment.user_id){
     service
     .deleteAnswerComment(this.answerComment.answer_comment_id)
-    .then(() => history.goBack())
+   .then(() => history.goBack())
     .catch((error) => Alert.danger('Error deleting answer comment: ' + error.message));
   }else{
     Alert.danger('You are not the owner of this comment');
