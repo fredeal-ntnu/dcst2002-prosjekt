@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { AllQuestions } from 'src/components/all-question'; // Adjust the import path as needed
-import { Column, Button } from 'src/widgets';
+import { Column, Button, Card, MiniCard, InsideMiniCard, Link } from 'src/widgets';
 import service from 'src/service'; // Adjust the import path as needed
 
 jest.mock('src/service'); // Mock the service module
@@ -83,6 +83,84 @@ describe('Button widget tests', () => {
 
 })
 
+describe('Card widget tests', () => {
+  test('Draws a card with title and body', () => {
+    const wrapper = shallow(<Card title="Test">Test</Card>);
+    expect(
+      wrapper.containsMatchingElement(
+        <div className="card">
+        <div className="card-body">
+          <h5 className="card-title">
+            Test
+          </h5>
+          <div className="card-text">
+            <div>
+              Test
+            </div>
+          </div>
+        </div>
+      </div>
+      )
+    ).toEqual(true);
+  })
+});
 
+describe('MiniCard widget tests', () => {
+  test('Draws a card with title and body', () => {
+    const wrapper = shallow(<MiniCard title="Test">Test</MiniCard>);
+    expect(
+      wrapper.containsMatchingElement(
+        <div className="card">
+        <div className="card-body">
+          <h5 className="card-title">
+            Test
+          </h5>
+          <div className="card-text">
+            <div>
+              Test
+            </div>
+          </div>
+        </div>
+      </div>
+      )
+    ).toEqual(true);
+  })
+});
+
+describe('MiniCard widget tests', () => {
+  test('Draws a card with title and body', () => {
+    const wrapper = shallow(<InsideMiniCard title="Test">Test</InsideMiniCard>);
+    expect(
+      wrapper.containsMatchingElement(
+        <div className="card">
+        <div className="card-body">
+          <h5 className="card-title">
+            Test
+          </h5>
+          <div className="card-text">
+            <div>
+              Test
+            </div>
+          </div>
+        </div>
+      </div>
+      )
+    ).toEqual(true);
+  })
+});
+
+describe('Navlink widget tests', () => {
+  test('Draws a navlink with text', () => {
+    const wrapper = shallow(<Link to="/test">Test</Link>);
+    console.log(wrapper.debug());
+    expect(
+      wrapper.containsMatchingElement(
+        <a className="nav-link" href="/test">
+          Test
+        </a>
+      )
+    ).toEqual(true);
+  });
+});
 
   
