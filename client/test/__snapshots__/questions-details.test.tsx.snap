@@ -1,0 +1,461 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Site renders Site renders correct 1`] = `
+<Fragment>
+  <Column
+    width={3}
+  >
+    <SideMenu
+      header="Menu"
+      items={
+        [
+          {
+            "label": "Questions",
+            "to": "/questions",
+          },
+          {
+            "label": "My Questions",
+            "to": "/myquestions",
+          },
+          {
+            "label": "My Favourite Answers",
+            "to": "/favourites",
+          },
+          {
+            "label": "New Question",
+            "to": "/createquestion",
+          },
+          {
+            "label": "Tags",
+            "to": "/tags",
+          },
+        ]
+      }
+    />
+  </Column>
+  <Card
+    title="Question"
+  >
+    <Card
+      title="Title"
+    />
+    <Card
+      title="Text"
+    />
+    <Row>
+      <Card
+        title="Tags"
+      >
+        test
+      </Card>
+    </Row>
+    <Row>
+      <Column
+        width={8}
+      >
+        <ButtonSuccess
+          onClick={[Function]}
+        >
+          Edit
+        </ButtonSuccess>
+      </Column>
+    </Row>
+  </Card>
+  <Row>
+    <Column
+      width={6}
+    >
+      <Card
+        title="Comments"
+      >
+        <Card
+          key="1"
+          title=""
+        >
+          <Row>
+            test
+          </Row>
+        </Card>
+      </Card>
+    </Column>
+    <Column
+      width={6}
+    >
+      <Card
+        title="Answers"
+      >
+        <FormSelect
+          onChange={[Function]}
+          value="all"
+        >
+          <option
+            value="all"
+          >
+            All Answers
+          </option>
+          <option
+            value="popular"
+          >
+            Most Popular Answers
+          </option>
+          <option
+            value="mostRecent"
+          >
+            Most Recent
+          </option>
+          <option
+            value="confirmed"
+          >
+            Confirmed Answers
+          </option>
+        </FormSelect>
+      </Card>
+    </Column>
+  </Row>
+</Fragment>
+`;
+
+exports[`switchcase switchcase confirmed 1`] = `
+<Fragment>
+  <Column
+    width={3}
+  >
+    <SideMenu
+      header="Menu"
+      items={
+        [
+          {
+            "label": "Questions",
+            "to": "/questions",
+          },
+          {
+            "label": "My Questions",
+            "to": "/myquestions",
+          },
+          {
+            "label": "My Favourite Answers",
+            "to": "/favourites",
+          },
+          {
+            "label": "New Question",
+            "to": "/createquestion",
+          },
+          {
+            "label": "Tags",
+            "to": "/tags",
+          },
+        ]
+      }
+    />
+  </Column>
+  <Card
+    title="Question"
+  >
+    <Card
+      title="Title"
+    />
+    <Card
+      title="Text"
+    />
+    <Row>
+      <Card
+        title="Tags"
+      >
+        test
+      </Card>
+    </Row>
+    <Row>
+      <Column
+        width={8}
+      >
+        <ButtonSuccess
+          onClick={[Function]}
+        >
+          Edit
+        </ButtonSuccess>
+      </Column>
+    </Row>
+  </Card>
+  <Row>
+    <Column
+      width={6}
+    >
+      <Card
+        title="Comments"
+      >
+        <Card
+          key="1"
+          title=""
+        >
+          <Row>
+            test
+          </Row>
+        </Card>
+      </Card>
+    </Column>
+    <Column
+      width={6}
+    >
+      <Card
+        title="Answers"
+      >
+        <FormSelect
+          onChange={[Function]}
+          value="confirmed"
+        >
+          <option
+            value="all"
+          >
+            All Answers
+          </option>
+          <option
+            value="popular"
+          >
+            Most Popular Answers
+          </option>
+          <option
+            value="mostRecent"
+          >
+            Most Recent
+          </option>
+          <option
+            value="confirmed"
+          >
+            Confirmed Answers
+          </option>
+        </FormSelect>
+      </Card>
+    </Column>
+  </Row>
+</Fragment>
+`;
+
+exports[`switchcase switchcase most recent 1`] = `
+<Fragment>
+  <Column
+    width={3}
+  >
+    <SideMenu
+      header="Menu"
+      items={
+        [
+          {
+            "label": "Questions",
+            "to": "/questions",
+          },
+          {
+            "label": "My Questions",
+            "to": "/myquestions",
+          },
+          {
+            "label": "My Favourite Answers",
+            "to": "/favourites",
+          },
+          {
+            "label": "New Question",
+            "to": "/createquestion",
+          },
+          {
+            "label": "Tags",
+            "to": "/tags",
+          },
+        ]
+      }
+    />
+  </Column>
+  <Card
+    title="Question"
+  >
+    <Card
+      title="Title"
+    />
+    <Card
+      title="Text"
+    />
+    <Row>
+      <Card
+        title="Tags"
+      >
+        test
+      </Card>
+    </Row>
+    <Row>
+      <Column
+        width={8}
+      >
+        <ButtonSuccess
+          onClick={[Function]}
+        >
+          Edit
+        </ButtonSuccess>
+      </Column>
+    </Row>
+  </Card>
+  <Row>
+    <Column
+      width={6}
+    >
+      <Card
+        title="Comments"
+      >
+        <Card
+          key="1"
+          title=""
+        >
+          <Row>
+            test
+          </Row>
+        </Card>
+      </Card>
+    </Column>
+    <Column
+      width={6}
+    >
+      <Card
+        title="Answers"
+      >
+        <FormSelect
+          onChange={[Function]}
+          value="mostRecent"
+        >
+          <option
+            value="all"
+          >
+            All Answers
+          </option>
+          <option
+            value="popular"
+          >
+            Most Popular Answers
+          </option>
+          <option
+            value="mostRecent"
+          >
+            Most Recent
+          </option>
+          <option
+            value="confirmed"
+          >
+            Confirmed Answers
+          </option>
+        </FormSelect>
+      </Card>
+    </Column>
+  </Row>
+</Fragment>
+`;
+
+exports[`switchcase switchcase popular 1`] = `
+<Fragment>
+  <Column
+    width={3}
+  >
+    <SideMenu
+      header="Menu"
+      items={
+        [
+          {
+            "label": "Questions",
+            "to": "/questions",
+          },
+          {
+            "label": "My Questions",
+            "to": "/myquestions",
+          },
+          {
+            "label": "My Favourite Answers",
+            "to": "/favourites",
+          },
+          {
+            "label": "New Question",
+            "to": "/createquestion",
+          },
+          {
+            "label": "Tags",
+            "to": "/tags",
+          },
+        ]
+      }
+    />
+  </Column>
+  <Card
+    title="Question"
+  >
+    <Card
+      title="Title"
+    />
+    <Card
+      title="Text"
+    />
+    <Row>
+      <Card
+        title="Tags"
+      >
+        test
+      </Card>
+    </Row>
+    <Row>
+      <Column
+        width={8}
+      >
+        <ButtonSuccess
+          onClick={[Function]}
+        >
+          Edit
+        </ButtonSuccess>
+      </Column>
+    </Row>
+  </Card>
+  <Row>
+    <Column
+      width={6}
+    >
+      <Card
+        title="Comments"
+      >
+        <Card
+          key="1"
+          title=""
+        >
+          <Row>
+            test
+          </Row>
+        </Card>
+      </Card>
+    </Column>
+    <Column
+      width={6}
+    >
+      <Card
+        title="Answers"
+      >
+        <FormSelect
+          onChange={[Function]}
+          value="popular"
+        >
+          <option
+            value="all"
+          >
+            All Answers
+          </option>
+          <option
+            value="popular"
+          >
+            Most Popular Answers
+          </option>
+          <option
+            value="mostRecent"
+          >
+            Most Recent
+          </option>
+          <option
+            value="confirmed"
+          >
+            Confirmed Answers
+          </option>
+        </FormSelect>
+      </Card>
+    </Column>
+  </Row>
+</Fragment>
+`;
