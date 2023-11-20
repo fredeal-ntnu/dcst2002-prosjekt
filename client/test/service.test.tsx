@@ -48,53 +48,47 @@ describe('Service', () => {
     user_id: 1,
   };
   const mockVote: Vote = { user_id: 1, answer_id: 1, vote_type: 1 };
-  const mockFavourite: Favourite = { answer_id: 1, user_id: 1 };
-  const mockTagQuestionRelation: Tag_Question_Relation = {
+const mockFavourite: Favourite = { answer_id: 1, user_id: 1 };
+const mockTagQuestionRelation: Tag_Question_Relation = {
     tag_id: 1,
     question_id: 1,
-  };
+};
 
-  // Mock axios.get implementation
-  axios.get.mockImplementation((url) => Promise.resolve({ data: [mockTag] }));
+// Mock axios.get implementation
+jest.fn().mockImplementation((url: string, data: any) => Promise.resolve({ data: mockTagQuestionRelation }));
 
-  // Mock axios.post implementation
-  axios.post.mockImplementation((url, data) => Promise.resolve({ data: mockTagQuestionRelation }));
+// Mock axios.post implementation
+axios.put = jest.fn().mockImplementation((url: string, data: any) => Promise.resolve({ data }));
 
-  // Mock axios.post implementation
-  axios.post.mockImplementation((url, data) => Promise.resolve({ data }));
+// Mock axios.get implementation
+axios.get = jest.fn().mockImplementation((url: string) => Promise.resolve({ data: [] }));
 
-  // Mock axios.get implementation
-  axios.get.mockImplementation((url) => Promise.resolve({ data: [] }));
+// Mock axios.delete implementation
+axios.delete = jest.fn().mockImplementation((url) => Promise.resolve({ data: {} }));
 
-  // Mock axios.put implementation
-  axios.put.mockImplementation((url, data) => Promise.resolve({ data }));
+// Mock async axios.get implementation
+axios.get = jest.fn().mockResolvedValue({ data: {} });
+(axios.get as jest.Mock).mockImplementation((url: string) => Promise.resolve({ data: mockVote }));
 
-  // Mock axios.delete implementation
-  axios.delete.mockImplementation((url) => Promise.resolve({ data: {} }));
+// Mock axios.get and axios.post implementation for getMe and logOut
+(axios.get as jest.Mock).mockImplementation((url: string) => Promise.resolve({ data: {} }));
+(axios.post as jest.Mock).mockImplementation((url: string) => Promise.resolve({ status: 200 }));
 
-  // Mock async axios.get implementation
-  axios.get.mockResolvedValue({ data: {} });
-  axios.get.mockImplementation((url) => Promise.resolve({ data: mockVote }));
-
-  // Mock axios.get and axios.post implementation for getMe and logOut
-  axios.get.mockImplementation((url) => Promise.resolve({ data: {} }));
-  axios.post.mockImplementation((url) => Promise.resolve({ status: 200 }));
-
-  axios.get.mockImplementation((url) => {
+axios.get = jest.fn<any, any>((url) => {
     if (url.includes('/questions/')) {
-      return Promise.resolve({ data: [mockTagQuestionRelation] });
+        return Promise.resolve({ data: [mockTagQuestionRelation] });
     } else if (url === '/question/:id') {
-      return Promise.resolve({ data: [mockTagQuestionRelation] });
+        return Promise.resolve({ data: [mockTagQuestionRelation] });
     } else if (url.includes('/users/')) {
-      return Promise.resolve({ data: mockUser });
+        return Promise.resolve({ data: mockUser });
     } else if (url.includes('/answers/')) {
-      return Promise.resolve({ data: mockAnswer });
+        return Promise.resolve({ data: mockAnswer });
     } else if (url.includes('/user/')) {
-      return Promise.resolve({ data: [mockAnswer] });
+        return Promise.resolve({ data: [mockAnswer] });
     } else {
-      return Promise.resolve({ data: {} });
+        return Promise.resolve({ data: {} });
     }
-  });
+});
 
   describe('createVote', () => {
     it('should create a vote', async () => {
@@ -107,43 +101,44 @@ describe('Service', () => {
     });
   });
 
-  describe('getAllQuestions', () => {
+describe('getAllQuestions', () => {
     it('should get all questions', async () => {
-      axios.get.mockResolvedValueOnce({ data: [mockQuestion] });
-      const result = await service.getAllQuestions();
-      expect(result).toEqual([mockQuestion]);
+        jest.spyOn(axios, 'get').mockResolvedValueOnce({ data: [mockQuestion] });
+        const result = await service.getAllQuestions();
+        expect(result).toEqual([mockQuestion]);
     });
-  });
-  describe('getQuestion', () => {
+});
+
+describe('getQuestion', () => {
     it('should get a question by id', async () => {
-      axios.get.mockResolvedValueOnce({ data: mockQuestion });
-      const result = await service.getQuestion(mockQuestion.question_id);
-      expect(result).toEqual(mockQuestion);
+        jest.spyOn(axios, 'get').mockResolvedValueOnce({ data: mockQuestion });
+        const result = await service.getQuestion(mockQuestion.question_id);
+        expect(result).toEqual(mockQuestion);
     });
-  });
+});
 
-  describe('getTopFiveQuestions', () => {
+describe('getTopFiveQuestions', () => {
     it('should get the top five questions', async () => {
-      axios.get.mockResolvedValueOnce({ data: [mockQuestion] });
-      const result = await service.getTopFiveQuestions();
-      expect(result).toEqual([mockQuestion]);
+        jest.spyOn(axios, 'get').mockResolvedValueOnce({ data: [mockQuestion] });
+        const result = await service.getTopFiveQuestions();
+        expect(result).toEqual([mockQuestion]);
     });
-  });
+});
 
-  describe('getUserTopFiveQuestions', () => {
+describe('getUserTopFiveQuestions', () => {
     it('should get the top five questions for a user', async () => {
-      axios.get.mockResolvedValueOnce({ data: [mockQuestion] });
-      const result = await service.getUserTopFiveQuestions(mockQuestion.user_id);
-      expect(result).toEqual([mockQuestion]);
+        jest.spyOn(axios, 'get').mockResolvedValueOnce({ data: [mockQuestion] });
+        const result = await service.getUserTopFiveQuestions(mockQuestion.user_id);
+        expect(result).toEqual([mockQuestion]);
     });
-  });
+});
 
-  describe('getUnansweredQuestions', () => {
+describe('getUnansweredQuestions', () => {
     it('should get all unanswered questions', async () => {
-      const result = await service.getUnansweredQuestions();
-      expect(result).toEqual([mockQuestion]);
+        const result = await service.getUnansweredQuestions();
+        expect(result).toEqual([mockQuestion]);
     });
-  });
+});
 
   describe('getUserUnansweredQuestions', () => {
     it('should get unanswered questions for a user', async () => {
@@ -152,20 +147,20 @@ describe('Service', () => {
     });
   });
 
-  describe('updateQuestion', () => {
+describe('updateQuestion', () => {
     it('should update a question', async () => {
-      axios.put.mockResolvedValueOnce({ data: mockQuestion });
-      const result = await service.updateQuestion(mockQuestion);
-      expect(result).toEqual(mockQuestion);
+        jest.fn().mockResolvedValueOnce({ data: mockQuestion });
+        const result = await service.updateQuestion(mockQuestion);
+        expect(result).toEqual(mockQuestion);
     });
-  });
+});
 
-  describe('createQuestion', () => {
+describe('createQuestion', () => {
     it('should create a question', async () => {
-      const result = await service.createQuestion('Test Title', 'Test Text', 1);
-      expect(result).toEqual(1);
+        const result = await service.createQuestion('Test Title', 'Test Text', 1);
+        expect(result).toEqual(1);
     });
-  });
+});
 
   describe('deleteQuestion', () => {
     it('should delete a question', async () => {
@@ -360,38 +355,48 @@ describe('Service', () => {
     });
   });
 
-  describe('getMe', () => {
+jest.mock('axios', () => ({
+    get: jest.fn(),
+}));
+
+describe('getMe', () => {
     it('should get user information for the logged-in user', async () => {
-      const result = await service.getMe();
-      expect(result).toEqual({});
+        (axios.get as jest.Mock).mockResolvedValueOnce({ data: {} });
+        const result = await service.getMe();
+        expect(result).toEqual({});
     });
 
     it('should throw an error if getMe fails', async () => {
-      axios.get.mockImplementationOnce(() => Promise.reject(new Error('Network Error')));
+        (axios.get as jest.Mock).mockRejectedValueOnce(new Error('Network Error'));
 
-      await expect(service.getMe()).rejects.toThrowError('getMe failed');
+        await expect(service.getMe()).rejects.toThrowError('getMe failed');
     });
-  });
+});
 
-  describe('logOut', () => {
+jest.mock('axios', () => ({
+    post: jest.fn(),
+}));
+
+describe('logOut', () => {
     it('should log the user out', async () => {
-      const result = await service.logOut();
-      expect(result).toEqual(200);
+        (axios.post as jest.Mock).mockResolvedValueOnce({ status: 200 });
+        const result = await service.logOut();
+        expect(result).toEqual(200);
     });
 
     it('should throw an error if logOut fails', async () => {
-      axios.post.mockImplementationOnce(() => Promise.reject(new Error('Network Error')));
+        (axios.post as jest.Mock).mockRejectedValueOnce(new Error('Network Error'));
 
-      await expect(service.logOut()).rejects.toThrowError('logout failed');
+        await expect(service.logOut()).rejects.toThrowError('logout failed');
     });
-  });
+});
 
-  describe('getAllFavouriteAnswersByUserId', () => {
+describe('getAllFavouriteAnswersByUserId', () => {
     it('should get all favorite answers for a user', async () => {
-      const result = await service.getAllFavouriteAnswersByUserId(1);
-      expect(result).toEqual(mockAnswer);
+        const result = await service.getAllFavouriteAnswersByUserId(1);
+        expect(result).toEqual(mockAnswer);
     });
-  });
+});
 
   describe('handleFavouriteRelation', () => {
     it('should create or delete a favorite relation', async () => {
