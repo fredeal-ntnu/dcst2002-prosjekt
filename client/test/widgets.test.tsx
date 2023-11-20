@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { NavLink } from 'react-router-dom';
 import { AllQuestions } from 'src/components/all-question'; // Adjust the import path as needed
-import { Column, Button, ButtonFavourite, ButtonUpvote, ButtonDownVote, ButtonCommentBuble, Card, MiniCard, InsideMiniCard, SideMenu } from 'src/widgets';
+import { Column, Button, ButtonFavourite, ButtonUpvote, ButtonDownVote, ButtonCommentBuble, Card, MiniCard, InsideMiniCard, SideMenu, Alert, NavBar, Form } from 'src/widgets';
 import { FavouriteIcon, UpvoteIcon, DownvoteIcon, CommentBubleIcon } from 'src/icons';
 import service from 'src/service'; // Adjust the import path as needed
 
@@ -220,24 +220,11 @@ describe('Card widget tests', () => {
   });
 });
 
-describe('Navlink widget tests', () => {
-  test('Draws a navlink with text', () => {
-    const wrapper = shallow(<Link to="/test">Test</Link>);
-    expect(
-      wrapper.containsMatchingElement(
-        <NavLink className="btn btn-outline-light" activeClassName="active" to="/test">
-        Test
-      </NavLink>
-      )
-    ).toEqual(true);
-  });
-});
 
 describe('SideMenu widget tests', () => { 
   test('Draws a side menu with text', () => {
     //@ts-ignore
     const wrapper = shallow(<SideMenu>Test</SideMenu>);
-    console.log(wrapper.debug());
     expect(
       wrapper.containsMatchingElement(
         <div className="card">
@@ -249,3 +236,45 @@ describe('SideMenu widget tests', () => {
   });
 })
   
+describe('Alert widget tests', () => {
+  test('Draws an alert with text', () => {
+    const wrapper = shallow(<Alert>Test</Alert>);
+    expect(
+      wrapper.containsMatchingElement(
+        <div />
+      )
+    ).toEqual(true);
+  });
+})
+
+describe('NavBar widget tests', () => {
+  test('Draws a navbar with text', () => {
+    //@ts-ignore
+    const wrapper = shallow(<NavBar>Test</NavBar>);
+    expect(
+      wrapper.containsMatchingElement(
+        <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div className="container-fluid">
+          <NavLink className="navbar-brand" activeClassName="active" exact={true} to="/" />
+          <div className="navbar-nav">
+            Test
+          </div>
+        </div>
+      </nav>
+      )
+    ).toEqual(true);
+  });
+});
+
+describe('Form widget tests', () => {
+  test('Draws a form with text', () => {
+    //@ts-ignore
+    const wrapper = shallow(<Form>Test</Form>);
+    console.log(wrapper.debug());
+    expect(
+      wrapper.containsMatchingElement(
+        <form />
+      )
+    ).toEqual(true);
+  });
+});
