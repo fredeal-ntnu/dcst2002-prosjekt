@@ -15,7 +15,6 @@ answerCommentRouter.get('/answers/:id/comments', (request, response) => {
 );
 
 //create new answer comment
-//not tested yet
 answerCommentRouter.post('/answer/:id/comments', (request, response) => {
   const data = request.body;
   if (typeof data.text === 'string' && data.text.length > 0) {
