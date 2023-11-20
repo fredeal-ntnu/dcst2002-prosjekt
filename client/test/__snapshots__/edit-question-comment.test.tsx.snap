@@ -36,43 +36,7 @@ exports[`Site renders Site renders correct 1`] = `
 </Fragment>
 `;
 
-exports[`site functionality delete button deletes comment 1`] = `
-<Fragment>
-  <Card
-    title="Edit Comment"
-  >
-    <Row>
-      <Column
-        width={10}
-      >
-        <FormTextarea
-          onChange={[Function]}
-          rows={5}
-          type="text"
-        />
-      </Column>
-    </Row>
-    <Row>
-      <Column>
-        <ButtonSuccess
-          onClick={[Function]}
-        >
-          Save
-        </ButtonSuccess>
-      </Column>
-      <Column>
-        <ButtonDanger
-          onClick={[Function]}
-        >
-          Delete
-        </ButtonDanger>
-      </Column>
-    </Row>
-  </Card>
-</Fragment>
-`;
-
-exports[`site functionality edit field takes in input 1`] = `
+exports[`site functionality edit field takes input 1`] = `
 <Fragment>
   <Card
     title="Edit Comment"

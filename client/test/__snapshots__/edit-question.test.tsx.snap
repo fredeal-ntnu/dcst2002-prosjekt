@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Site renders Site renders correct 1`] = `
+<Fragment>
+  <Row>
+    <Card
+      title="Edit Question"
+    >
+      <Row>
+        <Column>
+          <FormInput
+            onChange={[Function]}
+            placeholder="Title"
+            type="text"
+          />
+        </Column>
+        <Column>
+          <FormTextarea
+            onChange={[Function]}
+            placeholder="Text"
+            rows={5}
+            type="text"
+          />
+        </Column>
+      </Row>
+    </Card>
+  </Row>
+  <Row>
+    <Column
+      width={6}
+    >
+      <ButtonSuccess
+        onClick={[Function]}
+      >
+        Save
+      </ButtonSuccess>
+    </Column>
+    <Column
+      width={6}
+    >
+      <ButtonDanger
+        onClick={[Function]}
+      >
+        Delete
+      </ButtonDanger>
+    </Column>
+  </Row>
+</Fragment>
+`;
+
+exports[`site functionality text edit field takes input 1`] = `
+<Fragment>
+  <Row>
+    <Card
+      title="Edit Question"
+    >
+      <Row>
+        <Column>
+          <FormInput
+            onChange={[Function]}
+            placeholder="Title"
+            type="text"
+            value=""
+          />
+        </Column>
+        <Column>
+          <FormTextarea
+            onChange={[Function]}
+            placeholder="Text"
+            rows={5}
+            type="text"
+            value="test"
+          />
+        </Column>
+      </Row>
+    </Card>
+  </Row>
+  <Row>
+    <Column
+      width={6}
+    >
+      <ButtonSuccess
+        onClick={[Function]}
+      >
+        Save
+      </ButtonSuccess>
+    </Column>
+    <Column
+      width={6}
+    >
+      <ButtonDanger
+        onClick={[Function]}
+      >
+        Delete
+      </ButtonDanger>
+    </Column>
+  </Row>
+</Fragment>
+`;
+
+exports[`site functionality title edit field takes input 1`] = `
+<Fragment>
+  <Row>
+    <Card
+      title="Edit Question"
+    >
+      <Row>
+        <Column>
+          <FormInput
+            onChange={[Function]}
+            placeholder="Title"
+            type="text"
+            value="test"
+          />
+        </Column>
+        <Column>
+          <FormTextarea
+            onChange={[Function]}
+            placeholder="Text"
+            rows={5}
+            type="text"
+            value=""
+          />
+        </Column>
+      </Row>
+    </Card>
+  </Row>
+  <Row>
+    <Column
+      width={6}
+    >
+      <ButtonSuccess
+        onClick={[Function]}
+      >
+        Save
+      </ButtonSuccess>
+    </Column>
+    <Column
+      width={6}
+    >
+      <ButtonDanger
+        onClick={[Function]}
+      >
+        Delete
+      </ButtonDanger>
+    </Column>
+  </Row>
+</Fragment>
+`;

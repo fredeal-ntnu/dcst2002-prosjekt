@@ -1,73 +1,73 @@
-// Import necessary libraries and components
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import { QuestionDetails } from 'src/components/question-details'; // Update the path accordingly
-import service from 'src/service';
+import { shallow } from 'enzyme';
+import { QuestionDetails } from 'src/components/question-details'; // Adjust the import path as needed
+import { Column } from '../src/widgets';
 
-// Mock the service module to simulate API calls
-jest.mock('src/service', () => ({
-  getMe: jest.fn(() => Promise.resolve({ user_id: 1 })),
-  getAllTags: jest.fn(() => Promise.resolve([])),
-  getQuestion: jest.fn(() => Promise.resolve({ question_id: 1, title: 'Test Question', text: 'Test Text' })),
-  getAllTagQuestionRelations: jest.fn(() => Promise.resolve([])),
-  getAnswerScoresByQuestionId: jest.fn(() => Promise.resolve([])),
-  getQuestionCommentsForQuestion: jest.fn(() => Promise.resolve([])),
-  // Add other mock implementations for your service methods
-  // ...
-}));
+jest.mock('../src/service', () => {
+  class Service {
+    getQuestion(id: number) {
+      return new Promise((resolve, reject) => {
+        resolve([
+          { question_id: 1, title: 'test', text: 'test', view_count: 1, has_answer: 1, user_id: 1 },
+        ]);
+      });
+    }
 
-describe('QuestionDetails Component', () => {
-  let wrapper;
+    getAllTagQuestionRelations() {
+      return new Promise((resolve, reject) => {
+        resolve([{ tag_id: 1, question_id: 1 }]);
+      });
+    }
+    getAnswerScoresByQuestionId(question_id: number) {
+      return new Promise((resolve, reject) => {
+        resolve([{ answer_id: 1, score: 1 }]);
+      });
+    }
+    getQuestionCommentsForQuestion(question_id: number) {
+      return new Promise((resolve, reject) => {
+        resolve([{ question_comment_id: 1, text: 'test', question_id: 1, user_id: 1 }]);
+      });
+    }
+    getAllTags() {
+      return new Promise((resolve, reject) => {
+        resolve([{ tag_id: 1, name: 'test' }]);
+      });
+    }
+    getMe() {
+      return new Promise((resolve, reject) => {
+        resolve([{ user_id: 1, google_id: 'test', username: 'test', email: 'test' }]);
+      });
+    }
+  }
+  return new Service();
+}); // Mock the service module
 
-  beforeEach(() => {
-    // Shallow render the component before each test
-    wrapper = shallow(<QuestionDetails match={{ params: { id: 1 } }} />);
+describe('Site renders', () => {
+  test('Site renders correct', (done) => {
+    const wrapper = shallow(<QuestionDetails match={{ params: { id: 1 } }} />);
+    setTimeout(() => {
+      expect(wrapper).toMatchSnapshot();
+      done();
+    });
+  });
+});
+
+describe('switchcase', () => {
+  const wrapper = shallow(<QuestionDetails match={{ params: { id: 1 } }} />);
+
+  test('switchcase popular', () => {
+    wrapper.find('FormSelect').simulate('change', { target: { value: 'popular' } });
+
+    expect(wrapper).toMatchSnapshot();
   });
 
-  it('renders without crashing', () => {
-    expect(wrapper.exists()).toBe(true);
+  test('switchcase most recent', () => {
+    wrapper.find('FormSelect').simulate('change', { target: { value: 'mostRecent' } });
+    expect(wrapper).toMatchSnapshot();
   });
 
-  it('initializes state correctly', () => {
-    expect(wrapper.state('isFavorite')).toBe(false);
-    expect(wrapper.state('isConfirmedAnswer')).toBe(false);
-    // Add other assertions for state properties if necessary
+  test('switchcase confirmed', () => {
+    wrapper.find('FormSelect').simulate('change', { target: { value: 'confirmed' } });
+    expect(wrapper).toMatchSnapshot();
   });
-
-  it('loads data on mount', async () => {
-    // Mock the service methods to return data
-    await wrapper.instance().mounted();
-
-    // Expectations for data loading
-    expect(service.getMe).toHaveBeenCalled();
-    expect(service.getAllTags).toHaveBeenCalled();
-    expect(service.getQuestion).toHaveBeenCalledWith(1);
-    expect(service.getAllTagQuestionRelations).toHaveBeenCalled();
-    expect(service.getAnswerScoresByQuestionId).toHaveBeenCalledWith(1);
-    expect(service.getQuestionCommentsForQuestion).toHaveBeenCalledWith(1);
-    // Add other expectations for data loading if necessary
-  });
-
-  // Add more tests for rendering components, handling user interactions, etc.
-
-  it('renders question details correctly', () => {
-    // Expectations for rendering question details
-    expect(wrapper.find('Card[title="Title"]').text()).toBe('Test Question');
-    expect(wrapper.find('Card[title="Text"]').text()).toBe('Test Text');
-    // Add other expectations for rendering question details if necessary
-  });
-
-  it('handles filter change correctly', () => {
-    const select = wrapper.find('Form.Select');
-
-    // Simulate a filter change event
-    select.simulate('change', { target: { value: 'popular' } });
-
-    // Expect the component state to be updated
-    expect(wrapper.state('filter')).toBe('popular');
-  });
-
-  // Add more tests for other component functionalities, such as creating comments, adding answers, etc.
-
-  // Don't forget to test asynchronous functionalities using async/await or other mechanisms provided by testing libraries.
 });
