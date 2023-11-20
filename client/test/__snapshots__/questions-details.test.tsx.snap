@@ -36,17 +36,15 @@ exports[`Site renders Site renders correct 1`] = `
   <Card
     title="Question"
   >
-    <Card />
-    <Row>
-      <Card
-        title="Tags"
-      >
-        test
-      </Card>
-    </Row>
+    <MiniCard />
+    <MiniCard
+      title="Tags"
+    >
+      test
+    </MiniCard>
     <Row>
       <Column
-        width={8}
+        width={1}
       >
         <ButtonSuccess
           onClick={[Function]}
@@ -58,7 +56,7 @@ exports[`Site renders Site renders correct 1`] = `
   </Card>
   <Row>
     <Column
-      width={6}
+      width={5}
     >
       <Card
         title="Comments"
@@ -74,7 +72,7 @@ exports[`Site renders Site renders correct 1`] = `
       </Card>
     </Column>
     <Column
-      width={6}
+      width={5}
     >
       <Card
         title="Answers"
@@ -146,17 +144,15 @@ exports[`switchcase switchcase confirmed 1`] = `
   <Card
     title="Question"
   >
-    <Card />
-    <Row>
-      <Card
-        title="Tags"
-      >
-        test
-      </Card>
-    </Row>
+    <MiniCard />
+    <MiniCard
+      title="Tags"
+    >
+      test
+    </MiniCard>
     <Row>
       <Column
-        width={8}
+        width={1}
       >
         <ButtonSuccess
           onClick={[Function]}
@@ -168,7 +164,7 @@ exports[`switchcase switchcase confirmed 1`] = `
   </Card>
   <Row>
     <Column
-      width={6}
+      width={5}
     >
       <Card
         title="Comments"
@@ -184,7 +180,7 @@ exports[`switchcase switchcase confirmed 1`] = `
       </Card>
     </Column>
     <Column
-      width={6}
+      width={5}
     >
       <Card
         title="Answers"
@@ -256,17 +252,15 @@ exports[`switchcase switchcase most recent 1`] = `
   <Card
     title="Question"
   >
-    <Card />
-    <Row>
-      <Card
-        title="Tags"
-      >
-        test
-      </Card>
-    </Row>
+    <MiniCard />
+    <MiniCard
+      title="Tags"
+    >
+      test
+    </MiniCard>
     <Row>
       <Column
-        width={8}
+        width={1}
       >
         <ButtonSuccess
           onClick={[Function]}
@@ -278,7 +272,7 @@ exports[`switchcase switchcase most recent 1`] = `
   </Card>
   <Row>
     <Column
-      width={6}
+      width={5}
     >
       <Card
         title="Comments"
@@ -294,7 +288,7 @@ exports[`switchcase switchcase most recent 1`] = `
       </Card>
     </Column>
     <Column
-      width={6}
+      width={5}
     >
       <Card
         title="Answers"
@@ -366,17 +360,15 @@ exports[`switchcase switchcase popular 1`] = `
   <Card
     title="Question"
   >
-    <Card />
-    <Row>
-      <Card
-        title="Tags"
-      >
-        test
-      </Card>
-    </Row>
+    <MiniCard />
+    <MiniCard
+      title="Tags"
+    >
+      test
+    </MiniCard>
     <Row>
       <Column
-        width={8}
+        width={1}
       >
         <ButtonSuccess
           onClick={[Function]}
@@ -388,7 +380,7 @@ exports[`switchcase switchcase popular 1`] = `
   </Card>
   <Row>
     <Column
-      width={6}
+      width={5}
     >
       <Card
         title="Comments"
@@ -404,7 +396,7 @@ exports[`switchcase switchcase popular 1`] = `
       </Card>
     </Column>
     <Column
-      width={6}
+      width={5}
     >
       <Card
         title="Answers"
