@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { AllQuestions } from 'src/components/all-question'; // Adjust the import path as needed
-import { Column, Button, ButtonFavourite } from 'src/widgets';
+import { Column, Button, ButtonFavourite, ButtonUpvote, ButtonDownVote, ButtonCommentBuble } from 'src/widgets';
+import { FavouriteIcon, UpvoteIcon, DownvoteIcon, CommentBubleIcon } from 'src/icons';
 import service from 'src/service'; // Adjust the import path as needed
 
 jest.mock('src/service'); // Mock the service module
@@ -89,12 +90,68 @@ describe('Button widget tests', () => {
     expect(
       wrapper.containsMatchingElement(
         <button type="button" className="btn btn-danger">
+          <FavouriteIcon />
           Test
         </button>
       )
     ).toEqual(true);
   }
   )
+test('Draws a button with upvote type', () => {
+  //@ts-ignore
+  const wrapper = shallow(<ButtonUpvote>Test</ButtonUpvote>);
+
+  expect(
+    wrapper.containsMatchingElement(
+      <button type="button" className="btn btn-light">
+        <UpvoteIcon />
+        Test
+      </button>
+    )
+  ).toEqual(true);
+})
+
+test('Draws a button with downvote type', () => {
+  //@ts-ignore
+  const wrapper = shallow(<ButtonDownVote>Test</ButtonDownVote>);
+
+  expect(
+    wrapper.containsMatchingElement(
+      <button type="button" className="btn btn-light">
+        <DownvoteIcon />
+        Test
+      </button>
+    )
+  ).toEqual(true);
+})
+
+test('Draws a button with comment buble type', () => {
+  //@ts-ignore
+  const wrapper = shallow(<ButtonCommentBuble>Test</ButtonCommentBuble>);
+  console.log(wrapper.debug())
+
+  expect(
+    wrapper.containsMatchingElement(
+      <button type="button" className="btn btn-light">
+        <CommentBubleIcon />
+        Test
+      </button>
+    )
+  ).toEqual(true);
+})
+
+test('Draws a button with light type', () => {
+  //@ts-ignore
+  const wrapper = shallow(<Button.Light>Test</Button.Light>);
+
+  expect(
+    wrapper.containsMatchingElement(
+      <button type="button" className="btn btn-light">
+        Test
+      </button>
+    )
+  ).toEqual(true);
+})
 })
 
 
