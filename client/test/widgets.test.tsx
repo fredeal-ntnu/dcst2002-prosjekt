@@ -82,6 +82,76 @@ describe('Button widget tests', () => {
     ).toEqual(true);
   });
 
+  test('Draws a button with favourite type', () => {
+    //@ts-ignore
+    const wrapper = shallow(<ButtonFavourite>Test</ButtonFavourite>);
+    console.log(wrapper.debug())
+
+    expect(
+      wrapper.containsMatchingElement(
+        <button type="button" className="btn btn-danger">
+          <FavouriteIcon />
+          Test
+        </button>
+      )
+    ).toEqual(true);
+  }
+  )
+test('Draws a button with upvote type', () => {
+  //@ts-ignore
+  const wrapper = shallow(<ButtonUpvote>Test</ButtonUpvote>);
+
+  expect(
+    wrapper.containsMatchingElement(
+      <button type="button" className="btn btn-light">
+        <UpvoteIcon />
+        Test
+      </button>
+    )
+  ).toEqual(true);
+})
+
+test('Draws a button with downvote type', () => {
+  //@ts-ignore
+  const wrapper = shallow(<ButtonDownVote>Test</ButtonDownVote>);
+
+  expect(
+    wrapper.containsMatchingElement(
+      <button type="button" className="btn btn-light">
+        <DownvoteIcon />
+        Test
+      </button>
+    )
+  ).toEqual(true);
+})
+
+test('Draws a button with comment buble type', () => {
+  //@ts-ignore
+  const wrapper = shallow(<ButtonCommentBuble>Test</ButtonCommentBuble>);
+  console.log(wrapper.debug())
+
+  expect(
+    wrapper.containsMatchingElement(
+      <button type="button" className="btn btn-light">
+        <CommentBubleIcon />
+        Test
+      </button>
+    )
+  ).toEqual(true);
+})
+
+test('Draws a button with light type', () => {
+  //@ts-ignore
+  const wrapper = shallow(<Button.Light>Test</Button.Light>);
+
+  expect(
+    wrapper.containsMatchingElement(
+      <button type="button" className="btn btn-light">
+        Test
+      </button>
+    )
+  ).toEqual(true);
+})
 })
 
 describe('Card widget tests', () => {
