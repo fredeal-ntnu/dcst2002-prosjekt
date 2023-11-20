@@ -2,13 +2,32 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { NavLink } from 'react-router-dom';
 import { AllQuestions } from 'src/components/all-question'; // Adjust the import path as needed
-import { Column, Button, ButtonFavourite, ButtonUpvote, ButtonDownVote, ButtonCommentBuble, Card, MiniCard, InsideMiniCard, SideMenu, Alert, NavBar, Form } from 'src/widgets';
-import { FavouriteIcon, UpvoteIcon, DownvoteIcon, CommentBubleIcon } from 'src/icons';
+import { Row, Column, Button, ButtonFavourite, ButtonUpvote, ButtonDownVote, ButtonCommentBuble,
+   Card, QuestionCard, AnswerCard, MiniCard, InsideMiniCard, SideMenu, Alert, NavBar, FormTextarea, FormInput, FormLabel, FormCheckbox, FormSelect, Search } from 'src/widgets';
+import { FavouriteIcon, UpvoteIcon, DownvoteIcon, CommentBubleIcon, EyeIcon } from 'src/icons';
 import service from 'src/service'; // Adjust the import path as needed
 
 jest.mock('src/service'); // Mock the service module
+jest.mock('src/service', () => ({
+  getQuestionByAnswerId: jest.fn().mockResolvedValue({
+    question_id: '1',
+    title: 'Mocked Question Title',
 
+  }),
+}));
 
+describe('Row widget test', () => {
+  test('Draws a row without properties', () => {
+    const wrapper = shallow(<Row>Test</Row>);
+    expect(
+      wrapper.containsMatchingElement(
+        <div className="row">
+          Test
+        </div>
+      )
+    ).toEqual(true);
+  });
+});
 
 describe('Column widget test', () => {
 
@@ -176,6 +195,63 @@ describe('Card widget tests', () => {
     ).toEqual(true);
   });
 
+  test('Draws a card with title and body', () => {
+    // Mock question prop
+    const mockQuestion = {
+      question_id: '1',
+      title: 'Test Title',
+      text: 'Test Text',
+      view_count: 100
+    };
+  
+    // Use the mock question prop in your test component
+    // @ts-ignore
+    const wrapper = shallow(<QuestionCard question={mockQuestion} />);
+  
+    expect(
+
+      wrapper.containsMatchingElement(
+        // @ts-ignore
+        <Card>
+        <Row>
+          <Column>
+            Test Text
+          </Column>
+          <Column width={2} right={true}>
+            <EyeIcon/>
+            100
+          </Column>
+        </Row>
+      </Card>
+      )
+    ).toEqual(true);
+  });
+
+  test('Draws a card with title and body', async () => {
+    const mockAnswer = {
+      answer_id: '1',
+      text: 'Test Text',
+    };
+  //@ts-ignore
+    const wrapper = shallow(<AnswerCard answer={mockAnswer} />);
+    console.log(wrapper.debug());
+    // You might need to wait for the component to update after the mock service call
+    await wrapper.update();
+  
+    expect(
+      wrapper.containsMatchingElement(
+        // @ts-ignore
+        <Card>
+          <Row>
+            <Column>
+              Test Text
+            </Column>
+          </Row>
+        </Card>
+      )
+    ).toEqual(true);
+  });
+  
 
   test('Draws a card with title and body', () => {
     const wrapper = shallow(<MiniCard title="Test">Test</MiniCard>);
@@ -269,11 +345,75 @@ describe('NavBar widget tests', () => {
 describe('Form widget tests', () => {
   test('Draws a form with text', () => {
     //@ts-ignore
-    const wrapper = shallow(<Form>Test</Form>);
-    console.log(wrapper.debug());
+    const wrapper = shallow(<FormTextarea>Test</FormTextarea>);
     expect(
       wrapper.containsMatchingElement(
-        <form />
+        <textarea className="form-control">
+        Test
+      </textarea>
+      )
+    ).toEqual(true);
+  });
+
+
+  test('Draws a input with text', () => {
+    //@ts-ignore
+    const wrapper = shallow(<FormInput>Test</FormInput>);
+    expect(
+      wrapper.containsMatchingElement(
+        <input className="form-control">
+        Test
+      </input>
+      )
+    ).toEqual(true);
+  });
+
+  test('Draws a form with text', () => {
+    //@ts-ignore
+    const wrapper = shallow(<FormLabel>Test</FormLabel>);
+    expect(
+      wrapper.containsMatchingElement(
+        <label className="col-form-label">
+        Test
+      </label>
+      )
+    ).toEqual(true);
+  });
+
+  test('Draws a textbox with text', () => {
+    //@ts-ignore
+    const wrapper = shallow(<FormCheckbox>Test</FormCheckbox>);
+    expect(
+      wrapper.containsMatchingElement(
+        <input className="form-check-input" type="checkbox">
+        Test
+      </input>
+      )
+    ).toEqual(true);
+  });
+
+  test('Draws a form with text', () => {
+    //@ts-ignore
+    const wrapper = shallow(<FormSelect>Test</FormSelect>);
+    expect(
+      wrapper.containsMatchingElement(
+        <select className="form-select" aria-label="Default select example">
+        Test
+      </select>
+      )
+    ).toEqual(true);
+  });
+});
+
+describe('Search widget tests', () => {
+  test('Draws a search with text', () => {
+    //@ts-ignore
+    const wrapper = shallow(<Search>Test</Search>);
+    expect(
+      wrapper.containsMatchingElement(
+        <form className="form-inline d-flex align-items-center">
+        <input className="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search"/>
+      </form>
       )
     ).toEqual(true);
   });
