@@ -50,9 +50,6 @@ describe('site functionality', () => {
     })
   });
 
-
- 
-
 describe('switchcase', () => {
  
   const wrapper = shallow(<AllQuestions />);
