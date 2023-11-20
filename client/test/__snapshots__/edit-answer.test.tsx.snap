@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Site renders Site renders correct 1`] = `
+<Fragment>
+  <Row>
+    <Card
+      title="Edit Answer"
+    >
+      <Row>
+        <Column>
+          <FormTextarea
+            onChange={[Function]}
+            placeholder="Edit answer"
+            type="text"
+          />
+        </Column>
+      </Row>
+    </Card>
+  </Row>
+  <Row>
+    <Column
+      width={6}
+    >
+      <ButtonSuccess
+        onClick={[Function]}
+      >
+        Save
+      </ButtonSuccess>
+    </Column>
+    <Column
+      width={6}
+    >
+      <ButtonDanger
+        onClick={[Function]}
+      >
+        Delete
+      </ButtonDanger>
+    </Column>
+  </Row>
+</Fragment>
+`;
+
+exports[`site functionality edit field takes in input 1`] = `
+<Fragment>
+  <Row>
+    <Card
+      title="Edit Answer"
+    >
+      <Row>
+        <Column>
+          <FormTextarea
+            onChange={[Function]}
+            placeholder="Edit answer"
+            type="text"
+            value="test"
+          />
+        </Column>
+      </Row>
+    </Card>
+  </Row>
+  <Row>
+    <Column
+      width={6}
+    >
+      <ButtonSuccess
+        onClick={[Function]}
+      >
+        Save
+      </ButtonSuccess>
+    </Column>
+    <Column
+      width={6}
+    >
+      <ButtonDanger
+        onClick={[Function]}
+      >
+        Delete
+      </ButtonDanger>
+    </Column>
+  </Row>
+</Fragment>
+`;
