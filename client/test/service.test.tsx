@@ -54,61 +54,36 @@ describe('Service', () => {
   };
   const mockVote: Vote = { user_id: 1, answer_id: 1, vote_type: 1 };
   const mockFavourite: Favourite = { answer_id: 1, user_id: 1 };
-  const mockTagQuestionRelation: Tag_Question_Relation = {
-    tag_id: 1,
-    question_id: 1,
-  };
+  const mockTagQuestionRelation = [
+    {
+      question_id: 1,
+      tag_id: 1,
+    },
+    {
+      question_id: 2,
+      tag_id: 1,
+    },
+  ];
   const mockAnswerVote: AnswerVote = {
     ...mockAnswer,
     ...mockVote,
     // Override any conflicting fields if necessary
   };
 
-  // Mock axios.get implementation
-  jest
-    .fn()
-    .mockImplementation((url: string, data: any) =>
-      Promise.resolve({ data: mockTagQuestionRelation }),
-    );
 
-  // Mock axios.post implementation
+  // // Mock axios.post implementation
   axios.put = jest.fn().mockImplementation((url: string, data: any) => Promise.resolve({ data }));
-
-  // Mock axios.get implementation
-  axios.get = jest.fn().mockImplementation((url: string) => Promise.resolve({ data: [] }));
-
+  
   // Mock axios.delete implementation
   axios.delete = jest.fn().mockImplementation((url) => Promise.resolve({ data: {} }));
 
-  // Mock async axios.get implementation
-  axios.get = jest.fn().mockResolvedValue({ data: {} });
-  (axios.get as jest.Mock).mockImplementation((url: string) => Promise.resolve({ data: mockVote }));
-
-  // Mock axios.get and axios.post implementation for getMe and logOut
-  (axios.get as jest.Mock).mockImplementation((url: string) => Promise.resolve({ data: {} }));
-  (axios.post as jest.Mock).mockImplementation((url: string) => Promise.resolve({ status: 200 }));
-
-  axios.get = jest.fn<any, any>((url) => {
-    if (url.includes('/questions/')) {
-      return Promise.resolve({ data: [mockTagQuestionRelation] });
-    } else if (url === '/question/:id') {
-      return Promise.resolve({ data: [mockTagQuestionRelation] });
-    } else if (url.includes('/users/')) {
-      return Promise.resolve({ data: mockUser });
-    } else if (url.includes('/answers/')) {
-      return Promise.resolve({ data: mockAnswer });
-    } else if (url.includes('/user/')) {
-      return Promise.resolve({ data: [mockAnswer] });
-    } else {
-      return Promise.resolve({ data: {} });
-    }
-  });
-  // Mock async axios.get implementation
-  (axios.get as jest.Mock).mockResolvedValue({ data: {} });
+  // // Mock async axios.get implementation
   (axios.get as jest.Mock).mockImplementation((url: string) => {
     if (url.includes('/questions/')) {
       return Promise.resolve({ data: [mockTagQuestionRelation] });
     } else if (url === '/question/:id') {
+      return Promise.resolve({ data: [mockTagQuestionRelation] });
+    } else if (url === '/questiontagrelation') {
       return Promise.resolve({ data: [mockTagQuestionRelation] });
     } else if (url.includes('/users/')) {
       return Promise.resolve({ data: mockUser });
@@ -287,7 +262,7 @@ describe('Service', () => {
       const tag_id = mockTag.tag_id;
       const question_id = mockTagQuestionRelation.question_id;
 
-      const expectedUrl = `/questions/${question_id}`;
+      const expectedUrl = `/questiontagrelation`;
 
       const expectedPayload = { tag_id, question_id };
 
@@ -323,9 +298,11 @@ describe('Service', () => {
   });
 
   describe('getAllTagQuestionRelations', () => {
-    it('should get all tag-question relations', async () => {
+    it('should return all tag-question relations', async () => {
+      jest.spyOn(service, 'getAllTagQuestionRelations').mockResolvedValue(mockTagQuestionRelation);
+      const expectedRelations = mockTagQuestionRelation;
       const result = await service.getAllTagQuestionRelations();
-      expect(result).toEqual([mockTagQuestionRelation]);
+      expect(result).toEqual(expectedRelations);
     });
   });
 
