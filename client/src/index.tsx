@@ -20,7 +20,7 @@ import { Favourites } from './components/favourites';
 import { Profile } from './components/profile';
 import { User } from './service';
 
-class Menu extends Component {
+export class Menu extends Component {
   user:User = { user_id: 0, google_id: '', username: '', email: ''};
   connectedUser: number = 0;
 
@@ -67,8 +67,7 @@ class Menu extends Component {
 
 }
 
-class Home extends Component {
-  questions: Question[] = [];
+export class Home extends Component {
   user:User = { user_id: 0, google_id: '', username: '', email: ''}
   connectedUser: number = 0;
 
@@ -113,8 +112,6 @@ class Home extends Component {
       this.user = user;
       this.connectedUser = user.user_id;
     });
-
-    service.getAllQuestions().then((questions) => (this.questions = questions));
   }
 
 

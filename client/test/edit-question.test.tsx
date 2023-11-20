@@ -97,4 +97,4 @@ describe('site functionality', () => {
         wrapper.find('button').simulate('click');
         expect(buttonClicked).toEqual(true);
     })
-    })
+})
