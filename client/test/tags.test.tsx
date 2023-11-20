@@ -55,12 +55,47 @@ describe('Site renders', () => {
 });
 
 describe('site functionality', () => {
-  test('search onchange works', (done) => {
+  test('search onchange on first search works', (done) => {
     const wrapper = shallow(<Tags />);
-    wrapper.find('FormInput').simulate('change', { currentTarget: { value: 'test' } });
+    console.log(wrapper.debug());
+
+    // Find the specific input node using the appropriate selector
+    const inputNode = wrapper.find('FormInput');
+
+    // Simulate the change on the first node in the array
+    inputNode.first().simulate('change', { currentTarget: { value: 'test' } });
+    // Update the wrapper to reflect the simulated change
+    wrapper.update();
+
+    // Assert the changes with the snapshot
     expect(wrapper).toMatchSnapshot();
+
+    // Call done to finish the test
     done();
-  });
+});
+
+test('search onchange works for second node', (done) => {
+  const wrapper = shallow(<Tags />);
+  console.log(wrapper.debug());
+
+  // Find all nodes that match the selector
+  const inputNodes = wrapper.find('FormInput');
+
+  // Ensure that there are at least two nodes
+  expect(inputNodes).toHaveLength(2);
+
+  // Simulate the change on the second node in the array (index 1)
+  inputNodes.at(1).simulate('change', { currentTarget: { value: 'test' } });
+
+  // Update the wrapper to reflect the simulated change
+  wrapper.update();
+
+  // Assert the changes with the snapshot
+  expect(wrapper).toMatchSnapshot();
+
+  // Call done to finish the test
+  done();
+});
 });
 
 describe('switchcase', () => {

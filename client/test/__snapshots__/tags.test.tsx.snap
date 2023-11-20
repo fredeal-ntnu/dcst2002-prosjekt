@@ -136,6 +136,222 @@ exports[`Site renders Site renders correct 1`] = `
 </Row>
 `;
 
+exports[`site functionality search onchange on first search works 1`] = `
+<Row>
+  <Column
+    width={3}
+  >
+    <SideMenu
+      header="Menu"
+      items={
+        [
+          {
+            "label": "Questions",
+            "to": "/questions",
+          },
+          {
+            "label": "My Questions",
+            "to": "myquestions",
+          },
+          {
+            "label": "My Favourite Answers",
+            "to": "favourites",
+          },
+          {
+            "label": "New Question",
+            "to": "createquestion",
+          },
+          {
+            "label": "Tags",
+            "to": "/tags",
+          },
+        ]
+      }
+    />
+    <SideMenu
+      header="Select Tags"
+    >
+      <div
+        style={
+          {
+            "padding": "10px",
+            "paddingBottom": "0px",
+          }
+        }
+      >
+        <FormSelect
+          onChange={[Function]}
+          value="none"
+        >
+          <option
+            value="all"
+          >
+            Sort tags...
+          </option>
+          <option
+            value="popularity"
+          >
+            Popularity
+          </option>
+          <option
+            value="a-z"
+          >
+            A-Z
+          </option>
+          <option
+            value="z-a"
+          >
+            Z-A
+          </option>
+        </FormSelect>
+      </div>
+      <div
+        style={
+          {
+            "padding": "10px",
+          }
+        }
+      >
+        <FormInput
+          onChange={[Function]}
+          placeholder="Search"
+          type="text"
+          value="test"
+        />
+      </div>
+      <ul
+        className="list-group list-group-flush"
+      />
+    </SideMenu>
+  </Column>
+  <Column>
+    <Card
+      title="Top Questions"
+    >
+      <br />
+      <Row>
+        <Column>
+          <FormInput
+            onChange={[Function]}
+            placeholder="Search..."
+            type="text"
+            value=""
+          />
+        </Column>
+      </Row>
+    </Card>
+  </Column>
+</Row>
+`;
+
+exports[`site functionality search onchange works for second node 1`] = `
+<Row>
+  <Column
+    width={3}
+  >
+    <SideMenu
+      header="Menu"
+      items={
+        [
+          {
+            "label": "Questions",
+            "to": "/questions",
+          },
+          {
+            "label": "My Questions",
+            "to": "myquestions",
+          },
+          {
+            "label": "My Favourite Answers",
+            "to": "favourites",
+          },
+          {
+            "label": "New Question",
+            "to": "createquestion",
+          },
+          {
+            "label": "Tags",
+            "to": "/tags",
+          },
+        ]
+      }
+    />
+    <SideMenu
+      header="Select Tags"
+    >
+      <div
+        style={
+          {
+            "padding": "10px",
+            "paddingBottom": "0px",
+          }
+        }
+      >
+        <FormSelect
+          onChange={[Function]}
+          value="none"
+        >
+          <option
+            value="all"
+          >
+            Sort tags...
+          </option>
+          <option
+            value="popularity"
+          >
+            Popularity
+          </option>
+          <option
+            value="a-z"
+          >
+            A-Z
+          </option>
+          <option
+            value="z-a"
+          >
+            Z-A
+          </option>
+        </FormSelect>
+      </div>
+      <div
+        style={
+          {
+            "padding": "10px",
+          }
+        }
+      >
+        <FormInput
+          onChange={[Function]}
+          placeholder="Search"
+          type="text"
+          value=""
+        />
+      </div>
+      <ul
+        className="list-group list-group-flush"
+      />
+    </SideMenu>
+  </Column>
+  <Column>
+    <Card
+      title="Top Questions"
+    >
+      <br />
+      <Row>
+        <Column>
+          <FormInput
+            onChange={[Function]}
+            placeholder="Search..."
+            type="text"
+            value="test"
+          />
+        </Column>
+      </Row>
+    </Card>
+  </Column>
+</Row>
+`;
+
 exports[`switchcase switchcase a-z 1`] = `
 <Row>
   <Column
