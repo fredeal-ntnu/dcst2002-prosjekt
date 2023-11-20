@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { NavLink } from 'react-router-dom';
 import { AllQuestions } from 'src/components/all-question'; // Adjust the import path as needed
-import { Column, Button, ButtonFavourite, ButtonUpvote, ButtonDownVote, ButtonCommentBuble, Card, MiniCard, InsideMiniCard, Link } from 'src/widgets';
+import { Column, Button, ButtonFavourite, ButtonUpvote, ButtonDownVote, ButtonCommentBuble, Card, MiniCard, InsideMiniCard, SideMenu } from 'src/widgets';
 import { FavouriteIcon, UpvoteIcon, DownvoteIcon, CommentBubleIcon } from 'src/icons';
 import service from 'src/service'; // Adjust the import path as needed
 
@@ -54,6 +55,8 @@ describe('Column widget test', () => {
     ).toEqual(true);
   });
 })
+
+
 
 describe('Button widget tests', () => {
   test('Draws a button with danger type', () => {
@@ -173,10 +176,9 @@ describe('Card widget tests', () => {
       </div>
       )
     ).toEqual(true);
-  })
-});
+  });
 
-describe('MiniCard widget tests', () => {
+
   test('Draws a card with title and body', () => {
     const wrapper = shallow(<MiniCard title="Test">Test</MiniCard>);
     expect(
@@ -195,10 +197,10 @@ describe('MiniCard widget tests', () => {
       </div>
       )
     ).toEqual(true);
-  })
-});
+  });
 
-describe('MiniCard widget tests', () => {
+
+
   test('Draws a card with title and body', () => {
     const wrapper = shallow(<InsideMiniCard title="Test">Test</InsideMiniCard>);
     expect(
@@ -217,21 +219,35 @@ describe('MiniCard widget tests', () => {
       </div>
       )
     ).toEqual(true);
-  })
+  });
 });
 
 describe('Navlink widget tests', () => {
   test('Draws a navlink with text', () => {
     const wrapper = shallow(<Link to="/test">Test</Link>);
-    console.log(wrapper.debug());
     expect(
       wrapper.containsMatchingElement(
-        <a className="nav-link" href="/test">
-          Test
-        </a>
+        <NavLink className="btn btn-outline-light" activeClassName="active" to="/test">
+        Test
+      </NavLink>
       )
     ).toEqual(true);
   });
 });
 
+describe('SideMenu widget tests', () => { 
+  test('Draws a side menu with text', () => {
+    //@ts-ignore
+    const wrapper = shallow(<SideMenu>Test</SideMenu>);
+    console.log(wrapper.debug());
+    expect(
+      wrapper.containsMatchingElement(
+        <div className="card">
+        <h5 className="card-header" />
+        Test
+      </div>
+      )
+    ).toEqual(true);
+  });
+})
   
