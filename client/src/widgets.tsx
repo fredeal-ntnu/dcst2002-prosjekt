@@ -7,6 +7,7 @@ import service from './service';
 
 import { EyeIcon, FavouriteIcon, UpvoteIcon, DownvoteIcon, CommentBubleIcon } from './icons';
 
+
 /**
  * Renders an information card using Bootstrap classes.
  *
@@ -422,7 +423,7 @@ class NavBarLink extends Component<{ to: string }> {
   }
 }
 
-class Search extends Component {
+export class Search extends Component {
   render() {
     return (
       <form className="form-inline d-flex align-items-center" style={{ width: '600px' }}>
@@ -457,7 +458,7 @@ export class NavBar extends Component<{ brand: ReactNode }> {
 /**
  * Renders a form label using Bootstrap styles.
  */
-class FormLabel extends Component {
+export class FormLabel extends Component {
   render() {
     return <label className="col-form-label">{this.props.children}</label>;
   }
@@ -466,7 +467,7 @@ class FormLabel extends Component {
 /**
  * Renders a form input using Bootstrap styles.
  */
-class FormInput extends Component<{
+export class FormInput extends Component<{
   type: string;
   value: string | number;
   placeholder?: string;
@@ -493,7 +494,7 @@ class FormInput extends Component<{
 /**
  * Renders a form textarea using Bootstrap styles.
  */
-class FormTextarea extends React.Component<{
+export class FormTextarea extends React.Component<{
   value: string | number;
   onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   [prop: string]: any;
@@ -507,7 +508,7 @@ class FormTextarea extends React.Component<{
 /**
  * Renders a form checkbox using Bootstrap styles.
  */
-class FormCheckbox extends Component<{
+export class FormCheckbox extends Component<{
   checked: boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   [prop: string]: any;
@@ -531,7 +532,7 @@ class FormCheckbox extends Component<{
 /**
  * Renders a form select using Bootstrap styles.
  */
-class FormSelect extends Component<{
+export class FormSelect extends Component<{
   value: string | number;
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
   [prop: string]: any;
