@@ -66,7 +66,7 @@ export class EditAnswer extends Component<{ match: { params: { id: number } } }>
       .catch((error) => console.error('Error saving answer: ' + error.message));
   }else{
     history.push('/questions/' + this.answer.question_id)
-    console.error('You are not the author of this answer')
+    Alert.danger('You are not the author of this answer')
   }
 }
 
@@ -78,7 +78,7 @@ export class EditAnswer extends Component<{ match: { params: { id: number } } }>
       .catch((error) => console.error('Error deleting answer: ' + error.message));
     }else{
       history.push('/questions/' + this.answer.question_id)
-      console.error('You are not the author of this answer')
+  Alert.danger('You are not the author of this answer')
     }
    
   }

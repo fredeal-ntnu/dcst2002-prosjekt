@@ -42,6 +42,67 @@ export class Card extends Component<{ title: ReactNode; smallTitle?: boolean }> 
     );
   }
 } 
+export class MiniCard extends Component<{ title: ReactNode; smallTitle?: boolean }> {
+  renderTextLines(text: string, maxCharsPerLine: number): JSX.Element[] {
+    const lines = [];
+    for (let i = 0; i < text.length; i += maxCharsPerLine) {
+      lines.push(text.slice(i, i + maxCharsPerLine));
+    }
+    return lines.map((line, index) => <div key={index}>{line}</div>);
+  }
+
+  render() {
+    const maxCharsPerLine = 30;
+
+    return (
+      <div className="card" style={{ width: '550px' || 'auto', margin: '23px' }}>
+        <div className="card-body">
+          {this.props.smallTitle ? (
+            <h6 className="card-title">{this.props.title}</h6>
+          ) : (
+            <h5 className="card-title">{this.props.title}</h5>
+          )}
+          <div className="card-text">
+            {typeof this.props.children === 'string'
+              ? this.renderTextLines(this.props.children, maxCharsPerLine)
+              : this.props.children}
+          </div>
+        </div>
+      </div>
+    );
+  }
+} 
+export class InsideMiniCard extends Component<{ title: ReactNode; smallTitle?: boolean }> {
+  renderTextLines(text: string, maxCharsPerLine: number): JSX.Element[] {
+    const lines = [];
+    for (let i = 0; i < text.length; i += maxCharsPerLine) {
+      lines.push(text.slice(i, i + maxCharsPerLine));
+    }
+    return lines.map((line, index) => <div key={index}>{line}</div>);
+  }
+
+  render() {
+    const maxCharsPerLine = 30;
+
+    return (
+      <div className="card" style={{ width: '480px' || 'auto', margin: '20px' }}>
+        <div className="card-body">
+          {this.props.smallTitle ? (
+            <h6 className="card-title">{this.props.title}</h6>
+          ) : (
+            <h5 className="card-title">{this.props.title}</h5>
+          )}
+          <div className="card-text">
+            {typeof this.props.children === 'string'
+              ? this.renderTextLines(this.props.children, maxCharsPerLine)
+              : this.props.children}
+          </div>
+        </div>
+      </div>
+    );
+  }
+} 
+
 
 class Link extends Component<{ to: string }> {
   render() {
@@ -106,6 +167,7 @@ export class AnswerCard extends Component<{ answer: Answer }> {
   }
 
 }
+
 
 /**
  * Renders a row using Bootstrap classes.
@@ -491,55 +553,7 @@ class FormSelect extends Component<{
   }
 }
 
-/**
- * Renders a form radio button using Bootstrap styles.
- */
-class FormRadio extends Component<{
-  checked: boolean;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  [prop: string]: any;
-}> {
-  render() {
-    const { checked, onChange, ...rest } = this.props;
-    return (
-      <input
-        {...rest}
-        className="form-check-input"
-        type="radio"
-        checked={checked}
-        onChange={onChange}
-      />
-    );
-  }
-}
 
-export class RadioRow extends Component<{
-  label: string;
-  checked: boolean; 
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void; 
-  [prop: string]: any;
-}> {
-  render() {
-    const { checked, label, onChange, ...rest } = this.props;
-
-    return(
-        <Row>  
-            <Column>
-                {label}
-            </Column>
-            <Column right>
-                <Form.Radio
-                    {...rest}
-                    className="form-check-input"
-                    type="radio"
-                    checked={checked}
-                    onChange={onChange}
-                    label={label}
-                />
-            </Column>
-        </Row> 
-)}
-    }
 
 /**
  * Renders form components using Bootstrap styles.
@@ -550,7 +564,6 @@ export class Form {
   static Textarea = FormTextarea;
   static Checkbox = FormCheckbox;
   static Select = FormSelect;
-  static Radio = FormRadio;
 }
 
 /**

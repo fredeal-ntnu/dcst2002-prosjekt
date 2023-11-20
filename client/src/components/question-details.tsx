@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Card, Alert, Row, Column, Button, SideMenu, Form, ButtonFavourite, ButtonUpvote, ButtonDownVote, ButtonCommentBuble } from '../widgets';
+import { Card, Alert, Row, Column, Button, SideMenu, Form, 
+  ButtonFavourite, ButtonUpvote, ButtonDownVote, ButtonCommentBuble, MiniCard, InsideMiniCard } from '../widgets';
 
 import service, {
   Question,
@@ -73,30 +74,30 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
             ]}/>
         </Column>
         <Card title="Question">
-          <Card title={this.question.title}>{this.question.text}</Card>
+          <MiniCard title={this.question.title}>{this.question.text}</MiniCard>
 
-          <Row>
-            <Card title="Tags">
+
+            <MiniCard title="Tags">
               {this.relations
                 .filter((relation) => relation.question_id == this.props.match.params.id)
                 .map((relation) => this.tags.find((tag) => tag.tag_id == relation.tag_id))
                 .filter((tag): tag is Tag => tag !== undefined)
                 .map((tag) => tag.name)
                 .join(', ')}
-            </Card>
-          </Row>
+            </MiniCard>
+
           <Row>
-            <Column width={8}>
+            <Column width={1}>
              {this.createQuestionEditButton()}
             </Column>
           </Row>
         </Card>
         <Row>
-          <Column width={6}>
+          <Column width={5}>
           {this.handleQuestionCommentDisplay()}
           {this.addQuestionCommentInput()}
           </Column>
-          <Column width={6}>
+          <Column width={5}>
             {this.handleAnswerMapDisplay()}
             {this.addAnswerInput()}
           </Column>  
@@ -173,6 +174,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
             });
           })
           .catch((error: Error) => console.error('Error getting answers: ' + error.message));
+          break;
         
       case 'confirmed':
         service.getAnswerScoresByQuestionId(this.props.match.params.id)
@@ -203,7 +205,7 @@ createQuestionEditButton() {
   addQuestionCommentInput() {
     if(this.connectedUser) {
       return(
-        <Card title="Add comment">
+        <MiniCard title="Add comment">
         <Row>
           <Column>
             <Form.Textarea
@@ -220,7 +222,7 @@ createQuestionEditButton() {
             <Button.Success onClick={this.createComment}>Add</Button.Success>
           </Column>
         </Row>
-      </Card>
+      </MiniCard>
       )
     }else return
   }
@@ -231,6 +233,7 @@ createQuestionEditButton() {
       service
       .createQuestionComment(this.questionComment.text, this.props.match.params.id, this.connectedUser)
       .then(() => this.mounted())
+      .then(()=> this.questionComment.text = '')
       .catch((error) => console.error('Error saving comment: ' + error.message));
     }
     else alert("You have to be logged in to comment")
@@ -238,7 +241,7 @@ createQuestionEditButton() {
   addAnswerInput() {
     if(this.connectedUser) {
       return(
-        <Card title="Add answer">
+        <MiniCard title="Add answer">
           <Row>
             <Column>
               <Form.Textarea
@@ -255,7 +258,7 @@ createQuestionEditButton() {
               <Button.Success onClick={this.createAnswer}>Add</Button.Success>
             </Column>
           </Row>
-          </Card>
+          </MiniCard>
       )
     }else return
   } 
@@ -266,11 +269,11 @@ handleQuestionCommentDisplay() {
   //If logged in
   if(this.connectedUser) {
    return(
-    <Card title="Comments">
+    <MiniCard title="Comments">
     {this.questionComments.map((questionComment) => {
       if (questionComment.question_id == this.props.match.params.id) {
         return (
-          <Card title="" key={questionComment.question_comment_id}>
+          <InsideMiniCard title="" key={questionComment.question_comment_id}>
             <Row>
               {questionComment.text}
               <Row>
@@ -279,11 +282,11 @@ handleQuestionCommentDisplay() {
                 </Column>
               </Row>
             </Row>
-          </Card>
+          </InsideMiniCard>
         );
       }
     })}
-  </Card>
+  </MiniCard>
    )
   }
 
@@ -334,7 +337,7 @@ handleAnswerMapDisplay () {
   //if logged in
   if(this.connectedUser) {
 return(
-  <Card title="Answers">
+  <MiniCard title="Answers" >
     <Form.Select value={this.filter} onChange={this.handleFilterChange}>
                     <option value="all">All Answers</option>
                     <option value="popular">Most Popular Answers</option>
@@ -347,7 +350,7 @@ return(
       const isConfirmedAnswerKey = `isConfirmedAnswer_${answer.answer_id}`;
       if (answer.question_id == this.props.match.params.id) {
         return (
-          <Card title="hei" key={answer.answer_id}>
+          <InsideMiniCard title="" key={answer.answer_id}>
             
               {answer.text}
                 <Column>
@@ -400,19 +403,22 @@ return(
                   </ButtonFavourite>
            
                 
-                  <Button.Success onClick={() => this.setConfirmedAnswer(answer.answer_id)}>
-                    Mark as best
+                  <Button.Success  onClick={() => {
+                      if (this.state[isConfirmedAnswerKey as keyof State]) {
+                        this.setConfirmedAnswer(answer.answer_id);
+                        this.setState({ [isConfirmedAnswerKey]: false });
+                      } else {
+                        this.setConfirmedAnswer(answer.answer_id);
+                        this.setState({ [isConfirmedAnswerKey]: true });
+                      }
+                    }}>
+                     {this.state[isConfirmedAnswerKey as keyof State] ? 'Remove confirmed answer' : 'Set as confirmed answer'}
                   </Button.Success>
-                    
-              
-            
-          </Card>
+          </InsideMiniCard>
         );
       }
     })}
-    
-   
-  </Card>
+  </MiniCard>
 )
     
 
@@ -475,6 +481,7 @@ handleEditAnswer(answer_id: number, user_id: number) {
       .createAnswer(this.answer.text, this.props.match.params.id, this.connectedUser)
       .then(() => this.setHasAnswered())
       .then(() => this.mounted())
+      .then(()=> this.answer.text = '')
       .catch((error) => console.error('Error saving answer: ' + error.message));
     }
     else(alert("You have to be logged in to answer"))
@@ -483,6 +490,7 @@ handleEditAnswer(answer_id: number, user_id: number) {
     this.question.has_answer = 1;
     await service
       .updateQuestion(this.question)
+
       .catch((error) => console.error('Error saving question: ' + error.message));
   }
 
@@ -535,6 +543,7 @@ handleEditAnswer(answer_id: number, user_id: number) {
           this.answer.confirmed_answer = this.answer.confirmed_answer == 1 ? 0 : 1;
           service.updateAnswer(this.answer)
           .then(() => this.mounted())
+          .then(()=> this.answer.text = '')
           .then(() => Alert.success('Answer marked as best answer'))
           .catch((error) => console.error('Error saving answer: ' + error.message));
         
