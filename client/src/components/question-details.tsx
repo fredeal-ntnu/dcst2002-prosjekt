@@ -548,7 +548,7 @@ handleEditAnswer(answer_id: number, user_id: number) {
           service.updateAnswer(this.answer)
           .then(() => this.mounted())
           .then(()=> this.answer.text = '')
-          .then(() => Alert.succ  ess('Answer marked as best answer'))
+          .then(() => Alert.success('Answer marked as best answer'))
           .catch((error) => console.error('Error saving answer: ' + error.message));
         
       })
