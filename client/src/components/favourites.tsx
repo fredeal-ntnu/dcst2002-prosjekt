@@ -40,7 +40,7 @@ export class Favourites extends Component {
                       <Button.Danger onClick={()=>this.deleteFavourite(answer.answer_id)}>Remove Favourite</Button.Danger>
                       </>
               
-
+                      
 
               ))
              
