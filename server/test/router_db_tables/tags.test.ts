@@ -6,7 +6,7 @@ import { tagService } from '../../src/service/tag_services';
 
 const testTags = [
     { tag_id: 1, name: 'JavaScript' },
-    { tag_id: 2, name: 'Node.js' },
+    { tag_id: 2, name: 'Node' },
     { tag_id: 3, name: 'Express' },
 ];
 

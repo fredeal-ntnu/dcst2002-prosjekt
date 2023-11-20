@@ -52,3 +52,13 @@ afterAll((done) => {
     done();
   });
 
+    // Test fetching the authenticated user's questions
+    test.skip('Fetch authenticated user questions (200 OK)', (done) => {
+      axios.get('/questions/me')
+        .then((response) => {
+          expect(response.status).toEqual(200);
+          done();
+        })
+        .catch((error) => done(error));
+    });
+

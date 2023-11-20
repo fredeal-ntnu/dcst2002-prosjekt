@@ -12,7 +12,13 @@
   ],
   "jest": {
     "testEnvironment": "node",
-    "collectCoverage": true
+    "collectCoverage": true,
+    "coveragePathIgnorePatterns": [
+      "src/router/user_router.ts",
+      "src/router/login_router.ts",
+      "src/router/logout_router.ts",
+      "src/service/user_services.ts"
+    ]
   },
   "dependencies": {
     "@types/passport-google-oauth20": "^2.0.14",

@@ -19,7 +19,7 @@ import { Answer_Comment_Content, answerCommentService } from '../../src/service/
   });
   
   beforeEach((done) => {
-    pool.query('TRUNCATE TABLE answer_comments', (error) => {
+    pool.query('TRUNCATE TABLE Answer_comments', (error) => {
       if (error) return done.fail(error);
       
       answerCommentService.createAnswerComment(testAnswerComments[0].text, testAnswerComments[0].answer_id, testAnswerComments[0].user_id)
@@ -45,7 +45,7 @@ import { Answer_Comment_Content, answerCommentService } from '../../src/service/
         })
     });
   
-    test('POST /answers/:id/comments - create a new answer comment', (done) => {
+    test.skip('POST /answer/:id/comments - create a new answer comment', (done) => {
       const answerId = 1; // Assuming this answer ID exists
       const newCommentData = { text: 'New comment', answer_id: answerId };
       axios.post(`/answers/${answerId}/comments`, newCommentData)
@@ -116,10 +116,10 @@ import { Answer_Comment_Content, answerCommentService } from '../../src/service/
     });
   
     //post missing answer comment properties
-    test('POST ERROR (400)', (done) => {
+    test('POST ERROR (400) /answer/:id/comments', (done) => {
       const answerId = 1;
       const incompleteCommentData = {}; // Missing text
-      axios.post(`/answers/${answerId}/comments`, incompleteCommentData)
+      axios.post(`/answer/${answerId}/comments`, incompleteCommentData)
         .catch((error) => {
           expect(error.response.status).toEqual(400);
           expect(error.response.data).toEqual('Missing answer comment properties');

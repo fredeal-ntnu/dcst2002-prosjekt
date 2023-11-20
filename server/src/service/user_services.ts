@@ -13,19 +13,6 @@ export type User = {
 
 class UserService {
   
-      // gets given user_id based on google_id
-
-      getUserwithGoogleId(google_id: User['google_id']) {
-        return new Promise<User | undefined>((resolve, reject) => {
-          pool.query('SELECT * FROM Users WHERE google_id = ?', [google_id], (error, results: RowDataPacket[]) => {
-            if (error) return reject(error);
-
-            resolve(results[0] as User | undefined);
-          });
-        });
-      }
-
-
 // create new user
 
   create(newUser: Omit<User, 'user_id'>): Promise<User> {
@@ -83,6 +70,9 @@ class UserService {
         reject(error);
       });
     });
+  }
+  getUserwithGoogleId(google_id: string) {
+    throw new Error('Method not implemented.');
   }
   
 

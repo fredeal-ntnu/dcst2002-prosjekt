@@ -17,16 +17,22 @@ answerCommentRouter.get(
 );
 
 //create new answer comment
-
-answerCommentRouter.post('/answers/:id/comments', (request, response) => {
+//not tested
+answerCommentRouter.post('/answer/:id/comments', (request, response) => {
   const data = request.body;
-  if (typeof data.text == 'string' && data.text.length != 0)
+  if (typeof data.text === 'string' && data.text.length > 0) {
     answerCommentService
       .createAnswerComment(data.text, data.answer_id, data.user_id)
       .then((id) => response.send({ id: id }))
-      .catch((error) => response.status(500).send(error));
-  else response.status(400).send('Missing answer comment properties');
+      .catch((error) => {
+        console.error(error); // Log the error for debugging purposes
+        response.status(500).send('An error occurred while creating the answer comment');
+      });
+  } else {
+    response.status(400).send('Missing answer comment properties');
+  }
 });
+
 
 //Get answer comment by id
 
