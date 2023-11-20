@@ -191,6 +191,13 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
             });
           })
           .catch((error: Error) => console.error('Error getting answers: ' + error.message));
+        
+      case 'confirmed':
+        service.getAnswerScoresByQuestionId(this.props.match.params.id)
+        .then((answers_votes) => {
+          // Filter answers by confirmed_answer
+          this.answers_votes = answers_votes.filter((answer: { confirmed_answer: number }) => answer.confirmed_answer == 1);
+        })
         break;
     }
   }
@@ -340,11 +347,12 @@ handleQuestionCommentEdit(questionComment: QuestionComment) {
 handleAnswerMapDisplay () {
   if(this.connectedUser) {
 return(
-  <Card title="Answers HUSK SORTERING">
+  <Card title="Answers">
     <Form.Select value={this.filter} onChange={this.handleFilterChange}>
                     <option value="all">All Answers</option>
                     <option value="popular">Most Popular Answers</option>
                     <option value="mostRecent">Most Recent</option>
+                    <option value="confirmed">Confirmed Answers</option>
     </Form.Select>
     {this.answers_votes.map((answer) => {
       
@@ -423,7 +431,13 @@ return(
   }
 
   else return (
-    <Card title="Answers">
+     <Card title="Answers">
+    <Form.Select value={this.filter} onChange={this.handleFilterChange}>
+                    <option value="all">All Answers</option>
+                    <option value="popular">Most Popular Answers</option>
+                    <option value="mostRecent">Most Recent</option>
+                    <option value="confirmed">Confirmed Answers</option>
+    </Form.Select>
     {this.answers_votes.map((answer) => {
       const isFavoriteKey = `isFavorite_${answer.answer_id}`;
       if (answer.question_id == this.props.match.params.id) {
@@ -531,6 +545,7 @@ handleEditAnswer(answer_id: number, user_id: number) {
           this.answer.confirmed_answer = 1;
           service.updateAnswer(this.answer)
           .then(() => this.mounted())
+          .then(() => Alert.success('Answer marked as best answer'))
           .catch((error) => console.error('Error saving answer: ' + error.message));
         
       })
