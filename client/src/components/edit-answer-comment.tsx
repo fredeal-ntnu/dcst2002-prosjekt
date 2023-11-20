@@ -5,7 +5,6 @@ import service, {AnswerComment, User} from '../service';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();
-// let history = useHistory();
 export class EditAnswerComment extends Component<{ match: { params: { id: number } } }> {
   answerComments: AnswerComment[] = [];
   answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0, user_id: 0};

@@ -69,10 +69,25 @@ describe('Delete existing question comment', () => {
 describe('site functionality', () => {
     test('edit field takes input', (done) => {
         const wrapper = shallow(<EditQuestionComment match={{ params: { id: 1 } }} />);
-        console.log(wrapper.debug());
-        
-            wrapper.find('FormTextarea').simulate('change',{target:{value:'test'}});
+            wrapper.find('FormTextarea').simulate('change',{currentTarget:{value:'test'}});
             expect(wrapper).toMatchSnapshot();
             done()
         })
+    test('save button registers clcik', () => {
+        let buttonClicked = false
+        const wrapper = shallow(
+            <Button.Success onClick={()=> (buttonClicked = true)}>test</Button.Success>,
+        );
+        wrapper.find('button').simulate('click');
+        expect(buttonClicked).toEqual(true);
+    })
+
+    test('delete button registers click', () => {
+        let buttonClicked = false
+        const wrapper = shallow(
+            <Button.Danger onClick={()=> (buttonClicked = true)}>test</Button.Danger>,
+        );
+        wrapper.find('button').simulate('click');
+        expect(buttonClicked).toEqual(true);
+    })
     })

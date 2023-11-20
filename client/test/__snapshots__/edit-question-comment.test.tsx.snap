@@ -35,3 +35,40 @@ exports[`Site renders Site renders correct 1`] = `
   </Card>
 </Fragment>
 `;
+
+exports[`site functionality edit field takes input 1`] = `
+<Fragment>
+  <Card
+    title="Edit Comment"
+  >
+    <Row>
+      <Column
+        width={10}
+      >
+        <FormTextarea
+          onChange={[Function]}
+          rows={5}
+          type="text"
+          value="test"
+        />
+      </Column>
+    </Row>
+    <Row>
+      <Column>
+        <ButtonSuccess
+          onClick={[Function]}
+        >
+          Save
+        </ButtonSuccess>
+      </Column>
+      <Column>
+        <ButtonDanger
+          onClick={[Function]}
+        >
+          Delete
+        </ButtonDanger>
+      </Column>
+    </Row>
+  </Card>
+</Fragment>
+`;
