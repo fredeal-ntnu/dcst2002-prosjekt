@@ -43,8 +43,8 @@ describe('Site renders', () => {
 });
 
 
-describe('Edit existing answer comment', () => {
-test('edit existing answer comment', (done) => {
+describe('Edit existing answer', () => {
+test('edit existing answer', (done) => {
   const wrapper = shallow(<EditAnswer match={{ params: { id: 1 } }} />);    setTimeout(()=>{
       wrapper.setState({answerComment:{answer_comment_id:0,text:'test',answer_id:1,user_id:1}});
       wrapper.instance().save();
@@ -53,8 +53,8 @@ test('edit existing answer comment', (done) => {
 });
 });
 
-describe('Delete existing answer comment', () => {
-    test('delete existing answer comment', (done) => {
+describe('Delete existing answer', () => {
+    test('delete existing answer', (done) => {
       const wrapper = shallow(<EditAnswer match={{ params: { id: 1 } }} />);    setTimeout(()=>{
           wrapper.setState({answerComment:{answer_comment_id:0,text:'test',answer_id:1,user_id:1}});
           wrapper.instance().delete();
