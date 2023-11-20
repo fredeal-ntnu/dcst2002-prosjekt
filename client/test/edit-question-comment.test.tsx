@@ -49,6 +49,7 @@ describe('Edit existing question comment', () => {
         const wrapper = shallow(<EditQuestionComment match={{ params: { id: 1 } }} />);
         setTimeout(()=>{
             wrapper.setState({questionComment:{question_comment_id:0,text:'test',question_id:1,user_id:1}});
+            //@ts-ignore
             wrapper.instance().save();
             done()
         })
@@ -60,6 +61,7 @@ describe('Delete existing question comment', () => {
         const wrapper = shallow(<EditQuestionComment match={{ params: { id: 1 } }} />);
         setTimeout(()=>{
             wrapper.setState({questionComment:{question_comment_id:0,text:'test',question_id:1,user_id:1}});
+            //@ts-ignore
             wrapper.instance().delete();
             done()
         })

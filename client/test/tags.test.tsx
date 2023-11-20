@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Tags } from 'src/components/tags'; // Adjust the import path as needed
-import { Column } from '../src/widgets';
+import { Column, Button } from '../src/widgets';
+import service from 'src/service';
 
 jest.mock('../src/service', () => {
   class Service {
@@ -38,6 +39,22 @@ jest.mock('../src/service', () => {
     getAllTags() {
       return new Promise((resolve, reject) => {
         resolve([{ tag_id: 1, name: 'test' }]);
+      });
+    }
+
+    showQuestionsByTag(tag_id: number) {
+      return new Promise((resolve, reject) => {
+        resolve([
+          {
+            question_id: 1,
+            title: 'test',
+            description: 'test',
+            user_id: 1,
+            username: 'test',
+            date: 'test',
+            score: 1,
+          },
+        ]);
       });
     }
   }
@@ -96,6 +113,7 @@ test('search onchange works for second node', (done) => {
   // Call done to finish the test
   done();
 });
+
 });
 
 describe('switchcase', () => {
@@ -115,4 +133,10 @@ describe('switchcase', () => {
     wrapper.find('FormSelect').simulate('change', { target: { value: 'z-a' } });
     expect(wrapper).toMatchSnapshot();
   });
+  
+  test('switchcase default', () => {
+    wrapper.find('FormSelect').simulate('change', { target: { value: 'default' } });
+    expect(wrapper).toMatchSnapshot();
+  })
 });
+

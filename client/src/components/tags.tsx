@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Form, Card, Alert, SideMenu, Row, Column, Button, RadioRow, QuestionCard } from '../widgets';
-import service, { Question, Tag, Tag_Question_Relation } from '../service';
+import { Form, Card, SideMenu, Row, Column, Button, QuestionCard } from '../widgets';
+import service, { Question, Tag_Question_Relation } from '../service';
 import { NavLink } from 'react-router-dom';
 import { EyeIcon } from '../icons';
 
