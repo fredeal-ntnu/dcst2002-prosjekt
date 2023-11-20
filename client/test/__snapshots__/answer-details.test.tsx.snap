@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AnswerDetails component AnswerDetails component renders 1`] = `
+<Fragment>
+  <Card
+    title="Answer"
+  >
+    <Row>
+      <Column
+        width={10}
+      />
+    </Row>
+    <Row />
+  </Card>
+  <Card
+    title="Comments"
+  />
+  <Card
+    title="Add Comment"
+  >
+    <FormTextarea
+      onChange={[Function]}
+      placeholder="Add comment"
+      type="text"
+      value=""
+    />
+    <Column>
+      <ButtonSuccess
+        onClick={[Function]}
+      >
+        Add Comment
+      </ButtonSuccess>
+    </Column>
+  </Card>
+</Fragment>
+`;
