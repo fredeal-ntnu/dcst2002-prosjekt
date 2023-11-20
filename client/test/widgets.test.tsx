@@ -321,7 +321,127 @@ describe('Alert widget tests', () => {
       )
     ).toEqual(true);
   });
+
+  test('Renders alerts correctly', () => {
+    const wrapper = shallow(<Alert />);
+    //@ts-ignore
+    wrapper.instance().alerts = [
+      { id: 1, text: 'Success Alert', type: 'success' },
+      { id: 2, text: 'Info Alert', type: 'info' },
+      // Add more alerts as needed
+    ];
+    wrapper.update(); // Force re-render
+  
+    // Check if alerts are rendered
+    expect(wrapper.find('.alert-success').text()).toContain('Success Alert');
+    expect(wrapper.find('.alert-info').text()).toContain('Info Alert');
+  });
+
+  test('Removes an alert on close button click', () => {
+    const wrapper = shallow(<Alert />);
+    console.log(wrapper.debug());
+    //@ts-ignore
+    wrapper.instance().alerts = [{ id: 1, text: 'Test Alert', type: 'success' }];
+    wrapper.update();
+  
+    // Simulate close button click
+    wrapper.find('.btn-close').simulate('click');
+    wrapper.update();
+  
+    // Check if the alert is removed
+    expect(wrapper.find('.alert')).toHaveLength(0);
+  });
 })
+
+jest.useFakeTimers();
+
+describe('Alert static method tests', () => {
+  // @ts-ignore
+  let alertInstance;
+
+  // Set up a mock for Alert.instance()
+  beforeEach(() => {
+    // Mock implementation of Alert.instance()
+    // @ts-ignore
+    Alert.instance = jest.fn(() => alertInstance);
+    
+    // Create a controlled instance of Alert with a mock state
+    alertInstance = shallow(<Alert />).instance();
+    // @ts-ignore
+    alertInstance.alerts = [];
+  });
+
+  test('success method adds a success alert', () => {
+    // Call the static method
+    Alert.success('Success message');
+
+    // Fast-forward time to execute the setTimeout
+    jest.runAllTimers();
+
+    // Check if the alert was added to the instance's alerts array
+    // @ts-ignore
+    expect(alertInstance.alerts).toEqual([
+      { id: expect.any(Number), text: 'Success message', type: 'success' }
+    ]);
+  });
+
+  // Set up a mock for Alert.instance()
+  beforeEach(() => {
+    // Mock implementation of Alert.instance()
+    // @ts-ignore
+    Alert.instance = jest.fn(() => alertInstance);
+    
+    // Create a controlled instance of Alert with a mock state
+    alertInstance = shallow(<Alert />).instance();
+    // @ts-ignore
+    alertInstance.alerts = [];
+  });
+
+  test('info method adds an info alert', () => {
+    // Call the static method
+    Alert.info('Info message');
+
+    // Fast-forward time to execute the setTimeout
+    jest.runAllTimers();
+
+    // Check if the alert was added to the instance's alerts array
+    // @ts-ignore
+    expect(alertInstance.alerts).toEqual([
+      { id: expect.any(Number), text: 'Info message', type: 'info' }
+    ]);
+  });
+
+  test('warning method adds a warning alert', () => {
+    // Call the static method
+    Alert.warning('Warning message');
+
+    // Fast-forward time to execute the setTimeout
+    jest.runAllTimers();
+
+    // Check if the alert was added to the instance's alerts array
+    // @ts-ignore
+    expect(alertInstance.alerts).toEqual([
+      { id: expect.any(Number), text: 'Warning message', type: 'warning' }
+    ]);
+  });
+
+  test('danger method adds a danger alert', () => {
+    // Call the static method
+    Alert.danger('Danger message');
+
+    // Fast-forward time to execute the setTimeout
+    jest.runAllTimers();
+
+    // Check if the alert was added to the instance's alerts array
+    // @ts-ignore
+    expect(alertInstance.alerts).toEqual([
+      { id: expect.any(Number), text: 'Danger message', type: 'danger' }
+    ]);
+  });
+
+
+});
+
 
 describe('NavBar widget tests', () => {
   test('Draws a navbar with text', () => {
