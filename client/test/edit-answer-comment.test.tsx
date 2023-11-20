@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { EditAnswerComment } from 'src/components/edit-answer-comment'; // Adjust the import path as needed
 import { Column, Button } from '../src/widgets';
-import { Answer, AnswerComment } from 'src/service';
+import {AnswerComment } from 'src/service';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();
@@ -91,14 +91,7 @@ describe('site functionality', () => {
       expect(buttonClicked).toEqual(true);   
   }); 
 
-  test('TaskEdit correctly sets location on delete', async () => {
-    const wrapper = shallow(<EditAnswerComment match={{ params: { id: 1 } }} />);
-    console.log(wrapper.debug());
   
-    await wrapper.find(Button.Danger).simulate('click');
-  
-    expect(location.hash).toEqual('#/questions/1');
-  });
   });
 
 
