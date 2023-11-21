@@ -1,9 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { QuestionDetails } from 'src/components/question-details'; // Adjust the import path as needed
 import service from 'src/service';
-import { Column } from '../src/widgets';
-import ts from 'typescript';
+
+//@ts-ignore
+const flushPromises = () => new Promise(setTimeout);
+
 
 
 jest.mock('src/service', () => {
@@ -118,7 +120,4 @@ describe('createQuestionEditButton', () => {
     expect(wrapper.instance().handleEditAnswer(mockAnswer.answer_id, mockAnswer.user_id)).toBeDefined();
   });
 
-  
-  
-  
 });

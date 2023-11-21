@@ -4,7 +4,6 @@ import { Row, Column, Button } from 'src/widgets';
 import { AnswerDetails } from 'src/components/answer-details';
 import service from 'src/service';
 
-
 describe('AnswerDetails component', () => {
   test('AnswerDetails component renders', () => {
     const wrapper = shallow(<AnswerDetails match={{ params: { id: 1 } }} />);
@@ -59,39 +58,49 @@ describe('Page functionality', () => {
   });
 });
 
+//@ts-ignore
+const flushPromises = () => new Promise(setTimeout);
 
-describe('QuestionDetails - mounted method', () => {
+describe('AnswerDetails - mounted method', () => {
   it('updates connectedUser on successful getMe', async () => {
-    // Mock the service.getMe() to resolve with a mock user
-    jest.spyOn(service, 'getMe').mockResolvedValue({ user_id: 1 });
+    jest
+      .spyOn(service, 'getMe')
+      .mockResolvedValue({ user_id: 1, google_id: 'test', username: 'test', email: 'test' });
+    const wrapper = mount(<AnswerDetails match={{ params: { id: 1 } }} />);
+
+    await flushPromises();
+    wrapper.update();
+
+    //@ts-ignore
+    expect(wrapper.instance().connectedUser).toEqual(1);
+  });
+
+  it('handles error on failed getMe', async () => {
+    jest.spyOn(service, 'getMe').mockRejectedValue(new Error('Failed to fetch user'));
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    jest.spyOn(window, 'alert').mockImplementation(() => {});
 
     const wrapper = mount(<AnswerDetails match={{ params: { id: 1 } }} />);
-    
-    // Since service.getMe is a Promise, we need to wait for the next tick
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update(); // Update the wrapper to reflect the state change
 
-    expect(wrapper.instance().connectedUser).toEqual(1);
+    await flushPromises();
+    wrapper.update();
+
+    expect(console.error).toHaveBeenCalledWith('Failed to fetch user');
 
     // Clean up mocks
     jest.restoreAllMocks();
   });
 
-  it('handles errors in getMe', async () => {
-    // Mock the service.getMe() to reject
-    const errorMessage = 'You must be logged in to create a question';
-    jest.spyOn(service, 'getMe').mockRejectedValue(new Error(errorMessage));
-    jest.spyOn(window, 'alert').mockImplementation(() => {}); // Mock window.alert
+  it('fetches answer details on successful mounted', async () => {
+    jest.spyOn(service, 'getMe').mockResolvedValue({ user_id: 1 });
+    jest.spyOn(service, 'getAnswerById').mockResolvedValue({ answer_id: 1, text: 'Sample answer' });
 
-    const wrapper = mount(<QuestionDetails match={{ params: { id: 1 } }} />);
+    const wrapper = mount(<AnswerDetails match={{ params: { id: 1 } }} />);
 
-    await new Promise(resolve => setImmediate(resolve));
+    await flushPromises();
     wrapper.update();
 
-    // Check if the error handling behavior is correct
-    expect(window.alert).toHaveBeenCalledWith(errorMessage);
-    
-    // Clean up mocks
-    jest.restoreAllMocks();
+    //@ts-ignore
+    expect(wrapper.instance().answer).toEqual({ answer_id: 1, text: 'Sample answer' });
   });
 });
