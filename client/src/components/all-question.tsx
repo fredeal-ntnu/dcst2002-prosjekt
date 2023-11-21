@@ -62,7 +62,7 @@ export class AllQuestions extends Component {
     this.filter = event.target.value;
     this.loadQuestions();
   };
-
+  //loads questions based on set filter
   loadQuestions() {
     switch (this.filter) {
       case 'all':

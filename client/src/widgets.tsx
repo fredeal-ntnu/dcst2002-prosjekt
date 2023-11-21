@@ -287,14 +287,10 @@ export class ButtonUpvote extends Component<{
       <button
         type="button"
         className="btn btn-light"
-        style={
-          this.props.small
-            ? {
-                padding: '5px 5px',
-                fontSize: '16px',
-                lineHeight: '0.7',
-              }
-            : {}
+        style={{
+          padding: '5px 15px'
+        }
+         
         }
         onClick={this.props.onClick}
       >
@@ -315,13 +311,7 @@ export class ButtonCommentBuble extends Component<{
         type="button"
         className="btn btn-light"
         style={
-          this.props.small
-            ? {
-                padding: '5px 5px',
-                fontSize: '16px',
-                lineHeight: '0.7',
-              }
-            : {}
+         {padding: '5px 15px'}
         }
         onClick={this.props.onClick}
       >
@@ -342,13 +332,7 @@ export class ButtonDownVote extends Component<{
         type="button"
         className="btn btn-light"
         style={
-          this.props.small
-            ? {
-                padding: '5px 5px',
-                fontSize: '16px',
-                lineHeight: '0.7',
-              }
-            : {}
+        { padding: '5px 15px'}
         }
         onClick={this.props.onClick}
       >
