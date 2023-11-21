@@ -20,7 +20,7 @@ export class Card extends Component<{ title: ReactNode; smallTitle?: boolean }> 
     const maxCharsPerLine = 1000;
 
     return (
-      <div className="card" style={{ width: '800px' || 'auto', margin: '20px' }}>
+      <div className="card" style={{ width: '900px' || 'auto', margin: '20px' }}>
         <div className="card-body">
           {this.props.smallTitle ? (
             <h6 className="card-title">{this.props.title}</h6>
@@ -50,7 +50,7 @@ export class MiniCard extends Component<{ title: ReactNode; smallTitle?: boolean
     const maxCharsPerLine = 1000;
 
     return (
-      <div className="card" style={{ width: '550px' || 'auto', margin: '23px' }}>
+      <div className="card" style={{ width: '620px' || 'auto', margin: '23px' }}>
         <div className="card-body">
           {this.props.smallTitle ? (
             <h6 className="card-title">{this.props.title}</h6>
@@ -122,7 +122,7 @@ export class SideMenu extends Component<{
 
   render() {
     return (
-      <div className="card" style={{ width: '300px', margin: '20px' }}>
+      <div className="card" style={{ width: '250px', margin: '20px' }}>
         <h5 className="card-header">{this.props.header}</h5>
         {this.props.items ? (
           <ul className="list-group list-group-flush">
