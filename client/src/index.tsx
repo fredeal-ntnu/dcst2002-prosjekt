@@ -7,7 +7,7 @@ import service from './service';
 import { CreateQuestion } from './components/create-question';
 import { QuestionDetails } from './components/question-details';
 import { EditQuestion } from './components/edit-question';
-import { AllQuestions } from './components/all-question';
+import { AllQuestions } from './components/all-questions';
 import { Tags } from './components/tags';
 import { AnswerDetails } from './components/answer-details';
 import { EditQuestionComment } from './components/edit-question-comment';

@@ -200,11 +200,11 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   createQuestionEditButton() {
     if (this.connectedUser == this.question.user_id) {
       return (
-        <Button.Success
+        <Button.Light
           onClick={() => history.push('/questions/' + this.props.match.params.id + '/edit')}
         >
-          Edit
-        </Button.Success>
+          <span style={{ fontWeight: 'bold', fontSize: '16px', color: 'black' }}>Edit</span>
+        </Button.Light>
       );
     } else
       return (
@@ -291,7 +291,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
               return (
                 <InsideMiniCard title="" key={questionComment.question_comment_id}>
                   <Row>
-                    {questionComment.text}
+                    <p style={{marginBottom: '2.2em'}}>{questionComment.text}</p>
                     <Row>
                       <Column>{this.handleQuestionCommentEdit(questionComment)}</Column>
                     </Row>
@@ -326,7 +326,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     //if logged in
     if (this.connectedUser == questionComment.user_id) {
       return (
-        <Button.Success
+        <Button.Light
           onClick={() =>
             history.push(
               '/questions/' +
@@ -337,8 +337,8 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
             )
           }
         >
-          Edit
-        </Button.Success>
+          <span style={{ fontWeight: 'bold', fontSize: '16px', color: 'black' }}>Edit</span>
+        </Button.Light>
       );
       //if not logged in
     } else return;
@@ -361,7 +361,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
             if (answer.question_id == this.props.match.params.id) {
               return (
                 <InsideMiniCard title="" key={answer.answer_id}>
-                  {answer.text}
+                  <p style={{marginBottom: '2.2em'}}>{answer.text}</p>
                   <Column>
                     <ButtonUpvote
                       onClick={() => {
@@ -369,7 +369,17 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                       }}
                     ></ButtonUpvote>
                   </Column>
-                  <Column>{answer.score}</Column>
+                  <Column>
+                    <span style={{ fontWeight: 'bold',  }}>Votes:</span>
+                    <span
+                      style={{
+                        fontWeight: 'bold',
+                        color: answer.score > 0 ? 'green' : answer.score < 0 ? 'red' : 'black',
+                      }}
+                    >
+                    {answer.score}
+                    </span>
+                  </Column>
                   <ButtonDownVote
                     onClick={() => {
                       this.addDownvote(answer.answer_id);
@@ -395,9 +405,9 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                       }
                     }}
                   >
-                    {this.state[isFavoriteKey as keyof State] ? 'Remove from favorites' : ''}
+                    {this.state[isFavoriteKey as keyof State] ? '' : ''}
                   </ButtonFavourite>
-                  <Button.Success
+                  <Button.Light
                     onClick={() => {
                       if (this.question.user_id == this.connectedUser) {
                         if (this.state[isConfirmedAnswerKey as keyof State]) {
@@ -410,10 +420,12 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                       } else return alert('You are not the owner of this question');
                     }}
                   >
-                    {this.state[isConfirmedAnswerKey as keyof State]
-                      ? 'Remove confirmed answer'
-                      : 'Set as confirmed answer'}
-                  </Button.Success>
+                    <span style={{ fontWeight: 'bold', fontSize: '16px', color: 'black' }}>
+                      {this.state[isConfirmedAnswerKey as keyof State]
+                        ? 'Remove as best answer'
+                        : 'Best answer'}
+                    </span>
+                  </Button.Light>
                 </InsideMiniCard>
               );
             }
@@ -456,15 +468,15 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     //if logged in as owner of answer
     if (this.connectedUser == user_id) {
       return (
-        <Button.Success
+        <Button.Light
           onClick={() =>
             history.push(
               '/questions/' + this.props.match.params.id + '/answers/' + answer_id + '/edit',
             )
           }
         >
-          Edit
-        </Button.Success>
+          <span style={{ fontWeight: 'bold', fontSize: '16px', color: 'black' }}>Edit</span>
+        </Button.Light>
       );
     } else return;
   }
