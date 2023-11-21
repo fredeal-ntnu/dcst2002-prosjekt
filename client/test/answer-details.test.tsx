@@ -36,6 +36,21 @@ test('Renders the answer and comments correctly', () => {
 });
 
 
+test('Calls addAnswerComment method on button click', () => {
+  // Mock the addAnswerComment method on the component's prototype
+  AnswerDetails.prototype.addAnswerComment = jest.fn();
+
+  // Render the component
+  // @ts-ignore
+  const wrapper = shallow(<AnswerDetails match={{ params: { id: '1' }}} />);
+
+  // Simulate the button click for adding a comment
+  wrapper.find(Button.Success).simulate('click'); // Adjust selector if needed
+
+  // Check if the addAnswerComment method was called
+  expect(AnswerDetails.prototype.addAnswerComment).toHaveBeenCalled();
+});
+
 
 //øker ikke prosenten :(
 describe('Page functionality', () => {

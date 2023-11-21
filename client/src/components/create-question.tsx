@@ -12,7 +12,7 @@ export class CreateQuestion extends Component {
   text = '';
   user_id = 0;
   connectedUser: number = 0;
-
+ 
   render() {
     return (
       <>
