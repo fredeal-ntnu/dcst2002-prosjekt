@@ -41,6 +41,16 @@ jobs:
       run: |
         sudo mysql --host 127.0.0.1 --user=root --password=root testdb < cidatabase.sql
 
+
+    - name: Create config.ts
+      run: |
+        cat <<EOF > server/test/config.ts
+        process.env.MYSQL_HOST = '127.0.0.1';
+        process.env.MYSQL_USER = 'root';
+        process.env.MYSQL_PASSWORD = 'root';
+        process.env.MYSQL_DATABASE = 'testdb';
+        EOF
+
     # For server directory
     - name: Change into server directory
       run: cd server/
@@ -50,8 +60,3 @@ jobs:
     - name: Run server tests
       run: npm test
       working-directory: ./server
-      env:
-        MYSQL_HOST: localhost
-        MYSQL_USER: root
-        MYSQL_PASSWORD: root
-        MYSQL_DB: testdb
