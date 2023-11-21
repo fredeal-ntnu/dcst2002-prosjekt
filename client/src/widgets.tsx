@@ -22,7 +22,7 @@ export class Card extends Component<{ title: ReactNode; smallTitle?: boolean }> 
   }
 
   render() {
-    const maxCharsPerLine = 30;
+    const maxCharsPerLine = 1000;
 
     return (
       <div className="card" style={{ width: '800px' || 'auto', margin: '20px' }}>
@@ -52,7 +52,7 @@ export class MiniCard extends Component<{ title: ReactNode; smallTitle?: boolean
   }
 
   render() {
-    const maxCharsPerLine = 30;
+    const maxCharsPerLine = 1000;
 
     return (
       <div className="card" style={{ width: '550px' || 'auto', margin: '23px' }}>

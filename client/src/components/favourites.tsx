@@ -45,12 +45,12 @@ export class Favourites extends Component {
           </Card>
           <Column>
             {this.answers.map((answer, i) => (
-              <>
-                <AnswerCard key={i} answer={answer} />
+              <React.Fragment key={answer.answer_id}>
+                <AnswerCard answer={answer} />
                 <Button.Danger onClick={() => this.deleteFavourite(answer.answer_id)}>
                   Remove Favourite
                 </Button.Danger>
-              </>
+              </React.Fragment>
             ))}
           </Column>
         </Column>

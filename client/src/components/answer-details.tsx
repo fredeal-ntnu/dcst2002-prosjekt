@@ -27,7 +27,6 @@ export class AnswerDetails extends Component<{ match: { params: { id: number } }
           <Row>
             <Column width={10}>{this.answer.text}</Column>
           </Row>
-          <Row></Row>
         </Card>
         <Card title="Comments">
           {this.answerComments.map((answerComment) => (
@@ -63,6 +62,7 @@ export class AnswerDetails extends Component<{ match: { params: { id: number } }
             value={this.answerComment.text}
             onChange={(event) => (this.answerComment.text = event.currentTarget.value)}
             maxLength={1000}
+            style={{ width: '500px' }}
           />
           <Column>
             <Button.Success onClick={this.addAnswerComment}>Add Comment</Button.Success>

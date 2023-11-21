@@ -28,6 +28,7 @@ export class EditQuestionComment extends Component<{ match: { params: { id: numb
                 onChange={(event) => (this.questionComment.text = event.currentTarget.value)}
                 rows={5}
                 maxLength={1000}
+                style={{ width: '500px' }}
               />
             </Column>
           </Row>

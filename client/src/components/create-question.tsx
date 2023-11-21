@@ -41,6 +41,7 @@ export class CreateQuestion extends Component {
                   value={this.title}
                   onChange={(event) => (this.title = event.currentTarget.value)}
                   maxLength={255}
+                  style={{ width: '500px' }}
                 />
               </Column>
             </Row>
@@ -56,6 +57,7 @@ export class CreateQuestion extends Component {
                   onChange={(event) => (this.text = event.currentTarget.value)}
                   rows={5}
                   maxLength={1000}
+                  style={{ width: '500px' }}
                 />
               </Column>
             </Row>

@@ -31,6 +31,7 @@ export class EditAnswer extends Component<{ match: { params: { id: number } } }>
                   value={this.answer.text}
                   onChange={(event) => (this.answer.text = event.currentTarget.value)}
                   maxLength={1000}
+                  style={{ width: '500px' }}
                 />
               </Column>
             </Row>

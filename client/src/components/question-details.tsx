@@ -227,6 +227,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                 onChange={(event) => (this.questionComment.text = event.currentTarget.value)}
                 rows={5}
                 maxLength={1000}
+                style={{ width: '500px' }}
               />
             </Column>
           </Row>
@@ -266,6 +267,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                 onChange={(event) => (this.answer.text = event.currentTarget.value)}
                 rows={5}
                 maxLength={1000}
+                style={{ width: '500px' }}
               />
             </Column>
           </Row>
