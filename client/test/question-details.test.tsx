@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { QuestionDetails } from 'src/components/question-details'; // Adjust the import path as needed
 
-
 jest.mock('src/service', () => {
   class Service {
     getQuestion(id: number) {

@@ -57,9 +57,9 @@ jest.mock('../src/service', () => {
     }
 
     getMe() {
-        return new Promise((resolve, reject) => {
-            resolve([{ user_id: 1, google_id: 'test', username: 'test', email: 'test' }]);
-        });
+      return new Promise((resolve, reject) => {
+        resolve([{ user_id: 1, google_id: 'test', username: 'test', email: 'test' }]);
+      });
     }
   }
   return new Service();

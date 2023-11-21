@@ -71,7 +71,6 @@ describe('site functionality', () => {
   });
 });
 
-
 //@ts-ignore
 const flushPromises = () => new Promise(setTimeout);
 
@@ -101,14 +100,12 @@ describe('EditQuestionComment - mounted method', () => {
 
     expect(console.error).toHaveBeenCalledWith('Failed to fetch user');
     expect(window.alert).toHaveBeenCalledWith('You must be logged in to edit comment');
-
-    // Clean up mocks
     jest.restoreAllMocks();
   });
 
   it('fetches question details on successful mounted', async () => {
     jest.spyOn(service, 'getMe').mockResolvedValue({ user_id: 1 });
-    jest.spyOn(service, 'getQuestionCommentById').mockResolvedValue({ question_comment_id: 1,});
+    jest.spyOn(service, 'getQuestionCommentById').mockResolvedValue({ question_comment_id: 1 });
 
     const wrapper = mount(<EditQuestionComment match={{ params: { id: 1 } }} />);
 
@@ -116,7 +113,6 @@ describe('EditQuestionComment - mounted method', () => {
     wrapper.update();
 
     //@ts-ignore
-    expect(wrapper.instance().questionComment).toEqual({ question_comment_id: 1,});
+    expect(wrapper.instance().questionComment).toEqual({ question_comment_id: 1 });
   });
 });
-

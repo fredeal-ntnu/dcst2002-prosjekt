@@ -94,32 +94,38 @@ describe('site functionality', () => {
   });
 });
 
-  //@ts-ignore
-  const flushPromises = () => new Promise(setTimeout);
-  
-  describe('AnswerDetails - mounted method', () => {
-    it('updates connectedUser on successful getMe', async () => {
-      jest.spyOn(service, 'getMe').mockResolvedValue({ user_id: 1, google_id: 'test', username: 'test', email: 'test' });
-      const wrapper = mount(<EditAnswerComment match={{ params: { id: 1 } }} />);
-  
-      await flushPromises();
-      wrapper.update();
-        
-      //@ts-ignore
-      expect(wrapper.instance().connectedUser).toEqual(1);
-    });
-  
-  
-    it('fetches answer details on successful mounted', async () => {
-      jest.spyOn(service, 'getMe').mockResolvedValue({ user_id: 1 });
-      jest.spyOn(service, 'getAnswerCommentById').mockResolvedValue({ answer_comment_id: 1, text: 'Sample answer'});
-    
-      const wrapper = mount(<EditAnswerComment match={{ params: { id: 1 } }} />);
-    
-      await flushPromises();
-      wrapper.update();
-    
-      //@ts-ignore
-      expect(wrapper.instance().answerComment).toEqual({ answer_comment_id: 1, text: 'Sample answer'});
+//@ts-ignore
+const flushPromises = () => new Promise(setTimeout);
+
+describe('AnswerDetails - mounted method', () => {
+  it('updates connectedUser on successful getMe', async () => {
+    jest
+      .spyOn(service, 'getMe')
+      .mockResolvedValue({ user_id: 1, google_id: 'test', username: 'test', email: 'test' });
+    const wrapper = mount(<EditAnswerComment match={{ params: { id: 1 } }} />);
+
+    await flushPromises();
+    wrapper.update();
+
+    //@ts-ignore
+    expect(wrapper.instance().connectedUser).toEqual(1);
+  });
+
+  it('fetches answer details on successful mounted', async () => {
+    jest.spyOn(service, 'getMe').mockResolvedValue({ user_id: 1 });
+    jest
+      .spyOn(service, 'getAnswerCommentById')
+      .mockResolvedValue({ answer_comment_id: 1, text: 'Sample answer' });
+
+    const wrapper = mount(<EditAnswerComment match={{ params: { id: 1 } }} />);
+
+    await flushPromises();
+    wrapper.update();
+
+    //@ts-ignore
+    expect(wrapper.instance().answerComment).toEqual({
+      answer_comment_id: 1,
+      text: 'Sample answer',
     });
   });
+});

@@ -7,8 +7,6 @@ import service, {
   QuestionComment,
   AnswerComment,
   Vote,
-  Favourite,
-  Tag_Question_Relation,
 } from 'src/service';
 
 jest.mock('axios');
@@ -63,7 +61,6 @@ describe('Service', () => {
       tag_id: 1,
     },
   ];
-
 
   // // Mock axios.post implementation
   axios.put = jest.fn().mockImplementation((url: string, data: any) => Promise.resolve({ data }));
@@ -489,7 +486,6 @@ describe('Service', () => {
       expect(result).toEqual({});
     });
   });
-
 
   describe('logOut', () => {
     it('should successfully log the user out', async () => {
