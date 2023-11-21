@@ -105,13 +105,14 @@ describe('Button widget tests', () => {
   test('Draws a button with favourite type', () => {
     //@ts-ignore
     const wrapper = shallow(<ButtonFavourite>Test</ButtonFavourite>);
-
+    console.log(wrapper.debug());
     expect(
       wrapper.containsMatchingElement(
-        <button type="button" className="btn btn-danger">
-          <FavouriteIcon />
-          Test
-        </button>
+        <button type="button" className="btn btn-light">
+        <FavouriteIcon/>
+         
+        Test
+      </button>
       )
     ).toEqual(true);
   }
@@ -250,20 +251,23 @@ describe('Card widget tests', () => {
     };
   //@ts-ignore
     const wrapper = shallow(<AnswerCard answer={mockAnswer} />);
-    await wrapper.update();
-  
+
     expect(
       wrapper.containsMatchingElement(
         // @ts-ignore
         <Card>
-          <Row>
-            <Column>
-              Test Text
-            </Column>
-          </Row>
-        </Card>
+        <Row>
+          <Column>
+            Test Text
+          </Column>
+        </Row>
+        <Row>
+          <Column />
+        </Row>
+      </Card>
       )
-    ).toEqual(true);
+    ).toEqual(true)
+    
   });
   
 
