@@ -84,7 +84,7 @@ export class AnswerDetails extends Component<{ match: { params: { id: number } }
       .catch((error) => {
         console.error(error.message);
         history.push('/');
-        alert('You must be logged in to create a question');
+        alert('You must be logged in to access this page');
       });
 
     service
@@ -98,10 +98,14 @@ export class AnswerDetails extends Component<{ match: { params: { id: number } }
   }
 
   addAnswerComment() {
-    service
+    
+    if(this.connectedUser) {
+      service
       .createAnswerComment(this.answerComment.text, this.answer.answer_id, this.connectedUser)
       .then(() => this.mounted())
       .then(() => (this.answerComment.text = ''))
       .catch((error) => console.error('Error adding answer comment: ' + error.message));
+    }else return
+    
   }
 }
