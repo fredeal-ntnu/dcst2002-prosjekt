@@ -13,14 +13,12 @@ export type Answer_Content = {
 };
 
 class Service {
-
-
-
   //Gets vote scores for answers to a specific question
 
   getAnswerScoresByQuestionId(question_id: number) {
     return new Promise<Answer_Content[]>((resolve, reject) => {
-      pool.query(`
+      pool.query(
+        `
       SELECT a.*,
     COALESCE(SUM(
         CASE
@@ -38,7 +36,7 @@ GROUP BY a.answer_id;`,
           if (error) return reject(error);
 
           resolve(results as Answer_Content[]);
-        }, 
+        },
       );
     });
   }
@@ -61,7 +59,6 @@ GROUP BY a.answer_id;`,
   }
 
   //get answers by question id
-  //BRUKES IKKE ATM, SE KOMMENTAR PÅ SERVICE MED SAMME NAVN PÅ CLIENT SIDE
 
   getAnswersByQuestionId(question_id: number) {
     return new Promise<Answer_Content[]>((resolve, reject) => {
@@ -77,35 +74,34 @@ GROUP BY a.answer_id;`,
     });
   }
 
-getAllFavouriteAnswersByUserId(user_id: number){
+  getAllFavouriteAnswersByUserId(user_id: number) {
     return new Promise<Answer_Content[]>((resolve, reject) => {
-    // First query to get all answer_ids associated with the user_id
-  pool.query(
-    'SELECT * FROM Answer_user_favourite WHERE user_id = ?',
-    [user_id],
-    (error, favoriteResults) => {
-        if (error) return reject(error);
+      // First query to get all answer_ids associated with the user_id
+      pool.query(
+        'SELECT * FROM Answer_user_favourite WHERE user_id = ?',
+        [user_id],
+        (error, favoriteResults) => {
+          if (error) return reject(error);
 
-        if((favoriteResults as RowDataPacket[]).length === 0) return reject('No favourite found');
-        // Extract answer_ids from the favoriteResults
-        const answer_id = (favoriteResults as RowDataPacket[]).map(result => result.answer_id);
+          if ((favoriteResults as RowDataPacket[]).length === 0)
+            return reject('No favourite found');
+          // Extract answer_ids from the favoriteResults
+          const answer_id = (favoriteResults as RowDataPacket[]).map((result) => result.answer_id);
 
-        // Second query to get answers based on the extracted answer_ids
-        pool.query(
+          // Second query to get answers based on the extracted answer_ids
+          pool.query(
             'SELECT * FROM Answers WHERE answer_id IN (?)',
             [answer_id],
             (secondError, answerResults) => {
-                if (secondError) return reject(secondError);
-                  
-                
+              if (secondError) return reject(secondError);
 
-                resolve(answerResults as Answer_Content[]);
-            }
-        );
+              resolve(answerResults as Answer_Content[]);
+            },
+          );
+        },
+      );
     });
-  });
-}
-
+  }
 
   //create answer by question id
 
@@ -123,9 +119,7 @@ getAllFavouriteAnswersByUserId(user_id: number){
     });
   }
 
-  /**
-   * Delete answer with given id.
-   */
+  // Delete answer with given id.
 
   deleteAnswer(id: number) {
     return new Promise<void>((resolve, reject) => {
@@ -135,16 +129,14 @@ getAllFavouriteAnswersByUserId(user_id: number){
       });
     });
   }
-  /**
-   * Update answer with given id.
-   */
+
+  // Update answer with given id.
 
   updateAnswer(answer: Answer_Content) {
     return new Promise<void>((resolve, reject) => {
       pool.query(
         'UPDATE Answers SET text=?, confirmed_answer=? WHERE answer_id=?',
         [answer.text, answer.confirmed_answer, answer.answer_id],
-
 
         (error, results: ResultSetHeader) => {
           if (error) return reject(error);
@@ -156,13 +148,5 @@ getAllFavouriteAnswersByUserId(user_id: number){
     });
   }
 }
-
-
-
-
-
-
-
-
 
 export const answerService = new Service();

@@ -9,7 +9,6 @@ export type Question_Comment_Content = {
 };
 
 class Service {
-
   //get question comment by question id
 
   getQuestionCommentByQuestionId(question_id: number) {
@@ -44,7 +43,7 @@ class Service {
   }
 
   //create question comment by question id
-  
+
   createQuestionComment(text: string, question_id: number, user_id: number) {
     return new Promise<number>((resolve, reject) => {
       pool.query(
@@ -59,9 +58,7 @@ class Service {
     });
   }
 
-  /**
-   * Delete answer comment with answer id.
-   */
+  // Delete answer comment with answer id.
 
   deleteQuestionComment(question_comment_id: number) {
     return new Promise<void>((resolve, reject) => {
@@ -78,9 +75,7 @@ class Service {
     });
   }
 
-  /**
-   * Update answer Comment with given id.
-   */
+  // Update answer Comment with given id.
 
   updateQuestionComment(question_comment: Question_Comment_Content) {
     return new Promise<void>((resolve, reject) => {

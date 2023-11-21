@@ -1,5 +1,3 @@
-//vi trenger getTag og getAllTags
-
 import pool from '../mysql-pool';
 import type { RowDataPacket, ResultSetHeader } from 'mysql2';
 
@@ -9,26 +7,20 @@ export type Tag_Content = {
 };
 
 class Service {
-  
- // Create tag
- // DO NOT DELETE ITS FOR TESTING
+  // Create tag for testing purposes
+
   createTag(name: string) {
     return new Promise<number>((resolve, reject) => {
-      pool.query(
-        'INSERT INTO Tags (name) VALUES (?)',
-        [name],
-        (error, result: ResultSetHeader) => {
-          if (error) return reject(error);
+      pool.query('INSERT INTO Tags (name) VALUES (?)', [name], (error, result: ResultSetHeader) => {
+        if (error) return reject(error);
 
-          resolve(result.insertId);
-        },
-      );
+        resolve(result.insertId);
+      });
     });
   }
 
-  /*
-   * Get tag with given id.
-   */
+  // Get tag with given id.
+
   getTag(tag_id: number) {
     return new Promise<Tag_Content>((resolve, reject) => {
       pool.query(
@@ -44,9 +36,7 @@ class Service {
     });
   }
 
-  /*
-   * Get all tags.
-   */
+  // Get all tags.
 
   getAllTags() {
     return new Promise<Tag_Content[]>((resolve, reject) => {

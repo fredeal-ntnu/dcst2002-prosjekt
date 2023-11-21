@@ -12,7 +12,6 @@ export type Question_User_Favourite = {
 };
 
 class Service {
-
   //gets all tags using question id
 
   getAllTagsByQuestionId(question_id: number) {
@@ -59,7 +58,7 @@ class Service {
   }
 
   //gets all relations from the relation table using tag id
-  
+
   getAllQuestionsByTagId(tag_id: number) {
     return new Promise<Tag_Question_Relation[]>((resolve, reject) => {
       pool.query(
