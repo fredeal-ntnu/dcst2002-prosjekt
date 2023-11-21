@@ -402,13 +402,17 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
 
                   <Button.Success
                     onClick={() => {
-                      if (this.state[isConfirmedAnswerKey as keyof State]) {
-                        this.setConfirmedAnswer(answer.answer_id);
-                        this.setState({ [isConfirmedAnswerKey]: false });
-                      } else {
-                        this.setConfirmedAnswer(answer.answer_id);
-                        this.setState({ [isConfirmedAnswerKey]: true });
-                      }
+                      if(this.question.user_id == this.connectedUser){
+                        if (this.state[isConfirmedAnswerKey as keyof State]) {
+                          this.setConfirmedAnswer(answer.answer_id);
+                          this.setState({ [isConfirmedAnswerKey]: false });
+                        } else {
+                          this.setConfirmedAnswer(answer.answer_id);
+                          this.setState({ [isConfirmedAnswerKey]: true });
+                        }
+                      }else return alert('You are not the owner of this question')
+
+                      
                     }}
                   >
                     {this.state[isConfirmedAnswerKey as keyof State]
