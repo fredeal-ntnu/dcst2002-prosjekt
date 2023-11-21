@@ -70,9 +70,10 @@ export class CreateQuestion extends Component {
                         <Column key={tag.tag_id}>
                           <Form.Label>
                             {tag.name}
-                            <input
+                            <Form.Checkbox
                               type="checkbox"
                               value={tag.tag_id}
+                              checked={this.selectedTags.includes(tag.tag_id)}
                               onChange={(event) => {
                                 this.handleCheckboxChange(event);
                               }}

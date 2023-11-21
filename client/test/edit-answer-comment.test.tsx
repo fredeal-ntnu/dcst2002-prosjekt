@@ -1,9 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { EditAnswerComment } from 'src/components/edit-answer-comment'; // Adjust the import path as needed
-import { Column, Button } from '../src/widgets';
+import { Column, Button, Form } from '../src/widgets';
 import {AnswerComment } from 'src/service';
 import { createHashHistory } from 'history';
+import service from '../src/service';
 
 const history = createHashHistory();
 jest.mock('../src/service',()=>{
@@ -43,25 +44,30 @@ describe('Site renders', () => {
 });
 
 
-describe('Edit existing answer comment', () => {
-// test('edit existing answer comment', (done) => {
-//   const wrapper = shallow(<EditAnswerComment match={{ params: { id: 1 } }} />);    setTimeout(()=>{
-//       wrapper.setState({answerComment:{answer_comment_id:0,text:'test',answer_id:1,user_id:1}});
-//       wrapper.instance().save();
-//       done()
-//   })
-// });
-});
+describe('Create answercomment', () => {
+  test('create answer comment works', () => {
+    const match = { params: { id: 1 } };
 
-describe('Delete existing answer comment', () => {
-    // test('delete existing answer comment', (done) => {
-    //   const wrapper = shallow(<EditAnswerComment match={{ params: { id: 1 } }} />);    setTimeout(()=>{
-    //       wrapper.setState({answerComment:{answer_comment_id:0,text:'test',answer_id:1,user_id:1}});
-    //       wrapper.instance().delete();
-    //       done()
-    //   })
-    // });
-});
+    // Mock service call
+    service.getAnswerCommentById = jest.fn().mockResolvedValue({ text: 'some text'});
+
+    // Now pass the mock match as a prop
+    const wrapper = shallow(<EditAnswerComment match={{ params: { id: 1 } }}  />);
+    wrapper.find(Form.Textarea).at(0)
+    .simulate('change',{currentTarget:{value:'test'}});
+    
+    setTimeout(()=>{
+      wrapper.find(Button.Success).at(0).simulate('click');
+      setTimeout(()=>{
+        console.log(window.location.href)
+        expect(window.location.href).toEqual('http://localhost/#/');
+    
+      })
+    }
+    )
+  })
+}
+);
 
 describe('site functionality', () => {
     test('edit field takes in input', (done) => {
@@ -76,7 +82,6 @@ describe('site functionality', () => {
         const wrapper = shallow(
         <Button.Success onClick={() => (buttonClicked = true)}>test</Button.Success>,
         );
-        console.log(wrapper.debug());
         wrapper.find('button').simulate('click'); 
         expect(buttonClicked).toEqual(true);   
     }); 
@@ -86,7 +91,6 @@ describe('site functionality', () => {
       const wrapper = shallow(
       <Button.Danger onClick={() => (buttonClicked = true)}>test</Button.Danger>,
       );
-      console.log(wrapper.debug());
       wrapper.find('button').simulate('click'); 
       expect(buttonClicked).toEqual(true);   
   }); 
