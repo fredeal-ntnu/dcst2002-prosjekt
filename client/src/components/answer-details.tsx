@@ -100,6 +100,7 @@ export class AnswerDetails extends Component<{ match: { params: { id: number } }
   addAnswerComment() {
     service
       .createAnswerComment(this.answerComment.text, this.answer.answer_id, this.connectedUser)
+      .then(()=> this.answerComment.text = '')
       .then(() => this.mounted())
       .catch((error) => console.error('Error adding answer comment: ' + error.message));
   }
