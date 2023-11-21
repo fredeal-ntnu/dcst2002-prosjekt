@@ -57,15 +57,6 @@ describe('Vote Routes - Successful Requests (Code 200)', () => {
     });
   });
 
-  test.skip('POST /vote - Create a new vote', (done) => {
-    const answerId = 1;
-    const voteData = { user_id: 1, answer_id: answerId, vote_type: true };
-    axios.post(`/vote`, voteData).then((response) => {
-      expect(response.status).toEqual(200);
-      done();
-    });
-  });
-
   test('POST Positive vote /answers/:id/votes - Create a positive vote', (done) => {
     const answerId = 1;
     const voteData = { user_id: 1, answer_id: answerId, vote_type: true };
