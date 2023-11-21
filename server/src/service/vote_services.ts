@@ -33,9 +33,12 @@ class Service {
               },
             );
           } else {
+            //@ts-ignore
             const existingVoteType = (selectResult[0] as RowDataPacket)?.vote_type;
 
-            if (existingVoteType === vote_type || (existingVoteType === 0 && vote_type === 0)) {
+
+
+            if ((existingVoteType ? 1 : 0) === (vote_type ? 1 : 0) || (existingVoteType === 0 && vote_type === false)) {
               // Existing vote is the same as the new vote or both are 0, delete the entry
               pool.query(
                 'DELETE FROM Votes WHERE user_id = ? AND answer_id = ?',
