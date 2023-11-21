@@ -172,7 +172,7 @@ exports[`site functionality search onchange works 1`] = `
 </Row>
 `;
 
-exports[`switchcase switchcase popular 1`] = `
+exports[`switchcase works switchcase popular shows 1`] = `
 <Row>
   <Column
     width={3}
@@ -265,7 +265,7 @@ exports[`switchcase switchcase popular 1`] = `
 </Row>
 `;
 
-exports[`switchcase switchcase unanswered 1`] = `
+exports[`switchcase works switchcase unanswered shows 1`] = `
 <Row>
   <Column
     width={3}
