@@ -9,7 +9,6 @@ export type Answer_Comment_Content = {
 };
 
 class Service {
-
   //get answer comment by answer_id
 
   getAnswerCommentsByAnswerId(answer_id: number) {
@@ -25,7 +24,6 @@ class Service {
       );
     });
   }
-
 
   //Get answer comment by answer_comment_id
 
@@ -60,7 +58,7 @@ class Service {
     });
   }
 
-   //Delete answer comment with answer id.
+  //Delete answer comment with answer id.
 
   deleteAnswerComment(answer_comment_id: number) {
     return new Promise<void>((resolve, reject) => {
@@ -77,7 +75,7 @@ class Service {
     });
   }
 
-   //Update answer Comment with given id.
+  //Update answer Comment with given id.
 
   updateAnswerComment(answer_comment: Answer_Comment_Content) {
     return new Promise<void>((resolve, reject) => {
@@ -93,6 +91,5 @@ class Service {
     });
   }
 }
-
 
 export const answerCommentService = new Service();

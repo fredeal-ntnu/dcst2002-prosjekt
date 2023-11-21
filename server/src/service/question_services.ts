@@ -3,8 +3,6 @@
 import pool from '../mysql-pool';
 import type { RowDataPacket, ResultSetHeader } from 'mysql2';
 
-
-
 export type Question_Content = {
   question_id: number;
   title: string;
@@ -14,13 +12,10 @@ export type Question_Content = {
   user_id: number;
 };
 
-
 class Service {
+  //  Get all questions.
 
-   /**
-   * Get all questions.
-   */
-   getAllQuestions() {
+  getAllQuestions() {
     return new Promise<Question_Content[]>((resolve, reject) => {
       pool.query('SELECT * FROM Questions', (error, results: RowDataPacket[]) => {
         if (error) return reject(error);
@@ -30,29 +25,24 @@ class Service {
     });
   }
 
+  // Get all unanswered questions.
 
+  getUnansweredQuestions() {
+    return new Promise<Question_Content[]>((resolve, reject) => {
+      pool.query(
+        'SELECT * FROM Questions WHERE has_answer=0 OR has_answer IS NULL',
+        (error, results: RowDataPacket[]) => {
+          if (error) return reject(error);
 
-    /**
-   * Get all unanswered questions.
-   */
-    getUnansweredQuestions() {
-      return new Promise<Question_Content[]>((resolve, reject) => {
-        pool.query(
-          'SELECT * FROM Questions WHERE has_answer=0 OR has_answer IS NULL',
-          (error, results: RowDataPacket[]) => {
-            if (error) return reject(error);
-  
-            resolve(results as Question_Content[]);
-          },
-        );
-      });
-    }
+          resolve(results as Question_Content[]);
+        },
+      );
+    });
+  }
 
-   /**
-   * Get the top 5 questions with most views in descending order
-   */
+  // Get the top 5 questions with most views in descending order
 
-   getTopFiveQuestions() {
+  getTopFiveQuestions() {
     return new Promise<Question_Content[]>((resolve, reject) => {
       pool.query(
         'SELECT * FROM Questions ORDER BY view_count DESC LIMIT 5',
@@ -65,26 +55,23 @@ class Service {
     });
   }
 
-
-    //get top 5 questions by user id
-    getUserTopFiveQuestions(user_id: number) {
-      return new Promise<Question_Content[]>((resolve, reject) => {
-        pool.query(
-          'SELECT * FROM Questions WHERE user_id=? ORDER BY view_count DESC LIMIT 5', [user_id],
-          (error, results: RowDataPacket[]) => {
-            if (error) return reject(error);
+  //get top 5 questions by user id
   
-            resolve(results as Question_Content[]);
-          },
-        );
-      });
-    }
+  getUserTopFiveQuestions(user_id: number) {
+    return new Promise<Question_Content[]>((resolve, reject) => {
+      pool.query(
+        'SELECT * FROM Questions WHERE user_id=? ORDER BY view_count DESC LIMIT 5',
+        [user_id],
+        (error, results: RowDataPacket[]) => {
+          if (error) return reject(error);
 
+          resolve(results as Question_Content[]);
+        },
+      );
+    });
+  }
 
-
-  /**
-   * Get question with given id.
-   */
+  // Get question with given id.
 
   getQuestion(question_id: number) {
     return new Promise<Question_Content | undefined>((resolve, reject) => {
@@ -93,8 +80,7 @@ class Service {
         [question_id],
         (error, results: RowDataPacket[]) => {
           if (error) return reject(error);
-          if(results.length === 0) return reject(error);
-
+          if (results.length === 0) return reject(error);
 
           this.incrementViewCount(results[0].question_id);
 
@@ -104,13 +90,9 @@ class Service {
     });
   }
 
+  // Get all unanswered questions for user
 
-
-
-   /**
-   * Get all unanswered questions for user
-   */
-   getUserUnansweredQuestions(user_id: number) {
+  getUserUnansweredQuestions(user_id: number) {
     return new Promise<Question_Content[]>((resolve, reject) => {
       pool.query(
         'SELECT * FROM Questions WHERE (has_answer = 0 OR has_answer IS NULL) AND user_id = ?',
@@ -141,27 +123,25 @@ class Service {
     });
   }
 
-    //Gets question title in favourte answers page
-  
-    getQuestionByAnswerId(answer_id: number) {
-      return new Promise<Question_Content>((resolve, reject) => {
-        pool.query(
-          'SELECT Q.* FROM Questions Q JOIN Answers A ON Q.question_id = A.question_id JOIN Answer_user_favourite AF ON A.answer_id = AF.answer_id WHERE AF.answer_id =?',
-          [answer_id],
-          (error, results: RowDataPacket[]) => {
-            if (error) return reject(error);
-  
-            resolve(results[0] as Question_Content);
-          },
-        );
-      });
-    }
+  //Gets question title in favourte answers page
 
+  getQuestionByAnswerId(answer_id: number) {
+    return new Promise<Question_Content>((resolve, reject) => {
+      pool.query(
+        'SELECT Q.* FROM Questions Q JOIN Answers A ON Q.question_id = A.question_id JOIN Answer_user_favourite AF ON A.answer_id = AF.answer_id WHERE AF.answer_id =?',
+        [answer_id],
+        (error, results: RowDataPacket[]) => {
+          if (error) return reject(error);
 
-//Create new question
+          resolve(results[0] as Question_Content);
+        },
+      );
+    });
+  }
 
-  createQuestion(title: string, text: string, user_id: number,
-  ) {
+  //Create new question
+
+  createQuestion(title: string, text: string, user_id: number) {
     return new Promise<number>((resolve, reject) => {
       pool.query(
         'INSERT INTO Questions (title,text,user_id) VALUES (?,?,?)',
@@ -175,24 +155,24 @@ class Service {
     });
   }
 
-  /**
-   * Delete question with given id.
-   */
+  // Delete question with given id.
 
   deleteQuestion(id: number) {
     return new Promise<void>((resolve, reject) => {
-      pool.query('DELETE FROM Questions WHERE question_id=?', [id], (error, results: ResultSetHeader) => {
-        if (error) return reject(error);
-        if(results.affectedRows === 0) return reject(results);
-        
-        resolve();
-      });
+      pool.query(
+        'DELETE FROM Questions WHERE question_id=?',
+        [id],
+        (error, results: ResultSetHeader) => {
+          if (error) return reject(error);
+          if (results.affectedRows === 0) return reject(results);
+
+          resolve();
+        },
+      );
     });
   }
 
-  /**
-   * Update question with given id.
-   */
+  // Update question with given id.
 
   updateQuestion(question: Question_Content) {
     return new Promise<void>((resolve, reject) => {
@@ -230,14 +210,6 @@ class Service {
       );
     });
   }
-
-
-  
-
-
-
-
-
 }
 
 export const questionService = new Service();

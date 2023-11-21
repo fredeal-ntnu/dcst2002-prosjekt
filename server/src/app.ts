@@ -14,11 +14,10 @@ import session from 'express-session';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
 
- const cookieparser = require('cookie-parser');
+const cookieparser = require('cookie-parser');
 
-/**
- * Express application.
- */
+//  Express application.
+
 const app = express();
 
 app.use(express.json());
@@ -26,23 +25,21 @@ app.use(express.json());
 const oneDay = 1000 * 60 * 60 * 24;
 
 app.use(
-    session({
-      secret: 'secretKeyNumberTwoFiveFour',
-      saveUninitialized: true,
-      cookie: {
-        maxAge: oneDay,
-        httpOnly: true,
-        sameSite: true,
-      },
-      resave: false,
-    }),
-  )
+  session({
+    secret: 'secretKeyNumberTwoFiveFour',
+    saveUninitialized: true,
+    cookie: {
+      maxAge: oneDay,
+      httpOnly: true,
+      sameSite: true,
+    },
+    resave: false,
+  }),
+);
 app.use(passport.initialize());
 app.use(passport.session());
 
-  app.use(passport.authenticate('session'));
-
-
+app.use(passport.authenticate('session'));
 
 // Since API is not compatible with v1, API version is increased to v2
 app.use('/api/v2', questionRouter);
@@ -56,13 +53,5 @@ app.use('/api/v2', answerCommentRouter);
 app.use('/api/v2', favouriteRouter);
 app.use('/api/v2', userRouter);
 app.use('/api/v2', voteRouter);
-
-//app.use(cookieParser());
-
-// app.use(express.urlencoded({ extended: true }));
-
-//serving public file
-// app.use(express.static(__dirname));
-
 
 export default app;
