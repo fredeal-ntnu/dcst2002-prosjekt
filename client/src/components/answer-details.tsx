@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Card, Alert, Row, Column, Button, Form } from '../widgets';
-import service, {Answer, AnswerComment} from '../service';
+import service, {Answer, AnswerComment, User} from '../service';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();
@@ -11,6 +11,9 @@ export class AnswerDetails extends Component<{ match: { params: { id: number } }
 answer: Answer = {answer_id: 0, text: '', confirmed_answer: 0, last_updated: new Date(), question_id: 0, user_id: 0};
 answerComments: AnswerComment[] = [];
 answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0, user_id: 0};
+user: User = { user_id: 0, google_id: '', username: '', email: '' };
+connectedUser: number = 0;
+
 
   render() {
     return (
@@ -56,6 +59,17 @@ answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0, us
   }
 
   mounted() {
+    service.getMe()
+    .then((user) => {
+      this.user = user
+      this.connectedUser = this.user.user_id;
+    })
+    .catch((error)=>{
+      console.error(error.message)
+      history.push('/')
+      alert('You must be logged in to create a question')
+    })
+
     service
       .getAnswerById(this.props.match.params.id)
       .then((answer) => {
@@ -68,7 +82,7 @@ answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0, us
 
   addAnswerComment() {
     service
-      .createAnswerComment(this.answerComment.text, this.answer.answer_id, this.answer.user_id)
+      .createAnswerComment(this.answerComment.text, this.answer.answer_id, this.connectedUser)
       // .then(() => history.push('/questions/' + this.answer.question_id + '/answers/' + this.answer.answer_id))
       .then(() => this.mounted())
       .catch((error) => console.error('Error adding answer comment: ' + error.message));

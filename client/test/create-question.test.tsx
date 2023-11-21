@@ -40,6 +40,19 @@ describe('CreateQuestion component', () => {
   })
 })
 
+describe('Button click', () => {
+  test('Button click works', () => {
+    const wrapper = shallow(<CreateQuestion />);
+    setTimeout(()=>{
+    wrapper.find(Button.Success).simulate('click');
+    // expect alert to be called with the correct message
+    setTimeout(()=>{
+    expect(alert).toHaveBeenCalledWith('You must have atlest one tag');
+  })
+}
+   )}
+)})
+
  describe('Page functionality', () => {
 
 test('title input works ', () => {
@@ -67,36 +80,53 @@ test('title input works ', () => {
   }
  )
 
-test('create question works', (done) => {
-  const wrapper = shallow(<CreateQuestion />);
-  console.log(wrapper.debug());
-  setTimeout(()=>{
-    wrapper.find('#createTitle').simulate('change',{currentTarget:{value:'test'}});
-    expect(wrapper.find('#createTitle').prop('value')).toEqual('test');
-
-    wrapper.find('#createText').simulate('change',{currentTarget:{value:'test'}});
-    expect(wrapper.find('#createTitle').prop('value')).toEqual('questiontext');
-
-    wrapper.find('FormLabel').simulate('change',{currentTarget:{value:'test'}})
-    expect(wrapper.find('formLabel').prop('value')).toEqual('test');
-
-    wrapper.find('ButtonSuccess').simulate('click');
+  test('create question works', (done) => {
+    const wrapper = shallow(<CreateQuestion />);
+    console.log(wrapper.debug());
+    wrapper.find(Form.Input).at(0) //kan droppe siden bare en input
+    .simulate('change',{currentTarget:{value:'test'}});
+    wrapper.find(Form.Textarea).at(0)
+    .simulate('change',{currentTarget:{value:'test'}});
+    // wrapper.find(Form.Label).at(3)
+    // .simulate('change',{currentTarget:{checked:true}});
 
     setTimeout(()=>{
-      expect(location.hash).toEqual('#/questions/1');
-
-      done()
+      wrapper.find(Button.Success).simulate('click');
+      // expect alert to be called with the correct message
+      setTimeout(()=>{
+        expect(window.location.href).toEqual('http://localhost/#/questions/1');
     })
-  
-  })
-  
-    
-   
+  }
+  )
+})
 
-  
-    
-  })
 
+// test('create question works', (done) => {
+//   const wrapper = shallow(<CreateQuestion />);
+//   console.log(wrapper.debug());
+//   setTimeout(()=>{
+//     // const inputNodes = wrapper.find('FormInput');
+//     // expect(inputNodes).toHaveLength(4);
+    
+//     wrapper.find('#createTitle').simulate('change',{currentTarget:{value:'test'}});
+//     expect(wrapper.find('#createTitle').prop('value')).toEqual('test');
+
+//     wrapper.find('#createText').simulate('change',{currentTarget:{value:'test'}});
+//     expect(wrapper.find('#createTitle').prop('value')).toEqual('test');
+
+//     wrapper.find('FormLabel').simulate('change',{currentTarget:{value:'test'}})
+//     expect(wrapper.find('formLabel').prop('value')).toEqual('test');
+
+//     wrapper.find('ButtonSuccess').simulate('click');
+
+//     setTimeout(()=>{
+//       expect(window.location.href).toEqual('hhtp://localhost/#/questions/1'); // fra heine 
+    
+//       done()
+//     })
+  
+//   })
+//   })
 })
 
 

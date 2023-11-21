@@ -50,6 +50,7 @@ export class EditAnswerComment extends Component<{ match: { params: { id: number
   }
 
   save() {
+    console.log(this.answerComment)
     console.log(this.connectedUser, this.answerComment.user_id)
     if(this.connectedUser == this.answerComment.user_id){
     service
