@@ -58,7 +58,6 @@ describe('Create answercomment', () => {
     setTimeout(() => {
       wrapper.find(Button.Success).at(0).simulate('click');
       setTimeout(() => {
-        console.log(window.location.href);
         expect(window.location.href).toEqual('http://localhost/#/');
       });
     });

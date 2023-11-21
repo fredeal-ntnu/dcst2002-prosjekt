@@ -11,22 +11,18 @@ export type Vote_Content = {
 
 class Service {   
   // create a vote for answer
-  // Her bør vi kommentere hva som skjer i koden, hva som skjer i de forskjellige if-setningene
 createVote(user_id: number, answer_id: number, vote_type: boolean) {
-  console.log("første sted")
   return new Promise<void>((resolve, reject) => {
       // Check if there is an existing vote for the user and answer
       pool.query(
           'SELECT vote_type FROM Votes WHERE user_id = ? AND answer_id = ?',
           [user_id, answer_id],
           (selectError, selectResult) => {
-            console.log("andre sted")
               if (selectError) {
                   reject(selectError);
               }
 
               if (Array.isArray(selectResult) && selectResult.length === 0) {
-                console.log("tredje sted")
                 // No existing vote, insert the new vote
                 pool.query(
                   'INSERT INTO Votes (user_id, answer_id, vote_type) VALUES (?, ?, ?)',
@@ -43,7 +39,6 @@ createVote(user_id: number, answer_id: number, vote_type: boolean) {
 
 
                   if (existingVoteType === vote_type || (existingVoteType === 0 && vote_type === 0)) {
-                    console.log("det funker ikke")
                       // Existing vote is the same as the new vote or both are 0, delete the entry
                       pool.query(
                           'DELETE FROM Votes WHERE user_id = ? AND answer_id = ?',
@@ -55,7 +50,7 @@ createVote(user_id: number, answer_id: number, vote_type: boolean) {
                               resolve();
                           }
                       );
-                  } else {console.log("det funker")
+                  } else {
                       // Existing vote is different from the new vote, update the entry
                       pool.query(
                           'UPDATE Votes SET vote_type = ? WHERE user_id = ? AND answer_id = ?',
