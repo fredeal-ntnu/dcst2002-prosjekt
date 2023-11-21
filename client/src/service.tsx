@@ -70,25 +70,19 @@ class Service {
     return axios.post('/vote', { user_id, answer_id, vote_type });
   }
 
-  /**
-   * Get all questions.
-   */
+  //get all questions
 
   getAllQuestions() {
     return axios.get<Question[]>('/questions').then((response) => response.data);
   }
 
-  /**
-   * Get a question by id.
-   */
+  // Get a question by id.
 
   getQuestion(id: number) {
     return axios.get<Question>('/questions/' + id).then((response) => response.data);
   }
 
-  /**
-   * Get top five questions.
-   */
+  //Get top five questions.
 
   getTopFiveQuestions() {
     return axios.get<Question[]>('/topfivequestions').then((response) => response.data);
@@ -101,9 +95,8 @@ class Service {
       .then((response) => response.data);
   }
 
-  /**
-   * Get all unaswered questions.
-   */
+  //Get all unaswered questions.
+
   getUnansweredQuestions() {
     return axios.get<Question[]>('/unansweredquestions').then((response) => response.data);
   }
@@ -115,25 +108,19 @@ class Service {
       .then((response) => response.data);
   }
 
-  /**
-   * Update a question.
-   */
+  //Update a question.
 
   updateQuestion(question: Question) {
     return axios.put('/questions', question).then((response) => response.data);
   }
 
-  /**
-   * Create a question.
-   */
+  // Create a question.
 
   createQuestion(title: string, text: string, user_id: number) {
     return axios.post('/questions', { title, text, user_id }).then((response) => response.data.id);
   }
 
-  /**
-   * Delete a question.
-   */
+  // Delete a question.
 
   deleteQuestion(id: number) {
     return axios.delete('/questions/' + id).then((response) => response.data);
@@ -144,30 +131,25 @@ class Service {
     return axios.get('/user/' + user_id + '/questions').then((response) => response.data);
   }
 
-  /**
-   * Get tags for a question.
-   */
+  //Get tags for a question.
 
   getTags(id: number) {
     return axios.get('/questions/' + id + '/tags').then((response) => response.data);
   }
 
-  /**
-   * Get all tags.
-   */
+  //Get all tags.
 
   getAllTags() {
     return axios.get('/tags').then((response) => response.data);
   }
 
   // Creates a tag relation with tag_id and question_id
+
   createTagQuestionRelation(tag_id: number, question_id: number) {
     return axios.post('/questiontagrelation', { tag_id, question_id });
   }
 
-  /**
-   * Get a tag by name.
-   */
+  // Get a tag by name.
 
   getAllQuestionsByTagId(tag: number) {
     return axios.get('/tag/' + tag + '/questions').then((response) => response.data);
