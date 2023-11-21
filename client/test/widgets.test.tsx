@@ -193,6 +193,26 @@ describe('Card widget tests', () => {
     ).toEqual(true);
   });
 
+  test('Draws card with small title', () => {
+    const wrapper = shallow(<Card title="Test" smallTitle>Test</Card>);
+    expect(
+      wrapper.containsMatchingElement(
+        <div className="card">
+        <div className="card-body">
+          <h6 className="card-title">
+            Test
+          </h6>
+          <div className="card-text">
+            <div>
+              Test
+            </div>
+          </div>
+        </div>
+      </div>
+      )
+    ).toEqual(true);
+  });
+
   test('Draws a card with title and body', () => {
     const mockQuestion = {
       question_id: '1',

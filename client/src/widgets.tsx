@@ -71,7 +71,8 @@ export class MiniCard extends Component<{ title: ReactNode; smallTitle?: boolean
       </div>
     );
   }
-}
+} 
+
 export class InsideMiniCard extends Component<{ title: ReactNode; smallTitle?: boolean }> {
   renderTextLines(text: string, maxCharsPerLine: number): JSX.Element[] {
     const lines = [];
@@ -102,6 +103,7 @@ export class InsideMiniCard extends Component<{ title: ReactNode; smallTitle?: b
     );
   }
 }
+
 
 class Link extends Component<{ to: string }> {
   render() {
@@ -177,16 +179,16 @@ export class AnswerCard extends Component<{ answer: Answer }> {
 
   render() {
     return (
-      <Card
-        title={
-          <NavLink to={'/questions/' + this.question.question_id}>{this.question.title}</NavLink>
-        }
-      >
-        <Row>
-          <Column>{this.props.answer.text}</Column>
-        </Row>
-      </Card>
-    );
+      
+       <Card title={<NavLink to={'/questions/' + this.question.question_id}>{this.question.title}</NavLink>}>
+            <Row>
+              <Column>{this.props.answer.text}</Column>
+            </Row>
+            <Row>
+              <Column>{this.props.children}</Column>
+            </Row>
+       </Card> 
+    )
   }
 
   mounted(): void {
@@ -254,12 +256,30 @@ class ButtonSuccess extends Component<{
 export class ButtonFavourite extends Component<{
   small?: boolean;
   onClick: () => void;
+}, {
+  isFavorite: boolean;
 }> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      isFavorite: false
+    };
+  }
+
+  handleButtonClick = () => {
+    this.setState(prevState => ({
+      isFavorite: !prevState.isFavorite
+    }));
+    this.props.onClick(); // Call the parent component's onClick function
+  }
+
   render() {
+    const btnClass = this.state.isFavorite ? 'btn-danger' : 'btn-light';
+
     return (
       <button
         type="button"
-        className="btn btn-danger"
+        className={`btn ${btnClass}`}
         style={
           this.props.small
             ? {
@@ -269,7 +289,7 @@ export class ButtonFavourite extends Component<{
               }
             : {}
         }
-        onClick={this.props.onClick}
+        onClick={this.handleButtonClick}
       >
         <FavouriteIcon style={{ verticalAlign: '-2px', scale: '150%', alignItems: 'center' }} />{' '}
         {this.props.children}
@@ -277,6 +297,7 @@ export class ButtonFavourite extends Component<{
     );
   }
 }
+
 
 export class ButtonUpvote extends Component<{
   small?: boolean;
@@ -288,7 +309,7 @@ export class ButtonUpvote extends Component<{
         type="button"
         className="btn btn-light"
         style={{
-          padding: '5px 15px'
+          padding: '3px 18px'
         }
          
         }
@@ -311,7 +332,7 @@ export class ButtonCommentBuble extends Component<{
         type="button"
         className="btn btn-light"
         style={
-         {padding: '5px 15px'}
+         {padding: '3px 17px'}
         }
         onClick={this.props.onClick}
       >
@@ -332,7 +353,7 @@ export class ButtonDownVote extends Component<{
         type="button"
         className="btn btn-light"
         style={
-        { padding: '5px 15px'}
+        { padding: '3px 18px'}
         }
         onClick={this.props.onClick}
       >
@@ -428,7 +449,7 @@ class NavBarLink extends Component<{ to: string }> {
         className="btn btn-outline-light my-2 my-sm-0"
         activeClassName="active"
         to={this.props.to}
-        style={{ marginRight: '5px' }}
+        style={{ marginRight: '10px' }}
       >
         {this.props.children}
       </NavLink>

@@ -20,12 +20,25 @@ beforeAll((done) => {
 beforeEach((done) => {
   pool.query('TRUNCATE TABLE Votes', (error) => {
     if (error) return done.fail(error);
-    
+
     // Insert test votes into the database
-    voteService.createVote(testVotes[0].user_id, testVotes[0].answer_id, testVotes[0].vote_type)
-        .then(() => voteService.createVote(testVotes[1].user_id, testVotes[1].answer_id, testVotes[1].vote_type))
-        .then(() => voteService.createVote(testVotes[2].user_id, testVotes[2].answer_id, testVotes[2].vote_type))
-        .then(() => done());
+    voteService
+      .createVote(testVotes[0].user_id, testVotes[0].answer_id, testVotes[0].vote_type)
+      .then(() =>
+        voteService.createVote(
+          testVotes[1].user_id,
+          testVotes[1].answer_id,
+          testVotes[1].vote_type,
+        ),
+      )
+      .then(() =>
+        voteService.createVote(
+          testVotes[2].user_id,
+          testVotes[2].answer_id,
+          testVotes[2].vote_type,
+        ),
+      )
+      .then(() => done());
   });
 });
 
@@ -34,85 +47,59 @@ afterAll((done) => {
   webServer.close(() => pool.end(() => done()));
 });
 
-describe('Vote Routes', () => {
-  // Test fetching all votes for an answer
-  test('GET /answers/:id/votes (200 OK)', (done) => {
-    const answerId = 1; // Assuming this answer ID exists in your test database
-    axios.get(`/answers/${answerId}/votes`)
-      .then((response) => {
-        expect(response.status).toEqual(200);
-        expect(response.data).toEqual(testVotes); // Expect the test votes to be returned
-        done();
-      })
-  });
-
-  // Test fetching votes for an answer with no votes
-  test('GET (500) /answers/:id/votes', (done) => {
-    const answerId = 2; // Assuming this answer ID has no votes in your test database
-    axios.get(`/answers/${answerId}/votes`)
-      .catch((error) => {
-        expect(error.response.status).toEqual(500);
-        expect(error.response.data).toEqual('Votes not found'); // Expect an empty array when no votes are found
-        done();
-      })
-  });
-
-
-  test.skip('POST /answers/:id/votes (200 OK)', (done) => {
-    const answerId = 1; // Assuming this answer ID exists and can be voted on
-    const voteData = { user_id: 1, answer_id: answerId, vote_type: true };
-    axios.post(`/vote`, voteData)
-      .then((response) => {
-        expect(response.status).toEqual(200);
-        done();
-      })
-  });
-
-    // Test creating a vote with missing properties
-    test('POST ERROR /vote (400 Bad Request)', (done) => {
-      const incompleteVoteData = { user_id: 1, answer_id: 1 }; // Missing vote_type
-      axios.post('/vote', incompleteVoteData)
-        .catch((error) => {
-          expect(error.response.status).toEqual(400);
-          done();
-        });
-    });
-
-  // Positive vote
-  test('POST Positive vote /answers/:id/votes (200 OK)', (done) => {
-    const answerId = 1; // Assuming this answer ID exists and can be voted on
-    const voteData = { user_id: 1, answer_id: answerId, vote_type: true };
-    axios.post(`/answers/${answerId}/votes`, voteData)
-      .then((response) => {
-        expect(response.status).toEqual(200);
-        done();
-      })
-  });
-
-  // Negative vote
-  //DENNE GJØR INGENTING FORDI JEG IKKE FORSTÅR LOGIKKEN
-  test.skip('POST Negative vote /answers/:id/votes (200 OK)', (done) => {
-    const answerId = 1; // Assuming this answer ID exists and can be voted on
-    const voteData = { user_id: 3, answer_id: answerId, vote_type: false };
-    axios.post(`/answers/${answerId}/votes`, voteData)
-      .then((response) => {
-        expect(response.status).toEqual(200);
-        done();
-      }).catch((error) => {
-        expect(error.response.status).toEqual(400);
-        done();
-      });
-  });
-
-  // Test creating a vote with missing properties
-  test('POST ERROR /answers/:id/votes (400 Bad Request)', (done) => {
+describe('Vote Routes - Successful Requests (Code 200)', () => {
+  test('GET /answers/:id/votes - Retrieve all votes for an answer', (done) => {
     const answerId = 1;
-    const incompleteVoteData = { user_id: 1, answer_id: answerId }; // Missing vote_type
-    axios.post(`/answers/${answerId}/votes`, incompleteVoteData)
-      .catch((error) => {
-        expect(error.response.status).toEqual(400);
-        done();
-      });
+    axios.get(`/answers/${answerId}/votes`).then((response) => {
+      expect(response.status).toEqual(200);
+      expect(response.data).toEqual(testVotes);
+      done();
+    });
+  });
+
+  test.skip('POST /vote - Create a new vote', (done) => {
+    const answerId = 1;
+    const voteData = { user_id: 1, answer_id: answerId, vote_type: true };
+    axios.post(`/vote`, voteData).then((response) => {
+      expect(response.status).toEqual(200);
+      done();
+    });
+  });
+
+  test('POST Positive vote /answers/:id/votes - Create a positive vote', (done) => {
+    const answerId = 1;
+    const voteData = { user_id: 1, answer_id: answerId, vote_type: true };
+    axios.post(`/answers/${answerId}/votes`, voteData).then((response) => {
+      expect(response.status).toEqual(200);
+      done();
+    });
   });
 });
 
+describe('Vote Routes - Error Handling (Code 500)', () => {
+  test('GET /answers/:id/votes - Retrieve votes for an answer with no votes', (done) => {
+    const answerId = 2;
+    axios.get(`/answers/${answerId}/votes`).catch((error) => {
+      expect(error.response.status).toEqual(500);
+      expect(error.response.data).toEqual('Votes not found');
+      done();
+    });
+  });
+
+  test('POST /vote - Attempt to create a vote with missing properties', (done) => {
+    const incompleteVoteData = { user_id: 1, answer_id: 1 };
+    axios.post('/vote', incompleteVoteData).catch((error) => {
+      expect(error.response.status).toEqual(400);
+      done();
+    });
+  });
+
+  test('POST /answers/:id/votes - Attempt to create a positive vote with missing properties', (done) => {
+    const answerId = 1;
+    const incompleteVoteData = { user_id: 1, answer_id: answerId };
+    axios.post(`/answers/${answerId}/votes`, incompleteVoteData).catch((error) => {
+      expect(error.response.status).toEqual(400);
+      done();
+    });
+  });
+});
