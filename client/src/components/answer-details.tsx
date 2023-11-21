@@ -48,6 +48,7 @@ connectedUser: number = 0;
                   type="text"
                   value={this.answerComment.text}
                   onChange={(event) => (this.answerComment.text = event.currentTarget.value)}
+                  maxLength={1000}
                 />
             <Column>
                   <Button.Success onClick={this.addAnswerComment}>Add Comment</Button.Success>
