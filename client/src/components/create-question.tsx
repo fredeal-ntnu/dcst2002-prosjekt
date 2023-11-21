@@ -37,6 +37,7 @@ export class CreateQuestion extends Component {
                   </Column>
                   <Column>
                     <Form.Input
+                      id = "createTitle"
                       type="text"
                       value={this.title}
                       onChange={(event) => (this.title = event.currentTarget.value)}
@@ -50,6 +51,7 @@ export class CreateQuestion extends Component {
                   </Column>
                   <Column>
                     <Form.Textarea
+                      id = "createText"
                       placeholder="Text"
                       value={this.text}
                       onChange={(event) => (this.text = event.currentTarget.value)}
