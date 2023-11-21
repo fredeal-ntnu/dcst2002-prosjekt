@@ -27,16 +27,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     
-    # For client directory
-    # - name: Change into client directory
-    #   run: cd client/
-    # - name: Install client dependencies
-    #   run: npm install
-    #   working-directory: ./client
-    # - name: Run client tests
-    #   run: npm test
-    #   working-directory: ./client
-    
     - name: Create MySQL Tables
       run: |
         sudo mysql --host 127.0.0.1 --user=root --password=root testdb < cidatabase.sql
