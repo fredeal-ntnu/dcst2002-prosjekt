@@ -7,11 +7,6 @@ import service from './service';
 
 import { EyeIcon, FavouriteIcon, UpvoteIcon, DownvoteIcon, CommentBubleIcon } from './icons';
 
-/**
- * Renders an information card using Bootstrap classes.
- *
- * Properties: title
- */
 export class Card extends Component<{ title: ReactNode; smallTitle?: boolean }> {
   renderTextLines(text: string, maxCharsPerLine: number): JSX.Element[] {
     const lines = [];
@@ -71,7 +66,7 @@ export class MiniCard extends Component<{ title: ReactNode; smallTitle?: boolean
       </div>
     );
   }
-} 
+}
 
 export class InsideMiniCard extends Component<{ title: ReactNode; smallTitle?: boolean }> {
   renderTextLines(text: string, maxCharsPerLine: number): JSX.Element[] {
@@ -103,7 +98,6 @@ export class InsideMiniCard extends Component<{ title: ReactNode; smallTitle?: b
     );
   }
 }
-
 
 class Link extends Component<{ to: string }> {
   render() {
@@ -179,16 +173,19 @@ export class AnswerCard extends Component<{ answer: Answer }> {
 
   render() {
     return (
-      
-       <Card title={<NavLink to={'/questions/' + this.question.question_id}>{this.question.title}</NavLink>}>
-            <Row>
-              <Column>{this.props.answer.text}</Column>
-            </Row>
-            <Row>
-              <Column>{this.props.children}</Column>
-            </Row>
-       </Card> 
-    )
+      <Card
+        title={
+          <NavLink to={'/questions/' + this.question.question_id}>{this.question.title}</NavLink>
+        }
+      >
+        <Row>
+          <Column>{this.props.answer.text}</Column>
+        </Row>
+        <Row>
+          <Column>{this.props.children}</Column>
+        </Row>
+      </Card>
+    );
   }
 
   mounted(): void {
@@ -198,20 +195,12 @@ export class AnswerCard extends Component<{ answer: Answer }> {
   }
 }
 
-/**
- * Renders a row using Bootstrap classes.
- */
 export class Row extends Component {
   render() {
     return <div className="row">{this.props.children}</div>;
   }
 }
 
-/**
- * Renders a column with specified width using Bootstrap classes.
- *
- * Properties: width, right
- */
 export class Column extends Component<{ width?: number; right?: boolean }> {
   render() {
     return (
@@ -222,11 +211,6 @@ export class Column extends Component<{ width?: number; right?: boolean }> {
   }
 }
 
-/**
- * Renders a success button using Bootstrap styles.
- *
- * Properties: small, onClick
- */
 class ButtonSuccess extends Component<{
   small?: boolean;
   onClick: () => void;
@@ -253,25 +237,28 @@ class ButtonSuccess extends Component<{
   }
 }
 
-export class ButtonFavourite extends Component<{
-  small?: boolean;
-  onClick: () => void;
-}, {
-  isFavorite: boolean;
-}> {
+export class ButtonFavourite extends Component<
+  {
+    small?: boolean;
+    onClick: () => void;
+  },
+  {
+    isFavorite: boolean;
+  }
+> {
   constructor(props: any) {
     super(props);
     this.state = {
-      isFavorite: false
+      isFavorite: false,
     };
   }
 
   handleButtonClick = () => {
-    this.setState(prevState => ({
-      isFavorite: !prevState.isFavorite
+    this.setState((prevState) => ({
+      isFavorite: !prevState.isFavorite,
     }));
-    this.props.onClick(); // Call the parent component's onClick function
-  }
+    this.props.onClick();
+  };
 
   render() {
     const btnClass = this.state.isFavorite ? 'btn-danger' : 'btn-light';
@@ -298,7 +285,6 @@ export class ButtonFavourite extends Component<{
   }
 }
 
-
 export class ButtonUpvote extends Component<{
   small?: boolean;
   onClick: () => void;
@@ -309,10 +295,8 @@ export class ButtonUpvote extends Component<{
         type="button"
         className="btn btn-light"
         style={{
-          padding: '3px 18px'
-        }
-         
-        }
+          padding: '3px 18px',
+        }}
         onClick={this.props.onClick}
       >
         <UpvoteIcon style={{ verticalAlign: '-2px', scale: '150%', alignItems: 'center' }} />{' '}
@@ -331,9 +315,7 @@ export class ButtonCommentBuble extends Component<{
       <button
         type="button"
         className="btn btn-light"
-        style={
-         {padding: '3px 17px'}
-        }
+        style={{ padding: '3px 17px' }}
         onClick={this.props.onClick}
       >
         <CommentBubleIcon style={{ verticalAlign: '-2px', scale: '200%', alignItems: 'center' }} />{' '}
@@ -352,9 +334,7 @@ export class ButtonDownVote extends Component<{
       <button
         type="button"
         className="btn btn-light"
-        style={
-        { padding: '3px 18px'}
-        }
+        style={{ padding: '3px 18px' }}
         onClick={this.props.onClick}
       >
         <DownvoteIcon style={{ verticalAlign: '-2px', scale: '150%', alignItems: 'center' }} />{' '}
@@ -364,11 +344,6 @@ export class ButtonDownVote extends Component<{
   }
 }
 
-/**
- * Renders a danger button using Bootstrap styles.
- *
- * Properties: small, onClick
- */
 class ButtonDanger extends Component<{
   small?: boolean;
   onClick: () => void;
@@ -395,11 +370,6 @@ class ButtonDanger extends Component<{
   }
 }
 
-/**
- * Renders a light button using Bootstrap styles.
- *
- * Properties: small, onClick
- */
 class ButtonLight extends Component<{
   small?: boolean;
   onClick: () => void;
@@ -426,22 +396,12 @@ class ButtonLight extends Component<{
   }
 }
 
-/**
- * Renders a button using Bootstrap styles.
- *
- * Properties: onClick
- */
 export class Button {
   static Success = ButtonSuccess;
   static Danger = ButtonDanger;
   static Light = ButtonLight;
 }
 
-/**
- * Renders a NavBar link using Bootstrap styles.
- *
- * Properties: to
- */
 class NavBarLink extends Component<{ to: string }> {
   render() {
     return (
@@ -473,11 +433,6 @@ export class Search extends Component {
   }
 }
 
-/**
- * Renders a NavBar using Bootstrap classes.
- *
- * Properties: brand
- */
 export class NavBar extends Component<{ brand: ReactNode }> {
   static Link = NavBarLink;
 
@@ -495,18 +450,11 @@ export class NavBar extends Component<{ brand: ReactNode }> {
   }
 }
 
-/**
- * Renders a form label using Bootstrap styles.
- */
 export class FormLabel extends Component {
   render() {
     return <label className="col-form-label">{this.props.children}</label>;
   }
 }
-
-/**
- * Renders a form input using Bootstrap styles.
- */
 export class FormInput extends Component<{
   type: string;
   value: string | number;
@@ -515,8 +463,6 @@ export class FormInput extends Component<{
   [prop: string]: any;
 }> {
   render() {
-    // ...rest will contain extra passed attributes such as disabled, required, width, height, pattern
-    // For further information, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
     const { type, value, placeholder, onChange, ...rest } = this.props;
     return (
       <input
@@ -531,9 +477,6 @@ export class FormInput extends Component<{
   }
 }
 
-/**
- * Renders a form textarea using Bootstrap styles.
- */
 export class FormTextarea extends React.Component<{
   value: string | number;
   onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
@@ -545,17 +488,12 @@ export class FormTextarea extends React.Component<{
   }
 }
 
-/**
- * Renders a form checkbox using Bootstrap styles.
- */
 export class FormCheckbox extends Component<{
   checked: boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   [prop: string]: any;
 }> {
   render() {
-    // ...rest will contain extra passed attributes such as disabled, required, width, height, pattern
-    // For further information, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
     const { checked, onChange, ...rest } = this.props;
     return (
       <input
@@ -569,17 +507,12 @@ export class FormCheckbox extends Component<{
   }
 }
 
-/**
- * Renders a form select using Bootstrap styles.
- */
 export class FormSelect extends Component<{
   value: string | number;
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
   [prop: string]: any;
 }> {
   render() {
-    // ...rest will contain extra passed attributes such as disabled, required, size.
-    // For further information, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
     const { value, onChange, children, ...rest } = this.props;
     return (
       <select
@@ -595,9 +528,6 @@ export class FormSelect extends Component<{
   }
 }
 
-/**
- * Renders form components using Bootstrap styles.
- */
 export class Form {
   static Label = FormLabel;
   static Input = FormInput;
@@ -606,11 +536,6 @@ export class Form {
   static Select = FormSelect;
 }
 
-/**
- * Renders alert messages using Bootstrap classes.
- *
- * Students: this slightly more complex component is not part of curriculum.
- */
 export class Alert extends Component {
   alerts: { id: number; text: ReactNode; type: string }[] = [];
   nextId: number = 0;
@@ -636,41 +561,30 @@ export class Alert extends Component {
     );
   }
 
-  //Show success alert.
-
   static success(text: ReactNode) {
-    // To avoid 'Cannot update during an existing state transition' errors, run after current event through setTimeout
     setTimeout(() => {
-      let instance = Alert.instance(); // Get rendered Alert component instance
+      let instance = Alert.instance();
       if (instance) instance.alerts.push({ id: instance.nextId++, text: text, type: 'success' });
     });
   }
 
-  //Show info alert.
-
   static info(text: ReactNode) {
-    // To avoid 'Cannot update during an existing state transition' errors, run after current event through setTimeout
     setTimeout(() => {
-      let instance = Alert.instance(); // Get rendered Alert component instance
+      let instance = Alert.instance();
       if (instance) instance.alerts.push({ id: instance.nextId++, text: text, type: 'info' });
     });
   }
 
-  // Show warning alert.
   static warning(text: ReactNode) {
-    // To avoid 'Cannot update during an existing state transition' errors, run after current event through setTimeout
     setTimeout(() => {
-      let instance = Alert.instance(); // Get rendered Alert component instance
+      let instance = Alert.instance();
       if (instance) instance.alerts.push({ id: instance.nextId++, text: text, type: 'warning' });
     });
   }
 
-  // Show danger alert.
-
   static danger(text: ReactNode) {
-    // To avoid 'Cannot update during an existing state transition' errors, run after current event through setTimeout
     setTimeout(() => {
-      let instance = Alert.instance(); // Get rendered Alert component instance
+      let instance = Alert.instance();
       if (instance) instance.alerts.push({ id: instance.nextId++, text: text, type: 'danger' });
     });
   }
