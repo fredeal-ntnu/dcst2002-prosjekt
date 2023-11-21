@@ -220,6 +220,7 @@ describe('Service', () => {
   describe('getTags', () => {
     it('should get tags for a specific question', async () => {
       // Set up the question ID and the expected URL pattern
+      //@ts-ignore
       const questionId = mockTagQuestionRelation.question_id;
       const expectedUrl = `/questions/${questionId}/tags`; // Replace with the actual URL pattern used in your service
 
@@ -259,6 +260,7 @@ describe('Service', () => {
   describe('createTagQuestionRelation', () => {
     it('should create a tag-question relation', async () => {
       const tag_id = mockTag.tag_id;
+      //@ts-ignore
       const question_id = mockTagQuestionRelation.question_id;
 
       const expectedUrl = `/questiontagrelation`;
@@ -291,6 +293,7 @@ describe('Service', () => {
 
   describe('getTagsForQuestion', () => {
     it('should get all tags for a question by question id', async () => {
+      //@ts-ignore
       const result = await service.getTagsForQuestion(mockTagQuestionRelation.question_id);
       expect(result).toEqual([mockTagQuestionRelation]);
     });

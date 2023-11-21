@@ -84,15 +84,15 @@ describe('site functionality', () => {
   });
 });
 
-describe('switchcase', () => {
+describe('switchcase works', () => {
   const wrapper = shallow(<MyQuestions />);
 
-  test('switchcase popular', () => {
+  test('switchcase popular shows', () => {
     wrapper.find('FormSelect').simulate('change', { target: { value: 'popular' } });
     expect(wrapper).toMatchSnapshot();
   });
 
-  test('switchcase unanswered', () => {
+  test('switchcase unanswered shows', () => {
     wrapper.find('FormSelect').simulate('change', { target: { value: 'unanswered' } });
     expect(wrapper).toMatchSnapshot();
   });
