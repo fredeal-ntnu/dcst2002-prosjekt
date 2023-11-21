@@ -103,8 +103,8 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
               .filter((tag): tag is Tag => tag !== undefined)
               .map((tag) => tag.name)
               .join(', ')}
+              
           </MiniCard>
-
           <Row>
             <Column width={1}>{this.createQuestionEditButton()}</Column>
           </Row>
@@ -152,7 +152,6 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   }
 
   handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(event.target.value);
     this.filter = event.target.value;
     this.loadAnswers(); // Call a method to load questions based on the selected filter
   };
@@ -370,7 +369,6 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                       }}
                     ></ButtonUpvote>
                   </Column>
-                  <Column></Column>
                   <Column>{answer.score}</Column>
                   <ButtonDownVote
                     onClick={() => {
@@ -399,16 +397,18 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                   >
                     {this.state[isFavoriteKey as keyof State] ? 'Remove from favorites' : ''}
                   </ButtonFavourite>
-
                   <Button.Success
                     onClick={() => {
-                      if (this.state[isConfirmedAnswerKey as keyof State]) {
-                        this.setConfirmedAnswer(answer.answer_id);
-                        this.setState({ [isConfirmedAnswerKey]: false });
-                      } else {
-                        this.setConfirmedAnswer(answer.answer_id);
-                        this.setState({ [isConfirmedAnswerKey]: true });
-                      }
+                      if(this.question.user_id == this.connectedUser){
+                        if (this.state[isConfirmedAnswerKey as keyof State]) {
+                          this.setConfirmedAnswer(answer.answer_id);
+                          this.setState({ [isConfirmedAnswerKey]: false });
+                        } else {
+                          this.setConfirmedAnswer(answer.answer_id);
+                          this.setState({ [isConfirmedAnswerKey]: true });
+                        }
+                      }else return alert('You are not the owner of this question')
+                      
                     }}
                   >
                     {this.state[isConfirmedAnswerKey as keyof State]
@@ -483,7 +483,6 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
     this.question.has_answer = 1;
     await service
       .updateQuestion(this.question)
-
       .catch((error) => console.error('Error saving question: ' + error.message));
   }
 
@@ -520,7 +519,6 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   // Set confirmed answer for connected user
 
   setConfirmedAnswer(answer_id: number) {
-    if (this.question.user_id == this.connectedUser) {
       service
         .getAnswerById(answer_id)
         .then((answer) => (this.answer = answer))
@@ -530,10 +528,9 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
             .updateAnswer(this.answer)
             .then(() => this.mounted())
             .then(() => (this.answer.text = ''))
-            .then(() => Alert.success('Answer marked as best answer'))
             .catch((error) => console.error('Error saving answer: ' + error.message));
         })
         .catch((error) => console.error('Error getting answer: ' + error.message));
-    } else alert('You are not the owner of this question');
+  
   }
 }
