@@ -96,12 +96,17 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
           <MiniCard title={this.question.title}>{this.question.text}</MiniCard>
 
           <MiniCard title="Tags">
-            {this.relations
-              .filter((relation) => relation.question_id == this.props.match.params.id)
-              .map((relation) => this.tags.find((tag) => tag.tag_id == relation.tag_id))
-              .filter((tag): tag is Tag => tag !== undefined)
-              .map((tag) => tag.name)
-              .join(', ')}
+            {
+              // Filter relations based on matching question_id
+              this.relations
+                .filter((relation) => relation.question_id == this.props.match.params.id)
+                // Map each relation to corresponding tag using tag_id
+                .map((relation) => this.tags.find((tag) => tag.tag_id == relation.tag_id))
+                // Filter out undefined tags (type narrowing with tag is Tag)
+                .filter((tag): tag is Tag => tag !== undefined)
+                .map((tag) => tag.name)
+                .join(', ')
+            }
           </MiniCard>
           <Row>
             <Column width={1}>{this.createQuestionEditButton()}</Column>
