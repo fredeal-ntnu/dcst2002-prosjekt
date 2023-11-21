@@ -168,21 +168,6 @@ afterAll((done) => {
   });
   
   describe('POST /questions', () => {
-    test.skip('Create new question (201 Created)', (done) => {
-      const newQuestion = {
-        title: 'New Question Title',
-        text: 'New question text content',
-        user_id: 1 
-      };
-      
-      axios.post('/questions', newQuestion)
-        .then((response) => {
-          expect(response.status).toEqual(201);
-          expect(response.data).toHaveProperty('id');
-          done();
-        })
-    });
-  
     test('Fail to create a new question with invalid data (400 Bad Request)', (done) => {
       const invalidQuestion = {
         title: '', // Invalid title

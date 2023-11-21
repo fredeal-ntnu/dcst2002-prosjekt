@@ -1,4 +1,3 @@
-// DENNE ER FUCKED
 import axios from 'axios';
 import pool from '../../src/mysql-pool'; 
 import app from '../../src/app';
@@ -45,10 +44,10 @@ import { Answer_Comment_Content, answerCommentService } from '../../src/service/
         })
     });
   
-    test('POST /answer/:id/comments - create a new answer comment', (done) => {
+    test('POST /answers/:id/comments - create a new answer comment', (done) => {
       const answerId = 1; // Assuming this answer ID exists
       const newCommentData = { text: 'New comment', answer_id: 5, user_id: 5 };
-      axios.post(`/answer/${answerId}/comments`, newCommentData)
+      axios.post(`/answers/${answerId}/comments`, newCommentData)
         .then((response) => {
           expect(response.status).toEqual(200);
           expect(response.data).toHaveProperty('id');
@@ -113,10 +112,10 @@ import { Answer_Comment_Content, answerCommentService } from '../../src/service/
     });
   
     //post missing answer comment properties
-    test('POST ERROR (400) /answer/:id/comments', (done) => {
+    test('POST ERROR (400) /answers/:id/comments', (done) => {
       const answerId = 1;
       const incompleteCommentData = {}; // Missing text
-      axios.post(`/answer/${answerId}/comments`, incompleteCommentData)
+      axios.post(`/answers/${answerId}/comments`, incompleteCommentData)
         .catch((error) => {
           expect(error.response.status).toEqual(400);
           expect(error.response.data).toEqual('Missing answer comment properties');
