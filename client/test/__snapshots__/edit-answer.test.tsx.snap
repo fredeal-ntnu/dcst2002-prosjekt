@@ -9,6 +9,7 @@ exports[`Site renders Site renders correct 1`] = `
       <Row>
         <Column>
           <FormTextarea
+            maxLength={1000}
             onChange={[Function]}
             placeholder="Edit answer"
             type="text"
@@ -49,6 +50,7 @@ exports[`site functionality edit field takes in input 1`] = `
       <Row>
         <Column>
           <FormTextarea
+            maxLength={1000}
             onChange={[Function]}
             placeholder="Edit answer"
             type="text"

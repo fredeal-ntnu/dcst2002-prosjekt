@@ -1,9 +1,14 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { QuestionDetails } from 'src/components/question-details'; // Adjust the import path as needed
-import { Column } from '../src/widgets';
+import service from 'src/service';
 
-jest.mock('../src/service', () => {
+//@ts-ignore
+const flushPromises = () => new Promise(setTimeout);
+
+
+
+jest.mock('src/service', () => {
   class Service {
     getQuestion(id: number) {
       return new Promise((resolve, reject) => {
@@ -70,4 +75,49 @@ describe('switchcase', () => {
     wrapper.find('FormSelect').simulate('change', { target: { value: 'confirmed' } });
     expect(wrapper).toMatchSnapshot();
   });
+});
+
+describe('createQuestionEditButton', () => {
+  it('should call createQuestionEditButton if connectedUser matches question user_id', () => {
+    const wrapper = shallow(<QuestionDetails match={{ params: { id: 1 } }} />);
+    //@ts-ignore
+    wrapper.instance().connectedUser = 1;
+    //@ts-ignore
+    wrapper.instance().question.user_id = 1;
+    //@ts-ignore
+    expect(wrapper.instance().createQuestionEditButton()).toBeDefined();
+  });
+
+  it('should render addQuestionCommentInput if connectedUser is set', () => {
+    const wrapper = shallow(<QuestionDetails match={{ params: { id: 1 } }} />);
+    //@ts-ignore
+    wrapper.instance().connectedUser = 1;
+    //@ts-ignore
+    expect(wrapper.instance().addQuestionCommentInput()).toBeDefined();
+  });
+
+  
+
+  it('should render handleQuestionCommentDisplay if connectedUser is set', () => {
+    const mockComments = [{ question_comment_id: 1, text: 'Test Comment', question_id: 1, user_id: 1 }];
+    const wrapper = shallow(<QuestionDetails match={{ params: { id: 1 } }} />);
+    //@ts-ignore
+    wrapper.instance().connectedUser = 1;
+    //@ts-ignore
+    wrapper.instance().questionComments = mockComments;
+    //@ts-ignore
+    expect(wrapper.instance().handleQuestionCommentDisplay()).toBeDefined();
+  });
+  
+
+  
+  it('should call handleEditAnswer if connectedUser matches answer user_id', () => {
+    const wrapper = shallow(<QuestionDetails match={{ params: { id: 1 } }} />);
+    //@ts-ignore
+    wrapper.instance().connectedUser = 1;
+    const mockAnswer = { answer_id: 10, user_id: 1 };
+    //@ts-ignore
+    expect(wrapper.instance().handleEditAnswer(mockAnswer.answer_id, mockAnswer.user_id)).toBeDefined();
+  });
+
 });

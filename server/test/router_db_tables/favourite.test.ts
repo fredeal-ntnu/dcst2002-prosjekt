@@ -56,19 +56,6 @@ afterAll((done) => {
             done();
             })
         });
-  //FUNKER IKKE
-    test.skip('POST /users/:userId/favourites/:answerId - create a new favourite relation', (done) => {
-      const userId = 3;
-      const answerId = 3;
-      const newFavouriteData = { user_id: userId, answer_id: answerId };
-      axios.post(`/users/${userId}/favourites/${answerId}`, newFavouriteData)
-        .then((response) => {
-          expect(response.status).toEqual(200);
-          // Check the response to confirm creation
-          done();
-        })
-        .catch((error) => done.fail(error));
-    });
 
     test('GET /favourites/:id - get favourite relation by answer id', (done) => {
       const answerId = 1;

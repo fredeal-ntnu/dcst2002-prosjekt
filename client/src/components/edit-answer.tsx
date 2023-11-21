@@ -23,6 +23,7 @@ export class EditAnswer extends Component<{ match: { params: { id: number } } }>
                 type="text"
                 value={this.answer.text}
                 onChange={(event) => (this.answer.text = event.currentTarget.value)}
+                maxLength={1000}
               />
             </Column>
           </Row>

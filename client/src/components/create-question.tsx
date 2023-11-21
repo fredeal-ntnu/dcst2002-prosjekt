@@ -12,7 +12,7 @@ export class CreateQuestion extends Component {
   text = '';
   user_id = 0;
   connectedUser: number = 0;
- 
+
   render() {
     return (
       <>
@@ -30,91 +30,91 @@ export class CreateQuestion extends Component {
             />
           </Column>
           <Card title="Ask a Question">
-
+            <Row>
+              <Column width={2}>
+                <Form.Label>Title:</Form.Label>
+              </Column>
+              <Column>
+                <Form.Input
+                  id="createTitle"
+                  type="text"
+                  value={this.title}
+                  onChange={(event) => (this.title = event.currentTarget.value)}
+                  maxLength={255}
+                />
+              </Column>
+            </Row>
+            <br />
+            <Row>
+              <Column width={2}>
+                <Form.Label>Text:</Form.Label>
+              </Column>
+              <Column>
+                <Form.Textarea
+                  id="createText"
+                  placeholder="Text"
+                  value={this.text}
+                  onChange={(event) => (this.text = event.currentTarget.value)}
+                  rows={5}
+                  maxLength={1000}
+                />
+              </Column>
+            </Row>
+            <br />
+            <Row>
+              <Column width={2}>
+                <Form.Label>Tags:</Form.Label>
+              </Column>
+              <Column>
                 <Row>
-                  <Column width={2}>
-                    <Form.Label>Title:</Form.Label>
-                  </Column>
-                  <Column>
-                    <Form.Input
-                      id = "createTitle"
-                      type="text"
-                      value={this.title}
-                      onChange={(event) => (this.title = event.currentTarget.value)}
-                    />
-                  </Column>
-                </Row>
-                <br />
-                <Row>
-                  <Column width={2}>
-                    <Form.Label>Text:</Form.Label>
-                  </Column>
-                  <Column>
-                    <Form.Textarea
-                      id = "createText"
-                      placeholder="Text"
-                      value={this.text}
-                      onChange={(event) => (this.text = event.currentTarget.value)}
-                      rows={5}
-                    />
-                  </Column>
-                </Row>
-                <br />
-                <Row>
-                  <Column width={2}>
-                    <Form.Label>Tags:</Form.Label>
-                  </Column>
-                  <Column>
-                    <Row>
-                      {this.tags.map((tag) => (
-                        <Column key={tag.tag_id}>
-                          <Form.Label>
-                            {tag.name}
-                            <Form.Checkbox
-                              type="checkbox"
-                              value={tag.tag_id}
+                  {this.tags.map((tag) => (
+                    <Column key={tag.tag_id}>
+                      <Form.Label>
+                        {tag.name}
+                        <Form.Checkbox
+                          type="checkbox"
+                          value={tag.tag_id}
                               checked={this.selectedTags.includes(tag.tag_id)}
-                              onChange={(event) => {
-                                this.handleCheckboxChange(event);
-                              }}
-                            />
-                          </Form.Label>
-                        </Column>
-                      ))}
-                    </Row>
-                  </Column>
+                          onChange={(event) => {
+                            this.handleCheckboxChange(event);
+                          }}
+                        />
+                      </Form.Label>
+                    </Column>
+                  ))}
                 </Row>
-                <br />
-                <Row>
-                  <Column>
-                    <Button.Success
-                      onClick={() => {
-                        this.handleAddQuestion();
-                      }}
-                    >
-                      AskMorgan
-                    </Button.Success>
-                  </Column>
-                </Row>
-              </Card>
+              </Column>
+            </Row>
+            <br />
+            <Row>
+              <Column>
+                <Button.Success
+                  onClick={() => {
+                    this.handleAddQuestion();
+                  }}
+                >
+                  AskMorgan
+                </Button.Success>
+              </Column>
+            </Row>
+          </Card>
         </Row>
       </>
     );
   }
 
   mounted() {
-    service.getMe()
-    .then((user) => {
-      this.user_id = user.user_id
-      this.connectedUser = this.user_id;
-    })
-    .catch((error)=>{
-      console.error(error.message)
-      history.push('/')
-      alert('You must be logged in to create a question')
-    })
-    
-
+    service
+      .getMe()
+      .then((user) => {
+        this.user_id = user.user_id;
+        this.connectedUser = this.user_id;
+      })
+      .catch((error) => {
+        console.error(error.message);
+        history.push('/');
+        alert('You must be logged in to create a question');
+      });
 
     service
       .getAllTags()

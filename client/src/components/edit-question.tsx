@@ -41,6 +41,7 @@ export class EditQuestion extends Component<{ match: { params: { id: number } } 
                   value={this.question.text}
                   onChange={(event) => (this.question.text = event.currentTarget.value)}
                   rows={5}
+                  maxLength={1000}
                 />
               </Column>
             </Row>
