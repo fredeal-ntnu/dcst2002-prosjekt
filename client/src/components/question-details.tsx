@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Component } from 'react-simplified';
 import {
   Card,
-  Alert,
   Row,
   Column,
   Button,
@@ -103,7 +102,6 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
               .filter((tag): tag is Tag => tag !== undefined)
               .map((tag) => tag.name)
               .join(', ')}
-              
           </MiniCard>
           <Row>
             <Column width={1}>{this.createQuestionEditButton()}</Column>
@@ -153,7 +151,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
 
   handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     this.filter = event.target.value;
-    this.loadAnswers(); // Call a method to load questions based on the selected filter
+    this.loadAnswers();
   };
 
   //Logic for fetching and filtering answers
@@ -399,7 +397,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                   </ButtonFavourite>
                   <Button.Success
                     onClick={() => {
-                      if(this.question.user_id == this.connectedUser){
+                      if (this.question.user_id == this.connectedUser) {
                         if (this.state[isConfirmedAnswerKey as keyof State]) {
                           this.setConfirmedAnswer(answer.answer_id);
                           this.setState({ [isConfirmedAnswerKey]: false });
@@ -407,8 +405,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                           this.setConfirmedAnswer(answer.answer_id);
                           this.setState({ [isConfirmedAnswerKey]: true });
                         }
-                      }else return alert('You are not the owner of this question')
-                      
+                      } else return alert('You are not the owner of this question');
                     }}
                   >
                     {this.state[isConfirmedAnswerKey as keyof State]
@@ -519,18 +516,17 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
   // Set confirmed answer for connected user
 
   setConfirmedAnswer(answer_id: number) {
-      service
-        .getAnswerById(answer_id)
-        .then((answer) => (this.answer = answer))
-        .then(() => {
-          this.answer.confirmed_answer = this.answer.confirmed_answer == 1 ? 0 : 1;
-          service
-            .updateAnswer(this.answer)
-            .then(() => this.mounted())
-            .then(() => (this.answer.text = ''))
-            .catch((error) => console.error('Error saving answer: ' + error.message));
-        })
-        .catch((error) => console.error('Error getting answer: ' + error.message));
-  
+    service
+      .getAnswerById(answer_id)
+      .then((answer) => (this.answer = answer))
+      .then(() => {
+        this.answer.confirmed_answer = this.answer.confirmed_answer == 1 ? 0 : 1;
+        service
+          .updateAnswer(this.answer)
+          .then(() => this.mounted())
+          .then(() => (this.answer.text = ''))
+          .catch((error) => console.error('Error saving answer: ' + error.message));
+      })
+      .catch((error) => console.error('Error getting answer: ' + error.message));
   }
 }
