@@ -60,17 +60,6 @@ CREATE TABLE Tags (
     name VARCHAR(255) NOT NULL
 );
 
-INSERT INTO Tags (tag_id, name) VALUES 
-(1, 'SQL'),
-(2, 'Python'),
-(3, 'JavaScript'),
-(4, 'HTML'),
-(5, 'CSS'),
-(6, 'Bootstrap'),
-(7, 'Frontend'),
-(8, 'Backend')
-
-
 CREATE TABLE Tag_question_relation (
     tag_id INT,
     question_id INT,

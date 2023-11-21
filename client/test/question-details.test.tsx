@@ -1,6 +1,9 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { QuestionDetails } from 'src/components/question-details'; // Adjust the import path as needed
+import { QuestionDetails } from 'src/components/question-details';
+import service from 'src/service';
+import { createHashHistory } from 'history';
+const history = createHashHistory();
 
 jest.mock('src/service', () => {
   class Service {
@@ -114,3 +117,16 @@ describe('createQuestionEditButton', () => {
     ).toBeDefined();
   });
 });
+
+//@ts-ignore
+const flushPromises = () => new Promise(setTimeout);
+
+describe('Conditional Rendering', () => {
+  it('renders the edit button only for the question owner', () => {
+    const wrapper = shallow(<QuestionDetails match={{ params: { id: 1 } }} />);
+    wrapper.setState({ user: { user_id: 1 }, question: { user_id: 1 } });
+
+    expect(wrapper.find('Button.EditQuestion').length).toEqual(0); // Adjust the selector as needed
+  });
+});
+

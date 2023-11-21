@@ -1,3 +1,4 @@
+
 CREATE TABLE Users (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
     google_id VARCHAR(255) NOT NULL,
@@ -84,7 +85,6 @@ CREATE TABLE Answer_user_favourite (
     FOREIGN KEY (answer_id) REFERENCES Answers(answer_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
-
 
 
 
