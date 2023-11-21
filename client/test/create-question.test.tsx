@@ -1,9 +1,37 @@
 // Import necessary libraries and components
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { Row, Column, Button} from 'src/widgets';
+import { Row, Column, Button, Form} from 'src/widgets';
 import { CreateQuestion } from 'src/components/create-question'; // Update the path accordingly
-import service from 'src/service';
+import {Question, Tag_Question_Relation} from 'src/service';
+
+
+jest.mock('src/service',()=>{
+  class Service {
+    getMe(){
+      return new Promise((resolve,reject)=>{
+        resolve({user_id:1});
+      });
+    }
+    createQuestion(){
+      return new Promise((resolve,reject)=>{
+        resolve({question_id:1,title:'test',description:'test',user_id:1,username:'test',date:'test',score:0});
+      });
+    }
+    getAllTags(){
+      return new Promise((resolve,reject)=>{
+        resolve([{tag_id:1,name:'test'}]);
+      });
+    }
+    createTagQuestionRelation(){
+      return new Promise((resolve,reject)=>{
+        resolve({tag_id:1,question_id:1});
+      });
+    }
+    
+  }
+return new Service();
+})
 
 describe('CreateQuestion component', () => {
   test('CreateQuestion component renders', () => {
@@ -13,15 +41,6 @@ describe('CreateQuestion component', () => {
 })
 
  describe('Page functionality', () => {
-//   test('Add question button registers click', () => {
-//     let buttonClicked = false
-//     const wrapper = shallow(
-//         <Button.Success onClick={()=> (buttonClicked = true)}>test</Button.Success>,
-//   )
-//   wrapper.find('button').simulate('click');
-//   expect(buttonClicked).toEqual(true);
-//   }
-// )
 
 test('title input works ', () => {
   const wrapper = shallow(<CreateQuestion />);
@@ -46,7 +65,29 @@ test('title input works ', () => {
   wrapper.find('input').simulate('change');
   expect(checkboxClicked).toEqual(true);
   }
- )})
+ )
+
+test('create question works', (done) => {
+  const wrapper = shallow(<CreateQuestion />);
+  setTimeout(()=>{
+    wrapper.find('input').simulate('change',{currentTarget:{value:'questiontest'}});
+    expect(wrapper.find('button').prop('value')).toEqual('questiontest');
+
+    wrapper.find('button').simulate('click');
+    setTimeout(()=>{
+      expect(wrapper.find('button').prop('value')).toEqual('');
+    })
+  })
+  
+    
+   
+
+  
+    
+  })
+
+})
+
 
 
 

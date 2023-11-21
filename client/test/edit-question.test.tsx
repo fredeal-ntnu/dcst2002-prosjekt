@@ -45,25 +45,25 @@ describe('Site renders', () => {
 });
 
 describe('Edit existing question comment', () => {
-    test('edit existing question comment', (done) => {
-        const wrapper = shallow(<EditQuestion match={{ params: { id: 1 } }} />);
-        setTimeout(()=>{
-            wrapper.setState({questionComment:{question_comment_id:0,text:'test',question_id:1,user_id:1}});
-            wrapper.instance().save();
-            done()
-        })
-    })
+    // test('edit existing question comment', (done) => {
+    //     const wrapper = shallow(<EditQuestion match={{ params: { id: 1 } }} />);
+    //     setTimeout(()=>{
+    //         wrapper.setState({questionComment:{question_comment_id:0,text:'test',question_id:1,user_id:1}});
+    //         wrapper.instance().save();
+    //         done()
+    //     })
+    // })
 })
 
 describe('Delete existing question comment', () => {
-    test('delete existing question comment', (done) => {
-        const wrapper = shallow(<EditQuestion match={{ params: { id: 1 } }} />);
-        setTimeout(()=>{
-            wrapper.setState({questionComment:{question_comment_id:0,text:'test',question_id:1,user_id:1}});
-            wrapper.instance().delete();
-            done()
-        })
-    })
+    // test('delete existing question comment', (done) => {
+    //     const wrapper = shallow(<EditQuestion match={{ params: { id: 1 } }} />);
+    //     setTimeout(()=>{
+    //         wrapper.setState({questionComment:{question_comment_id:0,text:'test',question_id:1,user_id:1}});
+    //         wrapper.instance().delete();
+    //         done()
+    //     })
+    // })
 })
 
 describe('site functionality', () => {

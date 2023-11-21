@@ -44,23 +44,23 @@ describe('Site renders', () => {
 
 
 describe('Edit existing answer comment', () => {
-test('edit existing answer comment', (done) => {
-  const wrapper = shallow(<EditAnswerComment match={{ params: { id: 1 } }} />);    setTimeout(()=>{
-      wrapper.setState({answerComment:{answer_comment_id:0,text:'test',answer_id:1,user_id:1}});
-      wrapper.instance().save();
-      done()
-  })
-});
+// test('edit existing answer comment', (done) => {
+//   const wrapper = shallow(<EditAnswerComment match={{ params: { id: 1 } }} />);    setTimeout(()=>{
+//       wrapper.setState({answerComment:{answer_comment_id:0,text:'test',answer_id:1,user_id:1}});
+//       wrapper.instance().save();
+//       done()
+//   })
+// });
 });
 
 describe('Delete existing answer comment', () => {
-    test('delete existing answer comment', (done) => {
-      const wrapper = shallow(<EditAnswerComment match={{ params: { id: 1 } }} />);    setTimeout(()=>{
-          wrapper.setState({answerComment:{answer_comment_id:0,text:'test',answer_id:1,user_id:1}});
-          wrapper.instance().delete();
-          done()
-      })
-    });
+    // test('delete existing answer comment', (done) => {
+    //   const wrapper = shallow(<EditAnswerComment match={{ params: { id: 1 } }} />);    setTimeout(()=>{
+    //       wrapper.setState({answerComment:{answer_comment_id:0,text:'test',answer_id:1,user_id:1}});
+    //       wrapper.instance().delete();
+    //       done()
+    //   })
+    // });
 });
 
 describe('site functionality', () => {

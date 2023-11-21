@@ -53,7 +53,12 @@ describe('site functionality', () => {
 describe('switchcase', () => {
  
   const wrapper = shallow(<AllQuestions />);
- 
+
+  test('switchcase all', () => {
+    wrapper.find('FormSelect').simulate('change', { target: { value: 'all' } });
+    expect(wrapper).toMatchSnapshot();
+  })
+  
   test('switchcase popular', () => {
     wrapper.find('FormSelect').simulate('change', { target: { value: 'popular' } });
 
