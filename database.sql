@@ -8,7 +8,7 @@ CREATE TABLE Users (
 CREATE TABLE Questions (
     question_id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL,
-    text VARCHAR(255) NOT NULL,
+    text VARCHAR(1000) NOT NULL,
     view_count INT DEFAULT 0,
     has_answer BOOLEAN DEFAULT FALSE,
     user_id INT NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE Questions (
 
 CREATE TABLE Question_comments (
     question_comment_id INT PRIMARY KEY AUTO_INCREMENT,
-    text VARCHAR(255) NOT NULL,
+    text VARCHAR(1000) NOT NULL,
     question_id INT NOT NULL,
     user_id INT NOT NULL,
     FOREIGN KEY (question_id) REFERENCES Questions(question_id) ON DELETE CASCADE,
@@ -26,7 +26,7 @@ CREATE TABLE Question_comments (
 
 CREATE TABLE Answers (
     answer_id INT PRIMARY KEY AUTO_INCREMENT,
-    text VARCHAR(255) NOT NULL,
+    text VARCHAR(1000) NOT NULL,
     confirmed_answer BOOLEAN DEFAULT FALSE,
     last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     question_id INT NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE Votes (
 
 CREATE TABLE Answer_comments (
     answer_comment_id INT PRIMARY KEY AUTO_INCREMENT,
-    text VARCHAR(255) NOT NULL,
+    text VARCHAR(1000) NOT NULL,
     answer_id INT NOT NULL,
     user_id INT NOT NULL,
     FOREIGN KEY (answer_id) REFERENCES Answers(answer_id) ON DELETE CASCADE,
@@ -57,6 +57,17 @@ CREATE TABLE Tags (
     tag_id INT PRIMARY KEY,
     name VARCHAR(255) NOT NULL
 );
+
+INSERT INTO Tags (tag_id, name) VALUES 
+(1, 'SQL'),
+(2, 'Python'),
+(3, 'JavaScript'),
+(4, 'HTML'),
+(5, 'CSS'),
+(6, 'Bootstrap'),
+(7, 'Frontend'),
+(8, 'Backend')
+
 
 CREATE TABLE Tag_question_relation (
     tag_id INT,
