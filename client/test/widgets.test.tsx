@@ -230,7 +230,6 @@ describe('Card widget tests', () => {
     };
   //@ts-ignore
     const wrapper = shallow(<AnswerCard answer={mockAnswer} />);
-    console.log(wrapper.debug());
     await wrapper.update();
   
     expect(
@@ -332,7 +331,6 @@ describe('Alert widget tests', () => {
 
   test('Removes an alert on close button click', () => {
     const wrapper = shallow(<Alert />);
-    console.log(wrapper.debug());
     //@ts-ignore
     wrapper.instance().alerts = [{ id: 1, text: 'Test Alert', type: 'success' }];
     wrapper.update();

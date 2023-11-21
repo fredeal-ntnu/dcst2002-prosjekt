@@ -74,7 +74,6 @@ describe('Site renders', () => {
 describe('site functionality', () => {
   test('search onchange on first search works', (done) => {
     const wrapper = shallow(<Tags />);
-    console.log(wrapper.debug());
 
     
     const inputNode = wrapper.find('FormInput');
@@ -91,8 +90,6 @@ describe('site functionality', () => {
 
 test('search onchange works for second node', (done) => {
   const wrapper = shallow(<Tags />);
-  console.log(wrapper.debug());
-
 
   const inputNodes = wrapper.find('FormInput');
 

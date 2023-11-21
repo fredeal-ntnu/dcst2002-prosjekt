@@ -56,7 +56,6 @@ describe('site functionality', () => {
     const wrapper = shallow(
       <Button.Success onClick={() => (buttonClicked = true)}>test</Button.Success>,
     );
-    console.log(wrapper.debug());
     wrapper.find('button').simulate('click');
     expect(buttonClicked).toEqual(true);
   });
@@ -66,7 +65,6 @@ describe('site functionality', () => {
     const wrapper = shallow(
       <Button.Danger onClick={() => (buttonClicked = true)}>test</Button.Danger>,
     );
-    console.log(wrapper.debug());
     wrapper.find('button').simulate('click');
     expect(buttonClicked).toEqual(true);
   });
