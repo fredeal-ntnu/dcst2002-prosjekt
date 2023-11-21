@@ -47,6 +47,7 @@ exports[`CreateQuestion component CreateQuestion component renders 1`] = `
         </Column>
         <Column>
           <FormInput
+            id="createTitle"
             onChange={[Function]}
             type="text"
             value=""
@@ -64,6 +65,7 @@ exports[`CreateQuestion component CreateQuestion component renders 1`] = `
         </Column>
         <Column>
           <FormTextarea
+            id="createText"
             onChange={[Function]}
             placeholder="Text"
             rows={5}
@@ -146,6 +148,7 @@ exports[`Page functionality text input works  1`] = `
         </Column>
         <Column>
           <FormInput
+            id="createTitle"
             onChange={[Function]}
             type="text"
             value=""
@@ -163,6 +166,7 @@ exports[`Page functionality text input works  1`] = `
         </Column>
         <Column>
           <FormTextarea
+            id="createText"
             onChange={[Function]}
             placeholder="Text"
             rows={5}
@@ -245,6 +249,7 @@ exports[`Page functionality title input works  1`] = `
         </Column>
         <Column>
           <FormInput
+            id="createTitle"
             onChange={[Function]}
             type="text"
             value="test"
@@ -262,6 +267,7 @@ exports[`Page functionality title input works  1`] = `
         </Column>
         <Column>
           <FormTextarea
+            id="createText"
             onChange={[Function]}
             placeholder="Text"
             rows={5}

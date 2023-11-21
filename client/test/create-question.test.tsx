@@ -15,7 +15,7 @@ jest.mock('src/service',()=>{
     }
     createQuestion(){
       return new Promise((resolve,reject)=>{
-        resolve({question_id:1,title:'test',description:'test',user_id:1,username:'test',date:'test',score:0});
+        resolve({question_id:1,title:'test',description:'test',view_count:0,has_answer:0,user_id:1});
       });
     }
     getAllTags(){
@@ -69,14 +69,25 @@ test('title input works ', () => {
 
 test('create question works', (done) => {
   const wrapper = shallow(<CreateQuestion />);
+  console.log(wrapper.debug());
   setTimeout(()=>{
-    wrapper.find('input').simulate('change',{currentTarget:{value:'questiontest'}});
-    expect(wrapper.find('button').prop('value')).toEqual('questiontest');
+    wrapper.find('#createTitle').simulate('change',{currentTarget:{value:'test'}});
+    expect(wrapper.find('#createTitle').prop('value')).toEqual('test');
 
-    wrapper.find('button').simulate('click');
+    wrapper.find('#createText').simulate('change',{currentTarget:{value:'test'}});
+    expect(wrapper.find('#createTitle').prop('value')).toEqual('questiontext');
+
+    wrapper.find('FormLabel').simulate('change',{currentTarget:{value:'test'}})
+    expect(wrapper.find('formLabel').prop('value')).toEqual('test');
+
+    wrapper.find('ButtonSuccess').simulate('click');
+
     setTimeout(()=>{
-      expect(wrapper.find('button').prop('value')).toEqual('');
+      expect(location.hash).toEqual('#/questions/1');
+
+      done()
     })
+  
   })
   
     
