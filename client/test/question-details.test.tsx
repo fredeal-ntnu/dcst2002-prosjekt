@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { QuestionDetails } from 'src/components/question-details';
 
-
 jest.mock('src/service', () => {
   class Service {
     getQuestion(id: number) {
@@ -40,7 +39,7 @@ jest.mock('src/service', () => {
     }
   }
   return new Service();
-}); 
+});
 
 describe('Site renders', () => {
   test('Site renders correct', (done) => {
@@ -127,4 +126,3 @@ describe('Conditional Rendering', () => {
     expect(wrapper.find('Button.EditQuestion').length).toEqual(0); // Adjust the selector as needed
   });
 });
-

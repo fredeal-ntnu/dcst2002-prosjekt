@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 import { Card, Row, Column, Button, Alert, Form } from '../widgets';
-import service, { Question, QuestionComment, User, Answer, AnswerComment } from '../service';
+import service, { Question, User } from '../service';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();

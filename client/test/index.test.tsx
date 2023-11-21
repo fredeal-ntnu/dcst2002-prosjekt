@@ -1,9 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Menu, Home } from 'src/index';
-import { createHashHistory } from 'history';
 
-const history = createHashHistory();
 jest.mock('../src/service', () => {
   class Service {
     getMe() {

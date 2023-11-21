@@ -3,10 +3,8 @@ import { shallow, mount } from 'enzyme';
 import { EditQuestionComment } from 'src/components/edit-question-comment';
 import { Button } from '../src/widgets';
 import { QuestionComment } from 'src/service';
-import { createHashHistory } from 'history';
 import service from 'src/service';
 
-const history = createHashHistory();
 jest.mock('../src/service', () => {
   class Service {
     getQuestionCommentById(id: number) {

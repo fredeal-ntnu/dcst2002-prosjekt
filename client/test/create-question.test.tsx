@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 import { Button } from 'src/widgets';
 import { CreateQuestion } from 'src/components/create-question';
 
-
 jest.mock('src/service', () => {
   class Service {
     getMe() {

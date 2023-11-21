@@ -3,10 +3,8 @@ import { shallow, mount } from 'enzyme';
 import { EditQuestion } from 'src/components/edit-question';
 import { Button } from '../src/widgets';
 import { Question } from 'src/service';
-import { createHashHistory } from 'history';
 import service from 'src/service';
 
-const history = createHashHistory();
 jest.mock('src/service', () => {
   class Service {
     getQuestion(id: number) {
@@ -126,16 +124,14 @@ describe('EditQuestion - mounted method', () => {
 
   it('fetches question details on successful mounted', async () => {
     jest.spyOn(service, 'getMe').mockResolvedValue({ user_id: 1 });
-    jest
-      .spyOn(service, 'getQuestion')
-      .mockResolvedValue({
-        question_id: 1,
-        title: 'updatedtest',
-        text: 'updatedtest',
-        view_count: 1,
-        has_answer: 1,
-        user_id: 1,
-      });
+    jest.spyOn(service, 'getQuestion').mockResolvedValue({
+      question_id: 1,
+      title: 'updatedtest',
+      text: 'updatedtest',
+      view_count: 1,
+      has_answer: 1,
+      user_id: 1,
+    });
 
     const wrapper = mount(<EditQuestion match={{ params: { id: 1 } }} />);
 

@@ -1,9 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Favourites } from 'src/components/favourites';
-import { createHashHistory } from 'history';
 
-const history = createHashHistory();
 jest.mock('../src/service', () => {
   class Service {
     getAllFavouriteAnswersByUserId(user_id: number) {

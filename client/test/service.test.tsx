@@ -64,7 +64,6 @@ describe('Service', () => {
 
   axios.put = jest.fn().mockImplementation((url: string, data: any) => Promise.resolve({ data }));
 
-
   axios.delete = jest.fn().mockImplementation((url) => Promise.resolve({ data: {} }));
 
   (axios.get as jest.Mock).mockImplementation((url: string) => {

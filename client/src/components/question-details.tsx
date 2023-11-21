@@ -296,7 +296,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
               return (
                 <InsideMiniCard title="" key={questionComment.question_comment_id}>
                   <Row>
-                    <p style={{marginBottom: '2.2em'}}>{questionComment.text}</p>
+                    <p style={{ marginBottom: '2.2em' }}>{questionComment.text}</p>
                     <Row>
                       <Column>{this.handleQuestionCommentEdit(questionComment)}</Column>
                     </Row>
@@ -318,8 +318,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
               return (
                 <InsideMiniCard title="" key={questionComment.question_comment_id}>
                   <Row>
-                    <p style={{marginBottom: '2.2em'}}>{questionComment.text}</p>
-                  
+                    <p style={{ marginBottom: '2.2em' }}>{questionComment.text}</p>
                   </Row>
                 </InsideMiniCard>
               );
@@ -369,7 +368,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
             if (answer.question_id == this.props.match.params.id) {
               return (
                 <InsideMiniCard title="" key={answer.answer_id}>
-                  <p style={{marginBottom: '2.2em'}}>{answer.text}</p>
+                  <p style={{ marginBottom: '2.2em' }}>{answer.text}</p>
                   <Column>
                     <ButtonUpvote
                       onClick={() => {
@@ -378,14 +377,14 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                     ></ButtonUpvote>
                   </Column>
                   <Column>
-                    <span style={{ fontWeight: 'bold',  }}>Votes:</span>
+                    <span style={{ fontWeight: 'bold' }}>Votes:</span>
                     <span
                       style={{
                         fontWeight: 'bold',
                         color: answer.score > 0 ? 'green' : answer.score < 0 ? 'red' : 'black',
                       }}
                     >
-                    {answer.score}
+                      {answer.score}
                     </span>
                   </Column>
                   <ButtonDownVote
@@ -444,51 +443,42 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
 
     //If not logged in
     else
-    return (
-      <MiniCard title="Answers">
-        <Form.Select value={this.filter} onChange={this.handleFilterChange}>
-          <option value="all">All Answers</option>
-          <option value="popular">Most Popular Answers</option>
-          <option value="mostRecent">Most Recent</option>
-          <option value="confirmed">Confirmed Answers</option>
-        </Form.Select>
-        {this.answers_votes.map((answer) => {
-          const isFavoriteKey = `isFavorite_${answer.answer_id}`;
-          const isConfirmedAnswerKey = `isConfirmedAnswer_${answer.answer_id}`;
-          if (answer.question_id == this.props.match.params.id) {
-            return (
-              <InsideMiniCard title="" key={answer.answer_id}>
-                <p style={{marginBottom: '2.2em'}}>{answer.text}</p>
-                <Column>
-                  
-                </Column>
-                <Column>
-                  <span style={{ fontWeight: 'bold',  }}>Votes:</span>
-                  <span
-                    style={{
-                      fontWeight: 'bold',
-                      color: answer.score > 0 ? 'green' : answer.score < 0 ? 'red' : 'black',
-                    }}
-                  >
-                  {answer.score}
-                  </span>
-                </Column>
-                
+      return (
+        <MiniCard title="Answers">
+          <Form.Select value={this.filter} onChange={this.handleFilterChange}>
+            <option value="all">All Answers</option>
+            <option value="popular">Most Popular Answers</option>
+            <option value="mostRecent">Most Recent</option>
+            <option value="confirmed">Confirmed Answers</option>
+          </Form.Select>
+          {this.answers_votes.map((answer) => {
+            const isFavoriteKey = `isFavorite_${answer.answer_id}`;
+            const isConfirmedAnswerKey = `isConfirmedAnswer_${answer.answer_id}`;
+            if (answer.question_id == this.props.match.params.id) {
+              return (
+                <InsideMiniCard title="" key={answer.answer_id}>
+                  <p style={{ marginBottom: '2.2em' }}>{answer.text}</p>
+                  <Column></Column>
+                  <Column>
+                    <span style={{ fontWeight: 'bold' }}>Votes:</span>
+                    <span
+                      style={{
+                        fontWeight: 'bold',
+                        color: answer.score > 0 ? 'green' : answer.score < 0 ? 'red' : 'black',
+                      }}
+                    >
+                      {answer.score}
+                    </span>
+                  </Column>
 
-                
-
-                <Column>{this.handleEditAnswer(answer.answer_id, answer.user_id)}</Column>
-
-                
-                
-              </InsideMiniCard>
-            );
-          }
-        })}
-      </MiniCard>
-    );
+                  <Column>{this.handleEditAnswer(answer.answer_id, answer.user_id)}</Column>
+                </InsideMiniCard>
+              );
+            }
+          })}
+        </MiniCard>
+      );
   }
-  
 
   handleEditAnswer(answer_id: number, user_id: number) {
     //if logged in as owner of answer

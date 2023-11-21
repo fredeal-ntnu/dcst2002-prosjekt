@@ -34,7 +34,7 @@ describe('AnswerDetails component', () => {
 
     // @ts-ignore
     const wrapper = shallow(<AnswerDetails match={{ params: { id: '1' } }} />);
-    wrapper.find(Button.Success).simulate('click'); 
+    wrapper.find(Button.Success).simulate('click');
     expect(AnswerDetails.prototype.addAnswerComment).toHaveBeenCalled();
   });
 });

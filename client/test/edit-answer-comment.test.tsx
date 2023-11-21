@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { EditAnswerComment } from 'src/components/edit-answer-comment'; 
+import { EditAnswerComment } from 'src/components/edit-answer-comment';
 import { Button, Form } from '../src/widgets';
 import { AnswerComment } from 'src/service';
 import { createHashHistory } from 'history';

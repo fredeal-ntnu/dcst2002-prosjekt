@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { MyQuestions } from 'src/components/my-questions'; 
+import { MyQuestions } from 'src/components/my-questions';
 
 jest.mock('../src/service', () => {
   class Service {

@@ -60,7 +60,7 @@ export class MyQuestions extends Component {
 
   handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     this.filter = event.target.value;
-    this.loadQuestions(); 
+    this.loadQuestions();
   };
 
   // Method to load questions based on the current filter
