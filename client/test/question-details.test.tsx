@@ -1,11 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { QuestionDetails } from 'src/components/question-details'; // Adjust the import path as needed
-import service from 'src/service';
-
-//@ts-ignore
-const flushPromises = () => new Promise(setTimeout);
-
 
 
 jest.mock('src/service', () => {
@@ -96,10 +91,10 @@ describe('createQuestionEditButton', () => {
     expect(wrapper.instance().addQuestionCommentInput()).toBeDefined();
   });
 
-  
-
   it('should render handleQuestionCommentDisplay if connectedUser is set', () => {
-    const mockComments = [{ question_comment_id: 1, text: 'Test Comment', question_id: 1, user_id: 1 }];
+    const mockComments = [
+      { question_comment_id: 1, text: 'Test Comment', question_id: 1, user_id: 1 },
+    ];
     const wrapper = shallow(<QuestionDetails match={{ params: { id: 1 } }} />);
     //@ts-ignore
     wrapper.instance().connectedUser = 1;
@@ -108,16 +103,15 @@ describe('createQuestionEditButton', () => {
     //@ts-ignore
     expect(wrapper.instance().handleQuestionCommentDisplay()).toBeDefined();
   });
-  
 
-  
   it('should call handleEditAnswer if connectedUser matches answer user_id', () => {
     const wrapper = shallow(<QuestionDetails match={{ params: { id: 1 } }} />);
     //@ts-ignore
     wrapper.instance().connectedUser = 1;
     const mockAnswer = { answer_id: 10, user_id: 1 };
-    //@ts-ignore
-    expect(wrapper.instance().handleEditAnswer(mockAnswer.answer_id, mockAnswer.user_id)).toBeDefined();
+    expect(
+      //@ts-ignore
+      wrapper.instance().handleEditAnswer(mockAnswer.answer_id, mockAnswer.user_id),
+    ).toBeDefined();
   });
-
 });
