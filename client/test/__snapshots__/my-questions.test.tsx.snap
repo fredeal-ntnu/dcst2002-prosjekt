@@ -172,7 +172,7 @@ exports[`site functionality search onchange works 1`] = `
 </Row>
 `;
 
-exports[`switchcase switchcase popular 1`] = `
+exports[`switchcase works switchcase popular shows 1`] = `
 <Row>
   <Column
     width={3}
@@ -265,7 +265,193 @@ exports[`switchcase switchcase popular 1`] = `
 </Row>
 `;
 
-exports[`switchcase switchcase unanswered 1`] = `
+exports[`switchcase works switchcase unanswered shows 1`] = `
+<Row>
+  <Column
+    width={3}
+  >
+    <SideMenu
+      header="Menu"
+      items={
+        [
+          {
+            "label": "Questions",
+            "to": "/questions",
+          },
+          {
+            "label": "My Questions",
+            "to": "myquestions",
+          },
+          {
+            "label": "My Favourite Answers",
+            "to": "favourites",
+          },
+          {
+            "label": "New Question",
+            "to": "createquestion",
+          },
+          {
+            "label": "Tags",
+            "to": "/tags",
+          },
+        ]
+      }
+    />
+  </Column>
+  <Column>
+    <Card
+      title="My Questions"
+    >
+      <br />
+      <Row>
+        <Column>
+          1
+           questions in total
+        </Column>
+        <Column>
+          <FormSelect
+            onChange={[Function]}
+            value="unanswered"
+          >
+            <option
+              value="all"
+            >
+              All Questions
+            </option>
+            <option
+              value="popular"
+            >
+              Most Popular
+            </option>
+            <option
+              value="unanswered"
+            >
+              Unanswered
+            </option>
+          </FormSelect>
+        </Column>
+        <Column>
+          <FormInput
+            onChange={[Function]}
+            placeholder="Search..."
+            type="text"
+            value=""
+          />
+        </Column>
+      </Row>
+    </Card>
+    <QuestionCard
+      key="0"
+      question={
+        {
+          "date": "test",
+          "description": "test",
+          "question_id": 1,
+          "score": 1,
+          "title": "test",
+          "user_id": 1,
+          "username": "test",
+        }
+      }
+    />
+  </Column>
+</Row>
+`;
+
+exports[`switchcase works switchcase popular shows 1`] = `
+<Row>
+  <Column
+    width={3}
+  >
+    <SideMenu
+      header="Menu"
+      items={
+        [
+          {
+            "label": "Questions",
+            "to": "/questions",
+          },
+          {
+            "label": "My Questions",
+            "to": "myquestions",
+          },
+          {
+            "label": "My Favourite Answers",
+            "to": "favourites",
+          },
+          {
+            "label": "New Question",
+            "to": "createquestion",
+          },
+          {
+            "label": "Tags",
+            "to": "/tags",
+          },
+        ]
+      }
+    />
+  </Column>
+  <Column>
+    <Card
+      title="My Questions"
+    >
+      <br />
+      <Row>
+        <Column>
+          1
+           questions in total
+        </Column>
+        <Column>
+          <FormSelect
+            onChange={[Function]}
+            value="popular"
+          >
+            <option
+              value="all"
+            >
+              All Questions
+            </option>
+            <option
+              value="popular"
+            >
+              Most Popular
+            </option>
+            <option
+              value="unanswered"
+            >
+              Unanswered
+            </option>
+          </FormSelect>
+        </Column>
+        <Column>
+          <FormInput
+            onChange={[Function]}
+            placeholder="Search..."
+            type="text"
+            value=""
+          />
+        </Column>
+      </Row>
+    </Card>
+    <QuestionCard
+      key="0"
+      question={
+        {
+          "date": "test",
+          "description": "test",
+          "question_id": 1,
+          "score": 1,
+          "title": "test",
+          "user_id": 1,
+          "username": "test",
+        }
+      }
+    />
+  </Column>
+</Row>
+`;
+
+exports[`switchcase works switchcase unanswered shows 1`] = `
 <Row>
   <Column
     width={3}

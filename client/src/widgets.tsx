@@ -7,7 +7,6 @@ import service from './service';
 
 import { EyeIcon, FavouriteIcon, UpvoteIcon, DownvoteIcon, CommentBubleIcon } from './icons';
 
-
 /**
  * Renders an information card using Bootstrap classes.
  *
@@ -23,7 +22,7 @@ export class Card extends Component<{ title: ReactNode; smallTitle?: boolean }> 
   }
 
   render() {
-    const maxCharsPerLine = 30;
+    const maxCharsPerLine = 1000;
 
     return (
       <div className="card" style={{ width: '800px' || 'auto', margin: '20px' }}>
@@ -42,7 +41,7 @@ export class Card extends Component<{ title: ReactNode; smallTitle?: boolean }> 
       </div>
     );
   }
-} 
+}
 export class MiniCard extends Component<{ title: ReactNode; smallTitle?: boolean }> {
   renderTextLines(text: string, maxCharsPerLine: number): JSX.Element[] {
     const lines = [];
@@ -53,7 +52,7 @@ export class MiniCard extends Component<{ title: ReactNode; smallTitle?: boolean
   }
 
   render() {
-    const maxCharsPerLine = 30;
+    const maxCharsPerLine = 1000;
 
     return (
       <div className="card" style={{ width: '550px' || 'auto', margin: '23px' }}>
@@ -109,28 +108,39 @@ export class InsideMiniCard extends Component<{ title: ReactNode; smallTitle?: b
 class Link extends Component<{ to: string }> {
   render() {
     return (
-      <NavLink className="btn btn-outline-light" activeClassName="active" to={this.props.to} style={{ color: 'Black' }}>
+      <NavLink
+        className="btn btn-outline-light"
+        activeClassName="active"
+        to={this.props.to}
+        style={{ color: 'Black' }}
+      >
         {this.props.children}
       </NavLink>
     );
   }
 }
 
-export class SideMenu extends Component<{ header: ReactNode, items?: {label: string, to: string}[] }> {
+export class SideMenu extends Component<{
+  header: ReactNode;
+  items?: { label: string; to: string }[];
+}> {
   static Link = Link;
 
   render() {
     return (
-      <div className="card" style={{ width: '300px', margin: '20px'}}>
+      <div className="card" style={{ width: '300px', margin: '20px' }}>
         <h5 className="card-header">{this.props.header}</h5>
-        {this.props.items ?
-          <ul className="list-group list-group-flush">{this.props.items.map((item, index) => (
-            <li key={index} className="list-group-item">
-              <Link to={item.to}>{item.label}</Link>
-            </li>))}
+        {this.props.items ? (
+          <ul className="list-group list-group-flush">
+            {this.props.items.map((item, index) => (
+              <li key={index} className="list-group-item">
+                <Link to={item.to}>{item.label}</Link>
+              </li>
+            ))}
           </ul>
-          : this.props.children
-          }
+        ) : (
+          this.props.children
+        )}
       </div>
     );
   }
@@ -139,19 +149,33 @@ export class SideMenu extends Component<{ header: ReactNode, items?: {label: str
 export class QuestionCard extends Component<{ question: Question }> {
   render() {
     return (
-      <Card title={<NavLink to={'/questions/' + this.props.question.question_id}>{this.props.question.title}</NavLink>}>
-            <Row>
-              <Column>{this.props.question.text}</Column>
-              <Column width={2} right><EyeIcon style={{ verticalAlign: '-2px' }} />{' '}{this.props.question.view_count}</Column>
-            </Row>
+      <Card
+        title={
+          <NavLink to={'/questions/' + this.props.question.question_id}>
+            {this.props.question.title}
+          </NavLink>
+        }
+      >
+        <Row>
+          <Column>{this.props.question.text}</Column>
+          <Column width={2} right>
+            <EyeIcon style={{ verticalAlign: '-2px' }} /> {this.props.question.view_count}
+          </Column>
+        </Row>
       </Card>
-    )
+    );
   }
 }
 
 export class AnswerCard extends Component<{ answer: Answer }> {
-  question: Question = { question_id: 0, title: '', text: '',  view_count: 0, has_answer: 0, user_id: 0, };
-  
+  question: Question = {
+    question_id: 0,
+    title: '',
+    text: '',
+    view_count: 0,
+    has_answer: 0,
+    user_id: 0,
+  };
 
   render() {
     return (
@@ -168,11 +192,11 @@ export class AnswerCard extends Component<{ answer: Answer }> {
   }
 
   mounted(): void {
-    service.getQuestionByAnswerId(this.props.answer.answer_id).then(question => (this.question = question));
+    service
+      .getQuestionByAnswerId(this.props.answer.answer_id)
+      .then((question) => (this.question = question));
   }
-
 }
-
 
 /**
  * Renders a row using Bootstrap classes.
@@ -228,6 +252,7 @@ class ButtonSuccess extends Component<{
     );
   }
 }
+
 export class ButtonFavourite extends Component<{
   small?: boolean;
   onClick: () => void;
@@ -248,12 +273,13 @@ export class ButtonFavourite extends Component<{
         }
         onClick={this.props.onClick}
       >
-     <FavouriteIcon style={{ verticalAlign: '-2px', scale: '150%', alignItems: 'center' }} />{' '}
+        <FavouriteIcon style={{ verticalAlign: '-2px', scale: '150%', alignItems: 'center' }} />{' '}
         {this.props.children}
       </button>
     );
   }
 }
+
 export class ButtonUpvote extends Component<{
   small?: boolean;
   onClick: () => void;
@@ -263,25 +289,20 @@ export class ButtonUpvote extends Component<{
       <button
         type="button"
         className="btn btn-light"
-        style={
-          this.props.small
-            ? {
-                padding: '5px 5px',
-                fontSize: '16px',
-                lineHeight: '0.7',
-          
-               
-              }
-            : {}
+        style={{
+          padding: '5px 15px'
+        }
+         
         }
         onClick={this.props.onClick}
       >
-     <UpvoteIcon style={{ verticalAlign: '-2px', scale: '150%', alignItems: 'center' }} />{' '}
+        <UpvoteIcon style={{ verticalAlign: '-2px', scale: '150%', alignItems: 'center' }} />{' '}
         {this.props.children}
       </button>
     );
   }
 }
+
 export class ButtonCommentBuble extends Component<{
   small?: boolean;
   onClick: () => void;
@@ -292,19 +313,11 @@ export class ButtonCommentBuble extends Component<{
         type="button"
         className="btn btn-light"
         style={
-          this.props.small
-            ? {
-                padding: '5px 5px',
-                fontSize: '16px',
-                lineHeight: '0.7',
-          
-               
-              }
-            : {}
+         {padding: '5px 15px'}
         }
         onClick={this.props.onClick}
       >
-     <CommentBubleIcon style={{ verticalAlign: '-2px', scale: '200%', alignItems: 'center'}} />{' '}
+        <CommentBubleIcon style={{ verticalAlign: '-2px', scale: '200%', alignItems: 'center' }} />{' '}
         {this.props.children}
       </button>
     );
@@ -321,24 +334,17 @@ export class ButtonDownVote extends Component<{
         type="button"
         className="btn btn-light"
         style={
-          this.props.small
-            ? {
-                padding: '5px 5px',
-                fontSize: '16px',
-                lineHeight: '0.7',
-          
-               
-              }
-            : {}
+        { padding: '5px 15px'}
         }
         onClick={this.props.onClick}
       >
-     <DownvoteIcon style={{ verticalAlign: '-2px', scale: '150%', alignItems: 'center'}} />{' '}
+        <DownvoteIcon style={{ verticalAlign: '-2px', scale: '150%', alignItems: 'center' }} />{' '}
         {this.props.children}
       </button>
     );
   }
 }
+
 /**
  * Renders a danger button using Bootstrap styles.
  *
@@ -420,7 +426,12 @@ export class Button {
 class NavBarLink extends Component<{ to: string }> {
   render() {
     return (
-      <NavLink className="btn btn-outline-light my-2 my-sm-0" activeClassName="active" to={this.props.to} style={{ marginRight: '5px' }}>
+      <NavLink
+        className="btn btn-outline-light my-2 my-sm-0"
+        activeClassName="active"
+        to={this.props.to}
+        style={{ marginRight: '5px' }}
+      >
         {this.props.children}
       </NavLink>
     );
@@ -431,7 +442,13 @@ export class Search extends Component {
   render() {
     return (
       <form className="form-inline d-flex align-items-center" style={{ width: '600px' }}>
-        <input className="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search" style={{ marginRight: '5px' }}/>
+        <input
+          className="form-control mr-sm-2"
+          type="search"
+          placeholder="Search..."
+          aria-label="Search"
+          style={{ marginRight: '5px' }}
+        />
       </form>
     );
   }
@@ -546,19 +563,18 @@ export class FormSelect extends Component<{
     // For further information, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
     const { value, onChange, children, ...rest } = this.props;
     return (
-      <select 
-        {...rest} 
+      <select
+        {...rest}
         className="form-select"
         aria-label="Default select example"
-        value={value} 
-        onChange={onChange}>
+        value={value}
+        onChange={onChange}
+      >
         {children}
       </select>
     );
   }
 }
-
-
 
 /**
  * Renders form components using Bootstrap styles.
@@ -601,9 +617,8 @@ export class Alert extends Component {
     );
   }
 
-  
-   //Show success alert.
-   
+  //Show success alert.
+
   static success(text: ReactNode) {
     // To avoid 'Cannot update during an existing state transition' errors, run after current event through setTimeout
     setTimeout(() => {
@@ -612,9 +627,8 @@ export class Alert extends Component {
     });
   }
 
-  
   //Show info alert.
-   
+
   static info(text: ReactNode) {
     // To avoid 'Cannot update during an existing state transition' errors, run after current event through setTimeout
     setTimeout(() => {
@@ -623,9 +637,8 @@ export class Alert extends Component {
     });
   }
 
-  
-   // Show warning alert. 
-     static warning(text: ReactNode) {
+  // Show warning alert.
+  static warning(text: ReactNode) {
     // To avoid 'Cannot update during an existing state transition' errors, run after current event through setTimeout
     setTimeout(() => {
       let instance = Alert.instance(); // Get rendered Alert component instance
@@ -633,9 +646,8 @@ export class Alert extends Component {
     });
   }
 
-  
-   // Show danger alert.
-   
+  // Show danger alert.
+
   static danger(text: ReactNode) {
     // To avoid 'Cannot update during an existing state transition' errors, run after current event through setTimeout
     setTimeout(() => {

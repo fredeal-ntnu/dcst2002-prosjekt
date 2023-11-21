@@ -48,13 +48,18 @@ exports[`CreateQuestion component CreateQuestion component renders 1`] = `
         <Column>
           <FormInput
             id="createTitle"
+            maxLength={255}
             onChange={[Function]}
+            style={
+              {
+                "width": "500px",
+              }
+            }
             type="text"
             value=""
           />
         </Column>
       </Row>
-      <br />
       <Row>
         <Column
           width={2}
@@ -66,14 +71,19 @@ exports[`CreateQuestion component CreateQuestion component renders 1`] = `
         <Column>
           <FormTextarea
             id="createText"
+            maxLength={1000}
             onChange={[Function]}
             placeholder="Text"
             rows={5}
+            style={
+              {
+                "width": "500px",
+              }
+            }
             value=""
           />
         </Column>
       </Row>
-      <br />
       <Row>
         <Column
           width={2}
@@ -86,7 +96,6 @@ exports[`CreateQuestion component CreateQuestion component renders 1`] = `
           <Row />
         </Column>
       </Row>
-      <br />
       <Row>
         <Column>
           <ButtonSuccess
@@ -149,13 +158,18 @@ exports[`Page functionality text input works  1`] = `
         <Column>
           <FormInput
             id="createTitle"
+            maxLength={255}
             onChange={[Function]}
+            style={
+              {
+                "width": "500px",
+              }
+            }
             type="text"
             value=""
           />
         </Column>
       </Row>
-      <br />
       <Row>
         <Column
           width={2}
@@ -167,14 +181,19 @@ exports[`Page functionality text input works  1`] = `
         <Column>
           <FormTextarea
             id="createText"
+            maxLength={1000}
             onChange={[Function]}
             placeholder="Text"
             rows={5}
+            style={
+              {
+                "width": "500px",
+              }
+            }
             value="test"
           />
         </Column>
       </Row>
-      <br />
       <Row>
         <Column
           width={2}
@@ -187,7 +206,6 @@ exports[`Page functionality text input works  1`] = `
           <Row />
         </Column>
       </Row>
-      <br />
       <Row>
         <Column>
           <ButtonSuccess
@@ -250,13 +268,18 @@ exports[`Page functionality title input works  1`] = `
         <Column>
           <FormInput
             id="createTitle"
+            maxLength={255}
             onChange={[Function]}
+            style={
+              {
+                "width": "500px",
+              }
+            }
             type="text"
             value="test"
           />
         </Column>
       </Row>
-      <br />
       <Row>
         <Column
           width={2}
@@ -268,14 +291,19 @@ exports[`Page functionality title input works  1`] = `
         <Column>
           <FormTextarea
             id="createText"
+            maxLength={1000}
             onChange={[Function]}
             placeholder="Text"
             rows={5}
+            style={
+              {
+                "width": "500px",
+              }
+            }
             value=""
           />
         </Column>
       </Row>
-      <br />
       <Row>
         <Column
           width={2}
@@ -288,7 +316,6 @@ exports[`Page functionality title input works  1`] = `
           <Row />
         </Column>
       </Row>
-      <br />
       <Row>
         <Column>
           <ButtonSuccess

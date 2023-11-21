@@ -15,13 +15,11 @@ export class EditQuestion extends Component<{ match: { params: { id: number } } 
     has_answer: 0,
     user_id: 0,
   };
-
   user: User = { user_id: 0, google_id: '', username: '', email: '' };
   connectedUser: number = 0;
 
   render() {
     return (
-
       <>
         <Row>
           <Card title="Edit Question">
@@ -41,6 +39,8 @@ export class EditQuestion extends Component<{ match: { params: { id: number } } 
                   value={this.question.text}
                   onChange={(event) => (this.question.text = event.currentTarget.value)}
                   rows={5}
+                  maxLength={1000}
+                  style={{ width: '500px' }}
                 />
               </Column>
             </Row>
@@ -59,18 +59,19 @@ export class EditQuestion extends Component<{ match: { params: { id: number } } 
   }
 
   mounted() {
-    service.getMe()
-    .then((user) => {
-      this.user.user_id = user.user_id
-      this.connectedUser = this.user.user_id;
-      
-    })
-    .catch((error)=>{
-      console.error(error.message)
-      history.push('/')
-      alert('You must be logged in to edit question')
-    })
 
+    //get logged in user
+    service
+      .getMe()
+      .then((user) => {
+        this.user.user_id = user.user_id;
+        this.connectedUser = this.user.user_id;
+      })
+      .catch((error) => {
+        console.error(error.message);
+        history.push('/');
+        alert('You must be logged in to edit question');
+      });
 
     service
       .getQuestion(this.props.match.params.id)
@@ -79,25 +80,24 @@ export class EditQuestion extends Component<{ match: { params: { id: number } } 
   }
 
   save() {
-    if(this.connectedUser == this.question.user_id){
-    service
-      .updateQuestion(this.question)
-      .then(() => history.push('/questions/' + this.question.question_id))
-      .catch((error) => console.error('Error saving question: ' + error.message));
-  }else{
-    Alert.danger('You are not the owner of this question');
+    if (this.connectedUser == this.question.user_id) {
+      service
+        .updateQuestion(this.question)
+        .then(() => history.push('/questions/' + this.question.question_id))
+        .catch((error) => console.error('Error saving question: ' + error.message));
+    } else {
+      Alert.danger('You are not the owner of this question');
+    }
   }
-}
 
   delete() {
-    
-    if(this.connectedUser == this.question.user_id) {
-    service
-      .deleteQuestion(this.props.match.params.id)
-      .then(() => history.push('/questions'))
-      .catch((error) => console.error('Error deleting question: ' + error.message));
-  }else{
-    Alert.danger('You are not the owner of this question');
+    if (this.connectedUser == this.question.user_id) {
+      service
+        .deleteQuestion(this.props.match.params.id)
+        .then(() => history.push('/questions'))
+        .catch((error) => console.error('Error deleting question: ' + error.message));
+    } else {
+      Alert.danger('You are not the owner of this question');
+    }
   }
-}
 }

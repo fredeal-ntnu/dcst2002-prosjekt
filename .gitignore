@@ -4,4 +4,4 @@ bundle.js
 bundle.js.map
 coverage
 .env
-__snapshots__
+__snapshots__/

@@ -1,13 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { NavLink } from 'react-router-dom';
-import { AllQuestions } from 'src/components/all-question'; // Adjust the import path as needed
 import { Row, Column, Button, ButtonFavourite, ButtonUpvote, ButtonDownVote, ButtonCommentBuble,
    Card, QuestionCard, AnswerCard, MiniCard, InsideMiniCard, SideMenu, Alert, NavBar, FormTextarea, FormInput, FormLabel, FormCheckbox, FormSelect, Search } from 'src/widgets';
 import { FavouriteIcon, UpvoteIcon, DownvoteIcon, CommentBubleIcon, EyeIcon } from 'src/icons';
-import service from 'src/service'; // Adjust the import path as needed
 
-jest.mock('src/service'); // Mock the service module
+
 jest.mock('src/service', () => ({
   getQuestionByAnswerId: jest.fn().mockResolvedValue({
     question_id: '1',
@@ -216,7 +214,6 @@ describe('Card widget tests', () => {
   });
 
   test('Draws a card with title and body', () => {
-    // Mock question prop
     const mockQuestion = {
       question_id: '1',
       title: 'Test Title',
@@ -224,7 +221,6 @@ describe('Card widget tests', () => {
       view_count: 100
     };
   
-    // Use the mock question prop in your test component
     // @ts-ignore
     const wrapper = shallow(<QuestionCard question={mockQuestion} />);
   
@@ -254,8 +250,6 @@ describe('Card widget tests', () => {
     };
   //@ts-ignore
     const wrapper = shallow(<AnswerCard answer={mockAnswer} />);
-    console.log(wrapper.debug());
-    // You might need to wait for the component to update after the mock service call
     await wrapper.update();
   
     expect(
@@ -348,27 +342,22 @@ describe('Alert widget tests', () => {
     wrapper.instance().alerts = [
       { id: 1, text: 'Success Alert', type: 'success' },
       { id: 2, text: 'Info Alert', type: 'info' },
-      // Add more alerts as needed
     ];
-    wrapper.update(); // Force re-render
+    wrapper.update();
   
-    // Check if alerts are rendered
     expect(wrapper.find('.alert-success').text()).toContain('Success Alert');
     expect(wrapper.find('.alert-info').text()).toContain('Info Alert');
   });
 
   test('Removes an alert on close button click', () => {
     const wrapper = shallow(<Alert />);
-    console.log(wrapper.debug());
     //@ts-ignore
     wrapper.instance().alerts = [{ id: 1, text: 'Test Alert', type: 'success' }];
     wrapper.update();
   
-    // Simulate close button click
     wrapper.find('.btn-close').simulate('click');
     wrapper.update();
   
-    // Check if the alert is removed
     expect(wrapper.find('.alert')).toHaveLength(0);
   });
 })
@@ -379,52 +368,40 @@ describe('Alert static method tests', () => {
   // @ts-ignore
   let alertInstance;
 
-  // Set up a mock for Alert.instance()
   beforeEach(() => {
-    // Mock implementation of Alert.instance()
     // @ts-ignore
     Alert.instance = jest.fn(() => alertInstance);
     
-    // Create a controlled instance of Alert with a mock state
     alertInstance = shallow(<Alert />).instance();
     // @ts-ignore
     alertInstance.alerts = [];
   });
 
   test('success method adds a success alert', () => {
-    // Call the static method
-    Alert.success('Success message');
 
-    // Fast-forward time to execute the setTimeout
+    Alert.success('Success message');
     jest.runAllTimers();
 
-    // Check if the alert was added to the instance's alerts array
     // @ts-ignore
     expect(alertInstance.alerts).toEqual([
       { id: expect.any(Number), text: 'Success message', type: 'success' }
     ]);
   });
 
-  // Set up a mock for Alert.instance()
   beforeEach(() => {
-    // Mock implementation of Alert.instance()
     // @ts-ignore
     Alert.instance = jest.fn(() => alertInstance);
     
-    // Create a controlled instance of Alert with a mock state
     alertInstance = shallow(<Alert />).instance();
     // @ts-ignore
     alertInstance.alerts = [];
   });
 
   test('info method adds an info alert', () => {
-    // Call the static method
     Alert.info('Info message');
 
-    // Fast-forward time to execute the setTimeout
     jest.runAllTimers();
 
-    // Check if the alert was added to the instance's alerts array
     // @ts-ignore
     expect(alertInstance.alerts).toEqual([
       { id: expect.any(Number), text: 'Info message', type: 'info' }
@@ -432,13 +409,10 @@ describe('Alert static method tests', () => {
   });
 
   test('warning method adds a warning alert', () => {
-    // Call the static method
     Alert.warning('Warning message');
 
-    // Fast-forward time to execute the setTimeout
     jest.runAllTimers();
 
-    // Check if the alert was added to the instance's alerts array
     // @ts-ignore
     expect(alertInstance.alerts).toEqual([
       { id: expect.any(Number), text: 'Warning message', type: 'warning' }
@@ -446,13 +420,11 @@ describe('Alert static method tests', () => {
   });
 
   test('danger method adds a danger alert', () => {
-    // Call the static method
+
     Alert.danger('Danger message');
 
-    // Fast-forward time to execute the setTimeout
     jest.runAllTimers();
 
-    // Check if the alert was added to the instance's alerts array
     // @ts-ignore
     expect(alertInstance.alerts).toEqual([
       { id: expect.any(Number), text: 'Danger message', type: 'danger' }

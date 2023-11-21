@@ -1,78 +1,79 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import { Card, Alert, Row, Column, Button, Form} from '../widgets';
-import service, {AnswerComment, User} from '../service';
+import { Card, Alert, Row, Column, Button, Form } from '../widgets';
+import service, { AnswerComment, User } from '../service';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();
 export class EditAnswerComment extends Component<{ match: { params: { id: number } } }> {
   answerComments: AnswerComment[] = [];
-  answerComment: AnswerComment = {answer_comment_id: 0, text: '', answer_id: 0, user_id: 0};
+  answerComment: AnswerComment = { answer_comment_id: 0, text: '', answer_id: 0, user_id: 0 };
   user: User = { user_id: 0, google_id: '', username: '', email: '' };
   connectedUser: number = 0;
-  
-
 
   render() {
-    return(
+    return (
       <>
-      <Card title="Edit Comment">
-        <Row>
-          <Column width={10}>
-          <Form.Textarea
+        <Card title="Edit Comment">
+          <Row>
+            <Column width={10}>
+              <Form.Textarea
                 type="text"
                 value={this.answerComment.text}
                 onChange={(event) => (this.answerComment.text = event.currentTarget.value)}
                 rows={5}
+                maxLength={1000}
+                style={{ width: '500px' }}
               />
-          </Column>
-        </Row>
-        <Row>
-          <Column><Button.Success onClick={this.save}>Save</Button.Success></Column>
-          <Column><Button.Danger onClick={this.delete}>Delete</Button.Danger></Column>
-        </Row>
-      </Card>
+            </Column>
+          </Row>
+          <Row>
+            <Column>
+              <Button.Success onClick={this.save}>Save</Button.Success>
+            </Column>
+            <Column>
+              <Button.Danger onClick={this.delete}>Delete</Button.Danger>
+            </Column>
+          </Row>
+        </Card>
       </>
-    )
-    
+    );
   }
 
   mounted() {
+    //Get logged in user
     service.getMe().then((user) => {
       this.user = user;
       this.connectedUser = user.user_id;
     });
 
-
-    service.getAnswerCommentById(this.props.match.params.id)
-    .then((answerComment) => (this.answerComment = answerComment))
-    .catch((error: Error) => Alert.danger('Error getting answer comment: ' + error.message));
+    service
+      .getAnswerCommentById(this.props.match.params.id)
+      .then((answerComment) => (this.answerComment = answerComment))
+      .catch((error: Error) => Alert.danger('Error getting answer comment: ' + error.message));
   }
 
   save() {
-    console.log(this.answerComment)
-    console.log(this.connectedUser, this.answerComment.user_id)
-    if(this.connectedUser == this.answerComment.user_id){
-    service
-      .updateAnswerComment(this.answerComment)
-     .then(() => history.goBack())
-      .catch((error) => Alert.danger('Error saving answer comment: ' + error.message));
-  }else{
-    Alert.danger('You are not the owner of this comment');
+    //if logged in as creator of answer
+    if (this.connectedUser == this.answerComment.user_id) {
+      service
+        .updateAnswerComment(this.answerComment)
+        .then(() => history.goBack())
+        .catch((error) => Alert.danger('Error saving answer comment: ' + error.message));
+    } else {
+      Alert.danger('You are not the owner of this comment');
+    }
   }
-}
 
   delete() {
-    console.log(this.connectedUser, this.answerComment.user_id)
-
-    if(this.connectedUser == this.answerComment.user_id){
-    service
-    .deleteAnswerComment(this.answerComment.answer_comment_id)
-   .then(() => history.goBack())
-    .catch((error) => Alert.danger('Error deleting answer comment: ' + error.message));
-  }else{
-    Alert.danger('You are not the owner of this comment');
+    //if logged in as creator of answer
+    if (this.connectedUser == this.answerComment.user_id) {
+      service
+        .deleteAnswerComment(this.answerComment.answer_comment_id)
+        .then(() => history.goBack())
+        .catch((error) => Alert.danger('Error deleting answer comment: ' + error.message));
+    } else {
+      Alert.danger('You are not the owner of this comment');
+    }
   }
-}
-
 }

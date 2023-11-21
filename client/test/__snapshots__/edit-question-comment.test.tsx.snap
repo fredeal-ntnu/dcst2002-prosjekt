@@ -10,8 +10,14 @@ exports[`Site renders Site renders correct 1`] = `
         width={10}
       >
         <FormTextarea
+          maxLength={1000}
           onChange={[Function]}
           rows={5}
+          style={
+            {
+              "width": "500px",
+            }
+          }
           type="text"
         />
       </Column>
@@ -46,8 +52,14 @@ exports[`site functionality edit field takes input 1`] = `
         width={10}
       >
         <FormTextarea
+          maxLength={1000}
           onChange={[Function]}
           rows={5}
+          style={
+            {
+              "width": "500px",
+            }
+          }
           type="text"
           value="test"
         />

@@ -1,17 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
-import {
-  Card,
-  Alert,
-  Column,
-  Row,
-  Form,
-  SideMenu,
-  QuestionCard,
-  AnswerCard,
-  Button,
-} from '../widgets';
-import service, { Question, Tag, User, Answer } from '../service';
+import { Card, Alert, Column, Row, SideMenu, AnswerCard, Button } from '../widgets';
+import service, { Question, User, Answer } from '../service';
 
 export class Favourites extends Component {
   answers: Answer[] = [];
@@ -46,8 +36,6 @@ export class Favourites extends Component {
             ]}
           />
         </Column>
-
-        {/* Main content */}
         <Column>
           <Card title="My Favourite Answers!">
             <br />
@@ -57,14 +45,12 @@ export class Favourites extends Component {
           </Card>
           <Column>
             {this.answers.map((answer, i) => (
-              <>
-                <AnswerCard key={i} answer={answer}>
-                  <br />
-                  <Button.Danger onClick={() => this.deleteFavourite(answer.answer_id)}>
-                    Remove Favourite
-                  </Button.Danger>
-                </AnswerCard>
-              </>
+              <React.Fragment key={answer.answer_id}>
+                <AnswerCard answer={answer} />
+                <Button.Danger onClick={() => this.deleteFavourite(answer.answer_id)}>
+                  Remove Favourite
+                </Button.Danger>
+              </React.Fragment>
             ))}
           </Column>
         </Column>
@@ -72,9 +58,8 @@ export class Favourites extends Component {
     );
   }
 
-  // Lifecycle method to load answers when the component mounts
   mounted() {
-    console.log(this.answer);
+    //get logged in answer
     service
       .getMe()
       .then((user) => {
@@ -86,8 +71,6 @@ export class Favourites extends Component {
   }
 
   deleteFavourite(answerId: number) {
-    console.log(answerId);
-
     service
       .handleFavouriteRelation(answerId, this.user.user_id)
       .then(() => Alert.success('Favourite deleted'))

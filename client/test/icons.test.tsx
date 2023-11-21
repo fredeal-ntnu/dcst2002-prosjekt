@@ -53,8 +53,8 @@ describe('DownvoteIcon', () => {
 });
 
 describe('CommentBubleIcon', () => {
-    it('renders correctly', () => {
-      const wrapper = shallow(<CommentBubleIcon size={24} color="blue" />);
-      expect(wrapper).toMatchSnapshot();
-    });
+  it('renders correctly', () => {
+    const wrapper = shallow(<CommentBubleIcon size={24} color="blue" />);
+    expect(wrapper).toMatchSnapshot();
+  });
 });
