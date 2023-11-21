@@ -39,7 +39,7 @@ jobs:
     
     - name: Create MySQL Tables
       run: |
-        sudo mysql --host 127.0.0.1 --user=root --password=root testdb < database.sql
+        sudo mysql --host 127.0.0.1 --user=root --password=root testdb < cidatabase.sql
 
     # For server directory
     - name: Change into server directory

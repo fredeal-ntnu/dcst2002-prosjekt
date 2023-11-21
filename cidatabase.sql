@@ -1,4 +1,5 @@
-
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS;
+SET FOREIGN_KEY_CHECKS=0;
 CREATE TABLE Users (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
     google_id VARCHAR(255) NOT NULL,
@@ -59,17 +60,6 @@ CREATE TABLE Tags (
     name VARCHAR(255) NOT NULL
 );
 
-INSERT INTO Tags (tag_id, name) VALUES 
-(1, 'SQL'),
-(2, 'Python'),
-(3, 'JavaScript'),
-(4, 'HTML'),
-(5, 'CSS'),
-(6, 'Bootstrap'),
-(7, 'Frontend'),
-(8, 'Backend')
-
-
 CREATE TABLE Tag_question_relation (
     tag_id INT,
     question_id INT,
@@ -86,6 +76,7 @@ CREATE TABLE Answer_user_favourite (
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 
 
 
