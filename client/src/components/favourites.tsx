@@ -36,8 +36,9 @@ export class Favourites extends Component {
             <Column>
                     {this.answers.map((answer, i) => (
                       <>
-                            <AnswerCard key={i} answer={answer}/>
+                            <AnswerCard key={i} answer={answer}><br />
                       <Button.Danger onClick={()=>this.deleteFavourite(answer.answer_id)}>Remove Favourite</Button.Danger>
+                      </AnswerCard>
                       </>
               
                       

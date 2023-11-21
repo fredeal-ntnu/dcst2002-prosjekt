@@ -73,6 +73,7 @@ export class MiniCard extends Component<{ title: ReactNode; smallTitle?: boolean
     );
   }
 } 
+
 export class InsideMiniCard extends Component<{ title: ReactNode; smallTitle?: boolean }> {
   renderTextLines(text: string, maxCharsPerLine: number): JSX.Element[] {
     const lines = [];
@@ -102,7 +103,7 @@ export class InsideMiniCard extends Component<{ title: ReactNode; smallTitle?: b
       </div>
     );
   }
-} 
+}
 
 
 class Link extends Component<{ to: string }> {
@@ -158,6 +159,9 @@ export class AnswerCard extends Component<{ answer: Answer }> {
        <Card title={<NavLink to={'/questions/' + this.question.question_id}>{this.question.title}</NavLink>}>
             <Row>
               <Column>{this.props.answer.text}</Column>
+            </Row>
+            <Row>
+              <Column>{this.props.children}</Column>
             </Row>
        </Card> 
     )
