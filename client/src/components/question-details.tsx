@@ -464,7 +464,7 @@ export class QuestionDetails extends Component<{ match: { params: { id: number }
                     <span
                       style={{
                         fontWeight: 'bold',
-                        color: answer.score > 0 ? 'green' : answer.score < 0 ? 'red' : 'black',
+                        color: answer && answer.score ? (answer.score > 0 ? 'green' : answer.score < 0 ? 'red' : 'black') : 'black',
                       }}
                     >
                       {answer.score}
