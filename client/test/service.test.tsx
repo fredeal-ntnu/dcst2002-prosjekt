@@ -490,35 +490,6 @@ describe('Service', () => {
     });
   });
 
-  // THIS IS IMPOSSIBLE TO TEST BECAUSE OF THE IFS IN SQL
-  //   describe('getVotesByAnswerId', () => {
-  //     it('should get votes by answer id', async () => {
-  //       const result = await service.getVotesByAnswerId(mockAnswer.answer_id);
-  //       expect(result).toEqual(mockVote);
-  //     });
-  //   });
-
-  // CANT FIGURE OUT HOW TO TEST GETME()
-  //   describe('getMe', () => {
-  //     it('should get user information for the logged-in user', async () => {
-  //       const mockUserData = {
-  //         user_id: 1,
-  //         google_id: 'test',
-  //         username: 'test',
-  //         email: 'test',
-  //       };
-  //       (axios.get as jest.Mock).mockResolvedValueOnce({ data: mockUserData });
-  //       const result = await service.getMe();
-  //       expect(result).toEqual(mockUserData);
-  //     });
-
-  //     it('should throw an error if getMe fails', async () => {
-  //       const errorMessage = 'Network Error';
-  //       (axios.get as jest.Mock).mockRejectedValueOnce(new Error(errorMessage));
-
-  //       await expect(service.getMe()).rejects.toThrowError(errorMessage);
-  //     });
-  //   });
 
   describe('logOut', () => {
     it('should successfully log the user out', async () => {

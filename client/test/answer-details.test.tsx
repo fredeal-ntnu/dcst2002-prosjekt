@@ -52,7 +52,6 @@ test('Calls addAnswerComment method on button click', () => {
 });
 
 
-//øker ikke prosenten :(
 describe('Page functionality', () => {
   test('Add comment button registers click', () => {
     let buttonClicked = false
