@@ -55,7 +55,6 @@ exports[`CreateQuestion component CreateQuestion component renders 1`] = `
           />
         </Column>
       </Row>
-      <br />
       <Row>
         <Column
           width={2}
@@ -75,7 +74,6 @@ exports[`CreateQuestion component CreateQuestion component renders 1`] = `
           />
         </Column>
       </Row>
-      <br />
       <Row>
         <Column
           width={2}
@@ -88,7 +86,6 @@ exports[`CreateQuestion component CreateQuestion component renders 1`] = `
           <Row />
         </Column>
       </Row>
-      <br />
       <Row>
         <Column>
           <ButtonSuccess
@@ -158,7 +155,6 @@ exports[`Page functionality text input works  1`] = `
           />
         </Column>
       </Row>
-      <br />
       <Row>
         <Column
           width={2}
@@ -178,7 +174,6 @@ exports[`Page functionality text input works  1`] = `
           />
         </Column>
       </Row>
-      <br />
       <Row>
         <Column
           width={2}
@@ -191,7 +186,6 @@ exports[`Page functionality text input works  1`] = `
           <Row />
         </Column>
       </Row>
-      <br />
       <Row>
         <Column>
           <ButtonSuccess
@@ -261,7 +255,6 @@ exports[`Page functionality title input works  1`] = `
           />
         </Column>
       </Row>
-      <br />
       <Row>
         <Column
           width={2}
@@ -281,7 +274,6 @@ exports[`Page functionality title input works  1`] = `
           />
         </Column>
       </Row>
-      <br />
       <Row>
         <Column
           width={2}
@@ -294,7 +286,6 @@ exports[`Page functionality title input works  1`] = `
           <Row />
         </Column>
       </Row>
-      <br />
       <Row>
         <Column>
           <ButtonSuccess
