@@ -1,24 +1,21 @@
 import * as React from 'react';
 import { Component } from 'react-simplified';
 
-// Base Icon class that other specific icons will extend
+
 class BaseIcon extends Component<{ size?: number; color?: string; style?: React.CSSProperties }> {
-  // Default SVG properties
   size = this.props.size || 16;
   color = this.props.color || 'currentColor';
   style = this.props.style || {};
 
-  // Method to get the SVG content - to be implemented by subclasses
+
   getSvg() {
     return '';
   }
 
-  // Render method to display the SVG
   render() {
-    // Apply the style adjustments including vertical alignment
     const svgStyle = {
-      verticalAlign: '-0.125em', // Adjust the alignment as needed
-      ...this.style, // Allow for additional styles to be applied
+      verticalAlign: '-0.125em',
+      ...this.style,
     };
 
     return (
@@ -35,7 +32,7 @@ class BaseIcon extends Component<{ size?: number; color?: string; style?: React.
   }
 }
 
-// Specific EyeIcon class
+// EyeIcon class
 export class EyeIcon extends BaseIcon {
   getSvg() {
     return `
@@ -45,6 +42,7 @@ export class EyeIcon extends BaseIcon {
   }
 }
 
+// SearchIcon class
 export class SearchIcon extends BaseIcon {
   getSvg() {
     return `
@@ -53,6 +51,7 @@ export class SearchIcon extends BaseIcon {
   }
 }
 
+// QuestionIcon class
 export class QuestionIcon extends BaseIcon {
   getSvg() {
     return `
@@ -61,6 +60,8 @@ export class QuestionIcon extends BaseIcon {
     `;
   }
 }
+
+// FavouriteIcon class
 export class FavouriteIcon extends BaseIcon {
   getSvg(){ 
     return `
@@ -68,6 +69,8 @@ export class FavouriteIcon extends BaseIcon {
 `;
 }
 }
+
+// UpvoteIcon class
 export class UpvoteIcon extends BaseIcon {
   getSvg(){
 return`
@@ -75,6 +78,7 @@ return`
 }
 }
 
+// DownvoteIcon class
 export class DownvoteIcon extends BaseIcon {
   getSvg(){
 return`
@@ -82,6 +86,7 @@ return`
   }
 }
 
+// CommentBubleIcon class
 export class CommentBubleIcon extends BaseIcon {
   getSvg(){
     return`
@@ -89,7 +94,6 @@ export class CommentBubleIcon extends BaseIcon {
     `
   }
 }
-
 
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
   <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
