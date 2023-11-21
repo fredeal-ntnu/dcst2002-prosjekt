@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Favourites } from 'src/components/favourites'; // Adjust the import path as needed
+import { Favourites } from 'src/components/favourites';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();

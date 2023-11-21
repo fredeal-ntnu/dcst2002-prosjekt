@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { EditAnswerComment } from 'src/components/edit-answer-comment'; // Adjust the import path as needed
-import { Column, Button, Form } from '../src/widgets';
+import { EditAnswerComment } from 'src/components/edit-answer-comment'; 
+import { Button, Form } from '../src/widgets';
 import { AnswerComment } from 'src/service';
 import { createHashHistory } from 'history';
 import service from 'src/service';
@@ -47,10 +47,8 @@ describe('Create answercomment', () => {
   test('create answer comment works', () => {
     const match = { params: { id: 1 } };
 
-    // Mock service call
     service.getAnswerCommentById = jest.fn().mockResolvedValue({ text: 'some text' });
 
-    // Now pass the mock match as a prop
     const wrapper = shallow(<EditAnswerComment match={{ params: { id: 1 } }} />);
     wrapper
       .find(Form.Textarea)

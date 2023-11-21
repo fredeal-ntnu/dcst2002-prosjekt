@@ -1,9 +1,7 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { QuestionDetails } from 'src/components/question-details';
-import service from 'src/service';
-import { createHashHistory } from 'history';
-const history = createHashHistory();
+
 
 jest.mock('src/service', () => {
   class Service {
@@ -42,7 +40,7 @@ jest.mock('src/service', () => {
     }
   }
   return new Service();
-}); // Mock the service module
+}); 
 
 describe('Site renders', () => {
   test('Site renders correct', (done) => {

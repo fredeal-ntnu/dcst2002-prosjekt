@@ -1,8 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Tags } from 'src/components/tags'; // Adjust the import path as needed
-import { Column, Button } from '../src/widgets';
-import service from 'src/service';
+import { Tags } from 'src/components/tags'; 
 
 jest.mock('../src/service', () => {
   class Service {

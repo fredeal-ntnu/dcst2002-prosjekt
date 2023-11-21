@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { EditQuestionComment } from 'src/components/edit-question-comment'; // Adjust the import path as needed
-import { Column, Button } from '../src/widgets';
+import { EditQuestionComment } from 'src/components/edit-question-comment';
+import { Button } from '../src/widgets';
 import { QuestionComment } from 'src/service';
 import { createHashHistory } from 'history';
 import service from 'src/service';

@@ -338,7 +338,6 @@ describe('Alert widget tests', () => {
     wrapper.find('.btn-close').simulate('click');
     wrapper.update();
   
-    // Check if the alert is removed
     expect(wrapper.find('.alert')).toHaveLength(0);
   });
 })
@@ -359,13 +358,10 @@ describe('Alert static method tests', () => {
   });
 
   test('success method adds a success alert', () => {
-    // Call the static method
-    Alert.success('Success message');
 
-    // Fast-forward time to execute the setTimeout
+    Alert.success('Success message');
     jest.runAllTimers();
 
-    // Check if the alert was added to the instance's alerts array
     // @ts-ignore
     expect(alertInstance.alerts).toEqual([
       { id: expect.any(Number), text: 'Success message', type: 'success' }

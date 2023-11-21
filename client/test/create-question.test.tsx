@@ -1,9 +1,8 @@
-// Import necessary libraries and components
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import { Row, Column, Button, Form } from 'src/widgets';
-import { CreateQuestion } from 'src/components/create-question'; // Update the path accordingly
-import { Question, Tag_Question_Relation } from 'src/service';
+import { shallow } from 'enzyme';
+import { Button } from 'src/widgets';
+import { CreateQuestion } from 'src/components/create-question';
+
 
 jest.mock('src/service', () => {
   class Service {
@@ -50,7 +49,7 @@ describe('Button click', () => {
     const wrapper = shallow(<CreateQuestion />);
     setTimeout(() => {
       wrapper.find(Button.Success).simulate('click');
-      // expect alert to be called with the correct message
+
       setTimeout(() => {
         expect(alert).toHaveBeenCalledWith('You must have atlest one tag');
       });

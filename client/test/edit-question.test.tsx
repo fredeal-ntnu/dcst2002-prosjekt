@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { EditQuestion } from 'src/components/edit-question'; // Adjust the import path as needed
-import { Column, Button } from '../src/widgets';
+import { EditQuestion } from 'src/components/edit-question';
+import { Button } from '../src/widgets';
 import { Question } from 'src/service';
 import { createHashHistory } from 'history';
 import service from 'src/service';
@@ -121,7 +121,6 @@ describe('EditQuestion - mounted method', () => {
     expect(console.error).toHaveBeenCalledWith('Failed to fetch user');
     expect(window.alert).toHaveBeenCalledWith('You must be logged in to edit question');
 
-    // Clean up mocks
     jest.restoreAllMocks();
   });
 

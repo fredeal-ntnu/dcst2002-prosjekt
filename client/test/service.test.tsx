@@ -62,13 +62,11 @@ describe('Service', () => {
     },
   ];
 
-  // // Mock axios.post implementation
   axios.put = jest.fn().mockImplementation((url: string, data: any) => Promise.resolve({ data }));
 
-  // Mock axios.delete implementation
+
   axios.delete = jest.fn().mockImplementation((url) => Promise.resolve({ data: {} }));
 
-  // // Mock async axios.get implementation
   (axios.get as jest.Mock).mockImplementation((url: string) => {
     if (url.includes('/questions/')) {
       return Promise.resolve({ data: [mockTagQuestionRelation] });

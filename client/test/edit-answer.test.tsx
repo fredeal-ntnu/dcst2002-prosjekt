@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { EditAnswer } from 'src/components/edit-answer'; // Adjust the import path as needed
-import { Column, Button } from '../src/widgets';
-import { Answer, AnswerComment } from 'src/service';
+import { EditAnswer } from 'src/components/edit-answer'; 
+import { Button } from '../src/widgets';
+import { AnswerComment } from 'src/service';
 import { createHashHistory } from 'history';
 import service from 'src/service';
 
@@ -111,7 +111,6 @@ describe('AnswerDetails - mounted method', () => {
     expect(console.error).toHaveBeenCalledWith('Failed to fetch user');
     expect(window.alert).toHaveBeenCalledWith('You must be logged in to edit answer');
 
-    // Clean up mocks
     jest.restoreAllMocks();
   });
 

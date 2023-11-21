@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { AllQuestions } from 'src/components/all-question'; // Adjust the import path as needed
-import { Column } from '../src/widgets';
+import { AllQuestions } from 'src/components/all-question'; 
 
 jest.mock('../src/service', () => {
   class Service {
@@ -57,7 +56,7 @@ jest.mock('../src/service', () => {
     }
   }
   return new Service();
-}); // Mock the service module
+}); 
 
 describe('Site renders', () => {
   test('Site renders correct', (done) => {

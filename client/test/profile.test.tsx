@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Profile } from 'src/components/profile'; // Adjust the import path as needed
-import { Column, Button } from '../src/widgets';
+import { Button } from '../src/widgets';
 
 jest.mock('../src/service', () => {
   class Service {
@@ -12,7 +12,7 @@ jest.mock('../src/service', () => {
     }
   }
   return new Service();
-}); // Mock the service module
+});
 
 describe('Site renders', () => {
   test('Site renders correct', (done) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount, render } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { Row, Column, Button } from 'src/widgets';
 import { AnswerDetails } from 'src/components/answer-details';
 import service from 'src/service';
@@ -23,26 +23,18 @@ describe('AnswerDetails component', () => {
     ];
     wrapper.update();
 
-    // Check if the answer is rendered
     const answerText = wrapper.find('[title="Answer"]').find(Column).dive().text();
     expect(answerText).toContain('Test Answer');
 
-    // Check if the comments are rendered
     expect(wrapper.find('[title="Comments"]').find(Row)).toHaveLength(2);
   });
 
   test('Calls addAnswerComment method on button click', () => {
-    // Mock the addAnswerComment method on the component's prototype
     AnswerDetails.prototype.addAnswerComment = jest.fn();
 
-    // Render the component
     // @ts-ignore
     const wrapper = shallow(<AnswerDetails match={{ params: { id: '1' } }} />);
-
-    // Simulate the button click for adding a comment
-    wrapper.find(Button.Success).simulate('click'); // Adjust selector if needed
-
-    // Check if the addAnswerComment method was called
+    wrapper.find(Button.Success).simulate('click'); 
     expect(AnswerDetails.prototype.addAnswerComment).toHaveBeenCalled();
   });
 });
@@ -87,7 +79,6 @@ describe('AnswerDetails - mounted method', () => {
 
     expect(console.error).toHaveBeenCalledWith('Failed to fetch user');
 
-    // Clean up mocks
     jest.restoreAllMocks();
   });
 
