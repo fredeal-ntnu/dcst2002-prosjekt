@@ -4,7 +4,7 @@ import { Card, Alert, Column, Row, Form, SideMenu, QuestionCard, AnswerCard, But
 import service, { Question, Tag, User, Answer } from '../service';
 import { createHashHistory } from 'history';
 
-const history = createHashHistory(); // Use history.push(...) to programmatically change path, for instance after successfully saving a student
+const history = createHashHistory();
 
 export class Profile extends Component {
     questions: Question[] = [];
@@ -15,7 +15,6 @@ export class Profile extends Component {
     render() {
       return (
         <Row>
-            {/* Side Menu or other content */}
             <Column width={3}>
               <SideMenu header='Menu'
               items={[
@@ -42,10 +41,10 @@ export class Profile extends Component {
     }
   
     mounted() {
+        // Get logged in user
       service.getMe().then((user) => { this.user = user})
     }
       
-
     logout() {
       service.logOut()
       .then(() => window.location.assign('/'))

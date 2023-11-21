@@ -351,13 +351,10 @@ describe('Alert static method tests', () => {
   // @ts-ignore
   let alertInstance;
 
-  // Set up a mock for Alert.instance()
   beforeEach(() => {
-    // Mock implementation of Alert.instance()
     // @ts-ignore
     Alert.instance = jest.fn(() => alertInstance);
     
-    // Create a controlled instance of Alert with a mock state
     alertInstance = shallow(<Alert />).instance();
     // @ts-ignore
     alertInstance.alerts = [];

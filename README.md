@@ -55,6 +55,20 @@ process.env.MYSQL_DATABASE = 'database_name_test';
 
 These environment variables will be used in the `server/src/mysql-pool.ts` file.
 
+For the app to work, it needs predefined tags. These can be added like this:
+
+```sql
+INSERT INTO Tags (tag_id, name) VALUES 
+(1, 'SQL'),
+(2, 'Python'),
+(3, 'JavaScript'),
+(4, 'HTML'),
+(5, 'CSS'),
+(6, 'Bootstrap'),
+(7, 'Frontend'),
+(8, 'Backend');
+```
+
 ## Start server 
 
 Install dependencies and start server:
