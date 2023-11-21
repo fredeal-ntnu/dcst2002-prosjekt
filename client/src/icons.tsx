@@ -99,6 +99,7 @@ export class CommentBubleIcon extends BaseIcon {
   width="16"
   height="16"
   fill="currentColor"
+  //@ts-ignore
   class="bi bi-chat-dots"
   viewBox="0 0 16 16"
 >
